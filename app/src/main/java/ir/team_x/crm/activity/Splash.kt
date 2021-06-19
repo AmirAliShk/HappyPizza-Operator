@@ -20,7 +20,7 @@ class Splash : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("key", "start")
                 startActivity(intent)
-            }, 300
+            }, 600
         )
     }
 }
