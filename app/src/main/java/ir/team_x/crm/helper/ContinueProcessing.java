@@ -16,10 +16,10 @@ public class ContinueProcessing {
 //                        .remove();
 //                return;
 //            }
-        MyApplication.handler.post(() -> {
+        MyApplication.handler.postDelayed(() -> {
             MyApplication.currentActivity.startActivity(new Intent(MyApplication.currentActivity, MainActivity.class));
             MyApplication.currentActivity.finish();
-        });
+        },200);
 
     }
 }

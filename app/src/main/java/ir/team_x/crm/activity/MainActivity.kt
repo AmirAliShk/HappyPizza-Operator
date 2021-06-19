@@ -11,10 +11,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var mainFragment = SignInFragment()
-        supportFragmentManager.beginTransaction().add(R.id.container, mainFragment)
-            .commit()
-//        FragmentHelper.toFragment(MainActivity,SignInFragment)
     }
 }
