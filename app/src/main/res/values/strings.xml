@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CRM</string>
+    <string name="SignUp">ثبت نام</string>
+    <string name="mobile">موبایل</string>
+    <string name="name">نام</string>
+    <string name="email">ایمیل</string>
+    <string name="companyName">نام شرکت</string>
+    <string name="password">رمزعبور</string>
 </resources>
