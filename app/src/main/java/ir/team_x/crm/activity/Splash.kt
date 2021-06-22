@@ -6,6 +6,7 @@ import ir.team_x.crm.R
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivitySplashBinding
 import ir.team_x.crm.fragment.SignInFragment
+import ir.team_x.crm.helper.FragmentHelper
 
 class Splash : AppCompatActivity() {
 
@@ -18,16 +19,21 @@ class Splash : AppCompatActivity() {
         setContentView(view)
         MyApplication.handler.postDelayed(
             {
-                val fragmentManager = supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                val fragmentOne = SignInFragment()
-                fragmentTransaction.add(
-                    R.id.edtEmail,
-                    fragmentOne,
-                    "Fragment One"
-                )
-                fragmentTransaction.commit()
+                FragmentHelper
+                    .toFragment(MyApplication.currentActivity, SignInFragment())
+                    .setAddToBackStack(false)
+                    .add()
             }, 1000
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MyApplication.currentActivity = this
+    }
+
+    override fun onStart() {
+        super.onStart()
+        MyApplication.currentActivity = this
     }
 }

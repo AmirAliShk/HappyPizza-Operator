@@ -8,43 +8,39 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ir.team_x.crm.activity.MainActivity
 import ir.team_x.crm.app.MyApplication
-import ir.team_x.crm.databinding.FragmentSignInBinding
+import ir.team_x.crm.databinding.FragmentLogInBinding
 import ir.team_x.crm.helper.FragmentHelper
 
-class SignInFragment : Fragment() {
+class LogInFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignInBinding
+    lateinit var binding: FragmentLogInBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignInBinding.inflate(layoutInflater)
+        binding = FragmentLogInBinding.inflate(layoutInflater)
 
-        val name = binding.edtName.text.toString()
-        val mobile = binding.edtMobile.text.toString()
-        val email = binding.edtEmail.text.toString()
-        val companyName = binding.edtCompanyName.text.toString()
-        val password = binding.edtPassword.text.toString()
-
-        binding.btnSignIn.setOnClickListener {
+        binding.btnLogIn.setOnClickListener(View.OnClickListener {
             MyApplication.handler.postDelayed({
                 MyApplication.currentActivity.startActivity(
-                     Intent(
+                    Intent(
                         MyApplication.currentActivity,
                         MainActivity::class.java
                     )
                 )
                 MyApplication.currentActivity.finish()
             }, 200)
-        }
-        binding.txtLogIn.setOnClickListener {
+        })
+
+        binding.txtSignUp.setOnClickListener {
             FragmentHelper
-                .toFragment(MyApplication.currentActivity, LogInFragment())
+                .toFragment(MyApplication.currentActivity, SignInFragment())
                 .setAddToBackStack(false)
                 .add()
         }
+
         return binding.root
     }
 }

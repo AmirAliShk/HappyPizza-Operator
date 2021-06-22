@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:layoutDirection="rtl">
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="#fff">
 
     <ImageView
         android:layout_width="match_parent"
@@ -34,8 +36,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="@string/name"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:hint="@string/name" />
 
         </LinearLayout>
 
@@ -56,9 +58,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="@string/mobile"
+                android:gravity="center_vertical"
 
-                android:gravity="center_vertical" />
+                android:hint="@string/mobile" />
 
         </LinearLayout>
 
@@ -80,7 +82,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:hint="@string/email"/>
+                android:hint="@string/email" />
 
         </LinearLayout>
 
@@ -101,8 +103,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="@string/companyName"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:hint="@string/companyName" />
 
         </LinearLayout>
 
@@ -122,14 +124,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="@string/password"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:hint="@string/password" />
 
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
+        <!--        <View-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content" />-->
 
         <Button
             android:id="@+id/btnSignIn"
@@ -141,10 +143,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/LogIn"
+        android:layout_marginRight="20dp"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_bottom_register" />
 
-</RelativeLayout>
+</LinearLayout>
