@@ -22,7 +22,7 @@ class LogInFragment : Fragment() {
     ): View? {
         binding = FragmentLogInBinding.inflate(layoutInflater)
 
-        binding.btnLogIn.setOnClickListener(View.OnClickListener {
+        binding.btnLogIn.setOnClickListener {
             MyApplication.handler.postDelayed({
                 MyApplication.currentActivity.startActivity(
                     Intent(
@@ -32,7 +32,7 @@ class LogInFragment : Fragment() {
                 )
                 MyApplication.currentActivity.finish()
             }, 200)
-        })
+        }
 
         binding.txtSignUp.setOnClickListener {
             FragmentHelper
@@ -43,4 +43,6 @@ class LogInFragment : Fragment() {
 
         return binding.root
     }
+
+
 }
