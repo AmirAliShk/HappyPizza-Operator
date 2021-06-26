@@ -17,6 +17,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.imgMenu.setOnClickListener({ binding.draw.openDrawer(Gravity.RIGHT) })
+        binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
     }
 }

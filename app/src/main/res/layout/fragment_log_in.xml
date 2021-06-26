@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ececec"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +62,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                            android:text="ایمیل/موبایل" />
+                                android:text="ایمیل/موبایل" />
 
                         </LinearLayout>
 
@@ -82,7 +75,7 @@
 
                     <View
                         android:layout_width="0dp"
-                        android:layout_height="1dp"
+                        android:layout_height="0dp"
                         android:layout_weight="1" />
 
                 </LinearLayout>
@@ -114,16 +107,15 @@
 
 
                             <TextView
-                                android:id="@+id/textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="رمز عبور" />
+                                android:text="@string/password" />
+
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_button_morning2" />
@@ -138,13 +130,12 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingTop="25dp"
                     android:paddingRight="8dp"
-                    android:text="ثبت نام"
+                    android:text="@string/signUp"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -155,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_morning"
-                android:text="ورود"
+                android:text="@string/logIn"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 

@@ -10,4 +10,5 @@
         android:src="@mipmap/team_x"
         tools:layout_editor_absoluteX="۰dp"
         tools:layout_editor_absoluteY="۰dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

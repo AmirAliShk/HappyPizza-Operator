@@ -9,11 +9,6 @@
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,7 +64,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="نام" />
+                                android:text="@string/name" />
 
                         </LinearLayout>
 
@@ -114,16 +109,14 @@
 
 
                             <TextView
-                                android:id="@+id/textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="موبایل" />
+                                android:text="@string/mobile" />
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_button_morning2" />
@@ -168,7 +161,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="ایمیل" />
+                                android:text="@string/email" />
 
                         </LinearLayout>
 
@@ -217,7 +210,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="نام شرکت" />
+                                android:text="@string/companyName" />
 
                         </LinearLayout>
 
@@ -234,7 +227,6 @@
                         android:layout_weight="1" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -267,7 +259,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="رمز عبور" />
+                                android:text="@string/password" />
                         </LinearLayout>
 
                         <EditText
@@ -284,7 +276,6 @@
 
                 </LinearLayout>
 
-
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
@@ -292,7 +283,7 @@
                     android:layout_weight="1"
                     android:paddingTop="25dp"
                     android:paddingRight="8dp"
-                    android:text="ورود"
+                    android:text="@string/logIn"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -303,30 +294,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_morning"
-                android:text="ورود"
+                android:text="@string/signUp"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:background="@drawable/bg_button_morning"
-        android:text="@string/signUp" />
-
-    <TextView
-        android:id="@+id/txtLogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
-        android:text="@string/logIn"
-        android:textSize="20dp" />
 
     <ImageView
         android:layout_width="match_parent"
