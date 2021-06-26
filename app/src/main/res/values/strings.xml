@@ -7,7 +7,7 @@
     <string name="name">نام و نام خانوادگی</string>
     <string name="email">ایمیل</string>
     <string name="companyName">نام شرکت</string>
-    <string name="password">رمزعبور</string>
+    <string name="password">رمز عبور</string>
     <string name="logIn">ورود</string>
 
     <!-- drawer menu -->

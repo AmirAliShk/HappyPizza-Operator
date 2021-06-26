@@ -54,7 +54,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_margin="9dp"
-                                android:layout_weight="0.3dp"
+                                android:layout_weight="0.3"
                                 android:src="@drawable/ic_user" />
 
                             <TextView
@@ -102,7 +102,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_margin="9dp"
-                                android:layout_weight="0.3dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/ic_password" />
 
 
@@ -130,6 +130,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/txtSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -142,6 +143,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnLogIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
