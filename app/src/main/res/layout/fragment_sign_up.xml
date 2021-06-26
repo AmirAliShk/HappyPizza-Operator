@@ -11,7 +11,7 @@
 
     <ImageView
         android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp" />
 
 
     <LinearLayout
@@ -267,7 +267,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:text="رمز عبور"/>
+                                android:text="رمز عبور" />
                         </LinearLayout>
 
                         <EditText
@@ -310,5 +310,28 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:background="@drawable/bg_button_morning"
+        android:text="@string/signUp" />
+
+    <TextView
+        android:id="@+id/txtLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:text="@string/logIn"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_bottom_register" />
 
 </RelativeLayout>
