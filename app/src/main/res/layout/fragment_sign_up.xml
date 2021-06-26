@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:background="@drawable/bg_button_morning"
-            android:text="@string/SignUp" />
+            android:text="@string/signUp" />
 
     </LinearLayout>
 
@@ -147,7 +147,7 @@
         android:id="@+id/txtLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/LogIn"
+        android:text="@string/logIn"
         android:layout_marginRight="20dp"
         android:textSize="20dp"
         android:layout_alignParentBottom="true"/>

@@ -8,19 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ir.team_x.crm.activity.MainActivity
 import ir.team_x.crm.app.MyApplication
-import ir.team_x.crm.databinding.FragmentSignInBinding
+import ir.team_x.crm.databinding.FragmentSignUpBinding
 import ir.team_x.crm.helper.FragmentHelper
 
 class SignInFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignInBinding
+    private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignInBinding.inflate(layoutInflater)
+        binding = FragmentSignUpBinding.inflate(layoutInflater)
 
         val name = binding.edtName.text.toString()
         val mobile = binding.edtMobile.text.toString()
