@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ececec"
+    android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="18dp">
@@ -51,10 +54,9 @@
                             android:paddingRight="3dp">
 
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
                                 android:layout_margin="9dp"
-                                android:layout_weight="0.3"
                                 android:src="@drawable/ic_user" />
 
                             <TextView
@@ -69,7 +71,8 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_button_morning1" />
+                            android:background="@drawable/bg_button_morning2"
+                            android:padding="6dp" />
 
                     </LinearLayout>
 
@@ -99,10 +102,9 @@
                             android:paddingLeft="3dp">
 
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
                                 android:layout_margin="9dp"
-                                android:layout_weight="0.3"
                                 android:background="@drawable/ic_password" />
 
 
@@ -118,7 +120,8 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_button_morning2" />
+                            android:background="@drawable/bg_button_morning2"
+                            android:padding="6dp" />
 
                     </LinearLayout>
 
@@ -137,24 +140,53 @@
                     android:paddingTop="25dp"
                     android:paddingRight="8dp"
                     android:text="@string/signUp"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <Button
                 android:id="@+id/btnLogIn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:layout_weight="1"
-                android:background="@drawable/bg_button_morning"
+                android:background="@drawable/bg_gray_lite_edge"
+                android:gravity="center"
                 android:text="@string/logIn"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingTop="@dimen/_30sdp"
+        app:srcCompat="@mipmap/team_x" />
 
 </RelativeLayout>
 

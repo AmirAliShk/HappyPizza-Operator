@@ -18,5 +18,6 @@
     <string name="financial">مالی</string>
     <string name="customers">مشتریان</string>
     <string name="discounts">تخفیف ها</string>
+    <string name="order">سفارش</string>
 
 </resources>

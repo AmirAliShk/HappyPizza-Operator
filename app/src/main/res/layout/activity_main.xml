@@ -51,47 +51,152 @@
         android:layout_gravity="right"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <?xml version="1.0" encoding="utf-8"?>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
             android:orientation="vertical"
-            android:layoutDirection="rtl">
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingTop="@dimen/_30sdp"
+                app:srcCompat="@mipmap/team_x" />
 
             <TextView
-                android:id="@+id/registerOrder"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="@string/registerOrder"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/orders"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:clickable="false"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="ثبت سفارش"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/reminder"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:clickable="false"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="سفارش ها "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/products"/>
+                android:layout_marginLeft="30dp"
+
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="یاد اوری"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/financial"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="محصولات "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/customers"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="مالی "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/discounts"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="ثبت سفارش"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text=" مشتریان"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:clickable="false"
+                android:gravity="center"
+                android:minHeight="?android:attr/actionBarSize"
+                android:text="تخفیف ها"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

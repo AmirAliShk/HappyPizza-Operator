@@ -10,7 +10,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="lightBlue">#64b5f6</color>
     <color name="colorPrimaryDark">#381f60</color>
-<color name="colorPrimaryLighter">#ebeff0</color>
+    <color name="colorPrimaryLighter">#ebeff0</color>
+    <color name="page_background">#ececec</color>
+    <color name="view">#3A3C4A</color>
+    <color name="green">#1DAE24</color>
 
 
 </resources>
