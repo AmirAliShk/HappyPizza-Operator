@@ -2,7 +2,6 @@ package ir.team_x.crm.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ir.team_x.crm.R
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivitySplashBinding
 import ir.team_x.crm.fragment.SignInFragment
