@@ -20,4 +20,6 @@
     <string name="discounts">تخفیف ها</string>
     <string name="order">سفارش</string>
 
+    <string name="txt_please_for_exit_reenter_back">برای خروج دوباره کلید بازگشت را بزنید</string>
+
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_background"
@@ -69,7 +68,7 @@
                         </LinearLayout>
 
                         <EditText
-
+                            android:id="@+id/edtName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_button_morning2"
@@ -305,7 +304,7 @@
         </LinearLayout>
 
         <LinearLayout
-          android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:gravity="center"
@@ -318,16 +317,17 @@
 
 
             <Button
-                android:id="@+id/btnLogIn"
+                android:id="@+id/btnSignIn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:background="@drawable/bg_gray_lite_edge"
                 android:gravity="center"
-                android:text="@string/logIn"
+                android:text="@string/signUp"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -337,7 +337,6 @@
     </LinearLayout>
 
     <ImageView
-
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_alignParentLeft="true"
