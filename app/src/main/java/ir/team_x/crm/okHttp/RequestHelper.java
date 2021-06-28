@@ -266,7 +266,7 @@ public class RequestHelper implements okhttp3.Callback {
             okHttpClient = builder.connectTimeout(connectionTimeout, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeout, TimeUnit.SECONDS)
                     .readTimeout(readTimeout, TimeUnit.SECONDS)
-//                    .addInterceptor(new AuthenticationInterceptor())
+                    .addInterceptor(new AuthenticationInterceptor())
                     .build();
 
             call = okHttpClient.newCall(req);
