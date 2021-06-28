@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-      <style name="dialogTitle">
+    <style name="dialogTitle">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">@dimen/_18ssp</item>
     </style>
- <style name="ExpandAnimation">
+
+    <style name="ExpandAnimation">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+
+    <style name="pageTitle">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/_22ssp</item>
+    </style>
+
 </resources>

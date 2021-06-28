@@ -29,15 +29,13 @@ class MainActivity : AppCompatActivity() {
         binding.registerOrder.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-                .setAddToBackStack(false)
-                .add()
+                .replace()
         }
 
         binding.txtProduct.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, ProductFragment())
-                .setAddToBackStack(false)
-                .add()
+                .replace()
         }
     }
 
