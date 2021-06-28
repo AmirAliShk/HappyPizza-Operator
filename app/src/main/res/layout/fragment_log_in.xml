@@ -54,16 +54,17 @@
                             android:paddingRight="3dp">
 
                             <ImageView
-                                android:layout_width="@dimen/_20sdp"
+                                android:layout_width="0dp"
                                 android:layout_height="@dimen/_20sdp"
+                                android:layout_weight="0.5"
                                 android:layout_margin="9dp"
                                 android:src="@drawable/ic_user" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:text="ایمیل/موبایل" />
 
                         </LinearLayout>
@@ -103,17 +104,18 @@
                             android:paddingLeft="3dp">
 
                             <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
                                 android:layout_margin="9dp"
                                 android:background="@drawable/ic_password" />
 
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:text="@string/password" />
 
                         </LinearLayout>

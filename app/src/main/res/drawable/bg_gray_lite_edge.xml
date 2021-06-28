@@ -9,7 +9,7 @@
             android:right="1dp"
             android:top="1dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#0764B5F6" />
             </shape>
         </item>
@@ -19,7 +19,7 @@
             android:right="2dp"
             android:top="2dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#1264B5F6" />
             </shape>
         </item>
@@ -30,7 +30,7 @@
             android:right="3dp"
             android:top="3dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#1B64B5F6" />
             </shape>
         </item>
@@ -41,7 +41,7 @@
             android:right="4dp"
             android:top="4dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#2A64B5F6" />
             </shape>
         </item>
@@ -52,7 +52,7 @@
             android:right="5dp"
             android:top="5dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#3164B5F6" />
             </shape>
         </item>
@@ -63,7 +63,7 @@
             android:right="5.75dp"
             android:top="5.75dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#3764B5F6" />
             </shape>
         </item>
@@ -74,7 +74,7 @@
             android:right="6dp"
             android:top="6dp">
             <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp" />
+                <corners android:radius="@dimen/_7sdp" />
                 <solid android:color="#64b5f6" />
             </shape>
         </item>
