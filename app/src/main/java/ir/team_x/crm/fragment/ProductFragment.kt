@@ -55,8 +55,9 @@ class ProductFragment : Fragment() {
                             val dataObject = response.getJSONArray("data")
                             for (i in 0 until dataObject.length()) {
                                 val dataObj: JSONObject = dataObject.getJSONObject(i);
-                                lateinit var model: ProductsModel
-                                model.name = dataObj.getString("name")
+                                var model= ProductsModel(
+                                 dataObj.getString("name")
+                                )
                                 productsModel.add(model)
                             }
 
