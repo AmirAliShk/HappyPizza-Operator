@@ -71,8 +71,8 @@ public class AuthenticationInterceptor implements Interceptor {
     }
 
     private void setAuthHeader(Request.Builder builder, String authorization, String idToken) {
-        builder.header("Authorization", authorization);
-        builder.header("id_token", idToken);
+        builder.header("authorization", authorization);
+        builder.header("idToken", idToken);
     }
 
     public boolean refreshToken() {
