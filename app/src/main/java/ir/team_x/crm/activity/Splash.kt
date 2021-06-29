@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
+import ir.team_x.crm.app.MyApplication.context
 import ir.team_x.crm.databinding.ActivitySplashBinding
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.fragment.LogInFragment
+import ir.team_x.crm.helper.AppVersionHelper
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
@@ -39,7 +41,7 @@ class Splash : AppCompatActivity() {
 
     private fun appInfo() {
         RequestHelper.builder(EndPoints.APP_INFO)
-            .addParam("versionCode", "1")
+            .addParam("versionCode", AppVersionHelper(context).verionCode)
             .addParam("os", "Android")
             .listener(appInfoCallBack)
             .post()
@@ -51,9 +53,9 @@ class Splash : AppCompatActivity() {
                 MyApplication.handler.post {
                     try {
                         val response = JSONObject(args[0].toString())
-                        val status = response.getBoolean("status")
+                        val success = response.getBoolean("success")
                         val message = response.getString("message")
-                        if (status) {
+                        if (success) {
                             MyApplication.currentActivity.startActivity(
                                 Intent(
                                     MyApplication.currentActivity,
