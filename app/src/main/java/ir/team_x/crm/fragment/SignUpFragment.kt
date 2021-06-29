@@ -1,22 +1,22 @@
 package ir.team_x.crm.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import ir.team_x.crm.activity.MainActivity
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentSignUpBinding
+import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
+import org.json.JSONObject
 import java.lang.Exception
 
-class SignInFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
 
@@ -64,15 +64,37 @@ class SignInFragment : Fragment() {
                 MyApplication.handler.post {
                     try {
 //                        {"success":true,"message":"کاربر با موفقیت ثبت شد"}
-
+                        val response = JSONObject(args[0].toString())
+                        val success = response.getBoolean("success")
+                        val message = response.getString("message")
+                        if (success) {
+                            FragmentHelper
+                                .toFragment(MyApplication.currentActivity, LogInFragment())
+                                .setAddToBackStack(false)
+                                .replace()
+                        } else {
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { GeneralDialog().dismiss() }
+                                .secondButton("تلاش مجدد") { signUp() }
+                        }
                     } catch (e: JSONException) {
+                        GeneralDialog()
+                            .message("خطایی پیش آمده دوباره امتحان کنید.")
+                            .firstButton("باشه") { GeneralDialog().dismiss() }
+                            .secondButton("تلاش مجدد") { signUp() }
                         e.printStackTrace()
                     }
                 }
-                TODO("Not yet implemented")
             }
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
+                MyApplication.handler.post{
+                    GeneralDialog()
+                        .message("خطایی پیش آمده دوباره امتحان کنید.")
+                        .firstButton("باشه") { GeneralDialog().dismiss() }
+                        .secondButton("تلاش مجدد") { signUp() }
+                }
                 super.onFailure(reCall, e)
             }
         }

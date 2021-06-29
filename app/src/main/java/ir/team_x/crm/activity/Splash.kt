@@ -1,14 +1,17 @@
 package ir.team_x.crm.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivitySplashBinding
+import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.fragment.LogInFragment
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.okHttp.RequestHelper
+import org.json.JSONException
+import org.json.JSONObject
 
 class Splash : AppCompatActivity() {
 
@@ -20,7 +23,7 @@ class Splash : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         try {
-            if (MyApplication.prefManager.refreshToken.equals("")) {
+            if (MyApplication.prefManager.idToken.equals("")) {
                 FragmentHelper
                     .toFragment(this, LogInFragment())
                     .setAddToBackStack(false)
@@ -45,10 +48,41 @@ class Splash : AppCompatActivity() {
     private val appInfoCallBack: RequestHelper.Callback =
         object : RequestHelper.Callback() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-                TODO("Not yet implemented")
+                MyApplication.handler.post {
+                    try {
+                        val response = JSONObject(args[0].toString())
+                        val status = response.getBoolean("status")
+                        val message = response.getString("message")
+                        if (status) {
+                            MyApplication.currentActivity.startActivity(
+                                Intent(
+                                    MyApplication.currentActivity,
+                                    MainActivity::class.java
+                                )
+                            )
+                        } else {
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { GeneralDialog().dismiss() }
+                                .secondButton("تلاش مجدد") { appInfo() }
+                        }
+                    } catch (e: JSONException) {
+                        GeneralDialog()
+                            .message("خطایی پیش آمده دوباره امتحان کنید.")
+                            .firstButton("باشه") { GeneralDialog().dismiss() }
+                            .secondButton("تلاش مجدد") { appInfo() }
+                        e.printStackTrace()
+                    }
+                }
             }
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
+                MyApplication.handler.post {
+                    GeneralDialog()
+                        .message("خطایی پیش آمده دوباره امتحان کنید.")
+                        .firstButton("باشه") { GeneralDialog().dismiss() }
+                        .secondButton("تلاش مجدد") { appInfo() }
+                }
                 super.onFailure(reCall, e)
             }
         }

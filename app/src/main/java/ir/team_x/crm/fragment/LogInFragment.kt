@@ -11,6 +11,7 @@ import ir.team_x.crm.activity.MainActivity
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentLogInBinding
+import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
@@ -42,7 +43,7 @@ class LogInFragment : Fragment() {
 
         binding.txtSignUp.setOnClickListener {
             FragmentHelper
-                .toFragment(MyApplication.currentActivity, SignInFragment())
+                .toFragment(MyApplication.currentActivity, SignUpFragment())
                 .setAddToBackStack(false)
                 .add()
         }
@@ -66,7 +67,7 @@ class LogInFragment : Fragment() {
 //{"success":true,"message":"کاربر با موفقیت وارد شد","data":{"idToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBkOWJlNGY4ZTJiN2QyOTdjMmU0NjUwIiwidXNlcl9hY3RpdmUiOnRydWUsInVzZXJfZW1wbG95ZXIiOiI2MGQ5YmU0ZjhlMmI3ZDI5N2MyZTQ2NTAiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY0NjQ4MzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.LmSGVrGdlArOdfpwMQGF9f7e4xgs44bjZ9ZdBXF_8iU","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6InVzZXIiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY1MDgwMzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.SRgJvlVA_fggm6KX2D45v_S7Z1tW7h8g3uT4hEfiohw"}}
                         val response = JSONObject(args[0].toString())
                         val success = response.getBoolean("success")
-                        val message = response.get("message")
+                        val message = response.getString("message")
                         val dataObject = response.getJSONObject("data")
                         if (success) {
                             MyApplication.prefManager.idToken = dataObject.getString("idToken")
@@ -78,14 +79,29 @@ class LogInFragment : Fragment() {
                                     MainActivity::class.java
                                 )
                             )
+                        }else{
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { GeneralDialog().dismiss() }
+                                .secondButton("تلاش مجدد") { login() }
                         }
                     } catch (e: JSONException) {
+                        GeneralDialog()
+                            .message("خطایی پیش آمده دوباره امتحان کنید.")
+                            .firstButton("باشه") { GeneralDialog().dismiss() }
+                            .secondButton("تلاش مجدد") { login() }
                         e.printStackTrace()
                     }
                 }
             }
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
+                MyApplication.handler.post {
+                    GeneralDialog()
+                        .message("خطایی پیش آمده دوباره امتحان کنید.")
+                        .firstButton("باشه") { GeneralDialog().dismiss() }
+                        .secondButton("تلاش مجدد") { login() }
+                }
                 super.onFailure(reCall, e)
             }
         }
