@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/bg_button_morning1"
         android:layout_margin="@dimen/_8sdp"
         android:orientation="vertical">
 
@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_20sdp"
             android:background="@drawable/bg_button_morning"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/_7sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,16 +37,19 @@
                         android:id="@+id/textView23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_margin="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:text="تاریخ"
+                        android:layout_weight="0.5"
+                        android:paddingRight="@dimen/_9sdp"
+                        android:text="تاریخ:"
                         android:textColor="@color/transparent" />
 
                     <TextView
                         android:id="@+id/textView22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
                         android:text="1400/4/7"
                         android:textColor="@color/black" />
 
@@ -61,16 +65,18 @@
                         android:id="@+id/textView21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
                         android:baselineAligned="false"
-                        android:text="ساعت"
+                        android:text="ساعت:"
                         android:textColor="@color/transparent" />
 
                     <TextView
                         android:id="@+id/textView20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
                         android:text="17:57"
                         android:textColor="@color/black" />
 
@@ -80,25 +86,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="نام مشتری"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="نام مشتری:"
                     android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
                     android:text="مبینا واحدی"
                     android:textColor="@color/black" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -110,21 +117,27 @@
                     android:id="@+id/textView27"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="موبایل"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.25"
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="موبایل:"
                     android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView26"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
-
                     android:text="09907278878"
                     android:textColor="@color/black" />
 
             </LinearLayout>
-        </LinearLayout>
+
+        </LinearLayout><![CDATA[*
+            android:orientation="horizontal">
+
+            ]]>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,38 +148,47 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="سفارشات" />
+                android:paddingRight="@dimen/_9sdp"
+                android:text="سفارشات"
+                android:textColor="@color/transparent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="3dp"
+                android:orientation="horizontal"
+                android:textColor="@color/transparent">
 
                 <TextView
                     android:id="@+id/textView36"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="سفارش" />
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="سفارش"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView37"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="قیمت" />
+                    android:text="قیمت"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView38"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="تعداد" />
+                    android:text="تعداد"
+                    android:textColor="@color/transparent" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -174,26 +196,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="لاته" />
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="لاته"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView40"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="20000 تومان" />
+                    android:text="20000 تومان"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2" />
+                    android:text="2"
+                    android:textColor="@color/transparent" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -201,19 +228,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="موهیتو" />
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="موهیتو"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView43"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="30000 تومان" />
+                    android:text="30000 تومان"
+                    android:textColor="@color/transparent" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -221,24 +252,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="شیک نوتلا" />
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="شیک نوتلا"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView45"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="35000 تومان" />
+                    android:text="35000 تومان"
+                    android:textColor="@color/transparent" />
             </LinearLayout>
 
-             <View
+            <View
                 android:id="@+id/view3"
-                android:layout_width="wrap_content"
-                android:layout_height="3dp" />
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_dialog_header"
+                android:padding="@dimen/_5sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -246,7 +284,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="جمع کل" />
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="جمع کل"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView47"
@@ -259,5 +299,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+</LinearLayout>
 
 </LinearLayout>
