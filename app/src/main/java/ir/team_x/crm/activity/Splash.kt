@@ -11,6 +11,7 @@ import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.fragment.LogInFragment
 import ir.team_x.crm.helper.AppVersionHelper
 import ir.team_x.crm.helper.FragmentHelper
+import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
 import org.json.JSONObject
@@ -24,6 +25,8 @@ class Splash : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        TypefaceUtil.overrideFonts(binding.root)
+
         try {
             if (MyApplication.prefManager.idToken.equals("")) {
                 FragmentHelper

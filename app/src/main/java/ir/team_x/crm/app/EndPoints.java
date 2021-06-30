@@ -50,7 +50,7 @@ public class EndPoints {
 
     /******************************** product api *********************************/
 
-    public static final String GET_PRODUCT = WEBSERVICE_PATH + "product/";
+    public static final String PRODUCT = WEBSERVICE_PATH + "product/";
 
 
 }

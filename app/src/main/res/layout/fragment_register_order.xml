@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/page_background"
@@ -73,9 +72,9 @@
 
                 <View
                     android:id="@+id/view2"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -227,8 +226,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:text="جمع کل" />
+                    android:text="جمع کل"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -243,8 +242,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                     android:textColor="@color/black"
-                    android:text="تومان" />
+                    android:text="تومان"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -294,7 +293,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="ثبت" />
+        android:text="ثبت"
+        android:textColor="@color/black" />
 
 </LinearLayout>

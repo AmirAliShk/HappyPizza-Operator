@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="تلاش مجدد"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
 
             <View
@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="بستن"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
 
         </LinearLayout>

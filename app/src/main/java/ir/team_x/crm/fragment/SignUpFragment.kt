@@ -11,6 +11,7 @@ import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentSignUpBinding
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.FragmentHelper
+import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
 import org.json.JSONObject
@@ -26,6 +27,7 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
+        TypefaceUtil.overrideFonts(binding.root)
 
         binding.btnSignIn.setOnClickListener {
             if (binding.edtPassword.text.toString().isEmpty() || binding.edtName.text.toString()

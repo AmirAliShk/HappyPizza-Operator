@@ -8,33 +8,35 @@ import androidx.appcompat.app.AppCompatActivity
 import ir.team_x.crm.R
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivityMainBinding
-import ir.team_x.crm.fragment.ProductFragment
+import ir.team_x.crm.fragment.ProductsFragment
 import ir.team_x.crm.fragment.RegisterOrderFragment
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.helper.KeyBoardHelper
+import ir.team_x.crm.helper.TypefaceUtil
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    var doubleBackToExitPressedOnce = false
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        TypefaceUtil.overrideFonts(binding.root)
 
         binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
 
-        binding.registerOrder.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-                .replace()
-        }
+//        binding.txtRegisterOrder.setOnClickListener {
+//            FragmentHelper
+//                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
+//                .replace()
+//        }
 
         binding.txtProduct.setOnClickListener {
             FragmentHelper
-                .toFragment(MyApplication.currentActivity, ProductFragment())
+                .toFragment(MyApplication.currentActivity, ProductsFragment())
                 .replace()
         }
     }

@@ -12,7 +12,6 @@ import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.DialogAddProductBinding
-import ir.team_x.crm.dialog.ErrorDialog.dialog
 import ir.team_x.crm.helper.KeyBoardHelper
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
@@ -36,49 +35,51 @@ class AddProductDialog {
         dialog.window?.attributes = wlp
         dialog.setCancelable(true)
 
-
+        binding.btnSubmit.setOnClickListener { addProduct() }
 
         dialog.show()
 
     }
 
-//    private fun finish(serviceId: Int, price: String) {
-//        RequestHelper.builder(EndPoints.)
-//            .listener(finishCallBack)
-//            .addParam("serviceId", serviceId)
-//            .addParam("price", price)
-//            .post()
-//    }
-//
-//    private val finishCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
-//        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-//            MyApplication.handler.post {
-//                try {
-//                    val jsonObject = JSONObject(args[0].toString())
-//                    val success = jsonObject.getBoolean("success")
-//                    val message = jsonObject.getString("message")
-//                    if (success) {
-//                        val dataArr = jsonObject.getJSONArray("data")
-//                        val result = dataArr.getJSONObject(0).getBoolean("result")
-//                        if (result) {
-//                            MyApplication.Toast(message, Toast.LENGTH_SHORT)
-//                            dismiss()
-//                            MyApplication.currentActivity.onBackPressed()
-//                        }
-//                    }
-//
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
-//
-//        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
-//            MyApplication.handler.post {
-//
-//            }
-//        }
-//    }
+    private fun addProduct() {
+        RequestHelper.builder(EndPoints.PRODUCT)
+            .addParam("name", binding.edtProductName.text.toString())
+            .addParam("sellingPrice", binding.edtPrice.text.toString())
+            .addParam("description", binding.edtDescription.text.toString())
+            .listener(addProductCallBack)
+            .post()
+    }
+
+    private val addProductCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+//                    {"success":true,"message":"محصول شما با موفقیت ثبت شد"}
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    val message = jsonObject.getString("message")
+                    if (success) {
+                        val dataArr = jsonObject.getJSONArray("data")
+                        val result = dataArr.getJSONObject(0).getBoolean("result")
+                        if (result) {
+                            MyApplication.Toast(message, Toast.LENGTH_SHORT)
+                            dismiss()
+                            MyApplication.currentActivity.onBackPressed()
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            MyApplication.handler.post {
+
+            }
+        }
+    }
 
     private fun dismiss() {
         try {

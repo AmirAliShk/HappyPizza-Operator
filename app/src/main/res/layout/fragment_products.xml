@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ececec"
+    android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -18,10 +18,11 @@
         android:paddingRight="10dp">
 
         <ImageView
-            android:id="@+id/imgMenu"
-            android:layout_width="43dp"
-            android:layout_height="56dp"
+            android:id="@+id/imgAddProduct"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:padding="5dp"
             android:src="@drawable/ic_plus" />
 
         <TextView
@@ -34,9 +35,10 @@
             android:textColor="@color/white" />
 
         <ImageView
+            android:id="@+id/imgBack"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:padding="10dp"
+            android:padding="13dp"
             android:src="@drawable/ic_back" />
     </LinearLayout>
 
@@ -46,7 +48,6 @@
         android:layout_height="match_parent">
 
         <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avl"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -54,13 +55,13 @@
             app:indicatorName="BallBeatIndicator" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mistakesList"
+            android:id="@+id/productsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
             android:listSelector="@color/transparent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_product" />
+            tools:listitem="@layout/item_products" />
 
         <TextView
             android:layout_width="match_parent"
