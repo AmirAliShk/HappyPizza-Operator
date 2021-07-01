@@ -16,6 +16,6 @@
     <color name="transparent">#97000000</color>
     <color name="gray">#646464</color>
     <color name="darkGray">#373737</color>
-
+    <color name="colorPrimaryLight">#868a99</color>
 
 </resources>

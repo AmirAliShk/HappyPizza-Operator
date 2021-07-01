@@ -42,6 +42,7 @@ class AddProductDialog {
     }
 
     private fun addProduct() {
+        LoadingDialog.makeLoader()
         RequestHelper.builder(EndPoints.PRODUCT)
             .addParam("name", binding.edtProductName.text.toString())
             .addParam("sellingPrice", binding.edtPrice.text.toString())
@@ -59,16 +60,15 @@ class AddProductDialog {
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
                     if (success) {
-                        val dataArr = jsonObject.getJSONArray("data")
-                        val result = dataArr.getJSONObject(0).getBoolean("result")
-                        if (result) {
-                            MyApplication.Toast(message, Toast.LENGTH_SHORT)
-                            dismiss()
-                            MyApplication.currentActivity.onBackPressed()
-                        }
+                        LoadingDialog.dismiss()
+                        GeneralDialog()
+                            .message(message)
+                            .firstButton("باشه") { GeneralDialog().dismiss() }
+                        dismiss()
                     }
 
                 } catch (e: Exception) {
+                    LoadingDialog.dismiss()
                     e.printStackTrace()
                 }
             }
@@ -76,7 +76,7 @@ class AddProductDialog {
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
             MyApplication.handler.post {
-
+                LoadingDialog.dismiss()
             }
         }
     }

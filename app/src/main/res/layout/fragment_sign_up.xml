@@ -323,17 +323,31 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/btnSignIn"
+                    <ViewFlipper
+                        android:id="@+id/vfSignUp"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_gray_lite_edge"
-                        android:gravity="center"
-                        android:text="@string/signUp"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:background="@drawable/bg_gray_lite_edge">
+
+                        <TextView
+                            android:id="@+id/btnSignUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:gravity="center"
+                            android:text="@string/signUp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            app:indicatorColor="@color/black"
+                            app:indicatorName="BallBeatIndicator" />
+
+                    </ViewFlipper>
 
                     <View
                         android:layout_width="0dp"

@@ -1,8 +1,10 @@
 package ir.team_x.crm.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ir.team_x.crm.R
@@ -26,6 +28,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         TypefaceUtil.overrideFonts(binding.root)
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.darkGray)
+            window.navigationBarColor = this.resources.getColor(R.color.darkGray)
+        }
+
         binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
 
 //        binding.txtRegisterOrder.setOnClickListener {
@@ -37,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.txtProduct.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, ProductsFragment())
-                .replace()
+                .add()
         }
     }
 
@@ -46,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             KeyBoardHelper.hideKeyboard()
             if (fragmentManager.backStackEntryCount > 0 || supportFragmentManager.backStackEntryCount > 0) {
                 super.onBackPressed()
+                finish()
             } else {
                 if (doubleBackToExitPressedOnce) {
                     finish()

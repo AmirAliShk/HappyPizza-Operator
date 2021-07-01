@@ -35,7 +35,7 @@ class ProductsAdapter(list: ArrayList<ProductsModel>) :
 
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text =StringHelper.toPersianDigits(StringHelper.setComma(model.sellingPrice))  + " تومان"
-        holder.binding.txtEditTime.text = StringHelper.toPersianDigits(DateHelper.parseFormat(model.updatedAt))
+        holder.binding.txtEditTime.text = StringHelper.toPersianDigits(DateHelper.parseFormatToString(model.updatedAt))
         if (model.description.isEmpty()) {
             holder.binding.llDescription.visibility = ViewGroup.INVISIBLE
         } else {

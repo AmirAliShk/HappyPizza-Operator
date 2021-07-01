@@ -29,7 +29,7 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
 
-        binding.btnSignIn.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             if (binding.edtPassword.text.toString().isEmpty() || binding.edtName.text.toString()
                     .isEmpty() || binding.edtEmail.text.toString()
                     .isEmpty() || binding.edtEmail.text.toString()
@@ -50,6 +50,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun signUp() {
+        binding.vfSignUp.displayedChild = 1
         RequestHelper.builder(EndPoints.SIGN_UP)
             .addParam("password", binding.edtPassword.text.toString())
             .addParam("family", binding.edtName.text.toString())
@@ -65,6 +66,7 @@ class SignUpFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        binding.vfSignUp.displayedChild = 0
 //                        {"success":true,"message":"کاربر با موفقیت ثبت شد"}
                         val response = JSONObject(args[0].toString())
                         val success = response.getBoolean("success")
@@ -81,6 +83,7 @@ class SignUpFragment : Fragment() {
                                 .secondButton("تلاش مجدد") { signUp() }
                         }
                     } catch (e: JSONException) {
+                        binding.vfSignUp.displayedChild = 0
                         GeneralDialog()
                             .message("خطایی پیش آمده دوباره امتحان کنید.")
                             .firstButton("باشه") { GeneralDialog().dismiss() }
@@ -91,7 +94,8 @@ class SignUpFragment : Fragment() {
             }
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
-                MyApplication.handler.post{
+                MyApplication.handler.post {
+                    binding.vfSignUp.displayedChild = 0
                     GeneralDialog()
                         .message("خطایی پیش آمده دوباره امتحان کنید.")
                         .firstButton("باشه") { GeneralDialog().dismiss() }

@@ -1,8 +1,11 @@
 package ir.team_x.crm.activity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.app.MyApplication.context
@@ -10,6 +13,7 @@ import ir.team_x.crm.databinding.ActivitySplashBinding
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.fragment.LogInFragment
 import ir.team_x.crm.helper.AppVersionHelper
+import ir.team_x.crm.helper.ContinueProcessing
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
@@ -17,7 +21,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class Splash : AppCompatActivity() {
-
+    var TAG = Splash::class.java
     private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +30,14 @@ class Splash : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         TypefaceUtil.overrideFonts(binding.root)
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.darkGray)
+            window.navigationBarColor = this.resources.getColor(R.color.darkGray)
+        }
 
         try {
             if (MyApplication.prefManager.idToken.equals("")) {
@@ -59,12 +71,15 @@ class Splash : AppCompatActivity() {
                         val success = response.getBoolean("success")
                         val message = response.getString("message")
                         if (success) {
+//                            ContinueProcessing.runMainActivity()
                             MyApplication.currentActivity.startActivity(
                                 Intent(
                                     MyApplication.currentActivity,
                                     MainActivity::class.java
+
                                 )
                             )
+                            MyApplication.currentActivity.finish()
                         } else {
                             GeneralDialog()
                                 .message(message)

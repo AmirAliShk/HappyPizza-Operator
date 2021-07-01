@@ -21,7 +21,7 @@ class LogInFragment : Fragment() {
 
     lateinit var binding: FragmentLogInBinding
     var mobile = ""
-    var password = ""
+    private var password = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +52,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun login() {
+        binding.vfLogIn.displayedChild = 1
         RequestHelper.builder(EndPoints.LOG_IN)
             .addParam("mobileOrEmail", binding.edtMobileOrEmail.text.toString())
             .addParam("password", binding.edtPassword.text.toString())
@@ -64,6 +65,7 @@ class LogInFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        binding.vfLogIn.displayedChild = 0
 //{"success":true,"message":"کاربر با موفقیت وارد شد","data":{"idToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBkOWJlNGY4ZTJiN2QyOTdjMmU0NjUwIiwidXNlcl9hY3RpdmUiOnRydWUsInVzZXJfZW1wbG95ZXIiOiI2MGQ5YmU0ZjhlMmI3ZDI5N2MyZTQ2NTAiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY0NjQ4MzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.LmSGVrGdlArOdfpwMQGF9f7e4xgs44bjZ9ZdBXF_8iU","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6InVzZXIiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY1MDgwMzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.SRgJvlVA_fggm6KX2D45v_S7Z1tW7h8g3uT4hEfiohw"}}
                         val response = JSONObject(args[0].toString())
                         val success = response.getBoolean("success")
@@ -79,13 +81,15 @@ class LogInFragment : Fragment() {
                                     MainActivity::class.java
                                 )
                             )
-                        }else{
+                            MyApplication.currentActivity.finish()
+                        } else {
                             GeneralDialog()
                                 .message(message)
                                 .firstButton("باشه") { GeneralDialog().dismiss() }
                                 .secondButton("تلاش مجدد") { login() }
                         }
                     } catch (e: JSONException) {
+                        binding.vfLogIn.displayedChild = 0
                         GeneralDialog()
                             .message("خطایی پیش آمده دوباره امتحان کنید.")
                             .firstButton("باشه") { GeneralDialog().dismiss() }
@@ -97,6 +101,7 @@ class LogInFragment : Fragment() {
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
                 MyApplication.handler.post {
+                    binding.vfLogIn.displayedChild = 0
                     GeneralDialog()
                         .message("خطایی پیش آمده دوباره امتحان کنید.")
                         .firstButton("باشه") { GeneralDialog().dismiss() }
