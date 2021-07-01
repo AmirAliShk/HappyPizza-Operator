@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_background">
@@ -7,6 +8,18 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/team_x"/>
+        android:layout_centerInParent="true"
+        android:padding="120dp"
+        android:src="@drawable/ic_crm" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/lightBlue"
+        app:indicatorName="BallBeatIndicator"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>
