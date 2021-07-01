@@ -8,16 +8,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/white"
+        android:background="@drawable/bg_button_edt"
         android:gravity="center"
         android:orientation="vertical"
+        android:layout_margin="@dimen/_10sdp"
         android:paddingHorizontal="10dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="فعال"
+                android:backgroundTint="@color/green"
+                android:textColor="@color/green"/>
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="غیرفعال"/>
+
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_weight="2.5"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -37,8 +59,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/bg_button_morning2"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:text="لاته"/>
 
             </LinearLayout>
 
@@ -51,7 +74,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="قیمت" />
+                    android:text="قیمت"
+                    />
 
                 <EditText
                     android:id="@+id/edtPrice"
@@ -59,8 +83,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:inputType="numberDecimal"
-                    android:background="@drawable/bg_button_morning2"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:text="2000 تومان" />
 
             </LinearLayout>
 
@@ -68,8 +93,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -80,25 +104,33 @@
             <EditText
                 android:id="@+id/edtDescription"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_morning2"
-                android:padding="@dimen/_10sdp" />
+                android:background="@color/white"
+                android:text="شیر محلی با قهوه عالی . با خامه از مشتری پرسیه شود"
+                android:padding="@dimen/_8sdp" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:background="@drawable/bg_gray_lite_edge"
             android:gravity="center"
             android:text="@string/submit"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_plus"
+        android:layout_alignParentLeft="true"
+        android:background="@color/transparent"/>
 
 </RelativeLayout>

@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:fitsSystemWindows="true">
@@ -89,7 +89,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.5dp"
                         android:background="@color/lightBlue" />
 
                     <TextView
@@ -105,7 +105,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.5dp"
                         android:background="@color/lightBlue" />
 
                     <TextView
@@ -121,7 +121,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.5dp"
                         android:background="@color/lightBlue" />
 
                     <TextView
@@ -137,7 +137,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.5dp"
                         android:background="@color/lightBlue" />
 
                     <TextView
@@ -199,18 +199,24 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_log_out" />
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_setting" />
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_account" />
 
             </LinearLayout>

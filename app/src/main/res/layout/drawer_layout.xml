@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
+            android:layout_gravity="right"
             android:padding="@dimen/_10sdp">
 
             <TextView
@@ -36,7 +37,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/lightBlue" />
 
             <TextView
@@ -45,6 +46,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_gravity="right"
                 android:minHeight="?android:attr/actionBarSize"
                 android:text="@string/orders"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -93,6 +95,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_gravity="right"
                 android:minHeight="?android:attr/actionBarSize"
                 android:text="@string/financial"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -146,18 +149,24 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
             android:src="@drawable/ic_log_out" />
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
             android:src="@drawable/ic_setting" />
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
             android:src="@drawable/ic_account" />
 
     </LinearLayout>

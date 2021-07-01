@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#1f1f1f"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/darkGray">
 
         <ImageView
             android:id="@+id/imgAddProduct"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="5dp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/_8sdp"
             android:src="@drawable/ic_plus" />
 
         <TextView
-            style="@style/pageTitle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
             android:text="@string/products"
             android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:padding="13dp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/_10sdp"
             android:src="@drawable/ic_back" />
-    </LinearLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ViewFlipper
         android:id="@+id/vfProduct"
@@ -56,12 +59,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productsList"
+            tools:listitem="@layout/item_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
             android:listSelector="@color/transparent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_products" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
             android:layout_width="match_parent"

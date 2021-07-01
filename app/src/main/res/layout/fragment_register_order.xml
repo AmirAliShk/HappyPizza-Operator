@@ -234,15 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="105000"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="تومان"
+                    android:text="105000تومان"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -272,6 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center"
                 android:inputType="textPersonName"
                 android:text="7" />
         </LinearLayout>
