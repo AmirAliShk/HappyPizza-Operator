@@ -38,16 +38,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
 
-//        binding.txtRegisterOrder.setOnClickListener {
-//            FragmentHelper
-//                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-//                .replace()
-//        }
+        binding.txtRegisterOrder.setOnClickListener {
+            FragmentHelper
+                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
+                .replace()
+            binding.draw.closeDrawers()
+        }
 
         binding.txtProduct.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, ProductsFragment())
-                .add()
+                .replace()
+            binding.draw.closeDrawers()
         }
     }
 
@@ -56,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             KeyBoardHelper.hideKeyboard()
             if (fragmentManager.backStackEntryCount > 0 || supportFragmentManager.backStackEntryCount > 0) {
                 super.onBackPressed()
-                finish()
             } else {
                 if (doubleBackToExitPressedOnce) {
                     finish()
