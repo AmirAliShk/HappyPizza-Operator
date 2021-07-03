@@ -2,37 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     android:layoutDirection="rtl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/bg_button_edt"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/bg_green_edge"
         android:orientation="vertical"
-        android:layout_margin="@dimen/_10sdp"
         android:paddingHorizontal="10dp">
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="@dimen/_8sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/_8sdp">
 
             <RadioButton
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="فعال"
+                android:layout_weight="1"
                 android:backgroundTint="@color/green"
-                android:textColor="@color/green"/>
+                android:text="فعال"
+                android:textColor="@color/green" />
 
             <RadioButton
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="غیرفعال"/>
+                android:layout_weight="1"
+                android:backgroundTint="#ff0000"
+                android:text="غیرفعال"
+                android:textColor="#ff0000" />
 
         </RadioGroup>
 
@@ -52,16 +57,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="نام محصول" />
+                    android:text="نام محصول"
+                    android:textColor="@color/gray" />
 
                 <EditText
                     android:id="@+id/edtProductName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/white"
+                    android:paddingLeft="@dimen/_30sdp"
+
+                    android:background="@drawable/bg_activate_status"
                     android:padding="@dimen/_8sdp"
-                    android:text="لاته"/>
+                    android:text="لاته"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -75,15 +84,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="قیمت"
-                    />
+                    android:textColor="@color/gray" />
 
                 <EditText
                     android:id="@+id/edtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@drawable/bg_activate_status"
                     android:inputType="numberDecimal"
-                    android:background="@color/white"
+                    android:paddingRight="@dimen/_30sdp"
                     android:padding="@dimen/_8sdp"
                     android:text="2000 تومان" />
 
@@ -94,21 +104,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="توضیحات" />
+                android:text="توضیحات"
+                android:paddingBottom="@dimen/_5sdp"
+                android:textColor="@color/gray" />
 
             <EditText
                 android:id="@+id/edtDescription"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="@drawable/bg_activate_status"
+                android:padding="@dimen/_8sdp"
                 android:text="شیر محلی با قهوه عالی . با خامه از مشتری پرسیه شود"
-                android:padding="@dimen/_8sdp" />
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/llDialogi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -120,17 +143,17 @@
             android:background="@drawable/bg_gray_lite_edge"
             android:gravity="center"
             android:text="@string/submit"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_margin="@dimen/_6sdp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_plus"
-        android:layout_alignParentLeft="true"
-        android:background="@color/transparent"/>
+        android:background="@color/transparent"
+        android:src="@drawable/ic_plus" />
 
 </RelativeLayout>
