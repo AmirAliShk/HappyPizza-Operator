@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -10,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/bg_button_edt"
         android:orientation="vertical"
         android:padding="@dimen/_7sdp">
 
@@ -25,16 +26,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textColor="@color/darkGray"
-                android:text="نام تخفیف:" />
+                android:text="نام تخفیف:"
+                android:textColor="@color/transparent" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/black"
-                android:text="تولدت مبارک" />
+                android:text="تولدت مبارک"
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,9 +54,9 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGray"
                     android:layout_weight="1"
-                    android:text="نوع:" />
+                    android:text="نوع:"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -77,9 +78,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/darkGray"
                     android:gravity="left"
-                    android:text="درصد" />
+                    android:text="درصد"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -102,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="نام مشتری:"
-                android:textColor="@color/darkGray" />
+                android:textColor="@color/transparent" />
 
             <TextView
                 android:layout_width="0dp"
@@ -136,8 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/green"
-                    android:text="sms" />
+                    android:text="sms"
+                    android:textColor="@color/green" />
             </LinearLayout>
 
             <View
@@ -172,4 +173,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

@@ -2,23 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        android:background="@color/white"
+        android:layout_margin="@dimen/_11sdp"
+        android:background="@drawable/bg_button_edt"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_20sdp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/bg_button_morning"
             android:orientation="vertical"
-            android:padding="@dimen/_7sdp">
+            android:padding="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +85,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_6sdp">
 
                 <TextView
                     android:id="@+id/textView25"
@@ -109,6 +111,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -133,28 +136,25 @@
             </LinearLayout>
 
         </LinearLayout>
-        <![CDATA[*
-            android:orientation="horizontal">
-
-            ]]>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingRight="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="@dimen/_9sdp"
+                android:layout_margin="6dp"
                 android:text="سفارشات"
-                android:textColor="@color/transparent" />
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
+                android:layout_margin="6dp"
                 android:orientation="horizontal"
                 android:textColor="@color/transparent">
 
@@ -163,7 +163,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingRight="@dimen/_9sdp"
                     android:text="سفارش"
                     android:textColor="@color/transparent" />
 
@@ -179,7 +178,7 @@
                     android:id="@+id/textView38"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:text="تعداد"
                     android:textColor="@color/transparent" />
             </LinearLayout>
@@ -187,7 +186,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
+                android:layout_margin="6dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -195,9 +194,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingRight="@dimen/_9sdp"
                     android:text="لاته"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView40"
@@ -205,21 +203,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="20000 تومان"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:text="2"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
+                android:layout_margin="6dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -227,23 +225,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingRight="@dimen/_9sdp"
                     android:text="موهیتو"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/textView43"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="30000 تومان"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
+                android:layout_margin="6dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -253,7 +250,7 @@
                     android:layout_weight="1"
                     android:paddingRight="@dimen/_9sdp"
                     android:text="شیک نوتلا"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView45"
@@ -261,21 +258,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="35000 تومان"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="0.5dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_dialog_header"
-                android:padding="@dimen/_5sdp" />
+                android:background="@drawable/bg_dialog_header" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
+                android:layout_margin="6dp"
+                android:paddingBottom="@dimen/_8sdp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -283,16 +280,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingRight="@dimen/_9sdp"
                     android:text="جمع کل"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView47"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="105000 تومان" />
+                    android:text="105000 تومان"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
         </LinearLayout>

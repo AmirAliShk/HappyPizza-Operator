@@ -12,9 +12,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/darkGray">
+        android:background="#DA000000">
 
-        <ImageView
+
+    <ImageView
             android:id="@+id/imgAddProduct"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="wrap_content"
