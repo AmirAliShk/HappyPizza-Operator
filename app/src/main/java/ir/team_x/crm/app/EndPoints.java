@@ -12,16 +12,16 @@ public class EndPoints {
 //    http://192.168.1.145/api/findway/citylatinname/address
 
     public static final String IP = (BuildConfig.DEBUG)
-            ? "http://192.168.1.145"
-//            ? "http://turbotaxi.ir"
-//            : "http://turbotaxi.ir";
-            : "http://192.168.1.145";
+//            ? "http://192.168.1.145"
+            ? "http://www.crm-x.ir"
+            : "http://www.crm-x.ir";
+//            : "http://192.168.1.145";
 
     public static final String HAKWEYE_IP = (BuildConfig.DEBUG)
-          ? "http://192.168.1.145"
-//            ? "http://turbotaxi.ir"
-//            : "http://turbotaxi.ir";
-          : "http://192.168.1.145";
+//          ? "http://192.168.1.145"
+            ? "http://www.crm-x.ir"
+            : "http://www.crm-x.ir";
+//          : "http://192.168.1.145";
 
 
     public static final String APIPort = (BuildConfig.DEBUG) ? "3000" : "1881";
