@@ -14,7 +14,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/bg_gray_lite_edge"
+        android:background="@drawable/bg_blue_lite_shadow"
         android:orientation="vertical">
 
         <TextView

@@ -30,7 +30,7 @@
         android:bottom="3dp"
         android:left="3dp"
         android:right="3dp"
-        android:top="3dp"/>
+        android:top="3dp" />
     <shape android:shape="rectangle">
         <corners android:radius="@dimen/_7sdp" />
         <solid android:color="#20FFFFFF" />

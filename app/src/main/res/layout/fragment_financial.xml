@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/page_background"
+android:clickable="true"
+android:layoutDirection="rtl"
+android:orientation="vertical">
+
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/page_background"
-    android:clickable="true"
-    android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/darkGray">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#DA000000">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:text="مالی"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="مالی"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_8sdp"
-            android:src="@drawable/ic_back" />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="@dimen/_50sdp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_back" />
 
-    </ScrollView>
+</RelativeLayout>
 
 </LinearLayout>

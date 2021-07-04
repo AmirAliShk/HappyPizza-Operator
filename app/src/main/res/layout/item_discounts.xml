@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -78,8 +77,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="درصد"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/_9sdp"
+                    android:text="درصد:"
                     android:textColor="@color/transparent" />
 
                 <TextView
@@ -130,7 +130,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
-                    app:srcCompat="?attr/editTextBackground" />
+                    android:src="@drawable/ic_plus" />
 
                 <TextView
                     android:id="@+id/textView8"

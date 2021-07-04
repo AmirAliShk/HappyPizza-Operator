@@ -211,7 +211,7 @@
                 android:layout_width="150dp"
                 android:layout_height="90dp"
                 android:layout_gravity="center"
-                android:paddingLeft="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_15sdp"
                 android:paddingTop="@dimen/_30sdp"
                 android:src="@drawable/ic_crm" />
 
@@ -232,11 +232,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/registerOrder"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -248,11 +249,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/orders"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -264,11 +266,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/reminder"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -280,11 +283,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/products"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -296,11 +300,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/financial"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -312,11 +317,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/customers"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -328,11 +334,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/discounts"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/_20sdp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -346,7 +353,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_buton_morning"
+                android:background="@color/lightBlue"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -365,7 +372,7 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_account" />

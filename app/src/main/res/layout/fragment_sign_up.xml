@@ -59,8 +59,8 @@
                                     android:paddingRight="3dp">
 
                                     <ImageView
-                                        android:layout_width="@dimen/_20sdp"
-                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_width="@dimen/_15sdp"
+                                        android:layout_height="@dimen/_15sdp"
                                         android:layout_margin="9dp"
                                         android:src="@drawable/ic_user" />
 
@@ -68,10 +68,12 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1.5"
-                                        android:text="@string/name"
+                                        android:layout_weight="1.7"
+                                        android:layout_marginRight="@dimen/_4sdp"
+                                        android:text="@string/nameAndFamily"
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
                                         android:textColor="@color/darkGray"
-                                        android:textSize="@dimen/_11sdp"/>
+                                         />
                                 </LinearLayout>
 
                                 <EditText
@@ -79,13 +81,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
-                                    android:padding="@dimen/_5sdp"/>
-z                            </LinearLayout>
+                                    android:padding="@dimen/_5sdp"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
-                                android:layout_weight="1" />
+                                android:layout_weight="1.5" />
 
                         </LinearLayout>
 
@@ -108,8 +112,8 @@ z                            </LinearLayout>
                                     android:paddingLeft="3dp">
 
                                     <ImageView
-                                        android:layout_width="@dimen/_20sdp"
-                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
                                         android:layout_margin="9dp"
                                         android:src="@drawable/ic_phone" />
 
@@ -120,11 +124,13 @@ z                            </LinearLayout>
                                         android:layout_gravity="center"
                                         android:layout_weight="1.5"
                                         android:text="@string/mobile"
+                                        android:layout_marginRight="@dimen/_4sdp"
                                         android:textColor="@color/darkGray"
-                                        android:textSize="@dimen/_11sdp"/>
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        />
 
 
-" />
+                                    " />
                                 </LinearLayout>
 
                                 <EditText
@@ -133,14 +139,15 @@ z                            </LinearLayout>
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
                                     android:inputType="numberDecimal"
-                                    android:padding="@dimen/_5sdp" />
+                                    android:padding="@dimen/_5sdp"
+                                    android:textColor="@color/black" />
 
                             </LinearLayout>
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
-                                android:layout_weight="1" />
+                                android:layout_weight="1.5" />
 
                         </LinearLayout>
 
@@ -166,7 +173,7 @@ z                            </LinearLayout>
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_margin="9dp"
-                                        android:src="@drawable/ic_user" />
+                                        android:src="@drawable/ic_email" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -175,7 +182,8 @@ z                            </LinearLayout>
                                         android:layout_weight="1.5"
                                         android:text="@string/email"
                                         android:textColor="@color/darkGray"
-                                        android:textSize="@dimen/_11sdp"/>
+                                        android:layout_marginRight="@dimen/_4sdp"
+                                        android:textAppearance="?android:attr/textAppearanceMedium" />
                                 </LinearLayout>
 
                                 <EditText
@@ -184,14 +192,15 @@ z                            </LinearLayout>
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
                                     android:inputType="textEmailAddress"
-                                    android:padding="@dimen/_5sdp" />
+                                    android:padding="@dimen/_5sdp"
+                                    android:textColor="@color/black" />
 
                             </LinearLayout>
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
-                                android:layout_weight="1" />
+                                android:layout_weight="1.5" />
 
                         </LinearLayout>
 
@@ -214,8 +223,8 @@ z                            </LinearLayout>
                                     android:paddingRight="3dp">
 
                                     <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
+                                        android:layout_width="@dimen/_15sdp"
+                                        android:layout_height="@dimen/_15sdp"
                                         android:layout_margin="9dp"
                                         android:src="@drawable/ic_company_name" />
 
@@ -225,8 +234,9 @@ z                            </LinearLayout>
                                         android:layout_gravity="center"
                                         android:layout_weight="1.5"
                                         android:text="@string/companyName"
+                                        android:layout_marginRight="@dimen/_4sdp"
                                         android:textColor="@color/darkGray"
-                                        android:textSize="@dimen/_11sdp"/>
+                                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                                 </LinearLayout>
 
@@ -236,15 +246,15 @@ z                            </LinearLayout>
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:background="@drawable/bg_button_edt"
-                                    android:padding="@dimen/_5sdp" />
+                                    android:padding="@dimen/_5sdp"
+                                    android:textColor="@color/black" />
 
                             </LinearLayout>
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
-                                android:layout_weight="1"
-                                android:padding="6dp" />
+                                android:layout_weight="1.5" />
 
                         </LinearLayout>
 
@@ -277,10 +287,10 @@ z                            </LinearLayout>
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_weight="1.5"
+                                        android:layout_marginRight="@dimen/_4sdp"
                                         android:text="@string/password"
                                         android:textColor="@color/darkGray"
-                                        android:textSize="@dimen/_11sdp"
-                                        />
+                                        android:textAppearance="?android:attr/textAppearanceMedium"/>
                                 </LinearLayout>
 
                                 <EditText
@@ -289,18 +299,19 @@ z                            </LinearLayout>
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
                                     android:padding="@dimen/_5sdp"
-                                    android:singleLine="true"/>
+                                    android:singleLine="true"
+                                    android:textColor="@color/black" />
 
                                 <TextView
                                     android:id="@+id/txtLogIn"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
                                     android:layout_weight="1"
+                                    android:gravity="center"
                                     android:padding="@dimen/_8sdp"
                                     android:shadowColor="@color/lightBlue"
-                                    android:gravity="center"
-                                    android:layout_marginTop="@dimen/_10sdp"
-                                    android:shadowRadius="10"
+                                    android:shadowRadius="15"
                                     android:text="قبلا ثبت نام شده اید؟"
                                     android:textColor="@color/black"
                                     android:textSize="20sp" />
@@ -310,7 +321,7 @@ z                            </LinearLayout>
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
-                                android:layout_weight="1" />
+                                android:layout_weight="1.5" />
 
                         </LinearLayout>
 
@@ -336,7 +347,7 @@ z                            </LinearLayout>
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_gray_lite_edge">
+                        android:background="@drawable/bg_blue_lite_shadow">
 
                         <TextView
                             android:id="@+id/btnSignUp"
