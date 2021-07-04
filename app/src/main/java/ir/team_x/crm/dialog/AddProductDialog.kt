@@ -12,24 +12,27 @@ import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.DialogAddProductBinding
+import ir.team_x.crm.fragment.ProductsFragment
 import ir.team_x.crm.helper.KeyBoardHelper
 import ir.team_x.crm.helper.TypefaceUtil
+import ir.team_x.crm.model.ProductsModel
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class AddProductDialog {
     private lateinit var dialog: Dialog
     private lateinit var binding: DialogAddProductBinding
 
-    interface Data{
-        fun name(name : String)
-        fun price(price : String)
-        fun description(description : String)
+    interface Refresh {
+        fun refresh(refresh: Boolean)
     }
 
-    lateinit var listener: Data
-
-    fun show(fromWhere : String, listener : Data) {
+    lateinit var listener: Refresh
+    fun show(fromWhere: String, listener: Refresh) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         binding = DialogAddProductBinding.inflate(LayoutInflater.from(MyApplication.context))
@@ -43,7 +46,13 @@ class AddProductDialog {
         dialog.window?.attributes = wlp
         dialog.setCancelable(true)
 
-        binding.btnSubmit.setOnClickListener { addProduct() }
+        binding.btnSubmit.setOnClickListener {
+            addProduct()
+        }
+
+        dialog.setOnDismissListener {
+            listener.refresh(true)
+        }
 
         dialog.show()
 
@@ -96,4 +105,6 @@ class AddProductDialog {
         } catch (e: Exception) {
         }
     }
+
+
 }
