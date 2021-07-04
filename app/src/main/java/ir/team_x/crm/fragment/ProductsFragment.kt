@@ -2,6 +2,7 @@ package ir.team_x.crm.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentProductsBinding
 import ir.team_x.crm.dialog.AddProductDialog
+import ir.team_x.crm.dialog.AddProductDialog.Refresh
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.model.ProductsModel
@@ -47,18 +49,13 @@ class ProductsFragment : Fragment() {
         getProducts()
 
         binding.imgAddProduct.setOnClickListener {
-            AddProductDialog().show("addProduct", object : AddProductDialog.Data {
-                override fun name(name: String) {
-
+            AddProductDialog().show("addProduct", object : Refresh {
+                override fun refresh(refresh: Boolean) {
+                    if (refresh) {
+                        getProducts()
+                    }
                 }
 
-                override fun price(price: String) {
-
-                }
-
-                override fun description(description: String) {
-
-                }
             })
         }
 
