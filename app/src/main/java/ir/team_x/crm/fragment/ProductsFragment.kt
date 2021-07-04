@@ -46,7 +46,21 @@ class ProductsFragment : Fragment() {
 
         getProducts()
 
-        binding.imgAddProduct.setOnClickListener { AddProductDialog().show() }
+        binding.imgAddProduct.setOnClickListener {
+            AddProductDialog().show("addProduct", object : AddProductDialog.Data {
+                override fun name(name: String) {
+
+                }
+
+                override fun price(price: String) {
+
+                }
+
+                override fun description(description: String) {
+
+                }
+            })
+        }
 
         binding.imgBack.setOnClickListener { MyApplication.currentActivity.onBackPressed() }
 

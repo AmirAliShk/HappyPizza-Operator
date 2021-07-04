@@ -21,7 +21,15 @@ class AddProductDialog {
     private lateinit var dialog: Dialog
     private lateinit var binding: DialogAddProductBinding
 
-    fun show() {
+    interface Data{
+        fun name(name : String)
+        fun price(price : String)
+        fun description(description : String)
+    }
+
+    lateinit var listener: Data
+
+    fun show(fromWhere : String, listener : Data) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         binding = DialogAddProductBinding.inflate(LayoutInflater.from(MyApplication.context))

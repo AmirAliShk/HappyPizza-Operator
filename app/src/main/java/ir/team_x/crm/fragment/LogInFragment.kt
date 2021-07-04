@@ -16,6 +16,7 @@ import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentLogInBinding
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.FragmentHelper
+import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONException
 import org.json.JSONObject
@@ -40,7 +41,7 @@ class LogInFragment : Fragment() {
             window?.statusBarColor = this.resources.getColor(R.color.darkGray)
             window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
         }
-
+        TypefaceUtil.overrideFonts(binding.root)
         mobile = binding.edtMobileOrEmail.text.toString()
         password = binding.edtPassword.text.toString()
 
