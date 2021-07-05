@@ -42,6 +42,7 @@ class LogInFragment : Fragment() {
             window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
         }
         TypefaceUtil.overrideFonts(binding.root)
+
         mobile = binding.edtMobileOrEmail.text.toString()
         password = binding.edtPassword.text.toString()
 

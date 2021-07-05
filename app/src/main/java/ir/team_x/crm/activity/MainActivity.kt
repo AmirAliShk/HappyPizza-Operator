@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        TypefaceUtil.overrideFonts(binding.root)
+        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
 
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = this.resources.getColor(R.color.darkGray)
             window.navigationBarColor = this.resources.getColor(R.color.darkGray)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
         binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }

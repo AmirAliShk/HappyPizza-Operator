@@ -2,7 +2,6 @@ package ir.team_x.crm.fragment
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,8 @@ import ir.team_x.crm.adapter.ProductsAdapter
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentProductsBinding
-import ir.team_x.crm.dialog.AddProductDialog
-import ir.team_x.crm.dialog.AddProductDialog.Refresh
+import ir.team_x.crm.dialog.ProductDialog
+import ir.team_x.crm.dialog.ProductDialog.Refresh
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.model.ProductsModel
@@ -44,18 +43,17 @@ class ProductsFragment : Fragment() {
             window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
         }
 
-        TypefaceUtil.overrideFonts(binding.root)
+        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
 
         getProducts()
 
         binding.imgAddProduct.setOnClickListener {
-            AddProductDialog().show("addProduct", object : Refresh {
+            ProductDialog().show(null,"addProduct", object : Refresh {
                 override fun refresh(refresh: Boolean) {
                     if (refresh) {
                         getProducts()
                     }
                 }
-
             })
         }
 
@@ -137,5 +135,4 @@ class ProductsFragment : Fragment() {
                 super.onFailure(reCall, e)
             }
         }
-
 }

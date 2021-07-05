@@ -72,11 +72,11 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:layout_marginRight="@dimen/_4sdp"
                                         android:layout_weight="1.5"
                                         android:text="ایمیل/موبایل"
-                                        android:layout_marginRight="@dimen/_4sdp"
-                                        android:textColor="@color/darkGray"
-                                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        android:textColor="@color/darkGray" />
 
                                 </LinearLayout>
 
@@ -85,8 +85,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
-                                    android:singleLine="true"
-                                    android:padding="@dimen/_5sdp" />
+                                    android:padding="@dimen/_5sdp"
+                                    android:singleLine="true" />
 
                             </LinearLayout>
 
@@ -125,11 +125,11 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:layout_marginRight="@dimen/_4sdp"
                                         android:layout_weight="1.5"
                                         android:text="@string/password"
-                                        android:layout_marginRight="@dimen/_4sdp"
-                                        android:textColor="@color/darkGray"
-                                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        android:textColor="@color/darkGray" />
 
                                 </LinearLayout>
 
@@ -138,8 +138,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_button_edt"
-                                    android:singleLine="true"
-                                    android:padding="@dimen/_5sdp" />
+                                    android:padding="@dimen/_5sdp"
+                                    android:singleLine="true" />
 
                             </LinearLayout>
 

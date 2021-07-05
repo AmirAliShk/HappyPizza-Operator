@@ -90,7 +90,7 @@
                                 android:layout_weight="1.5"
                                 android:text="ثبت سفارش"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_11sdp" />
+                                android:textSize="@dimen/_14sdp" />
 
                         </LinearLayout>
 
@@ -125,7 +125,7 @@
                                 android:layout_weight="1.5"
                                 android:text="سفارشات"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_11sdp" />
+                                android:textSize="@dimen/_14sdp" />
 
                         </LinearLayout>
 
@@ -160,7 +160,7 @@
                                 android:layout_weight="1.5"
                                 android:text="مشتریان"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_11sdp" />
+                                android:textSize="@dimen/_14sdp" />
 
                         </LinearLayout>
 
@@ -231,13 +231,14 @@
                         android:id="@+id/txtRegisterOrder"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/registerOrder"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -248,13 +249,14 @@
                         android:id="@+id/txtOrders"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/orders"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -265,13 +267,14 @@
                         android:id="@+id/txtReminder"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/reminder"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -282,13 +285,14 @@
                         android:id="@+id/txtProduct"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/products"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -299,13 +303,14 @@
                         android:id="@+id/txtFinancial"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/financial"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -316,13 +321,14 @@
                         android:id="@+id/txtCustomers"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/customers"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -333,13 +339,14 @@
                         android:id="@+id/txtDiscounts"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:minHeight="?android:attr/actionBarSize"
                         android:text="@string/discounts"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
