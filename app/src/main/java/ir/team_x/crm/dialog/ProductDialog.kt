@@ -24,6 +24,7 @@ class ProductDialog {
     }
 
     lateinit var listener: Refresh
+
     fun show(model: ProductsModel?, fromWhere: String, listener: Refresh) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -37,13 +38,14 @@ class ProductDialog {
         wlp?.windowAnimations = R.style.ExpandAnimation
         dialog.window?.attributes = wlp
         dialog.setCancelable(true)
-        if (model != null) {
-            this.model = model
-        }
+        this.listener = listener
+
         if (fromWhere == "addProduct") {
             binding.rgStatus.visibility = View.GONE
         }
+
         if (model != null) {
+            this.model = model
             if (model.active) {
                 binding.rbActive.isChecked = true
             } else {
@@ -62,11 +64,11 @@ class ProductDialog {
             }
         }
 
+        binding.imgClose.setOnClickListener { dismiss() }
+
         dialog.setOnDismissListener {
             listener.refresh(true)
         }
-
-        binding.imgClose.setOnClickListener { dismiss() }
 
         dialog.show()
 
@@ -83,6 +85,11 @@ class ProductDialog {
     }
 
     private fun editProduct() {
+        if (binding.rbActive.isChecked) {
+            model.active = true
+        } else if (binding.rbDeActive.isChecked) {
+            model.active = false
+        }
         LoadingDialog.makeLoader()
         RequestHelper.builder(EndPoints.PRODUCT)
             .addParam("_id", model.id)

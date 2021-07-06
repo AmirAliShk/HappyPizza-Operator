@@ -5,10 +5,10 @@
     android:layoutDirection="rtl">
 
     <RelativeLayout
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:padding="@dimen/_5sdp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/_5sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,6 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/green"
+                    android:buttonTint="@color/green"
                     android:text="فعال"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/green" />
@@ -42,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/red"
+                    android:buttonTint="@color/red"
                     android:text="غیرفعال"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/red" />
@@ -169,9 +171,9 @@
 
         <ImageView
             android:id="@+id/imgClose"
-            android:layout_alignParentLeft="true"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentLeft="true"
             android:background="@drawable/red_rectangle_stroke"
             android:src="@drawable/ic_round_close_24" />
 

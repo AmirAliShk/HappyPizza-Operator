@@ -111,7 +111,13 @@ class ProductsFragment : Fragment() {
                                 binding.vfProduct.displayedChild = 2
                             } else {
                                 binding.vfProduct.displayedChild = 1
-                                adapter = ProductsAdapter(productsModel)
+                                adapter = ProductsAdapter(productsModel,object :
+                                    ProductsAdapter.RefreshAdapter {
+                                    override fun refresh(listener: Boolean) {
+                                        getProducts()
+                                    }
+
+                                })
                                 binding.productsList.adapter = adapter;
                             }
 
