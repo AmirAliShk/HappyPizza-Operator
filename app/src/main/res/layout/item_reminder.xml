@@ -9,33 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_11sdp"
-        android:background="@drawable/bg_button_edt"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/bg_unknown"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-           android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:orientation="vertical"
+            android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/bg_sky_blue"
+            android:orientation="vertical"
             android:padding="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/_8sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:textColor="@color/black"
-                    android:text="سارا بنی اسدی" />
+                    android:text="سارا بنی اسدی"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -43,8 +41,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:textColor="@color/transparent"
-                    android:text="موبایل:" />
+                    android:text="موبایل:"
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView43"
@@ -52,8 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:textColor="@color/black"
-                    android:text="09307278878"/>
+                    android:text="09307278878"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,16 +65,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="تاریخ تولید:"
-                    android:textColor="@color/transparent"/>
+                    android:textColor="@color/transparent" />
 
                 <TextView
                     android:id="@+id/textView49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
                     android:gravity="left"
-                    android:text="22 اذر 1379" />
+                    android:text="22 اذر 1379"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -135,14 +133,15 @@
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_gravity="center"
+            android:layout_margin="@dimen/_6sdp"
             android:background="@drawable/bg_sky_blue" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingRight="@dimen/_18sdp"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/_18sdp"
-            android:orientation="horizontal">
+            android:paddingRight="@dimen/_18sdp">
 
             <TextView
                 android:id="@+id/textView51"
@@ -161,15 +160,30 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView50"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/bg_green_button"
-            android:text="sms" />
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+           android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_weight="2" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:background="@drawable/bg_green_button"
+                android:gravity="center"
+                android:text="sms"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

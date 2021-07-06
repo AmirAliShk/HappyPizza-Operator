@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
@@ -39,7 +40,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,10 +60,11 @@
                     android:id="@+id/editTextTextPersonName4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_button_edt"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:padding="@dimen/_5sdp" />
+                    android:padding="@dimen/_5sdp"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -90,7 +93,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -103,16 +107,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_6sdp"
-                    android:text="نام" />
+                    android:text="نام"
+                    android:textColor="@color/transparent" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_4sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/bg_button_edt"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp"
+                    android:singleLine="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,10 +138,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_4sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/bg_button_edt"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:padding="@dimen/_5sdp"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -146,98 +153,123 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="9dp"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/bg_light_gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="سبد خرید"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="9dp"
-            android:background="@drawable/bg_light_gray"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
-                android:text="سبد خرید"
-                android:textColor="@color/black" />
+            android:layout_height="@dimen/_30sdp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_edt"
-
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edt_active"
                 android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/black" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:background="@color/black"
-                    android:src="@drawable/ic_plus" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="سفارش"
-                    android:textColor="@color/transparent" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="قیمت"
-                    android:textColor="@color/transparent" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="سفارش"
-                    android:textColor="@color/transparent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="جمع کل"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="105000تومان"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/transparent"
+                    android:layout_gravity="center"/>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="0.2"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/bg_edt_active"
+                android:src="@drawable/ic_plus" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/_5sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="سفارش"
+                android:textColor="@color/transparent" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="قیمت"
+                android:textColor="@color/transparent" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="تعداد"
+                android:textColor="@color/transparent" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            tools:listitem="@layout/item_register_order"
+            android:scrollbars="none"
+            android:paddingRight="@dimen/_9sdp"
+
+            android:divider="@null"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightBlue"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/_5sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="جمع کل"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="105000تومان"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -257,16 +289,31 @@
                 android:id="@+id/textView31"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="تاریخ یاداوری" />
+                android:layout_margin="@dimen/_6sdp"
+                android:text="تاریخ یاداوری"
+                android:textColor="@color/transparent" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:background="@drawable/bg_edt_active"
+                android:ems="5"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:text="7" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
         </LinearLayout>
 
         <LinearLayout
@@ -288,6 +335,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ثبت"
+        android:background="@drawable/bg_blue_lite_shadow"
+        android:layout_margin="@dimen/_6sdp"
         android:textColor="@color/black" />
 
 </LinearLayout>
