@@ -93,6 +93,7 @@ class SignUpFragment : Fragment() {
                                 .message(message)
                                 .firstButton("باشه") { GeneralDialog().dismiss() }
                                 .secondButton("تلاش مجدد") { signUp() }
+                                .show()
                         }
                     } catch (e: JSONException) {
                         binding.vfSignUp.displayedChild = 0
@@ -100,6 +101,7 @@ class SignUpFragment : Fragment() {
                             .message("خطایی پیش آمده دوباره امتحان کنید.")
                             .firstButton("باشه") { GeneralDialog().dismiss() }
                             .secondButton("تلاش مجدد") { signUp() }
+                            .show()
                         e.printStackTrace()
                     }
                 }
@@ -112,6 +114,7 @@ class SignUpFragment : Fragment() {
                         .message("خطایی پیش آمده دوباره امتحان کنید.")
                         .firstButton("باشه") { GeneralDialog().dismiss() }
                         .secondButton("تلاش مجدد") { signUp() }
+                        .show()
                 }
                 super.onFailure(reCall, e)
             }

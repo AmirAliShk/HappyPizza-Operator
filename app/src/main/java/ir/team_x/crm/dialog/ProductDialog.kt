@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
+import android.widget.Toast
 import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
@@ -40,6 +41,8 @@ class ProductDialog {
         dialog.setCancelable(true)
         this.listener = listener
 
+        binding.edtProductName.requestFocus()
+
         if (fromWhere == "addProduct") {
             binding.rgStatus.visibility = View.GONE
         }
@@ -57,10 +60,14 @@ class ProductDialog {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if (fromWhere == "addProduct") {
-                addProduct()
+            if (binding.edtProductName.text.isEmpty() || binding.edtPrice.text.isEmpty() || binding.edtDescription.text.isEmpty()) {
+                MyApplication.Toast("لطفا تمام موارد را وارد کنید.", Toast.LENGTH_SHORT)
             } else {
-                editProduct()
+                if (fromWhere == "addProduct") {
+                    addProduct()
+                } else {
+                    editProduct()
+                }
             }
         }
 
@@ -115,6 +122,7 @@ class ProductDialog {
                     GeneralDialog()
                         .message(message)
                         .firstButton("باشه") { GeneralDialog().dismiss() }
+                        .show()
                     dismiss()
 
                 } catch (e: Exception) {

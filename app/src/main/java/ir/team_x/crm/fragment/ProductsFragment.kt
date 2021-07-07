@@ -126,6 +126,7 @@ class ProductsFragment : Fragment() {
                                 .message(message)
                                 .firstButton("باشه") { GeneralDialog().dismiss() }
                                 .secondButton("تلاش مجدد") { getProducts() }
+                                .show()
                             binding.vfProduct.displayedChild = 3
                         }
                     } catch (e: JSONException) {

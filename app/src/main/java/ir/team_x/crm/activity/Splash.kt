@@ -13,7 +13,6 @@ import ir.team_x.crm.databinding.ActivitySplashBinding
 import ir.team_x.crm.dialog.GeneralDialog
 import ir.team_x.crm.fragment.LogInFragment
 import ir.team_x.crm.helper.AppVersionHelper
-import ir.team_x.crm.helper.ContinueProcessing
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.okHttp.RequestHelper
@@ -85,12 +84,14 @@ class Splash : AppCompatActivity() {
                                 .message(message)
                                 .firstButton("باشه") { GeneralDialog().dismiss() }
                                 .secondButton("تلاش مجدد") { appInfo() }
+                                .show()
                         }
                     } catch (e: JSONException) {
                         GeneralDialog()
                             .message("خطایی پیش آمده دوباره امتحان کنید.")
                             .firstButton("باشه") { GeneralDialog().dismiss() }
                             .secondButton("تلاش مجدد") { appInfo() }
+                            .show()
                         e.printStackTrace()
                     }
                 }
@@ -102,6 +103,7 @@ class Splash : AppCompatActivity() {
                         .message("خطایی پیش آمده دوباره امتحان کنید.")
                         .firstButton("باشه") { GeneralDialog().dismiss() }
                         .secondButton("تلاش مجدد") { appInfo() }
+                        .show()
                 }
                 super.onFailure(reCall, e)
             }
