@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text="12000000"
-                android:textColor="@color/black" />
+                android:textColor="@color/darkGray" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text="10000000"
-                android:textColor="@color/black" />
+                android:textColor="@color/darkGray" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,7 +81,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text="2000000"
-                android:textColor="@color/black" />
+                android:textColor="@color/darkGray" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

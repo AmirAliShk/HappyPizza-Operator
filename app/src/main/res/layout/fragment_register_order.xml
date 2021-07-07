@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_6sdp"
                     android:text="موبایل"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/gray" />
 
                 <EditText
                     android:id="@+id/editTextTextPersonName4"
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_6sdp"
                     android:text="نام"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/gray" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_6sdp"
                     android:text="تاریخ تولد"
-                    android:textColor="@color/transparent" />
+                    android:textColor="@color/gray" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -165,7 +165,7 @@
             android:text="سبد خرید"
             android:layout_marginBottom="@dimen/_4sdp"
             android:paddingRight="@dimen/_9sdp"
-            android:textColor="@color/black" />
+            android:textColor="@color/darkGray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -215,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="سفارش"
-                android:textColor="@color/transparent" />
+                android:textColor="@color/transparent"/>
 
             <TextView
                 android:id="@+id/textView19"
@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="قیمت"
-                android:textColor="@color/transparent" />
+                android:textColor="@color/transparent"/>
 
             <TextView
                 android:id="@+id/textView18"
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="تعداد"
-                android:textColor="@color/transparent" />
+                android:textColor="@color/gray"/>
         </LinearLayout>
 
         <ListView
@@ -291,7 +291,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
                 android:text="تاریخ یاداوری"
-                android:textColor="@color/transparent" />
+                android:textColor="@color/gray" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"

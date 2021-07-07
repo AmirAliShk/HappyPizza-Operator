@@ -6,6 +6,7 @@
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,8 +24,8 @@
             android:id="@+id/view4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_sky_blue"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:background="@drawable/bg_sky_blue" />
 
         <TextView
             android:id="@+id/textView40"
@@ -34,4 +35,9 @@
             android:text="20000 تومان"
             android:textColor="@color/black" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 </LinearLayout>

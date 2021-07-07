@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 .replace()
             binding.draw.closeDrawers()
         }
-        binding.llRegisterOrder.setOnClickListener {
+        binding.gitllRegisterOrder.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
                 .replace()

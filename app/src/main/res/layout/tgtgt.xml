@@ -15,36 +15,42 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/bg_light_gray"
+            android:background="@color/darkGray"
             android:orientation="vertical"
             android:padding="@dimen/_15sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/_20sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="نام مشتری"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
-
-                <EditText
-                    android:id="@+id/edtProductName"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:background="@drawable/bg_unknown"
-                    android:padding="@dimen/_3sdp"
-                    android:paddingRight="@dimen/_50sdp"
-                    android:singleLine="true"
-                    android:textColor="@color/black" />
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="نام مشتری"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <EditText
+                        android:id="@+id/edtProductName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@drawable/bg_unknown"
+                        android:padding="@dimen/_3sdp"
+                        android:paddingRight="@dimen/_50sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

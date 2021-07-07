@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="تولدت مبارک"
-                android:textColor="@color/black" />
+                android:textColor="@color/darkGray" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +63,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="تولد"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/darkGray" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,7 +89,7 @@
                     android:layout_weight="1"
 
                     android:text="35"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/darkGray" />
             </LinearLayout>
         </LinearLayout>
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="فاطمه نوری"
-                android:textColor="@color/black" />
+                android:textColor="@color/darkGray" />
         </LinearLayout>
 
         <LinearLayout
