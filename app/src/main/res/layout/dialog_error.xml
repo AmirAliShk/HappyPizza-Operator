@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="خطایی رخ داده"/>
+                android:text="خطایی رخ داده" />
 
         </LinearLayout>
 
@@ -49,9 +49,9 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:gravity="center"
-                android:textColor="@color/darkGray"
                 android:text="خطایی عدم به اینترنت
-لطفا پس از برسی ارتباط خود اینترنت مجدد چک کنید"/>
+لطفا پس از برسی ارتباط خود اینترنت مجدد چک کنید"
+                android:textColor="@color/darkGray" />
 
             <EditText
                 android:id="@+id/edtMessage"
@@ -87,15 +87,15 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnFirst"
+                    android:id="@+id/btnTryAgain"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:text="تلاش مجدد"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/darkGray"
-                    android:textStyle="bold"
-                    android:text="تلاش مجدد"/>
+                    android:textStyle="bold" />
 
                 <View
                     android:id="@+id/imgSpace"
@@ -103,16 +103,16 @@
                     android:layout_height="match_parent" />
 
                 <Button
-                    android:id="@+id/btnSecond"
+                    android:id="@+id/btnClose"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingBottom="5dip"
+                    android:text="بستن"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/darkGray"
-                    android:textStyle="bold"
-                    android:text="بستن"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnThird"

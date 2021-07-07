@@ -13,7 +13,7 @@
 
     <!-- drawer menu -->
     <string name="registerOrder">ثبت سفارش</string>
-    <string name="orders">سفارش ها</string>
+    <string name="orders">سفارشات</string>
     <string name="reminder">یادآوری</string>
     <string name="products">محصولات</string>
     <string name="financial">مالی</string>

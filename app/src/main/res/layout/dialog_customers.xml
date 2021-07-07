@@ -5,10 +5,10 @@
     android:layoutDirection="rtl">
 
     <RelativeLayout
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:padding="@dimen/_5sdp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/_5sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,16 +79,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="تاریخ عضویت از"
                             android:layout_margin="@dimen/_6sdp"
+                            android:text="تاریخ عضویت از"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_13sdp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_5sdp"
                             android:background="@drawable/bg_unknown"
+                            android:padding="@dimen/_5sdp"
                             android:singleLine="true"
                             android:textColor="@color/black" />
 
@@ -104,9 +104,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_6sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:text="تا"
-                            android:layout_margin="@dimen/_6sdp"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_13sdp" />
 
@@ -137,9 +137,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_6sdp"
                             android:text="تاریخ اخرین خرید از"
                             android:textColor="@color/gray"
-                            android:layout_margin="@dimen/_6sdp"
                             android:textSize="@dimen/_13sdp" />
 
                         <EditText
@@ -161,10 +161,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_6sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:text="تا"
                             android:textColor="@color/gray"
-                            android:layout_margin="@dimen/_6sdp"
                             android:textSize="@dimen/_13sdp" />
 
                         <EditText
@@ -194,8 +194,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="تعدادخرید از"
                             android:layout_margin="@dimen/_6sdp"
+                            android:text="تعدادخرید از"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_13sdp" />
 
@@ -219,9 +219,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_6sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:text="تا"
-                            android:layout_margin="@dimen/_6sdp"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/_13sdp" />
 
@@ -241,7 +241,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop=""
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -277,10 +276,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_6sdp"
                             android:paddingRight="@dimen/_20sdp"
                             android:text="تا"
                             android:textColor="@color/gray"
-                            android:layout_margin="@dimen/_6sdp"
                             android:textSize="@dimen/_13sdp" />
 
                         <EditText
@@ -306,7 +305,6 @@
                     android:gravity="center"
                     android:text="جست وجو"
                     android:textColor="@color/black"
-"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -315,13 +313,14 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_alignParentLeft="true"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentLeft="true"
             android:background="@drawable/red_rectangle_stroke"
             android:src="@drawable/ic_round_close_24" />
 
     </RelativeLayout>
+
 </RelativeLayout>
 
 
