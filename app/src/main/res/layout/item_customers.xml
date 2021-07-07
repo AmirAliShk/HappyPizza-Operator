@@ -11,20 +11,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
         android:background="@drawable/bg_unknown"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/bg_sky_blue"
-            android:padding="@dimen/_10sdp" >
+            android:padding="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/textView36"
                 android:layout_width="136dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.1"
+                android:layout_weight="1.5"
                 android:text="مبینا واحدی"
                 android:textColor="@color/black" />
 
@@ -46,9 +46,11 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_6sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -68,13 +70,14 @@
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:text="09907278878"
-                android:textColor="@color/darkGray" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_6sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -91,14 +94,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="120"
-                android:textColor="@color/darkGray" />
+                android:text="5 مرداد139 "
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_6sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -115,14 +119,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="27 "
-                android:textColor="@color/darkGray" />
+
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:orientation="horizontal">
 
             <TextView
@@ -130,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:paddingRight="@dimen/_9sdp"
+
                 android:text="اخرین خرید::"
                 android:textColor="@color/gray" />
 
@@ -139,14 +144,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="09907278878"
-                android:textColor="@color/darkGray" />
+                android:text="27 خرداد 1400"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -163,11 +168,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="09907278878"
-                android:textColor="@color/darkGray" />
+                android:text="8548000"
+                android:textColor="@color/black" />
+
 
         </LinearLayout>
-
 
     </LinearLayout>
 

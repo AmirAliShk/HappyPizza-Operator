@@ -129,7 +129,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_13sdp"
                         android:background="@drawable/bg_unknown"
                         android:padding="@dimen/_3sdp"
                         android:singleLine="true"
@@ -277,6 +277,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_10sdp"
+                        android:paddingLeft="@dimen/_12sdp"
                         android:background="@drawable/bg_unknown"
                         android:padding="@dimen/_3sdp"
                         android:singleLine="true"
@@ -301,7 +302,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_12sdp"
                         android:background="@drawable/bg_unknown"
                         android:padding="@dimen/_3sdp"
                         android:singleLine="true"
