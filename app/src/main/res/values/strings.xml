@@ -24,4 +24,10 @@
     <string name="txt_please_for_exit_reenter_back">برای خروج دوباره کلید بازگشت را بزنید</string>
 
     <string name="submit">ثبت</string>
+    <string name="birthday">تاریخ تولد</string>
+    <string name="cart">سبد خرید</string>
+    <string name="price">قیمت</string>
+    <string name="number">تعداد</string>
+
+
 </resources>

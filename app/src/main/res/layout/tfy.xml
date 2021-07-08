@@ -157,9 +157,9 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="فرستادن sms"
-                android:paddingRight="@dimen/_11sdp"
                 android:layout_marginBottom="@dimen/_6sdp"
+                android:paddingRight="@dimen/_11sdp"
+                android:text="فرستادن sms"
                 android:textColor="@color/gray" />
 
             <TextView

@@ -49,8 +49,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/gray_dark"
                         android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@drawable/gray_dark"
                         android:gravity="center_vertical">
 
                         <ImageView
@@ -70,6 +70,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/llRegisterOrder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gray_dark"
@@ -90,8 +91,8 @@
                                 android:layout_margin="@dimen/_12sdp"
                                 android:layout_weight="1.5"
                                 android:background="@drawable/gray_dark"
-                                android:text="ثبت سفارشات"
                                 android:gravity="center"
+                                android:text="@string/registerOrder"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sdp" />
 
@@ -128,9 +129,9 @@
                                 android:layout_gravity="center"
                                 android:layout_margin="@dimen/_12sdp"
                                 android:layout_weight="1.5"
-                                android:text="سفارشات"
                                 android:background="@drawable/gray_dark"
                                 android:gravity="center"
+                                android:text="@string/orders"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sdp" />
 
@@ -166,9 +167,9 @@
                                 android:layout_gravity="center"
                                 android:layout_margin="@dimen/_12sdp"
                                 android:layout_weight="1.5"
-                                android:text="مشتریان"
                                 android:background="@drawable/gray_dark"
                                 android:gravity="center"
+                                android:text="@string/customers"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sdp" />
 

@@ -31,20 +31,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="نام مشتری"
-                    android:paddingRight="@dimen/_20sdp"
-                    android:textColor="@color/gray"
-                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="نام مشتری"
+                    android:textColor="@color/gray"
                     android:textSize="@dimen/_13sdp" />
 
                 <EditText
-                    android:id="@+id/edtProductName"
+                    android:id="@+id/edtCustomerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:background="@drawable/bg_edit_text"                    android:padding="@dimen/_3sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="@dimen/_3sdp"
                     android:paddingRight="@dimen/_50sdp"
                     android:singleLine="true"
                     android:textColor="@color/darkGray" />
@@ -59,10 +60,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="موبایل"
+                    android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_20sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:text="@string/mobile"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_13sdp" />
 
@@ -79,7 +80,7 @@
 
             </LinearLayout>
 
-           <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -104,7 +105,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:background="@drawable/bg_edit_text"                        android:padding="@dimen/_3sdp"
+                        android:background="@drawable/bg_edit_text"
+                        android:padding="@dimen/_3sdp"
                         android:singleLine="true"
                         android:textColor="@color/black" />
 
@@ -119,11 +121,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_5sdp"
                         android:paddingRight="@dimen/_20sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_5sdp"
                         android:text="تا"
-
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_13sdp" />
 
@@ -131,7 +132,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:background="@drawable/bg_edit_text"                        android:padding="@dimen/_3sdp"
+                        android:background="@drawable/bg_edit_text"
+                        android:padding="@dimen/_3sdp"
                         android:singleLine="true"
                         android:textColor="@color/black" />
 
@@ -140,15 +142,14 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnSubmit2"
+                android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingBottom="@dimen/_5sdp"
-
-                android:paddingTop="@dimen/_5sdp"
                 android:layout_weight="2"
                 android:background="@drawable/bg_blue_lite_shadow"
                 android:gravity="center"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:text="@string/submit"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -164,6 +165,5 @@
             android:src="@drawable/ic_round_close_24" />
 
     </RelativeLayout>
-
 
 </RelativeLayout>

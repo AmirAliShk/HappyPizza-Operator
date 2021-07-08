@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="rtl"
@@ -21,7 +20,7 @@
             android:padding="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/textView36"
+                android:id="@+id/txtName"
                 android:layout_width="136dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -29,7 +28,6 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,7 +35,7 @@
                 android:textColor="@color/gray" />
 
             <TextView
-                android:id="@+id/textView38"
+                android:id="@+id/txtDateJoin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -46,7 +44,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,17 +51,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView27"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingRight="@dimen/_9sdp"
-                android:text="موبایل:"
+                android:text="@string/mobile"
                 android:textColor="@color/gray" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/txtMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -86,10 +82,11 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingRight="@dimen/_9sdp"
-                android:text="تاریخ تولد:"
+                android:text="@string/birthday"
                 android:textColor="@color/gray" />
 
             <TextView
+                android:id="@+id/txtBirthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -111,15 +108,15 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingRight="@dimen/_9sdp"
-                android:text="تعداد سفارش::"
+                android:text="تعداد سفارش"
                 android:textColor="@color/gray" />
 
             <TextView
+                android:id="@+id/txtNumberOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-
                 android:textColor="@color/black" />
 
         </LinearLayout>
@@ -127,7 +124,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginTop="@dimen/_6sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -135,11 +132,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-
-                android:text="اخرین خرید::"
+                android:paddingRight="@dimen/_9sdp"
+                android:text="اخرین خرید"
                 android:textColor="@color/gray" />
 
             <TextView
+                android:id="@+id/txtLastBuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -152,6 +150,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -160,17 +159,17 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:paddingRight="@dimen/_9sdp"
-                android:text="جمع خرید:"
+                android:text="جمع خرید"
                 android:textColor="@color/gray" />
 
             <TextView
+                android:id="@+id/txtSumPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="8548000"
                 android:textColor="@color/black" />
-
 
         </LinearLayout>
 

@@ -33,6 +33,7 @@ class ProductsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
         binding = FragmentProductsBinding.inflate(layoutInflater)
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -48,7 +49,7 @@ class ProductsFragment : Fragment() {
         getProducts()
 
         binding.imgAddProduct.setOnClickListener {
-            ProductDialog().show(null,"addProduct", object : Refresh {
+            ProductDialog().show(null, "addProduct", object : Refresh {
                 override fun refresh(refresh: Boolean) {
                     if (refresh) {
                         getProducts()
@@ -56,6 +57,8 @@ class ProductsFragment : Fragment() {
                 }
             })
         }
+
+        binding.imgRefresh.setOnClickListener { getProducts() }
 
         binding.imgBack.setOnClickListener { MyApplication.currentActivity.onBackPressed() }
 
@@ -111,7 +114,7 @@ class ProductsFragment : Fragment() {
                                 binding.vfProduct.displayedChild = 2
                             } else {
                                 binding.vfProduct.displayedChild = 1
-                                adapter = ProductsAdapter(productsModel,object :
+                                adapter = ProductsAdapter(productsModel, object :
                                     ProductsAdapter.RefreshAdapter {
                                     override fun refresh(listener: Boolean) {
                                         getProducts()

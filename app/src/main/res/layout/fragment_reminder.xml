@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
-            android:text="یاد اوری"
+            android:text="@string/reminder"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
