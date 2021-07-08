@@ -17,8 +17,9 @@
     <string name="reminder">یادآوری</string>
     <string name="products">محصولات</string>
     <string name="financial">مالی</string>
+    <string name="current_costs">هزینه های جاری</string>
     <string name="customers">مشتریان</string>
-    <string name="discounts">تخفیف ها</string>
+    <string name="discounts">تخفیفات</string>
     <string name="order">سفارش</string>
 
     <string name="txt_please_for_exit_reenter_back">برای خروج دوباره کلید بازگشت را بزنید</string>

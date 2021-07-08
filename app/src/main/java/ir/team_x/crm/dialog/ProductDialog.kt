@@ -60,7 +60,7 @@ class ProductDialog {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if (binding.edtProductName.text.isEmpty() || binding.edtPrice.text.isEmpty() || binding.edtDescription.text.isEmpty()) {
+            if (binding.edtProductName.text.trim().isEmpty() || binding.edtPrice.text.isEmpty() || binding.edtPrice.text.toString() == "0") {
                 MyApplication.Toast("لطفا تمام موارد را وارد کنید.", Toast.LENGTH_SHORT)
             } else {
                 if (fromWhere == "addProduct") {

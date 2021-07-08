@@ -37,7 +37,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0.5"
-            android:src="@drawable/ic_plus" />
+            android:src="@drawable/ic_delete" />
 
     </LinearLayout>
 

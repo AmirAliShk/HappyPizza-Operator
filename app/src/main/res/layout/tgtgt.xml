@@ -324,7 +324,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/red_rectangle_stroke"
-            android:src="@drawable/ic_round_close_24" />
+            android:src="@drawable/ic_close" />
 
     </RelativeLayout>
 
