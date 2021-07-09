@@ -75,7 +75,6 @@ class Splash : AppCompatActivity() {
                                 Intent(
                                     MyApplication.currentActivity,
                                     MainActivity::class.java
-
                                 )
                             )
                             MyApplication.currentActivity.finish()
