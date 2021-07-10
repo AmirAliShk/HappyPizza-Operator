@@ -3,11 +3,13 @@ package ir.team_x.crm.activity
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ir.team_x.crm.R
+import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivityMainBinding
 import ir.team_x.crm.fragment.ProductsFragment
@@ -15,6 +17,9 @@ import ir.team_x.crm.fragment.RegisterOrderFragment
 import ir.team_x.crm.helper.FragmentHelper
 import ir.team_x.crm.helper.KeyBoardHelper
 import ir.team_x.crm.helper.TypefaceUtil
+import ir.team_x.crm.okHttp.RequestHelper
+import org.json.JSONException
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,12 +50,13 @@ class MainActivity : AppCompatActivity() {
                 .replace()
             binding.draw.closeDrawers()
         }
-        binding.llRegisterOrder.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-                .replace()
-            binding.draw.closeDrawers()
-        }
+
+//        binding.llRegisterOrder.setOnClickListener {
+//            FragmentHelper
+//                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
+//                .replace()
+//            binding.draw.closeDrawers()
+//        }
 
         binding.txtProduct.setOnClickListener {
             FragmentHelper
@@ -58,7 +64,41 @@ class MainActivity : AppCompatActivity() {
                 .replace()
             binding.draw.closeDrawers()
         }
+
+        getProducts()
     }
+
+
+    private fun getProducts() {
+        RequestHelper.builder(EndPoints.PRODUCT)
+            .listener(productCallBack)
+            .get()
+    }
+
+    private val productCallBack: RequestHelper.Callback =
+        object : RequestHelper.Callback() {
+            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+                MyApplication.handler.post {
+                    try {
+                        val response = JSONObject(args[0].toString())
+                        val success = response.getBoolean("success")
+                        val message = response.getString("message")
+
+                        if (success) {
+                            MyApplication.prefManager.products =
+                                response.getJSONArray("data").toString()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+
+            }
+
+            override fun onFailure(reCall: Runnable?, e: Exception?) {
+                super.onFailure(reCall, e)
+            }
+        }
 
     override fun onBackPressed() {
         try {

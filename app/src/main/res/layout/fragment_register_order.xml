@@ -143,7 +143,7 @@
                 android:orientation="horizontal">
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spProducts"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

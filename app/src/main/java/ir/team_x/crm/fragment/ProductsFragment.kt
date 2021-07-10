@@ -87,6 +87,7 @@ class ProductsFragment : Fragment() {
 
                         if (success) {
                             val dataObject = response.getJSONArray("data")
+                            MyApplication.prefManager.products = response.getJSONArray("data").toString()
                             for (i in 0 until dataObject.length()) {
                                 val dataObj: JSONObject = dataObject.getJSONObject(i);
                                 var model = ProductsModel(

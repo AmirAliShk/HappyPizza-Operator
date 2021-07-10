@@ -39,6 +39,7 @@ public class PrefManager {
     private static final String REPETITION_TIME = "repetitionTime";
     private static final String KEY_ACTIVATION_REMAINING_TIME = "activationRemainingTime";
     private static final String CITY = "city";
+    private static final String PRODUCTS = "products";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -198,5 +199,15 @@ public class PrefManager {
 
     public String getCity() {
         return pref.getString(CITY, "");
+    }
+
+    public void setProducts(String products) {
+        Log.d("LOG", "setProducts: " + products);
+        editor.putString(PRODUCTS, products);
+        editor.commit();
+    }
+
+    public String getProducts() {
+        return pref.getString(PRODUCTS, "");
     }
 }
