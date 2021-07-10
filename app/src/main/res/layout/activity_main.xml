@@ -67,8 +67,10 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:background="@color/white"
+                        android:textSize="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="center"
                         android:text="در انتظار قبول درخواست توسط اقای مصطفایی با شماره

@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_sky_blue"
             android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:padding="@dimen/_5sdp">
 
             <TextView
@@ -39,9 +40,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_3sdp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:paddingRight="@dimen/_5sdp">
 
             <TextView

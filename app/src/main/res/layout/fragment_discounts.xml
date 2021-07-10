@@ -47,7 +47,7 @@
         android:divider="@null"
         android:listSelector="@color/transparent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_discounts"/>
+        tools:listitem="@layout/item_discounts" />
 
 </LinearLayout>
 
