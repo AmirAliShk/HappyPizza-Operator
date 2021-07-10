@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
@@ -26,6 +27,7 @@ class RegisterOrderFragment : Fragment() {
 
     lateinit var binding: FragmentRegisterOrderBinding
     private var customer: JSONObject = JSONObject()
+    private var products: JSONObject = JSONObject()
     lateinit var productsModel: ArrayList<ProductsModel>
     lateinit var productName: String
     lateinit var productId: String
@@ -54,14 +56,11 @@ class RegisterOrderFragment : Fragment() {
         binding.btnSubmit.setOnClickListener {
             registerOrder()
         }
+
         initProductSpinner()
+
         return binding.root
     }
-
-//    private fun initProductSpinner() {
-//     var productsModel : ArrayList<>()
-//
-//    }
 
     private fun initProductSpinner() {
         productsModel = ArrayList<ProductsModel>()
@@ -107,7 +106,7 @@ class RegisterOrderFragment : Fragment() {
                     if (position == 0) {
                         productName = ""
                         productId = ""
-                        productPrice = "0"
+                        productPrice = ""
                         return
                     }
                     productName = productsModel[position - 1].name
@@ -122,10 +121,56 @@ class RegisterOrderFragment : Fragment() {
         }
     }
 
+    private fun customerInfo() {
+        RequestHelper.builder(EndPoints.CUSTOMER_INFO)
+            .addParam("mobile", binding.edtMobile.text.toString())
+            .listener(infoCallBack)
+            .get()
+    }
+
+    private val infoCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+//                    success: true,
+//                    message: "اطلاعات مشتری با موفقیت ارسال شد",
+//                    data: {
+//                        family: "مصطفایی",
+//                        mobile: "09625846122",
+//                        birthday: "1990-12-18T23:59:00.798Z"
+//                    }
+                    val response = JSONObject(args[0].toString())
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        val dataObject = response.getJSONObject("data")
+                        binding.edtName.setText(dataObject.getString("family"))
+                        binding.edtMobile.setText(dataObject.getString("mobile"))
+                        binding.edtBirthday.setText(dataObject.getString("birthday"))
+                    } else {
+                        MyApplication.Toast("مشتری جدید", Toast.LENGTH_SHORT)//todo
+                    }
+
+                } catch (e: JSONException) {
+
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+        }
+    }
+
     private fun registerOrder() {
         customer.put("family", binding.edtName.text.toString())
         customer.put("mobile", binding.edtMobile.text.toString())
         customer.put("birthday", binding.edtBirthday.text.toString())
+
+        products.put("_id", productId)
+        products.put("quantity", 2)//todo
+        products.put("sellingPrice", productPrice)
 
         RequestHelper.builder(EndPoints.REGISTER_ORDER)
             .addParam("customer", customer)

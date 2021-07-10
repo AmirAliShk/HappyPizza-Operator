@@ -55,6 +55,7 @@ public class EndPoints {
     /******************************** order api *********************************/
 
     public static final String REGISTER_ORDER = WEBSERVICE_PATH + "order/";
+    public static final String CUSTOMER_INFO = WEBSERVICE_PATH + "customer/";
 
 
 }
