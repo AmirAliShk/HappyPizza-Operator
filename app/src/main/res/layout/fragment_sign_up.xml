@@ -32,18 +32,18 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingRight="@dimen/_15sdp">
+                    android:padding="@dimen/_13sdp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -74,6 +74,7 @@
                                 android:id="@+id/edtName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
                                 android:padding="@dimen/_5sdp"
                                 android:singleLine="true"
@@ -81,23 +82,10 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1.5" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -126,26 +114,20 @@
                             </LinearLayout>
 
                             <EditText
-                                android:id="@+id/edtMobile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:inputType="numberDecimal"
                                 android:padding="@dimen/_5sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1.5" />
-
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal">
@@ -192,23 +174,18 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1.5" />
-
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -221,25 +198,24 @@
                                     android:layout_width="@dimen/_15sdp"
                                     android:layout_height="@dimen/_15sdp"
                                     android:layout_margin="9dp"
-                                    android:src="@drawable/ic_company_name" />
+                                    android:src="@drawable/ic_user" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginRight="@dimen/_4sdp"
-                                    android:layout_weight="1.5"
-                                    android:text="@string/companyName"
+                                    android:layout_weight="1.7"
+                                    android:text="نام شرکت"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:textColor="@color/darkGray" />
 
                             </LinearLayout>
 
                             <EditText
-                                android:id="@+id/edtCompanyName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
                                 android:padding="@dimen/_5sdp"
                                 android:singleLine="true"
@@ -247,15 +223,102 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1.5" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="3dp">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_16sdp"
+                                    android:layout_height="@dimen/_16sdp"
+                                    android:layout_margin="9dp"
+                                    android:src="@drawable/ic_orders" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/_4sdp"
+                                    android:layout_weight="1.5"
+                                    android:text="ادرس شرکت"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:textColor="@color/darkGray" />
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height=""
+                                android:layout_marginRight="@dimen/_4sdp"
+                                android:background="@drawable/bg_edit_text"
+                                android:padding="@dimen/_5sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@drawable/ic_password" />
+
+                                <TextView
+                                    android:id="@+id/textView14"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="کد تخفیف" />
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_4sdp"
+                                android:background="@drawable/bg_edit_text"
+                                android:padding="@dimen/_5sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_blue_lite_shadow"
+                            android:text="ادرس کد" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal">
@@ -315,11 +378,6 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1.5" />
-
                     </LinearLayout>
 
                 </LinearLayout>
@@ -337,19 +395,19 @@
                         android:layout_weight="1" />
 
                     <ViewFlipper
-                        android:id="@+id/vfSignUp"
+                        android:id="@+id/vfLogIn"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/bg_blue_lite_shadow">
 
                         <TextView
-                            android:id="@+id/btnSignUp"
+                            android:id="@+id/btnLogIn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
-                            android:text="@string/signUp"
+                            android:text="ثبت نام"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -366,7 +424,7 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -376,17 +434,17 @@
                     android:layout_height="100dp"
                     android:src="@drawable/ic_bottom_register" />
 
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:src="@drawable/ic_crm" />
 
-            <ImageView
-                android:layout_width="@dimen/_140sdp"
-                android:layout_height="@dimen/_120sdp"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="@dimen/_20sdp"
-                android:src="@drawable/ic_crm" />
+            </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
 
 </RelativeLayout>
+

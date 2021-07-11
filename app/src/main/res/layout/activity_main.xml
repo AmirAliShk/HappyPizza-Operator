@@ -74,8 +74,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="center"
                         android:text="در انتظار قبول درخواست توسط اقای مصطفایی با شماره
-                       09307278878
-" />
+                       09307278878"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -107,7 +106,7 @@
                                 android:layout_weight="1.5"
                                 android:background="@drawable/gray_dark"
                                 android:gravity="center"
-                                android:text="لغو سفر"
+                                android:text="لغو در خواست"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sdp" />
 
