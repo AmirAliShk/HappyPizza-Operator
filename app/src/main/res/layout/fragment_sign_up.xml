@@ -114,6 +114,7 @@
                             </LinearLayout>
 
                             <EditText
+                                android:id="@+id/edtMobile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_4sdp"
@@ -254,8 +255,9 @@
                             </LinearLayout>
 
                             <EditText
+                                android:id="@+id/edtCompanyName"
                                 android:layout_width="match_parent"
-                                android:layout_height=""
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
                                 android:padding="@dimen/_5sdp"
@@ -395,14 +397,14 @@
                         android:layout_weight="1" />
 
                     <ViewFlipper
-                        android:id="@+id/vfLogIn"
+                        android:id="@+id/vfSignUp"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/bg_blue_lite_shadow">
 
                         <TextView
-                            android:id="@+id/btnLogIn"
+                            android:id="@+id/btnSignUp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="left"

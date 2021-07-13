@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <layer-list>
+            <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#80ADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#95ADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#ADADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#ADADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#CEADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="5.75dp" android:left="5.75dp" android:right="5.75dp" android:top="5.75dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#E6ADD8FB" />
+                </shape>
+            </item>
+
+            <item android:bottom="6dp" android:left="6dp" android:right="6dp" android:top="6dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/_7sdp" />
+                    <solid android:color="#add8fb" />
+                </shape>
+            </item>
+
+        </layer-list>
+
+    </item>
+</selector>

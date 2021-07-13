@@ -21,7 +21,7 @@
             android:gravity="center_vertical"
             android:text="حساب کار بری"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <ImageView
             android:id="@+id/imgBack"
