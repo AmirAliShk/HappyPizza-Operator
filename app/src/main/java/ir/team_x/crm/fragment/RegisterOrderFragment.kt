@@ -18,6 +18,7 @@ import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentRegisterOrderBinding
 import ir.team_x.crm.helper.DateHelper
+import ir.team_x.crm.helper.DateHelper.YearMonthDate
 import ir.team_x.crm.helper.StringHelper
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.model.ProductsModel
@@ -28,7 +29,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RegisterOrderFragment : Fragment() {
+class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     lateinit var binding: FragmentRegisterOrderBinding
     private var customer: JSONObject = JSONObject()
@@ -39,6 +40,9 @@ class RegisterOrderFragment : Fragment() {
     lateinit var productPrice: String
     private lateinit var datePickerDialog: DatePickerDialog
     var DATEPICKER = "DatePickerDialog";
+    private lateinit var selectedDate: Date
+    private lateinit var jalaliDate: YearMonthDate
+    lateinit var to: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,9 +71,9 @@ class RegisterOrderFragment : Fragment() {
             val persianCalendar = PersianCalendar()
             datePickerDialog = DatePickerDialog.newInstance(
                 { _: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                    val jalaliDate =
-                        DateHelper.YearMonthDate(year, monthOfYear + 1, dayOfMonth, 23, 59, 0)
-                    val selectedDate = DateHelper.jalaliToGregorian(jalaliDate)
+                    jalaliDate =
+                        YearMonthDate(year, monthOfYear + 1, dayOfMonth, 23, 59, 0)
+                    selectedDate = DateHelper.jalaliToGregorian(jalaliDate)
                     val currentDate: Date = DateHelper.getCurrentGregorianDate()
 
                     if (selectedDate.time >= currentDate.time) {
@@ -77,21 +81,9 @@ class RegisterOrderFragment : Fragment() {
                             "نباید از تاریخ امروز بیشتر انتخاب کنی!",
                             Toast.LENGTH_SHORT
                         )
-
-//                        binding.edtBirthday.setText(
-//                            StringHelper.toPersianDigits(
-//                                DateHelper.strPersianSeven(
-//                                    currentDate
-//                                )
-//                            )
-//                        )
                     } else {
                         binding.edtBirthday.setText(
-                            StringHelper.toPersianDigits(
-                                DateHelper.strPersianSeven(
-                                    selectedDate
-                                )
-                            )
+                            StringHelper.toPersianDigits(DateHelper.strPersianSeven(selectedDate))
                         )
                     }
                 },
@@ -99,12 +91,14 @@ class RegisterOrderFragment : Fragment() {
                 persianCalendar.persianMonth,
                 persianCalendar.persianDay
             )
-            datePickerDialog.maxDate = persianCalendar
+            datePickerDialog.maxDate = persianCalendar//todo
             datePickerDialog.show(
                 MyApplication.currentActivity.fragmentManager,
                 DATEPICKER
             )
         }
+
+        binding.imgDownloadInfo.setOnClickListener { customerInfo() }
 
         initProductSpinner()
 
@@ -173,8 +167,7 @@ class RegisterOrderFragment : Fragment() {
     }
 
     private fun customerInfo() {
-        RequestHelper.builder(EndPoints.CUSTOMER_INFO)
-            .addParam("mobile", binding.edtMobile.text.toString())
+        RequestHelper.builder(EndPoints.CUSTOMER_INFO + binding.edtMobile.text.toString())
             .listener(infoCallBack)
             .get()
     }
@@ -217,7 +210,7 @@ class RegisterOrderFragment : Fragment() {
     private fun registerOrder() {
         customer.put("family", binding.edtName.text.toString())
         customer.put("mobile", binding.edtMobile.text.toString())
-        customer.put("birthday", binding.edtBirthday.text.toString())
+        customer.put("birthday", to)//todo
 
         products.put("_id", productId)
         products.put("quantity", 2)//todo
@@ -265,4 +258,10 @@ class RegisterOrderFragment : Fragment() {
             }
 
         }
+
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        val date =
+            StringHelper.toPersianDigits(DateHelper.strPersianSeven(selectedDate)) + dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year
+        to = date
+    }
 }
