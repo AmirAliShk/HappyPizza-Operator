@@ -9,19 +9,24 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar
 import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentRegisterOrderBinding
+import ir.team_x.crm.helper.DateHelper
+import ir.team_x.crm.helper.StringHelper
 import ir.team_x.crm.helper.TypefaceUtil
 import ir.team_x.crm.model.ProductsModel
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RegisterOrderFragment : Fragment() {
 
@@ -32,7 +37,8 @@ class RegisterOrderFragment : Fragment() {
     lateinit var productName: String
     lateinit var productId: String
     lateinit var productPrice: String
-
+    private lateinit var datePickerDialog: DatePickerDialog
+    var DATEPICKER = "DatePickerDialog";
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +61,49 @@ class RegisterOrderFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener {
             registerOrder()
+        }
+
+        binding.edtBirthday.setOnClickListener {
+            val persianCalendar = PersianCalendar()
+            datePickerDialog = DatePickerDialog.newInstance(
+                { _: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                    val jalaliDate =
+                        DateHelper.YearMonthDate(year, monthOfYear + 1, dayOfMonth, 23, 59, 0)
+                    val selectedDate = DateHelper.jalaliToGregorian(jalaliDate)
+                    val currentDate: Date = DateHelper.getCurrentGregorianDate()
+
+                    if (selectedDate.time >= currentDate.time) {
+                        MyApplication.Toast(
+                            "نباید از تاریخ امروز بیشتر انتخاب کنی!",
+                            Toast.LENGTH_SHORT
+                        )
+
+//                        binding.edtBirthday.setText(
+//                            StringHelper.toPersianDigits(
+//                                DateHelper.strPersianSeven(
+//                                    currentDate
+//                                )
+//                            )
+//                        )
+                    } else {
+                        binding.edtBirthday.setText(
+                            StringHelper.toPersianDigits(
+                                DateHelper.strPersianSeven(
+                                    selectedDate
+                                )
+                            )
+                        )
+                    }
+                },
+                persianCalendar.persianYear,
+                persianCalendar.persianMonth,
+                persianCalendar.persianDay
+            )
+            datePickerDialog.maxDate = persianCalendar
+            datePickerDialog.show(
+                MyApplication.currentActivity.fragmentManager,
+                DATEPICKER
+            )
         }
 
         initProductSpinner()
@@ -93,9 +142,11 @@ class RegisterOrderFragment : Fragment() {
                 productList.add(i + 1, productObj.getString("name"))
             }
             if (binding.spProducts == null) return
-            binding.spProducts.adapter = ArrayAdapter(MyApplication.currentActivity,
+            binding.spProducts.adapter = ArrayAdapter(
+                MyApplication.currentActivity,
                 R.layout.item_spinner,
-                productList)
+                productList
+            )
             binding.spProducts.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
