@@ -146,9 +146,6 @@ public class GeneralDialog {
     @BindView(R.id.txtMessage)
     TextView txtMessage;
 
-    @BindView(R.id.imgSpace)
-    View imgSpace;
-
     @BindView(R.id.llBtnView)
     LinearLayout llBtnView;
 
@@ -161,8 +158,8 @@ public class GeneralDialog {
     @BindView(R.id.btnSecond)
     Button btnSecond;
 
-    @BindView(R.id.btnThird)
-    Button btnThird;
+//    @BindView(R.id.btnThird)
+//    Button btnThird;
 
     @OnClick(R.id.btnFirst)
     void onFirstPress() {
@@ -187,15 +184,15 @@ public class GeneralDialog {
         }
     }
 
-    @OnClick(R.id.btnThird)
-    void onThirdPress() {
-        dismiss();
-
-        if (thirdBtn != null) {
-            if (thirdBtn.getBody() != null)
-                thirdBtn.getBody().run();
-        }
-    }
+//    @OnClick(R.id.btnThird)
+//    void onThirdPress() {
+//        dismiss();
+//
+//        if (thirdBtn != null) {
+//            if (thirdBtn.getBody() != null)
+//                thirdBtn.getBody().run();
+//        }
+//    }
 
     private Dialog dialog;
     private Dialog staticDialog = null;
@@ -245,16 +242,14 @@ public class GeneralDialog {
         }
         if (secondBtn == null) {
             btnSecond.setVisibility(View.GONE);
-            imgSpace.setVisibility(View.GONE);
         } else {
             btnSecond.setText(secondBtn.getText());
-            imgSpace.setVisibility(View.VISIBLE);
         }
-        if (thirdBtn == null) {
-            btnThird.setVisibility(View.GONE);
-        } else {
-            btnThird.setText(thirdBtn.getText());
-        }
+//        if (thirdBtn == null) {
+//            btnThird.setVisibility(View.GONE);
+//        } else {
+//            btnThird.setText(thirdBtn.getText());
+//        }
 
         if (firstBtn == null && secondBtn == null && thirdBtn == null) {
             llBtnView.setVisibility(View.GONE);
