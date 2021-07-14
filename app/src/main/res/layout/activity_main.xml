@@ -5,8 +5,8 @@
     android:id="@+id/draw"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_background"
     android:clickable="true"
+    android:background="@color/page_background"
     android:layoutDirection="rtl"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
@@ -14,7 +14,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/page_background"
         android:clickable="true"
         android:layoutDirection="rtl"
         android:orientation="vertical">
@@ -69,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/black"
-                        android:background="@color/white"
+                        android:background="@drawable/bg_unknown"
                         android:textSize="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="center"

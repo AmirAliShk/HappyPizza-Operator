@@ -3,7 +3,7 @@
      <!-- signUp & logIn-->
     <string name="app_name">CRM</string>
     <string name="signUp">ثبت نام</string>
-    <string name="mobile">موبایل:</string>
+    <string name="mobile">موبایل</string>
     <string name="name">نام</string>
     <string name="nameAndFamily">نام و نام خانوادگی</string>
     <string name="email">ایمیل</string>

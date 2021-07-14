@@ -76,7 +76,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -100,7 +100,6 @@
                                     android:layout_margin="9dp"
                                     android:src="@drawable/ic_phone" />
 
-
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -119,7 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -169,7 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_edit_text"
                                 android:inputType="textEmailAddress"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -218,7 +217,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -260,7 +259,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -281,20 +280,25 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingRight="3dp">
 
                                 <ImageView
-                                    android:id="@+id/imageView5"
                                     android:layout_width="@dimen/_15sdp"
                                     android:layout_height="@dimen/_15sdp"
+                                    android:layout_margin="9dp"
                                     android:src="@drawable/ic_password" />
 
                                 <TextView
-                                    android:id="@+id/textView14"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:text="کد تخفیف" />
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/_4sdp"
+                                    android:layout_weight="1.7"
+                                    android:text="کد تایید"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:textColor="@color/darkGray" />
 
                             </LinearLayout>
 
@@ -303,7 +307,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
 
@@ -315,7 +319,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/bg_blue_lite_shadow"
-                            android:text="ادرس کد" />
+                            android:gravity="center"
+                            android:padding="@dimen/_4sdp"
+                            android:text="ادرس کد"
+                            android:textColor="@color/darkGray"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -326,9 +335,50 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="3dp">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_16sdp"
+                                    android:layout_height="@dimen/_16sdp"
+                                    android:layout_margin="9dp"
+                                    android:src="@drawable/ic_orders" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/_4sdp"
+                                    android:layout_weight="1.5"
+                                    android:text="رمز عبور"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:textColor="@color/darkGray" />
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_4sdp"
+                                android:background="@drawable/bg_edit_text"
+                                android:padding="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -338,49 +388,49 @@
                                 android:paddingRight="3dp">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
                                     android:layout_margin="9dp"
-                                    android:src="@drawable/ic_password" />
+                                    android:src="@drawable/ic_user" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginRight="@dimen/_4sdp"
-                                    android:layout_weight="1.5"
-                                    android:text="@string/password"
+                                    android:layout_weight="1.7"
+                                    android:text="تکرار رمزعبور"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:textColor="@color/darkGray" />
 
                             </LinearLayout>
 
                             <EditText
-                                android:id="@+id/edtPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_4sdp"
                                 android:background="@drawable/bg_edit_text"
-                                android:padding="@dimen/_5sdp"
+                                android:padding="@dimen/_4sdp"
                                 android:singleLine="true"
                                 android:textColor="@color/black" />
-
-                            <TextView
-                                android:id="@+id/txtLogIn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:padding="@dimen/_8sdp"
-                                android:shadowColor="@color/lightBlue"
-                                android:shadowRadius="15"
-                                android:text="قبلا ثبت نام شده اید؟"
-                                android:textColor="@color/black"
-                                android:textSize="20sp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtLogIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:shadowColor="@color/lightBlue"
+                        android:shadowRadius="15"
+                        android:text="قبلا ثبت نام شده اید؟"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -436,17 +486,19 @@
                     android:layout_height="100dp"
                     android:src="@drawable/ic_bottom_register" />
 
-                <ImageView
-                    android:layout_width="@dimen/_140sdp"
-                    android:layout_height="@dimen/_120sdp"
-                    android:paddingLeft="@dimen/_20sdp"
-                    android:src="@drawable/ic_crm" />
-
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/_140sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="@dimen/_20sdp"
+                android:src="@drawable/ic_crm" />
 
         </RelativeLayout>
 
     </ScrollView>
+
 
 </RelativeLayout>
 

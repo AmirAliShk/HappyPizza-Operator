@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:padding="@dimen/_66sdp"
         android:src="@drawable/ic_crm" />
 
     <LinearLayout
@@ -22,20 +23,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:background="@drawable/bg_blue_lite_shadow"
-            android:text="کارفرما" />
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_13sdp"
+            android:padding="@dimen/_10sdp"
+            android:text="کارفرما"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4" />
 
         <TextView
             android:id="@+id/textView23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:background="@drawable/bg_blue_liteee_shadow"
-            android:text="کارمند" />
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_13sdp"
+            android:text="کارمند"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"/>
     </LinearLayout>
 
 </LinearLayout>

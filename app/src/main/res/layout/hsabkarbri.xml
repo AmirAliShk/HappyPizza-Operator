@@ -20,6 +20,7 @@
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
             android:text="حساب کار بری"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="22sp" />
 

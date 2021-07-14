@@ -21,6 +21,7 @@
             android:gravity="center_vertical"
             android:text="@string/financial"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="22sp" />
 
         <ImageView
