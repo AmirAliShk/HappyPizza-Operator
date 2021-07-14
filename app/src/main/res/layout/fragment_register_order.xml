@@ -20,9 +20,9 @@
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
             android:text="@string/registerOrder"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgBack"
@@ -74,9 +74,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/_8sdp"
                 android:background="@drawable/bg_edit_text"
-                android:layout_gravity="center"
                 android:src="@drawable/ic_download" />
         </LinearLayout>
 
@@ -128,8 +128,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="@dimen/_4sdp"
+                android:layout_weight="1"
                 android:text="@string/name"
                 android:textColor="@color/gray" />
 
@@ -166,6 +166,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
+                android:focusable="false"
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true" />
 
@@ -236,24 +237,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="@string/order"
                 android:textColor="@color/transparent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="قیمت "
                 android:textColor="@color/transparent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:text="@string/number"
                 android:textColor="@color/gray" />
 
