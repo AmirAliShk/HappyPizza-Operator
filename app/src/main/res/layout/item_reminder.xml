@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="22 اذر 1379"
+                    android:text="22  اذر  1379"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -145,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="20000تومان"
+                android:text="  20000  تومان"
                 android:textColor="@color/black" />
 
         </LinearLayout>

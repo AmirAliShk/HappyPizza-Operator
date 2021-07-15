@@ -348,9 +348,9 @@
 
                                 <ImageView
                                     android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
+                                    android:layout_height="15dp"
                                     android:layout_margin="9dp"
-                                    android:src="@drawable/ic_orders" />
+                                    android:src="@drawable/ic_passwordd" />
 
                                 <TextView
                                     android:layout_width="0dp"
@@ -392,7 +392,7 @@
                                     android:layout_width="@dimen/_15sdp"
                                     android:layout_height="@dimen/_15sdp"
                                     android:layout_margin="9dp"
-                                    android:src="@drawable/ic_user" />
+                                    android:src="@drawable/ic_passwordd" />
 
                                 <TextView
                                     android:layout_width="0dp"

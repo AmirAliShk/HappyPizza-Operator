@@ -128,8 +128,9 @@
         android:text="هزینه های جاری"
         android:background="@drawable/bg_blue_lite_shadow"
         android:textColor="@color/black"
-        android:padding="@dimen/_5sdp"
-        android:textSize="@dimen/_13sdp"
+        android:padding="@dimen/_7sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
 
 
