@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-        binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
+//        binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
+        binding.imgMenu1.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
 
         binding.txtRegisterOrder.setOnClickListener {
             FragmentHelper
