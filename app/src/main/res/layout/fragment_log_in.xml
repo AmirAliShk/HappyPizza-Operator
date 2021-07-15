@@ -151,17 +151,15 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/txtSignUp"
+                            android:id="@+id/txtLogIn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_weight="1"
-                            android:gravity="center"
                             android:padding="@dimen/_8sdp"
-                            android:shadowColor="@color/lightBlue"
-                            android:shadowRadius="10"
-                            android:text="ثبت نام نکرده اید؟"
-                            android:textColor="@color/black"
+                            android:shadowRadius="15"
+                            android:text="ثبت نام نکردهاید؟"
+                            android:textColor="@color/lightBlue"
                             android:textSize="20sp" />
 
                     </LinearLayout>
