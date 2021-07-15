@@ -30,5 +30,8 @@
     <string name="price">قیمت</string>
     <string name="number">تعداد</string>
 
+    <string name="date">تاریخ:</string>
+    <string name="time">ساعت:</string>
+    <string name="customer_name">نام مشتری:</string>
 
 </resources>

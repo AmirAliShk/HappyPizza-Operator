@@ -12,6 +12,7 @@ import ir.team_x.crm.R
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.ActivityMainBinding
+import ir.team_x.crm.fragment.OrdersFragment
 import ir.team_x.crm.fragment.ProductsFragment
 import ir.team_x.crm.fragment.RegisterOrderFragment
 import ir.team_x.crm.helper.FragmentHelper
@@ -48,6 +49,13 @@ class MainActivity : AppCompatActivity() {
         binding.txtRegisterOrder.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
+                .replace()
+            binding.draw.closeDrawers()
+        }
+
+        binding.txtOrders.setOnClickListener {
+            FragmentHelper
+                .toFragment(MyApplication.currentActivity, OrdersFragment())
                 .replace()
             binding.draw.closeDrawers()
         }

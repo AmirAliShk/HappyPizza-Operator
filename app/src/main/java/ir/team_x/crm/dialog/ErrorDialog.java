@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -95,10 +96,10 @@ public class ErrorDialog {
             title.setText(titleText);
         }
 
-        Button btnClose = dialog.findViewById(R.id.btnClose);
+        ImageView btnClose = dialog.findViewById(R.id.btnClose);
         Button btnTryAgain = dialog.findViewById(R.id.btnTryAgain);
 
-        btnClose.setText(closeText);
+//        btnClose.setText(closeText);
         btnTryAgain.setText(tryAgainText);
 
         if (bodyRunnable != null)

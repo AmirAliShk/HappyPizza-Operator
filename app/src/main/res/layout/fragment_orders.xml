@@ -15,7 +15,7 @@
         android:background="@color/darkGray">
 
         <ImageView
-            android:id="@+id/imgAddProduct"
+            android:id="@+id/imgSearchOrder"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -28,9 +28,9 @@
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
             android:text="@string/orders"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgBack"
@@ -42,12 +42,57 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ViewFlipper
+        android:id="@+id/vfOrders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:listSelector="@color/transparent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_orders" />
+        android:layout_height="match_parent">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            app:indicatorColor="@color/black"
+            app:indicatorName="BallBeatIndicator" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOrders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_orders" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="چیزی ثبت نشده است."
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="خطایی پیش آمده دوباره امتحان کنید."
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageView
+                android:id="@+id/imgRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@drawable/ic_refresh" />
+
+        </LinearLayout>
+
+    </ViewFlipper>
 
 </LinearLayout>

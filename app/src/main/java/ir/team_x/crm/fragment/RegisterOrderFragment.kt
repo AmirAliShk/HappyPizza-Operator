@@ -14,8 +14,7 @@ import androidx.fragment.app.Fragment
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar
 import ir.team_x.crm.R
-import ir.team_x.crm.adapter.OrdersAdapter
-import ir.team_x.crm.adapter.ProductsAdapter
+import ir.team_x.crm.adapter.CartAdapter
 import ir.team_x.crm.app.EndPoints
 import ir.team_x.crm.app.MyApplication
 import ir.team_x.crm.databinding.FragmentRegisterOrderBinding
@@ -23,7 +22,7 @@ import ir.team_x.crm.helper.DateHelper
 import ir.team_x.crm.helper.DateHelper.YearMonthDate
 import ir.team_x.crm.helper.StringHelper
 import ir.team_x.crm.helper.TypefaceUtil
-import ir.team_x.crm.model.OrdersModel
+import ir.team_x.crm.model.CartModel
 import ir.team_x.crm.model.ProductsModel
 import ir.team_x.crm.okHttp.RequestHelper
 import org.json.JSONArray
@@ -38,7 +37,7 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private var customer: JSONObject = JSONObject()
     private var products: JSONObject = JSONObject()
     lateinit var productsModel: ArrayList<ProductsModel>
-    var ordersModel: ArrayList<OrdersModel> = ArrayList()
+    var cartModel: ArrayList<CartModel> = ArrayList()
     lateinit var productName: String
     lateinit var productId: String
     lateinit var productPrice: String
@@ -47,7 +46,7 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var selectedDate: Date
     private lateinit var jalaliDate: YearMonthDate
     lateinit var to: String
-    lateinit var adapter: OrdersAdapter
+    lateinit var adapter: CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,9 +109,9 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             if (productId.isEmpty()) {
                 return@setOnClickListener
             }
-            var model = OrdersModel(productId, productName, productPrice)
-            ordersModel.add(model)
-            adapter = OrdersAdapter(ordersModel)
+            var model = CartModel(productId, productName, productPrice)
+            cartModel.add(model)
+            adapter = CartAdapter(cartModel)
             binding.listOrders.adapter = adapter;
             adapter.notifyDataSetChanged()
         }
@@ -233,7 +232,7 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         products.put("quantity", 2)//todo
         products.put("sellingPrice", productPrice)
 
-        RequestHelper.builder(EndPoints.REGISTER_ORDER)
+        RequestHelper.builder(EndPoints.ORDER)
             .addParam("customer", customer)
             .addParam("reminder", binding.edtReminder.text.toString())
             .addParam("products", "")

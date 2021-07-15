@@ -69,6 +69,7 @@
                     android:textColor="@color/gray" />
 
                 <EditText
+                    android:id="@+id/edtProductName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -95,6 +96,7 @@
                     android:textColor="@color/gray" />
 
                 <EditText
+                    android:id="@+id/edtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
