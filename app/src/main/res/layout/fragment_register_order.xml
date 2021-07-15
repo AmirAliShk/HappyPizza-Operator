@@ -260,13 +260,15 @@
 
         </LinearLayout>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listOrders"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_height="@dimen/_100sdp"
             android:divider="@null"
+            android:listSelector="@color/transparent"
             android:paddingRight="@dimen/_9sdp"
             android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_register_order" />
 
         <View
