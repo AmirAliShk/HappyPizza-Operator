@@ -313,8 +313,7 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:background="@color/lightBlue"
-                android:layout_margin="@dimen/_7sdp"
-                android:src="" />
+                android:layout_margin="@dimen/_7sdp" />
 
             <ImageButton
                 android:id="@+id/imageButton8"

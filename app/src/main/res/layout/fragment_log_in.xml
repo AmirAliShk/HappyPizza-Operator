@@ -151,7 +151,7 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/txtLogIn"
+                            android:id="@+id/txtSignUp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"

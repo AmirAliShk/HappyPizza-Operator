@@ -79,7 +79,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imgClose"
+            android:id="@+id/btnClose"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentLeft="true"
