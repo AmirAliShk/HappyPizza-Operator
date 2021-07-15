@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
-            android:text="حساب کار بری"
+            android:text="حساب کاربری"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="22sp" />
