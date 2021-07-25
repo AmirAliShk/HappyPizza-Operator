@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:padding="120dp"
-        android:src="@drawable/ic_crm" />
+        android:src="@drawable/ic_pizza" />
 
     <com.wang.avi.AVLoadingIndicatorView
         android:layout_width="40dp"

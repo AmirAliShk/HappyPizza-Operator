@@ -18,6 +18,7 @@ import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -89,13 +90,7 @@ class LogInFragment : Fragment() {
                             MyApplication.prefManager.idToken = dataObject.getString("idToken")
                             MyApplication.prefManager.authorization =
                                 dataObject.getString("accessToken")
-                            MyApplication.currentActivity.startActivity(
-                                Intent(
-                                    MyApplication.currentActivity,
-                                    MainActivity::class.java
-                                )
-                            )
-                            MyApplication.currentActivity.finish()
+                            GetAppInfo().callAppInfoAPI()
                         } else {
                             GeneralDialog()
                                 .message(message)

@@ -42,71 +42,7 @@ class MainActivity : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-//        binding.imgMenu.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
-        binding.imgMenu1.setOnClickListener { binding.draw.openDrawer(Gravity.RIGHT) }
-
-        binding.txtRegisterOrder.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-                .replace()
-            binding.draw.closeDrawers()
-        }
-
-        binding.txtOrders.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, OrdersFragment())
-                .replace()
-            binding.draw.closeDrawers()
-        }
-
-//        binding.llRegisterOrder.setOnClickListener {//todo
-//            FragmentHelper
-//                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-//                .replace()
-//            binding.draw.closeDrawers()
-//        }
-
-        binding.txtProduct.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, ProductsFragment())
-                .replace()
-            binding.draw.closeDrawers()
-        }
-
-        getProducts()
     }
-
-
-    private fun getProducts() {
-        RequestHelper.builder(EndPoints.PRODUCT)
-            .listener(productCallBack)
-            .get()
-    }
-
-    private val productCallBack: RequestHelper.Callback =
-        object : RequestHelper.Callback() {
-            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-                MyApplication.handler.post {
-                    try {
-                        val response = JSONObject(args[0].toString())
-                        val success = response.getBoolean("success")
-                        val message = response.getString("message")
-
-                        if (success) {
-                            MyApplication.prefManager.products =
-                                response.getJSONArray("data").toString()
-                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                }
-
-            }
-
-            override fun onFailure(reCall: Runnable?, e: Exception?) {
-                super.onFailure(reCall, e)
-            }
-        }
 
     override fun onBackPressed() {
         try {

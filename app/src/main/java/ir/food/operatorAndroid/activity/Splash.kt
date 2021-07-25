@@ -16,6 +16,7 @@ import ir.food.operatorAndroid.helper.AppVersionHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -38,75 +39,9 @@ class Splash : AppCompatActivity() {
             window.navigationBarColor = this.resources.getColor(R.color.darkGray)
         }
 
-        try {
-            if (MyApplication.prefManager.idToken.equals("")) {
-                FragmentHelper
-                    .toFragment(this, LogInFragment())
-                    .setAddToBackStack(false)
-                    .add()
-            } else {
-                appInfo()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace();
-        }
+        MyApplication.handler.postDelayed(GetAppInfo()::callAppInfoAPI, 1500)
 
     }
-
-    private fun appInfo() {
-        RequestHelper.builder(EndPoints.APP_INFO)
-            .addParam("versionCode", AppVersionHelper(context).verionCode)
-            .addParam("os", "Android")
-            .listener(appInfoCallBack)
-            .post()
-    }
-
-    private val appInfoCallBack: RequestHelper.Callback =
-        object : RequestHelper.Callback() {
-            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-                MyApplication.handler.post {
-                    try {
-                        val response = JSONObject(args[0].toString())
-                        val success = response.getBoolean("success")
-                        val message = response.getString("message")
-                        if (success) {
-//                            ContinueProcessing.runMainActivity()
-                            MyApplication.currentActivity.startActivity(
-                                Intent(
-                                    MyApplication.currentActivity,
-                                    MainActivity::class.java
-                                )
-                            )
-                            MyApplication.currentActivity.finish()
-                        } else {
-                            GeneralDialog()
-                                .message(message)
-                                .firstButton("باشه") { GeneralDialog().dismiss() }
-                                .secondButton("تلاش مجدد") { appInfo() }
-                                .show()
-                        }
-                    } catch (e: JSONException) {
-                        GeneralDialog()
-                            .message("خطایی پیش آمده دوباره امتحان کنید.")
-                            .firstButton("باشه") { GeneralDialog().dismiss() }
-                            .secondButton("تلاش مجدد") { appInfo() }
-                            .show()
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-            override fun onFailure(reCall: Runnable?, e: Exception?) {
-                MyApplication.handler.post {
-                    GeneralDialog()
-                        .message("خطایی پیش آمده دوباره امتحان کنید.")
-                        .firstButton("باشه") { GeneralDialog().dismiss() }
-                        .secondButton("تلاش مجدد") { appInfo() }
-                        .show()
-                }
-                super.onFailure(reCall, e)
-            }
-        }
 
     override fun onResume() {
         super.onResume()

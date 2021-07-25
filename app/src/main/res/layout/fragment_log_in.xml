@@ -6,31 +6,32 @@
     android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
-    android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="0.21"
+            android:src="@drawable/ic_top_register" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_top_register" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -74,7 +75,7 @@
                                         android:layout_gravity="center"
                                         android:layout_marginRight="@dimen/_4sdp"
                                         android:layout_weight="1.5"
-                                        android:text="ایمیل/موبایل"
+                                        android:text="@string/mobile"
                                         android:textAppearance="?android:attr/textAppearanceMedium"
                                         android:textColor="@color/darkGray" />
 
@@ -158,7 +159,7 @@
                             android:layout_weight="1"
                             android:padding="@dimen/_8sdp"
                             android:shadowRadius="15"
-                            android:text="ثبت نام نکردهاید؟"
+                            android:text="ثبت نام نکرده اید؟"
                             android:textColor="@color/lightBlue"
                             android:textSize="20sp" />
 
@@ -212,23 +213,24 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_bottom_register" />
-
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="@dimen/_140sdp"
-                android:layout_height="@dimen/_120sdp"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="@dimen/_20sdp"
-                android:src="@drawable/ic_crm" />
+        </ScrollView>
 
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.209"
+            android:src="@drawable/ic_bottom_register" />
 
-    </ScrollView>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/_20sdp"
+        android:src="@drawable/ic_pizza" />
 
 </RelativeLayout>
 

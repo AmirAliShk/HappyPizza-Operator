@@ -42,15 +42,15 @@ class SignUpFragment : Fragment() {
         TypefaceUtil.overrideFonts(binding.root)
 
         binding.btnSignUp.setOnClickListener {
-            if (binding.edtPassword.text.toString().isEmpty() || binding.edtName.text.toString()
-                    .isEmpty() || binding.edtEmail.text.toString()
-                    .isEmpty() || binding.edtEmail.text.toString()
-                    .isEmpty() || binding.edtCompanyName.text.toString().isEmpty()
-            ) {
-                MyApplication.Toast("لطفا اطلاعات را وارد کنید.", Toast.LENGTH_SHORT)
-            } else {
+//            if (binding.edtPassword.text.toString().isEmpty() || binding.edtName.text.toString()
+//                    .isEmpty() || binding.edtEmail.text.toString()
+//                    .isEmpty() || binding.edtEmail.text.toString()
+//                    .isEmpty() || binding.edtCompanyName.text.toString().isEmpty()
+//            ) {
+//                MyApplication.Toast("لطفا اطلاعات را وارد کنید.", Toast.LENGTH_SHORT)
+//            } else {
                 signUp()
-            }
+//            }
         }
         binding.txtLogIn.setOnClickListener {
             FragmentHelper
@@ -64,11 +64,8 @@ class SignUpFragment : Fragment() {
     private fun signUp() {
         binding.vfSignUp.displayedChild = 1
         RequestHelper.builder(EndPoints.SIGN_UP)
-            .addParam("password", binding.edtPassword.text.toString())
             .addParam("family", binding.edtName.text.toString())
-            .addParam("email", binding.edtEmail.text.toString())
             .addParam("mobile", binding.edtMobile.text.toString())
-            .addParam("company", binding.edtCompanyName.text.toString())
             .listener(signUpCallBack)
             .post()
     }
