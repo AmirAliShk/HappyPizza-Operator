@@ -37,10 +37,12 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private var customer: JSONObject = JSONObject()
     private var products: JSONObject = JSONObject()
     lateinit var productsModel: ArrayList<ProductsModel>
-    var cartModel: ArrayList<CartModel> = ArrayList()
-    lateinit var productName: String
-    lateinit var productId: String
-    lateinit var productPrice: String
+    var cartModels: ArrayList<CartModel> = ArrayList()
+
+    //    lateinit var productName: String
+//    lateinit var productId: String
+//    lateinit var productPrice: String
+    lateinit var cartModel: CartModel
     private lateinit var datePickerDialog: DatePickerDialog
     var DATEPICKER = "DatePickerDialog";
     private lateinit var selectedDate: Date
@@ -106,19 +108,32 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding.imgDownloadInfo.setOnClickListener { customerInfo() }
 
         binding.imgAddOrder.setOnClickListener {
-            if (productId.isEmpty()) {
-                return@setOnClickListener
-            }
-            var model = CartModel(productId, productName, productPrice)
-            cartModel.add(model)
-            adapter = CartAdapter(cartModel)
-            binding.listOrders.adapter = adapter;
-            adapter.notifyDataSetChanged()
+//            if (cartModel.product?.id?.isEmpty() == true) {
+//                return@setOnClickListener
+//            }
+//            var model = cartModel
+//            cartModels.add(model)
+//            adapter = CartAdapter(cartModels)
+//            binding.listOrders.adapter = adapter;
+//            adapter.notifyDataSetChanged()
+//            addItem(cartModel)
+            cartModel.product?.let { it1 -> isAlreadyInCart(it1.id) }
         }
 
         initProductSpinner()
 
         return binding.root
+    }
+
+    private fun isAlreadyInCart(targetItemId: String): Boolean {
+        var isAlreadyInCart = false
+        for (i in 0 until cartModels.size) {
+            if (targetItemId.equals(cartModels[i])) {
+                isAlreadyInCart = true
+                break
+            }
+        }
+        return isAlreadyInCart
     }
 
     private fun initProductSpinner() {
@@ -165,14 +180,16 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     id: Long,
                 ) {
                     if (position == 0) {
-                        productName = ""
-                        productId = ""
-                        productPrice = ""
+                        CartModel(null, 1)
+//                        productName = ""
+//                        productId = ""
+//                        productPrice = ""
                         return
                     }
-                    productName = productsModel[position - 1].name
-                    productId = productsModel[position - 1].id
-                    productPrice = productsModel[position - 1].sellingPrice
+                    CartModel(productsModel[position - 1], 1)
+//                    cartModel = productsModel[position - 1].name
+//                    productId = productsModel[position - 1].id
+//                    productPrice = productsModel[position - 1].sellingPrice
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -228,9 +245,9 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         customer.put("mobile", binding.edtMobile.text.toString())
         customer.put("birthday", to)//todo
 
-        products.put("_id", productId)
+        products.put("_id", cartModel.product?.id)
         products.put("quantity", 2)//todo
-        products.put("sellingPrice", productPrice)
+        products.put("sellingPrice", cartModel.product?.sellingPrice)
 
         RequestHelper.builder(EndPoints.ORDER)
             .addParam("customer", customer)

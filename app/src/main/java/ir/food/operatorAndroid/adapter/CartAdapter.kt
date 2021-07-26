@@ -31,8 +31,8 @@ class CartAdapter(list: ArrayList<CartModel>) :
         if (models.contains(model)) {
             temp = sum++
         }
-        holder.binding.txtName.text = model.name
-        holder.binding.txtPrice.text = (model.sellingPrice)
+        holder.binding.txtName.text = model.product?.name
+        holder.binding.txtPrice.text = (model.product?.sellingPrice)
         holder.binding.txtQuantity.text = StringHelper.toPersianDigits(temp.toString())//todo
 
         holder.binding.imgRemove.setOnClickListener {

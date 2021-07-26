@@ -1,24 +1,14 @@
 package ir.food.operatorAndroid.activity
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.app.MyApplication.context
 import ir.food.operatorAndroid.databinding.ActivitySplashBinding
-import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.fragment.LogInFragment
-import ir.food.operatorAndroid.helper.AppVersionHelper
-import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.webService.GetAppInfo
-import org.json.JSONException
-import org.json.JSONObject
 
 class Splash : AppCompatActivity() {
     var TAG = Splash::class.java
