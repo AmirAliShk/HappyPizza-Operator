@@ -15,7 +15,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,23 +32,23 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_18ssp"
+            android:padding="@dimen/_15sdp"
             android:text="نسخه اپراتور"
             android:textColor="#f49089"
-            android:textStyle="bold"
-            android:padding="@dimen/_15sdp"/>
-
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_30sdp"
-            android:orientation="horizontal">
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/_30sdp">
 
             <com.agrawalsuneet.dotsloader.loaders.BounceLoader
                 android:layout_width="wrap_content"
@@ -75,7 +75,6 @@
                 app:bounce_showShadow="true" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 
