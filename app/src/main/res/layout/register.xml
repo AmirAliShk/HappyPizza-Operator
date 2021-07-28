@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
                         android:padding="7dp"
-                        android:src="@drawable/ic_user__1_" />
+                        android:src="@drawable/ic_user" />
 
                     <TextView
                         android:id="@+id/textView"

@@ -21,6 +21,7 @@
     <color name="actionbar">#383a3c</color>
     <color name="title">#535353</color>
     <color name="background">#f8f3ef</color>
+    <color name="paleRed">#f4c7c3</color>
 
 
 </resources>
