@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
                         android:padding="7dp"
-                        android:src="@drawable/ic_user__1_" />
+                        android:src="@drawable/ic_user" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="نام نام خانوادگی"
-                        android:textColor="@color/title"
+                        android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
 
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="موبایل"
-                        android:textColor="@color/title"
+                        android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
 
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="کد تایید"
-                        android:textColor="@color/title"
+                        android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
 
@@ -199,7 +199,7 @@
                         android:background="@drawable/pale_red"
                         android:elevation="@dimen/_2sdp"
                         android:text="ارسال کد"
-                        android:textColor="@color/red"
+                        android:textColor="@color/color_Red"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
@@ -225,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="رمز عبور"
-                        android:textColor="@color/title"
+                        android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
 
@@ -269,7 +269,7 @@
                 android:elevation="@dimen/_2sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="قبلا ثبت نام کردم"
-                android:textColor="@color/red"
+                android:textColor="@color/color_Red"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
