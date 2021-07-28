@@ -5,6 +5,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+<<<<<<< HEAD
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="lightBlue">#64b5f6</color>
@@ -22,6 +23,19 @@
     <color name="title">#535353</color>
     <color name="background">#f8f3ef</color>
     <color name="paleRed">#f4c7c3</color>
+=======
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+>>>>>>> 32989df4aade2b6a69e192da5a4209e7cbb092e7
 
+    <color name="actionbar">#535353</color>
+    <color name="gray_light">#8b8886</color>
+    <color name="color_Titles">#535353</color>
+    <color name="color_Red">#f44336</color>
+    <color name="color_blue">#1e88e5</color>
+    <color name="color_green">#43a047</color>
+    <color name="background">#ececec</color>
+    <color name="color_light_Red">#f8d9d7</color>
+    <color name="darkGray">#383738</color>
 
 </resources>
