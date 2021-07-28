@@ -184,7 +184,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_blue_lite_shadow">
+                        android:background="@drawable/bg_light_red">
 
                         <TextView
                             android:id="@+id/btnLogIn"

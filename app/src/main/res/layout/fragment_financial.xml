@@ -126,7 +126,7 @@
         android:layout_gravity="left"
         android:gravity="center"
         android:text="هزینه های جاری"
-        android:background="@drawable/bg_blue_lite_shadow"
+        android:background="@drawable/bg_light_red"
         android:textColor="@color/black"
         android:padding="@dimen/_7sdp"
         android:layout_margin="@dimen/_10sdp"

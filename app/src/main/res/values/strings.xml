@@ -4,7 +4,7 @@
     <string name="app_name">Happy Pizza Operator</string>
     <string name="signUp">ثبت نام</string>
     <string name="mobile">موبایل</string>
-    <string name="name">نام</string>
+    <string name="name">نام :</string>
     <string name="nameAndFamily">نام و نام خانوادگی</string>
     <string name="email">ایمیل</string>
     <string name="companyName">نام شرکت</string>
@@ -29,9 +29,13 @@
     <string name="cart">سبد خرید</string>
     <string name="price">قیمت</string>
     <string name="number">تعداد</string>
+    <string name="service_detail">جزئیات سرویس</string>
 
     <string name="date">تاریخ:</string>
     <string name="time">ساعت:</string>
     <string name="customer_name">نام مشتری:</string>
-
+    <string name="address">آدرس :</string>
+    <string name="nummber">موبایل :</string>
+    <string name="Price">قیمت</string>
+    <string name="Toman">تومان</string>
 </resources>
