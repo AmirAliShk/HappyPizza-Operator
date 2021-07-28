@@ -28,15 +28,21 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_happy_pizza" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delivery" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_18ssp"
+            android:text="نسخه اپراتور"
+            android:textColor="#f49089"
+            android:textStyle="bold"
+            android:padding="@dimen/_15sdp"/>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
