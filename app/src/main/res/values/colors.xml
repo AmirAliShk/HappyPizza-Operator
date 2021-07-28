@@ -17,6 +17,10 @@
     <color name="darkGray">#383738</color>
     <color name="colorPrimaryLight">#868a99</color>
     <color name="skyBlue">#c9e1f9</color>
-    <color name="red">#e53935</color>
+    <color name="red">#f44336</color>
+    <color name="actionbar">#383a3c</color>
+    <color name="title">#535353</color>
+    <color name="background">#f8f3ef</color>
+
 
 </resources>

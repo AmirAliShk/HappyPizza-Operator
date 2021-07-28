@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/draw"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_background"
-    android:clickable="true"
+    android:background="@color/actionbar"
     android:layoutDirection="rtl"
-    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
     <LinearLayout
@@ -15,152 +13,100 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.21"
-            android:src="@drawable/ic_top_register" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_14sdp"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_menu__2_" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:layout_weight="0.5"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/llRegisterOrder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:background="@drawable/gray_dark"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_8sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_20sdp"
-                            android:src="@drawable/ic_registration_order" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|right"
-                            android:layout_weight="1"
-                            android:background="@drawable/gray_dark"
-                            android:gravity="center"
-                            android:text="ثبت سفارش"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_16sdp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llCustomers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_33sdp"
-                        android:background="@drawable/gray_dark"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_8sdp">
-
-
-                        <ImageView
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_20sdp"
-                            android:src="@drawable/ic_orders" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|right"
-                            android:layout_weight="1"
-                            android:background="@drawable/gray_dark"
-                            android:gravity="center"
-                            android:text="ثبت سفارش"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_16sdp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_33sdp"
-                        android:background="@drawable/gray_dark"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_8sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_32sdp"
-                            android:layout_height="@dimen/_32sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_20sdp"
-                            android:src="@drawable/ic_customers" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|right"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="لغو در خواست"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_16sdp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.2" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/_190sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_60sdp"
+                android:src="@drawable/ic_happy_pizza" />
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.209"
-            android:src="@drawable/ic_bottom_register" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/pichi"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llRegisterOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/stroke_red"
+                android:orientation="horizontal"
+                android:layout_marginRight="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:src="@drawable/ic_registration_order" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="ثبت سفارش"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/stroke_red"
+                android:orientation="horizontal"
+                android:layout_marginRight="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:elevation="@dimen/_2sdp"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:src="@drawable/ic_orders"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="لیست سفارش"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="@dimen/_140sdp"
-        android:layout_height="@dimen/_120sdp"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="@dimen/_20sdp"
-        android:src="@drawable/ic_pizza" />
 
 </RelativeLayout>
