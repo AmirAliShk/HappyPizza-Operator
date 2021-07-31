@@ -42,4 +42,8 @@
     <string name="transport_cost">هزینه ارسال :</string>
     <string name="Taxation">مالیات :</string>
     <string name="total">جمع کل :</string>
+    <string name="location_delivery">موقعیت پیک</string>
+    <string name="Cancel">کنسل کردن</string>
+    <string name="change_of_address">تغییر آدرس</string>
+    <string name="record_complaint">ثبت شکایت</string>
 </resources>
