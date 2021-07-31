@@ -52,17 +52,33 @@
                 android:text="@string/mobile"
                 android:textColor="@color/color_Titles" />
 
-            <EditText
-                android:id="@+id/edtMobile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:inputType="numberDecimal"
                 android:elevation="@dimen/_2sdp"
-                android:maxLength="11"
-                android:padding="@dimen/_8sdp"
-                android:singleLine="true" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtMobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:maxLength="11"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/ic_downloadd" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -87,6 +103,7 @@
                 android:elevation="@dimen/_2sdp"
                 android:maxLength="11"
                 android:padding="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_4sdp"
                 android:singleLine="true" />
 
         </LinearLayout>
@@ -102,7 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="macu"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
 
 
             <TextView
@@ -113,12 +131,12 @@
                 android:textColor="@color/color_Titles" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_edit_text"
+                android:elevation="@dimen/_2sdp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:elevation="@dimen/_2sdp"
                 android:padding="@dimen/_8sdp"
                 android:singleLine="true" />
 
@@ -130,8 +148,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="9dp"
-        android:background="@drawable/bg_item"
+        android:background="@drawable/bg_edit_text"
         android:orientation="vertical"
+        android:elevation="@dimen/_2sdp"
         android:padding="@dimen/_10sdp">
 
         <TextView
@@ -140,7 +159,8 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:paddingRight="@dimen/_9sdp"
             android:text="@string/cart"
-            android:textColor="@color/color_Titles" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -156,7 +176,7 @@
 
                 <Spinner
                     android:id="@+id/spProducts"
-                    android:layout_width="match_parent"
+                    android:layout_width="127dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:textColor="@color/transparent" />
@@ -192,7 +212,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="@string/order"
-                android:textColor="@color/title"  />
+                 android:textColor="@color/color_Titles"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -200,7 +220,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="قیمت "
-                android:textColor="@color/title" />
+                android:textColor="@color/color_Titles" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -208,7 +228,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="@string/number"
-                android:textColor="@color/title"  />
+                android:textColor="@color/color_Titles"  />
 
         </LinearLayout>
 
@@ -217,7 +237,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/paleRed" />
+            android:background="@drawable/red"  />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -262,13 +282,12 @@
                 android:layout_margin="@dimen/_6sdp"
                 android:layout_weight="1"
                 android:text="توضیحات"
-                android:textColor="@color/title"  />
+                android:textColor="@color/color_Titles" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_12sdp"
                 android:layout_weight="1"
                 android:background="@drawable/field_background"
                 android:padding="@dimen/_6sdp"
@@ -290,7 +309,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_7sdp"
             android:layout_weight="1.5"
-            android:background="@color/red"
+            android:background="@drawable/red"
             android:text="ثبت"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
@@ -301,7 +320,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_7sdp"
             android:layout_weight="0.5"
-            android:background="@color/paleRed"
+            android:background="@drawable/red"
             android:text="گزینه ها"
             android:textColor="@color/color_Red"
             android:textSize="@dimen/_20sdp" />
