@@ -8,12 +8,10 @@
     <string name="nameAndFamily">نام و نام خانوادگی</string>
     <string name="email">ایمیل</string>
     <string name="companyName">نام شرکت</string>
-    <string name="password">رمز عبور</string>
     <string name="logIn">ورود</string>
 
     <!-- drawer menu -->
     <string name="registerOrder">ثبت سفارش</string>
-    <string name="orders">سفارشات</string>
     <string name="reminder">یادآوری</string>
     <string name="products">محصولات</string>
     <string name="financial">مالی</string>
@@ -28,17 +26,12 @@
     <string name="birthday">تاریخ تولد:</string>
     <string name="cart">سبد خرید</string>
     <string name="price">قیمت</string>
-    <string name="number">تعداد</string>
-    <string name="service_detail">جزئیات سرویس</string>
+        <string name="service_detail">جزئیات سرویس</string>
 
     <string name="date">تاریخ:</string>
     <string name="time">ساعت:</string>
-    <string name="customer_name">نام مشتری:</string>
     <string name="address">آدرس :</string>
     <string name="nummber">موبایل :</string>
-    <string name="Price">قیمت</string>
-    <string name="Toman">تومان</string>
-    <string name="Description">توضیحات</string>
     <string name="transport_cost">هزینه ارسال :</string>
     <string name="Taxation">مالیات :</string>
     <string name="total">جمع کل :</string>
@@ -46,4 +39,35 @@
     <string name="Cancel">کنسل کردن</string>
     <string name="change_of_address">تغییر آدرس</string>
     <string name="record_complaint">ثبت شکایت</string>
+
+    <!-- sara -->
+    <string name="charge">شارژ من : </string>
+    <string name="customer_name">نام مشتری : </string>
+    <string name="Accept_service_taitel">قبول سرویس : </string>
+    <string name="Address">آدرس : </string>
+    <string name="order_detail">جزئیات سفارش</string>
+    <string name="View_route">مشاهده مسیر</string>
+    <string name="Call_customer">تماس با مشتری</string>
+    <string name="user">نام و نام خانوادگی</string>
+    <string name="number">موبایل</string>
+    <string name="Verification_code">کد تایید</string>
+    <string name="login">ورود</string>
+    <string name="send_code">ارسال کد</string>
+    <string name="Accept_service_button">قبول سرویس</string>
+    <string name="sign_up">ثبت نام</string>
+    <string name="already_registered">قبلا ثبت نام کردم</string>
+    <string name="password">رمز عبور</string>
+    <string name="repeat_password">تکرار رمز عبور</string>
+    <string name="history_service">تاریخچه سرویس ها</string>
+    <string name="Completed">اتمام یافته</string>
+    <string name="canceled">کنسل شده</string>
+    <string name="orders">سفارش ها</string>
+    <string name="Price">قیمت</string>
+    <string name="Toman">تومان</string>
+    <string name="Description">توضیحات</string>
+    <string name="detaile_service">جزئیات سفارش</string>
+    <string name="customer_is_not_answer">پاسخگو نیستن</string>
+    <string name="End_of_service">پایان سرویس</string>
+
+
 </resources>
