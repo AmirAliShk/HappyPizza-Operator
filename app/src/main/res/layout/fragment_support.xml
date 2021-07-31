@@ -14,13 +14,6 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/darkGray">
 
-        <ImageView
-            android:id="@+id/imgSearchOrder"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_usera" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,12 +39,24 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_margin="@dimen/_14sdp"
-        android:background="@drawable/field_background"
+        android:background="@drawable/bg_item"
         android:elevation="@dimen/_2sdp"
         android:gravity="center"
         android:orientation="horizontal">
 
-
+        <ImageView
+       
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:padding="@dimen/_2sdp"
+            android:src="@drawable/ic_user" />
+        
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/bg_red"/>
+        
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -68,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:padding="@dimen/_2sdp"
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/ic_search"
+            android:layout_marginLeft="@dimen/_10sdp"/>
 
     </LinearLayout>
 

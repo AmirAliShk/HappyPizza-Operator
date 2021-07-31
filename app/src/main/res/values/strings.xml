@@ -43,8 +43,9 @@
     <!-- sara -->
     <string name="charge">شارژ من : </string>
     <string name="customer_name">نام مشتری : </string>
+    <string name="customer_namee">نام مشتری  </string>
     <string name="Accept_service_taitel">قبول سرویس : </string>
-    <string name="Address">آدرس : </string>
+    <string name="Address">آدرس  </string>
     <string name="order_detail">جزئیات سفارش</string>
     <string name="View_route">مشاهده مسیر</string>
     <string name="Call_customer">تماس با مشتری</string>
@@ -67,7 +68,8 @@
     <string name="Description">توضیحات</string>
     <string name="detaile_service">جزئیات سفارش</string>
     <string name="customer_is_not_answer">پاسخگو نیستن</string>
-    <string name="End_of_service">پایان سرویس</string>
+    <string name="support">پشتیبانی</string>
+
 
 
 </resources>

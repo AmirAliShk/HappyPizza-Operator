@@ -6,128 +6,125 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_item"
         android:orientation="vertical"
-        android:background="@drawable/field_background"
         android:elevation="@dimen/_2sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:layout_margin="@dimen/_14sdp">
+        android:layout_margin="@dimen/_3sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:background="@drawable/red"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_red_top_radus"
+            android:orientation="horizontal"
+            android:padding="@dimen/_7sdp">
 
             <ImageView
-                android:id="@+id/imageView11"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:src="@drawable/ic_peyment" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="در انتظار پرداخت"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="6 مرداد  12:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_7sdp">
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:padding="@dimen/_8sdp"
-                android:src="@drawable/ic_menu" />
+                android:text="@string/name"
+                android:textColor="@color/color_Titles"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="در حال انتظار پرداخت"
-                android:paddingRight="@dimen/_10sdp"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6 مرداد   10:13"
-                android:gravity="left"
-                android:paddingLeft="@dimen/_14sdp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.17"
-                android:paddingRight="@dimen/_9sdp"
-                android:text="نام:"
-                android:textColor="@color/color_Titles" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="مبیناواحدی"
-                android:textColor="@color/black" />
+                android:layout_weight="2"
+                android:text="سارابنی اسدی"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_7sdp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0.1"
-                android:paddingRight="@dimen/_9sdp"
-                android:text="موبایل:"
-                android:textColor="@color/color_Titles" />
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="09907278878"
-                android:textColor="@color/black" />
+                android:layout_weight="0.5"
+                android:text="@string/nummber"
+                android:textColor="@color/color_Titles"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="09307278878"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_7sdp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.18"
-                android:paddingRight="@dimen/_9sdp"
-                android:text="آدرس:"
-                android:textColor="@color/actionbar" />
+                android:layout_weight="0.5"
+                android:text="@string/address"
+                android:textColor="@color/color_Titles"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="دندانپزشکان 9 دادگر 11 پلاک 30"
-                android:textColor="@color/color_Titles"/>
+                android:layout_weight="2"
+                android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
