@@ -38,4 +38,8 @@
     <string name="nummber">موبایل :</string>
     <string name="Price">قیمت</string>
     <string name="Toman">تومان</string>
+    <string name="Description">توضیحات</string>
+    <string name="transport_cost">هزینه ارسال :</string>
+    <string name="Taxation">مالیات :</string>
+    <string name="total">جمع کل :</string>
 </resources>
