@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:padding="@dimen/_8sdp"
-                android:src="@drawable/ic_menu__2_" />
+                android:src="@drawable/ic_menu" />
 
             <TextView
                 android:id="@+id/textView4"
