@@ -13,7 +13,7 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.FragmentLogInBinding
+import ir.food.operatorAndroid.databinding.FragmentLoginBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -24,7 +24,7 @@ import org.json.JSONObject
 
 class LogInFragment : Fragment() {
 
-    lateinit var binding: FragmentLogInBinding
+    lateinit var binding: FragmentLoginBinding
     var mobile = ""
     private var password = ""
 
@@ -33,7 +33,7 @@ class LogInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentLogInBinding.inflate(layoutInflater)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
 
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.activity?.window
@@ -44,34 +44,17 @@ class LogInFragment : Fragment() {
         }
         TypefaceUtil.overrideFonts(binding.root)
 
-        mobile = binding.edtMobileOrEmail.text.toString()
-        password = binding.edtPassword.text.toString()
-
-        binding.btnLogIn.setOnClickListener {
-            if (binding.edtMobileOrEmail.text.isEmpty() || binding.edtPassword.text.isEmpty()) {
-                MyApplication.Toast("لطفا اطلاعات را وارد کنید.", Toast.LENGTH_SHORT)
-            } else {
-                login()
-            }
-        }
-
-        binding.txtSignUp.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, SignUpFragment())
-                .setAddToBackStack(false)
-                .add()
-        }
 
         return binding.root
     }
 
     private fun login() {
-        binding.vfLogIn.displayedChild = 1
-        RequestHelper.builder(EndPoints.LOG_IN)
-            .addParam("mobileOrEmail", binding.edtMobileOrEmail.text.toString())
-            .addParam("password", binding.edtPassword.text.toString())
-            .listener(loginCallBack)
-            .post()
+//        binding.vfLogIn.displayedChild = 1
+//        RequestHelper.builder(EndPoints.LOG_IN)
+//            .addParam("mobileOrEmail", binding.edtMobileOrEmail.text.toString())
+//            .addParam("password", binding.edtPassword.text.toString())
+//            .listener(loginCallBack)
+//            .post()
     }
 
     private val loginCallBack: RequestHelper.Callback =
@@ -79,7 +62,7 @@ class LogInFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
-                        binding.vfLogIn.displayedChild = 0
+//                        binding.vfLogIn.displayedChild = 0
 //{"success":true,"message":"کاربر با موفقیت وارد شد","data":{"idToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBkOWJlNGY4ZTJiN2QyOTdjMmU0NjUwIiwidXNlcl9hY3RpdmUiOnRydWUsInVzZXJfZW1wbG95ZXIiOiI2MGQ5YmU0ZjhlMmI3ZDI5N2MyZTQ2NTAiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY0NjQ4MzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.LmSGVrGdlArOdfpwMQGF9f7e4xgs44bjZ9ZdBXF_8iU","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6InVzZXIiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY1MDgwMzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.SRgJvlVA_fggm6KX2D45v_S7Z1tW7h8g3uT4hEfiohw"}}
 //                      {"success":false,"message":"کاربر در دسترس نمی باشد","data":{}}
                         val response = JSONObject(args[0].toString())
@@ -99,7 +82,7 @@ class LogInFragment : Fragment() {
                                 .show()
                         }
                     } catch (e: JSONException) {
-                        binding.vfLogIn.displayedChild = 0
+//                        binding.vfLogIn.displayedChild = 0
                         GeneralDialog()
                             .message("خطایی پیش آمده دوباره امتحان کنید.")
                             .firstButton("باشه") { GeneralDialog().dismiss() }
@@ -112,7 +95,7 @@ class LogInFragment : Fragment() {
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
                 MyApplication.handler.post {
-                    binding.vfLogIn.displayedChild = 0
+//                    binding.vfLogIn.displayedChild = 0
                     GeneralDialog()
                         .message("خطایی پیش آمده دوباره امتحان کنید.")
                         .firstButton("باشه") { GeneralDialog().dismiss() }

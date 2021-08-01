@@ -69,43 +69,10 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
         binding.imgBack.setOnClickListener { MyApplication.currentActivity.onBackPressed() }
 
-        binding.btnSubmit.setOnClickListener {
-            registerOrder()
-        }
+//        binding.btnSubmit.setOnClickListener {
+//            registerOrder()
+//        }
 
-        binding.edtBirthday.setOnClickListener {
-            val persianCalendar = PersianCalendar()
-            datePickerDialog = DatePickerDialog.newInstance(
-                { _: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                    jalaliDate =
-                        YearMonthDate(year, monthOfYear + 1, dayOfMonth, 23, 59, 0)
-                    selectedDate = DateHelper.jalaliToGregorian(jalaliDate)
-                    val currentDate: Date = DateHelper.getCurrentGregorianDate()
-
-                    if (selectedDate.time >= currentDate.time) {
-                        MyApplication.Toast(
-                            "نباید از تاریخ امروز بیشتر انتخاب کنی!",
-                            Toast.LENGTH_SHORT
-                        )
-                        return@newInstance//todo
-                    } else {
-                        binding.edtBirthday.setText(
-                            StringHelper.toPersianDigits(DateHelper.strPersianSeven(selectedDate))
-                        )
-                    }
-                },
-                persianCalendar.persianYear,
-                persianCalendar.persianMonth,
-                persianCalendar.persianDay
-            )
-//            datePickerDialog.maxDate = persianCalendar//todo
-            datePickerDialog.show(
-                MyApplication.currentActivity.fragmentManager,
-                DATEPICKER
-            )
-        }
-
-        binding.imgDownloadInfo.setOnClickListener { customerInfo() }
 
         binding.imgAddOrder.setOnClickListener {
 //            if (cartModel.product?.id?.isEmpty() == true) {
@@ -166,43 +133,43 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 productsModel.add(cityModel)
                 productList.add(i + 1, productObj.getString("name"))
             }
-            if (binding.spProducts == null) return
-            binding.spProducts.adapter = ArrayAdapter(
-                MyApplication.currentActivity,
-                R.layout.item_spinner,
-                productList
-            )
-            binding.spProducts.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View,
-                    position: Int,
-                    id: Long,
-                ) {
-                    if (position == 0) {
-                        CartModel(null, 1)
-//                        productName = ""
-//                        productId = ""
-//                        productPrice = ""
-                        return
-                    }
-                    CartModel(productsModel[position - 1], 1)
-//                    cartModel = productsModel[position - 1].name
-//                    productId = productsModel[position - 1].id
-//                    productPrice = productsModel[position - 1].sellingPrice
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
+//            if (binding.spProducts == null) return
+//            binding.spProducts.adapter = ArrayAdapter(
+//                MyApplication.currentActivity,
+//                R.layout.item_spinner,
+//                productList
+//            )
+//            binding.spProducts.onItemSelectedListener = object : OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>?,
+//                    view: View,
+//                    position: Int,
+//                    id: Long,
+//                ) {
+//                    if (position == 0) {
+//                        CartModel(null, 1)
+////                        productName = ""
+////                        productId = ""
+////                        productPrice = ""
+//                        return
+//                    }
+//                    CartModel(productsModel[position - 1], 1)
+////                    cartModel = productsModel[position - 1].name
+////                    productId = productsModel[position - 1].id
+////                    productPrice = productsModel[position - 1].sellingPrice
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>?) {}
+//            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
     }
 
     private fun customerInfo() {
-        RequestHelper.builder(EndPoints.CUSTOMER_INFO + binding.edtMobile.text.toString())
-            .listener(infoCallBack)
-            .get()
+//        RequestHelper.builder(EndPoints.CUSTOMER_INFO + binding.edtMobile.text.toString())
+//            .listener(infoCallBack)
+//            .get()
     }
 
     private val infoCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
@@ -222,9 +189,6 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
                     if (success) {
                         val dataObject = response.getJSONObject("data")
-                        binding.edtName.setText(dataObject.getString("family"))
-                        binding.edtMobile.setText(dataObject.getString("mobile"))
-                        binding.edtBirthday.setText(dataObject.getString("birthday"))
                     } else {
                         MyApplication.Toast("مشتری جدید", Toast.LENGTH_SHORT)//todo
                     }
@@ -241,20 +205,20 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun registerOrder() {
-        customer.put("family", binding.edtName.text.toString())
-        customer.put("mobile", binding.edtMobile.text.toString())
-        customer.put("birthday", to)//todo
-
-        products.put("_id", cartModel.product?.id)
-        products.put("quantity", 2)//todo
-        products.put("sellingPrice", cartModel.product?.sellingPrice)
-
-        RequestHelper.builder(EndPoints.ORDER)
-            .addParam("customer", customer)
-            .addParam("reminder", binding.edtReminder.text.toString())
-            .addParam("products", "")
-            .listener(registerOrderCallback)
-            .post()
+//        customer.put("family", binding.edtName.text.toString())
+//        customer.put("mobile", binding.edtMobile.text.toString())
+//        customer.put("birthday", to)//todo
+//
+//        products.put("_id", cartModel.product?.id)
+//        products.put("quantity", 2)//todo
+//        products.put("sellingPrice", cartModel.product?.sellingPrice)
+//
+//        RequestHelper.builder(EndPoints.ORDER)
+//            .addParam("customer", customer)
+//            .addParam("reminder", binding.edtReminder.text.toString())
+//            .addParam("products", "")
+//            .listener(registerOrderCallback)
+//            .post()
 //                        {
 //                            products: [...{
 //                            _id: "60b72a70e353f0385c2fe5af",

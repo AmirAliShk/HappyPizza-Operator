@@ -3,23 +3,14 @@ package ir.food.operatorAndroid.activity
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.Gravity
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
-import ir.food.operatorAndroid.fragment.OrdersFragment
-import ir.food.operatorAndroid.fragment.ProductsFragment
-import ir.food.operatorAndroid.fragment.RegisterOrderFragment
-import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.okHttp.RequestHelper
-import org.json.JSONException
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 

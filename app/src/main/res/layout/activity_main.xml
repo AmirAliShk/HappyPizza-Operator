@@ -66,7 +66,7 @@
                     android:layout_gravity="center|right"
                     android:layout_weight="1"
                     android:text="ثبت سفارش"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_Red"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold"
                     android:paddingRight="@dimen/_10sdp"/>
@@ -99,7 +99,7 @@
                     android:layout_weight="1"
                     android:paddingRight="@dimen/_10sdp"
                     android:text="لیست سفارش"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_Red"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
 

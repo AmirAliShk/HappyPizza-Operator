@@ -487,7 +487,6 @@ public class RequestHelper implements okhttp3.Callback {
         MyApplication.handler.post(() -> {
             FragmentHelper
                     .toFragment(MyApplication.currentActivity, new LogInFragment())
-                    .setStatusBarColor(MyApplication.currentActivity.getResources().getColor(R.color.colorPrimaryDark))
                     .setAddToBackStack(false)
                     .replace();
         });
