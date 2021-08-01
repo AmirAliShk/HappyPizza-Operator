@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/actionbar"
@@ -32,7 +31,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -42,13 +41,11 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_8sdp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <ImageView
                         android:layout_width="0dp"
@@ -61,7 +58,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="@string/number"
+                        android:text="@string/mobile"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
@@ -101,13 +98,12 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
                         android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_passwordd" />
+                        android:src="@drawable/ic_key" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -153,7 +149,6 @@
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
-
                 </LinearLayout>
 
                 <TextView
@@ -166,7 +161,6 @@
                     android:textColor="@color/color_Red"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
-
 
                 <Button
                     android:id="@+id/btnLogin"
@@ -182,7 +176,6 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18ssp"
                     android:textStyle="bold" />
-
 
             </LinearLayout>
 

@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:padding="@dimen/_10sdp">
+    android:padding="@dimen/_13sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_item"
-        android:orientation="vertical"
         android:elevation="@dimen/_2sdp"
-        android:layout_margin="@dimen/_3sdp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:background="@drawable/bg_red_top_radus"
             android:orientation="horizontal"
             android:padding="@dimen/_7sdp">
@@ -28,22 +25,25 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
-                android:src="@drawable/ic_peyment" />
+                android:src="@drawable/ic_payment" />
 
             <TextView
+                android:id="@+id/txtStatus"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="در انتظار پرداخت"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtTime"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:text="6 مرداد  12:00"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
@@ -53,23 +53,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
             android:padding="@dimen/_7sdp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
+                android:gravity="center_vertical"
                 android:text="@string/name"
                 android:textColor="@color/color_Titles"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtName"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:text="سارابنی اسدی"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
@@ -78,53 +82,63 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
             android:padding="@dimen/_7sdp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
+                android:gravity="center_vertical"
                 android:text="@string/nummber"
                 android:textColor="@color/color_Titles"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtMobile"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:text="09307278878"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
             android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
+            android:paddingHorizontal="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
+                android:gravity="center_vertical"
                 android:text="@string/address"
                 android:textColor="@color/color_Titles"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtAddress"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
+                android:gravity="center_vertical"
+                android:textandroid:clickable="true"="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

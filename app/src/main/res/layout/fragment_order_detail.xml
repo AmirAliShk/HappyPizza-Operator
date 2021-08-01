@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -8,7 +10,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rlActionBar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/actionbar"
@@ -23,8 +24,9 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:gravity="center_vertical"
             android:text="@string/service_detail"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
@@ -34,8 +36,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_15sdp"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:paddingHorizontal="@dimen/_15sdp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -44,436 +47,347 @@
             android:background="@drawable/bg_item"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_red_top_radus"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.25"
-                android:src="@drawable/ic_peyment" />
-
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="در انتظار پرداخت"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
+                android:background="@drawable/bg_red_top_radus"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="6 مرداد  12:00"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:src="@drawable/ic_payment" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="در انتظار پرداخت"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="6 مرداد  12:00"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/name"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="سارابنی اسدی"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/nummber"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="09307278878"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/address"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_light_red"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/name"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="سارابنی اسدی"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/nummber"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtMobile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="09307278878"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/address"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_light_red"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.95"
+                        android:text="@string/orders"
+                        android:textColor="@color/color_Red"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="left"
+                        android:paddingLeft="@dimen/_2sdp"
+                        android:text="@string/Price"
+                        android:textColor="@color/color_Red"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/Toman"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/_10sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:text="@string/number"
+                        android:textColor="@color/color_Red"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/orderList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="#00ffffff"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_order" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/Description"
+                android:textColor="@color/color_Titles"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_stroke_red"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_10sdp"
+                android:text="زنگ خانه خراب است لطفا تماس بگیرید."
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/transport_cost"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSendPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10 تومان"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/Taxation"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtTaxPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0 تومان"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/total"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtTotalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0 تومان"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="horizontal">
 
-                <TextView
+                <Button
+                    android:id="@+id/btnDeliverLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.95"
-                    android:text="@string/orders"
-                    android:textColor="@color/color_Red"
-                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_blue"
+                    android:text="@string/location_delivery"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_17sdp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:gravity="left"
-                    android:paddingLeft="@dimen/_2sdp"
-                    android:text="@string/Price"
-                    android:textColor="@color/color_Red"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="@string/Toman"
-                    android:textColor="@color/gray_light"
-                    android:textSize="@dimen/_10sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:text="تعداد"
-                    android:textColor="@color/color_Red"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_9sdp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
-                    android:text="رست بیف"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingLeft="@dimen/_2sdp"
-                    android:text="75,000"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.20"
-                    android:text="2"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_9sdp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
-                    android:text="رست بیف"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingLeft="@dimen/_2sdp"
-                    android:text="75,000"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.20"
-                    android:text="2"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_9sdp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
-                    android:text="رست بیف"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingLeft="@dimen/_2sdp"
-                    android:text="75,000"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.20"
-                    android:text="2"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_7sdp"
-            android:text="@string/Description"
-            android:textColor="@color/color_Titles"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stroke_red"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/_10sdp"
-            android:text="زنگ خانه خراب است لطفا تماس بگیرید."
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/transport_cost"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="10 تومان"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/Taxation"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0 تومان"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/total"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0 تومان"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_blue"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="@dimen/_17sdp"
-                android:text="@string/location_delivery"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_red"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="@dimen/_17sdp"
-                android:text="@string/Cancel"/>
-
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/_7sdp">
 
                 <Button
+                    android:id="@+id/btnCancelOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_red"
+                    android:text="@string/Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_17sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnChangeAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_green"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:text="@string/change_of_address"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:textSize="@dimen/_17sdp"
-                    android:text="@string/change_of_address"/>
+                    android:textStyle="bold" />
 
                 <Button
+                    android:id="@+id/btnSetComplaint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_gray"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:text="@string/record_complaint"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:textSize="@dimen/_17sdp"
-                    android:text="@string/record_complaint"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 

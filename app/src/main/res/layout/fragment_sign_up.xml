@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/actionbar"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,12 +31,12 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:layout_marginVertical="@dimen/_15sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/_8sdp">
 
@@ -47,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <ImageView
                         android:layout_width="0dp"
@@ -73,7 +70,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
                     <EditText
                         android:id="@+id/edtName"
                         android:layout_width="0dp"
@@ -90,7 +86,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.25" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <ImageView
                         android:layout_width="0dp"
@@ -111,7 +105,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="@string/number"
+                        android:text="@string/mobile"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
@@ -123,7 +117,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <EditText
                         android:id="@+id/edtMobile"
@@ -141,7 +134,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.25" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -150,13 +142,12 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
                         android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_passwordd" />
+                        android:src="@drawable/ic_key" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -198,7 +189,6 @@
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,7 +196,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <ImageView
                         android:layout_width="0dp"
@@ -229,10 +218,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:gravity="center"
                     android:orientation="horizontal">
-
 
                     <EditText
                         android:id="@+id/edtPassword"
@@ -249,7 +236,6 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="0.25" />
-
 
                 </LinearLayout>
 
@@ -311,12 +297,7 @@
                     android:text="@string/already_registered"
                     android:textColor="@color/color_Red"
                     android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnLogin"
@@ -328,16 +309,14 @@
                     android:elevation="@dimen/_2sdp"
                     android:paddingLeft="@dimen/_50sdp"
                     android:paddingRight="@dimen/_50sdp"
-                    android:text="@string/login"
+                    android:text="@string/sign_up"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold" />
 
-
             </LinearLayout>
 
         </ScrollView>
-
 
     </LinearLayout>
 

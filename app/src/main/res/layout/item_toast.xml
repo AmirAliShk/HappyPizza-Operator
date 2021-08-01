@@ -2,21 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:clickable="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
-        android:clickable="false"
-        android:minHeight="?android:attr/actionBarSize"
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:id="@+id/text"
+        android:clickable="false"
         android:gravity="center"
-        android:textStyle="bold"
+        android:minHeight="?android:attr/actionBarSize"
         android:text="تست توست"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textStyle="bold" />
 
 </LinearLayout>

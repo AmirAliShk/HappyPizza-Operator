@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rlParent"
     android:clickable="true"
     android:layoutDirection="rtl">
 
@@ -14,7 +14,6 @@
         app:realtimeBlurRadius="20dp"
         app:realtimeOverlayColor="#2fff" />
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,21 +22,21 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/bg_gray"
         android:clickable="true"
+        android:elevation="@dimen/_5sdp"
         android:gravity="center_vertical|right"
         android:layoutDirection="rtl"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:elevation="@dimen/_5sdp">
+        android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/llToday"
+            android:id="@+id/llCustomerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/bg_item"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="25dp"
@@ -49,19 +48,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="@string/customer_namee"
-                android:textColor="@color/darkGray"/>
+                android:textColor="@color/darkGray" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llYesterday"
+            android:id="@+id/llMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/bg_item"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="25dp"
@@ -72,13 +71,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@string/number"
-                android:textColor="@color/darkGray"/>
+                android:text="@string/mobile"
+                android:textColor="@color/darkGray" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llTwoDayAgo"
+            android:id="@+id/llAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_item"
@@ -96,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="@string/Address"
-                android:textColor="@color/darkGray"/>
+                android:textColor="@color/darkGray" />
 
         </LinearLayout>
 

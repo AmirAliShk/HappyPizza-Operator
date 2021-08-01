@@ -38,17 +38,18 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:padding="@dimen/_8sdp">
 
                 <LinearLayout
@@ -61,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_15sdp"
-                        android:text="@string/number"
+                        android:text="@string/mobile"
                         android:textColor="@color/color_Titles" />
 
                     <RelativeLayout
@@ -69,8 +70,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-
                         <EditText
+                            android:id="@+id/edtMobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_item"
@@ -88,6 +89,7 @@
                             android:layout_centerVertical="true">
 
                             <ImageView
+                                android:id="@+id/imgDownload"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
@@ -96,7 +98,6 @@
                         </LinearLayout>
 
                     </RelativeLayout>
-
 
                 </LinearLayout>
 
@@ -113,8 +114,8 @@
                         android:text="@string/customer_namee"
                         android:textColor="@color/color_Titles" />
 
-
                     <EditText
+                        android:id="@+id/edtCustomerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_item"
@@ -125,17 +126,16 @@
                         android:singleLine="true"
                         android:textColor="@color/black" />
 
-
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="@dimen/_8sdp">
+                android:paddingHorizontal="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -149,8 +149,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-
                     <EditText
+                        android:id="@+id/edtAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_item"
@@ -168,6 +168,7 @@
                         android:layout_centerVertical="true">
 
                         <ImageView
+                            android:id="@+id/imgAddressList"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_5sdp"
@@ -177,21 +178,23 @@
 
                 </RelativeLayout>
 
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="@dimen/_10sdp"
+                android:layout_weight="4"
                 android:background="@drawable/bg_item"
                 android:orientation="vertical"
                 android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center_vertical"
                     android:paddingRight="@dimen/_9sdp"
                     android:text="@string/cart"
                     android:textColor="@color/black"
@@ -199,7 +202,8 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -210,7 +214,29 @@
                         android:orientation="horizontal">
 
                         <Spinner
-                            android:layout_width="wrap_content"
+                            android:id="@+id/spProductType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color_light_Red" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.2" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@drawable/bg_light_red"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/spProduct"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:textColor="@color/color_light_Red" />
@@ -235,37 +261,48 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal"
                     android:paddingVertical="@dimen/_5sdp"
                     android:paddingRight="@dimen/_9sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="@string/order"
                         android:textColor="@color/color_Titles" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="قیمت "
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:text="@string/price"
                         android:textColor="@color/color_Titles" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="@string/number"
                         android:textColor="@color/color_Titles" />
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/orderList"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"
+                    android:divider="@null"
+                    android:listSelector="#00ffffff"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_register_order" />
 
                 <View
                     android:layout_width="match_parent"
@@ -274,23 +311,26 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal"
                     android:paddingVertical="@dimen/_5sdp"
                     android:paddingRight="@dimen/_9sdp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="جمع کل"
+                        android:gravity="center_vertical"
+                        android:text="@string/total"
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/txtSumPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1.8"
+                        android:gravity="center_vertical"
                         android:text="105000  تومان"
                         android:textColor="@color/black" />
 
@@ -300,56 +340,58 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/_6sdp"
+                    android:layout_weight="0.5"
+                    android:text="@string/Description"
+                    android:textColor="@color/color_Titles" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_6sdp"
-                        android:layout_weight="1"
-                        android:text="توضیحات"
-                        android:textColor="@color/color_Titles" />
-
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_item"
-                        android:elevation="@dimen/_2sdp"
-                        android:padding="@dimen/_6sdp"
-                        android:text="سس سفید حتما اشته باشد"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp" />
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/edtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_item"
+                    android:elevation="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:text="سس سفید حتما اشته باشد"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <Button
+                    android:id="@+id/btnSubmit"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="@dimen/_7sdp"
                     android:layout_weight="1.5"
                     android:background="@drawable/bg_red"
-                    android:text="ثبت"
+                    android:text="@string/submit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold" />
 
                 <Button
+                    android:id="@+id/btnSupport"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="@dimen/_7sdp"
                     android:layout_weight="0.5"
                     android:background="@drawable/bg_light_red"

@@ -1,6 +1,6 @@
 <resources>
 
-     <!-- signUp & logIn-->
+    <!-- signUp & logIn-->
     <string name="app_name">Happy Pizza Operator</string>
     <string name="signUp">ثبت نام</string>
     <string name="mobile">موبایل</string>
@@ -26,7 +26,7 @@
     <string name="birthday">تاریخ تولد:</string>
     <string name="cart">سبد خرید</string>
     <string name="price">قیمت</string>
-        <string name="service_detail">جزئیات سرویس</string>
+    <string name="service_detail">جزئیات سرویس</string>
 
     <string name="date">تاریخ:</string>
     <string name="time">ساعت:</string>
@@ -44,13 +44,13 @@
     <string name="charge">شارژ من : </string>
     <string name="customer_name">نام مشتری : </string>
     <string name="customer_namee">نام مشتری  </string>
-    <string name="Accept_service_taitel">قبول سرویس : </string>
+    <string name="Accept_service_title">قبول سرویس : </string>
     <string name="Address">آدرس  </string>
     <string name="order_detail">جزئیات سفارش</string>
     <string name="View_route">مشاهده مسیر</string>
     <string name="Call_customer">تماس با مشتری</string>
     <string name="user">نام و نام خانوادگی</string>
-    <string name="number">موبایل</string>
+    <string name="number">تعداد</string>
     <string name="Verification_code">کد تایید</string>
     <string name="login">ورود</string>
     <string name="send_code">ارسال کد</string>
@@ -69,7 +69,8 @@
     <string name="detaile_service">جزئیات سفارش</string>
     <string name="customer_is_not_answer">پاسخگو نیستن</string>
     <string name="support">پشتیبانی</string>
-
+    <string name="orders_list">لیست سفارش ها</string>
+    <string name="operator_version">نسخه اپراتور</string>
 
 
 </resources>

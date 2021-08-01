@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr">
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blrView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="20dp"
+        app:realtimeOverlayColor="#2fff" />
 
     <RelativeLayout
         android:layout_width="300dip"

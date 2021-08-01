@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/bg_blue.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/ic_peyment.xml" value="0.209375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/dialog_cancelable_loder.xml" value="0.21445086705202313" />
+        <entry key="app/src/main/res/layout/dialog_error.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/dialog_extended_time.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_general.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/dialog_loder.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_register_order.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/fragment_support.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/item_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_order.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/item_register_order.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_search.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_spinner.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/item_toast.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10520833333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.10520833333333333" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

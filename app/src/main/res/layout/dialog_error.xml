@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     android:layoutDirection="rtl">
 
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blrView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="20dp"
+        app:realtimeOverlayColor="#2fff" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,8 +42,8 @@
                     android:layout_weight="1"
                     android:text="خطا"
                     android:textColor="@color/color_Red"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_17sdp"/>
+                    android:textSize="@dimen/_17sdp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -46,10 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:gravity="center"
-                android:text="خطایی عدم به اینترنت
-لطفا پس از برسی ارتباط خود اینترنت مجدد چک کنید"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"/>
+                android:textSize="@dimen/_15sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,7 +76,6 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
         <ImageView
@@ -81,8 +85,8 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/_2sdp"
             android:background="@drawable/red_circle"
-            android:src="@drawable/ic_close"
-            android:padding="@dimen/_3sdp"/>
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_close" />
 
     </RelativeLayout>
 
