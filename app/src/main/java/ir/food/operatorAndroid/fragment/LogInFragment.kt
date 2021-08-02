@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.activity.MainActivity
@@ -39,22 +40,41 @@ class LogInFragment : Fragment() {
             val window = this.activity?.window
             window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window?.statusBarColor = this.resources.getColor(R.color.darkGray)
-            window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
+            window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window?.navigationBarColor =
+                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
+
         TypefaceUtil.overrideFonts(binding.root)
 
+        binding.btnLogin.setOnClickListener {
+            MyApplication.currentActivity.startActivity(
+                Intent(
+                    MyApplication.currentActivity,
+                    MainActivity::class.java
+                )
+            )
+            MyApplication.currentActivity.finish()
+        }
+
+        binding.txtSignup.setOnClickListener {
+            FragmentHelper
+                .toFragment(MyApplication.currentActivity, SignUpFragment())
+                .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
+                .setAddToBackStack(false)
+                .add()
+        }
 
         return binding.root
     }
 
     private fun login() {
 //        binding.vfLogIn.displayedChild = 1
-//        RequestHelper.builder(EndPoints.LOG_IN)
-//            .addParam("mobileOrEmail", binding.edtMobileOrEmail.text.toString())
-//            .addParam("password", binding.edtPassword.text.toString())
-//            .listener(loginCallBack)
-//            .post()
+        RequestHelper.builder(EndPoints.LOG_IN)
+            .addParam("mobileOrEmail", binding.edtMobile.text.toString())
+            .addParam("password", binding.edtVerificationCode.text.toString())
+            .listener(loginCallBack)
+            .post()
     }
 
     private val loginCallBack: RequestHelper.Callback =

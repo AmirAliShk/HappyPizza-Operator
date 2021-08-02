@@ -133,7 +133,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:textandroid:clickable="true"="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
+                android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 

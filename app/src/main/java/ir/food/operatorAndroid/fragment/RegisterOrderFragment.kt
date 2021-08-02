@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar
@@ -61,8 +62,9 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             val window = this.activity?.window
             window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window?.statusBarColor = this.resources.getColor(R.color.darkGray)
-            window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
+            window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window?.navigationBarColor =
+                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
 
         TypefaceUtil.overrideFonts(binding.root)

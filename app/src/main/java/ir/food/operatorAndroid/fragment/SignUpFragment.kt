@@ -1,5 +1,6 @@
 package ir.food.operatorAndroid.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentSignUpBinding
@@ -35,13 +38,14 @@ class SignUpFragment : Fragment() {
             val window = this.activity?.window
             window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window?.statusBarColor = this.resources.getColor(R.color.darkGray)
-            window?.navigationBarColor = this.resources.getColor(R.color.darkGray)
+            window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window?.navigationBarColor =
+                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
 
         TypefaceUtil.overrideFonts(binding.root)
 
-//        binding.btnSignUp.setOnClickListener {
+        binding.btnSignup.setOnClickListener {
 //            if (binding.edtPassword.text.toString().isEmpty() || binding.edtName.text.toString()
 //                    .isEmpty() || binding.edtEmail.text.toString()
 //                    .isEmpty() || binding.edtEmail.text.toString()
@@ -49,25 +53,34 @@ class SignUpFragment : Fragment() {
 //            ) {
 //                MyApplication.Toast("لطفا اطلاعات را وارد کنید.", Toast.LENGTH_SHORT)
 //            } else {
-                signUp()
+//                signUp()
 //            }
-//        }
-//        binding.txtLogIn.setOnClickListener {
-//            FragmentHelper
-//                .toFragment(MyApplication.currentActivity, LogInFragment())
-//                .setAddToBackStack(false)
-//                .add()
-//        }
+            MyApplication.currentActivity.startActivity(
+                Intent(
+                    MyApplication.currentActivity,
+                    MainActivity::class.java
+                )
+            )
+            MyApplication.currentActivity.finish()
+        }
+
+        binding.txtLogin.setOnClickListener {
+            FragmentHelper
+                .toFragment(MyApplication.currentActivity, LogInFragment())
+                .setAddToBackStack(false)
+                .add()
+        }
+
         return binding.root
     }
 
     private fun signUp() {
 //        binding.vfSignUp.displayedChild = 1
-//        RequestHelper.builder(EndPoints.SIGN_UP)
-//            .addParam("family", binding.edtName.text.toString())
-//            .addParam("mobile", binding.edtMobile.text.toString())
-//            .listener(signUpCallBack)
-//            .post()
+        RequestHelper.builder(EndPoints.SIGN_UP)
+            .addParam("family", binding.edtName.text.toString())
+            .addParam("mobile", binding.edtMobile.text.toString())
+            .listener(signUpCallBack)
+            .post()
     }
 
     private val signUpCallBack: RequestHelper.Callback =

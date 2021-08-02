@@ -4,9 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivitySplashBinding
+import ir.food.operatorAndroid.fragment.LogInFragment
+import ir.food.operatorAndroid.fragment.SignUpFragment
+import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.webService.GetAppInfo
 
@@ -25,11 +29,20 @@ class Splash : AppCompatActivity() {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.darkGray)
-            window.navigationBarColor = this.resources.getColor(R.color.darkGray)
+            window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window?.navigationBarColor =
+                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
 
-        MyApplication.handler.postDelayed(GetAppInfo()::callAppInfoAPI, 1500)
+        MyApplication.handler.postDelayed(
+            {
+                FragmentHelper
+                    .toFragment(MyApplication.currentActivity, LogInFragment())
+                    .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
+                    .setAddToBackStack(false)
+                    .add()
+            }/*GetAppInfo()::callAppInfoAPI*/, 1500
+        )
 
     }
 
