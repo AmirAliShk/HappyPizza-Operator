@@ -4,17 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_blue.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/bg_gray.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/bg_red.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/bg_stroke_red.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_peyment.xml" value="0.209375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="app/src/main/res/layout/dialog_cancelable_loder.xml" value="0.21445086705202313" />
         <entry key="app/src/main/res/layout/dialog_error.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/dialog_extended_time.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_general.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/dialog_loder.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/dialog_search.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/dialog_search.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_orders_list.xml" value="0.19322916666666667" />

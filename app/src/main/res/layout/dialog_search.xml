@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/bg_gray"
         android:clickable="true"
         android:elevation="@dimen/_5sdp"

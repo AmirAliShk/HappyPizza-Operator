@@ -38,8 +38,9 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
             0 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_payment)
             1 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_waiting)
             2 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_chef)
-            3 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_delivery)
-            4 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_close)
+            3 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_coooking)
+            4 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_delivery)
+            5 -> holder.binding.imgStatus.setImageResource(R.drawable.ic_close)
         }
     }
 

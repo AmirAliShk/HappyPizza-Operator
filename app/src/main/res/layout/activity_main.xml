@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/actionbar"
+    android:background="@color/darkGray"
     android:layoutDirection="rtl"
     tools:context=".activity.MainActivity">
 
@@ -65,7 +65,7 @@
                     android:layout_weight="1"
                     android:paddingRight="@dimen/_10sdp"
                     android:text="@string/registerOrder"
-                    android:textColor="@color/color_Red"
+                    android:textColor="@color/darkGray"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:paddingRight="@dimen/_10sdp"
                     android:text="@string/orders_list"
-                    android:textColor="@color/color_Red"
+                    android:textColor="@color/darkGray"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
 

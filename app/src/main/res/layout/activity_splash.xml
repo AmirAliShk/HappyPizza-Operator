@@ -3,76 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/actionbar">
+    android:background="@color/darkGray"
+    android:gravity="center"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:paddingBottom="@dimen/_10sdp"
+        android:src="@drawable/ic_operator_happy" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:src="@drawable/ic_happy_pizza" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.23"
+        android:gravity="center"
+        android:text="@string/support_version"
+        android:textColor="#f49089"
+        android:textSize="@dimen/_18ssp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/_30sdp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageView
+        <com.agrawalsuneet.dotsloader.loaders.BounceLoader
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_10sdp"
-            android:src="@drawable/ic_operator_happy" />
+            app:bounce_animDuration="400"
+            app:bounce_ballColor="#f4c7c3"
+            app:bounce_ballRadius="5dp"
+            app:bounce_showShadow="true" />
 
-        <ImageView
+        <com.agrawalsuneet.dotsloader.loaders.BounceLoader
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_happy_pizza" />
+            app:bounce_animDuration="400"
+            app:bounce_ballColor="#f49089"
+            app:bounce_ballRadius="5dp"
+            app:bounce_showShadow="true" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
+        <com.agrawalsuneet.dotsloader.loaders.BounceLoader
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_15sdp"
-            android:text="@string/operator_version"
-            android:textColor="#f49089"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/_30sdp">
-
-            <com.agrawalsuneet.dotsloader.loaders.BounceLoader
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:bounce_animDuration="400"
-                app:bounce_ballColor="#f4c7c3"
-                app:bounce_ballRadius="5dp"
-                app:bounce_showShadow="true" />
-
-            <com.agrawalsuneet.dotsloader.loaders.BounceLoader
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:bounce_animDuration="400"
-                app:bounce_ballColor="#f49089"
-                app:bounce_ballRadius="5dp"
-                app:bounce_showShadow="true" />
-
-            <com.agrawalsuneet.dotsloader.loaders.BounceLoader
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:bounce_animDuration="400"
-                app:bounce_ballColor="#f44336"
-                app:bounce_ballRadius="5dp"
-                app:bounce_showShadow="true" />
-
-        </LinearLayout>
+            app:bounce_animDuration="400"
+            app:bounce_ballColor="#f44336"
+            app:bounce_ballRadius="5dp"
+            app:bounce_showShadow="true" />
 
     </LinearLayout>
 

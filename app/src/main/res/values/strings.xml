@@ -70,7 +70,7 @@
     <string name="customer_is_not_answer">پاسخگو نیستن</string>
     <string name="support">پشتیبانی</string>
     <string name="orders_list">لیست سفارش ها</string>
-    <string name="operator_version">نسخه اپراتور</string>
+    <string name="support_version">نسخه پشتیبانی</string>
 
 
 </resources>
