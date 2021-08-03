@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
-import ir.food.operatorAndroid.fragment.OrdersList
+import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.fragment.RegisterOrderFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.KeyBoardHelper
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.llOrdersList.setOnClickListener {
             FragmentHelper
-                .toFragment(MyApplication.currentActivity, OrdersList())
+                .toFragment(MyApplication.currentActivity, OrdersListFragment())
                 .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
                 .add()
         }

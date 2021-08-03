@@ -6,21 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog
-import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.CartAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentRegisterOrderBinding
 import ir.food.operatorAndroid.helper.DateHelper
-import ir.food.operatorAndroid.helper.DateHelper.YearMonthDate
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.CartModel
@@ -32,7 +27,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class RegisterOrderFragment : Fragment() {
 
     lateinit var binding: FragmentRegisterOrderBinding
     private var customer: JSONObject = JSONObject()
@@ -44,10 +39,6 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 //    lateinit var productId: String
 //    lateinit var productPrice: String
     lateinit var cartModel: CartModel
-    private lateinit var datePickerDialog: DatePickerDialog
-    var DATEPICKER = "DatePickerDialog";
-    private lateinit var selectedDate: Date
-    private lateinit var jalaliDate: YearMonthDate
     lateinit var to: String
     lateinit var adapter: CartAdapter
 
@@ -76,7 +67,7 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 //        }
 
 
-        binding.imgAddOrder.setOnClickListener {
+//        binding.imgAddOrder.setOnClickListener {
 //            if (cartModel.product?.id?.isEmpty() == true) {
 //                return@setOnClickListener
 //            }
@@ -86,10 +77,10 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 //            binding.listOrders.adapter = adapter;
 //            adapter.notifyDataSetChanged()
 //            addItem(cartModel)
-            cartModel.product?.let { it1 -> isAlreadyInCart(it1.id) }
-        }
+//            cartModel.product?.let { it1 -> isAlreadyInCart(it1.id) }
+//        }
 
-        initProductSpinner()
+//        initProductSpinner()
 
         return binding.root
     }
@@ -207,20 +198,19 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun registerOrder() {
-//        customer.put("family", binding.edtName.text.toString())
-//        customer.put("mobile", binding.edtMobile.text.toString())
-//        customer.put("birthday", to)//todo
-//
-//        products.put("_id", cartModel.product?.id)
-//        products.put("quantity", 2)//todo
-//        products.put("sellingPrice", cartModel.product?.sellingPrice)
-//
-//        RequestHelper.builder(EndPoints.ORDER)
-//            .addParam("customer", customer)
-//            .addParam("reminder", binding.edtReminder.text.toString())
-//            .addParam("products", "")
-//            .listener(registerOrderCallback)
-//            .post()
+        customer.put("family", binding.edtCustomerName.text.toString())
+        customer.put("mobile", binding.edtMobile.text.toString())
+        customer.put("birthday", to)//todo
+
+        products.put("_id", cartModel.product?.id)
+        products.put("quantity", 2)//todo
+        products.put("sellingPrice", cartModel.product?.sellingPrice)
+
+        RequestHelper.builder(EndPoints.ORDER)
+            .addParam("customer", customer)
+            .addParam("products", "")
+            .listener(registerOrderCallback)
+            .post()
 //                        {
 //                            products: [...{
 //                            _id: "60b72a70e353f0385c2fe5af",
@@ -257,10 +247,4 @@ class RegisterOrderFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             }
 
         }
-
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val date =
-            StringHelper.toPersianDigits(DateHelper.strPersianSeven(selectedDate)) + dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year
-        to = date
-    }
 }

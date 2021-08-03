@@ -22,6 +22,7 @@
             android:padding="@dimen/_7sdp">
 
             <ImageView
+                android:id="@+id/imgStatus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
@@ -33,7 +34,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="در انتظار پرداخت"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
@@ -44,7 +44,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
-                android:text="6 مرداد  12:00"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold" />
@@ -74,7 +73,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="سارابنی اسدی"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
@@ -85,7 +83,8 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:orientation="horizontal"
-            android:padding="@dimen/_7sdp">
+            android:paddingHorizontal="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp">
 
             <TextView
                 android:layout_width="0dp"
@@ -103,7 +102,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="09307278878"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
@@ -112,7 +110,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.6"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/_7sdp"
             android:paddingBottom="@dimen/_7sdp">
@@ -121,7 +119,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="center_vertical"
                 android:text="@string/address"
                 android:textColor="@color/color_Titles"
                 android:textSize="@dimen/_16sdp"
@@ -132,8 +129,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 

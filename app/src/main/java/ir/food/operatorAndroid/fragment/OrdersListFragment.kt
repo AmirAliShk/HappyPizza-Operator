@@ -10,14 +10,20 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.adapter.OrdersAdapter
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
 import ir.food.operatorAndroid.dialog.SearchDialog
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.model.OrderModel
+import org.json.JSONObject
 
-class OrdersList : Fragment() {
+class OrdersListFragment : Fragment() {
 
     lateinit var binding: FragmentOrdersListBinding
+
+    var orderModels: ArrayList<OrderModel> = ArrayList()
+    var adapter: OrdersAdapter = OrdersAdapter(orderModels)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +42,27 @@ class OrdersList : Fragment() {
         }
 
         TypefaceUtil.overrideFonts(binding.root)
+
+        val data =
+            "{\"orders\":[{\"status\":{\"name\":\"در حال پخت\",\"code\":2},\"date\":\"3/2\",\"name\":\"رضایی\",\"mobile\":\"093454400369\",\"address\":\"کوهسنگی\"},{\"status\":{\"name\":\"در صف پخت\",\"code\":1},\"date\":\"14/5\",\"name\":\"احمدی\",\"mobile\":\"093454400369\",\"address\":\"احمدآباد\"},{\"status\":{\"name\":\"در حال ارسال\",\"code\":3},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"},{\"status\":{\"name\" : \"در حال پخت\", \"code\" : 2},\"date\":\"3/2\", \"name\":\"رضایی\" , \"mobile\" : \"093454400369\", \"address\" : \"کوهسنگی\"}]}"
+        val dataObject = JSONObject(data)
+        val active = dataObject.getJSONArray("orders")
+        for (i in 0 until active.length()) {
+            val dataObj: JSONObject = active.getJSONObject(i)
+            val status = dataObj.getJSONObject("status")
+
+            var model = OrderModel(
+                status.getString("name"),
+                status.getInt("code"),
+                dataObj.getString("date"),
+                dataObj.getString("name"),
+                dataObj.getString("mobile"),
+                dataObj.getString("address")
+            )
+
+            orderModels.add(model)
+        }
+        binding.searchList.adapter = adapter
 
         binding.imgSearchType.setOnClickListener {
             SearchDialog().show(object : SearchDialog.SearchListener {

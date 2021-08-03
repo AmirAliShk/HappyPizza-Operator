@@ -331,7 +331,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1.8"
                         android:gravity="center_vertical"
-                        android:text="105000  تومان"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -363,7 +362,6 @@
                     android:background="@drawable/bg_item"
                     android:elevation="@dimen/_2sdp"
                     android:padding="@dimen/_6sdp"
-                    android:text="سس سفید حتما اشته باشد"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 
