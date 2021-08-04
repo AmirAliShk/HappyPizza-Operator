@@ -42,9 +42,17 @@ class OrdersListFragment : Fragment() {
         }
 
         TypefaceUtil.overrideFonts(binding.root)
+        binding.edtSearchBar.requestFocus()
 
         val data =
-            "{\"orders\":[{\"status\":{\"name\":\"در حال پخت\",\"code\":2},\"date\":\"3/2\",\"name\":\"رضایی\",\"mobile\":\"093454400369\",\"address\":\"کوهسنگی\"},{\"status\":{\"name\":\"در صف پخت\",\"code\":1},\"date\":\"14/5\",\"name\":\"احمدی\",\"mobile\":\"093454400369\",\"address\":\"احمدآباد\"},{\"status\":{\"name\":\"در حال ارسال\",\"code\":3},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"},{\"status\":{\"name\" : \"در حال پخت\", \"code\" : 2},\"date\":\"3/2\", \"name\":\"رضایی\" , \"mobile\" : \"093454400369\", \"address\" : \"کوهسنگی\"}]}"
+            "{\"orders\":[{\"status\":{\"name\":\"در صف پرداخت\",\"code\":0},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"}," +
+                    "{\"status\":{\"name\":\"در صف انتظار\",\"code\":1},\"date\":\"14/5\",\"name\":\"احمدی\",\"mobile\":\"093454400369\",\"address\":\"احمدآباد\"}," +
+                    "{\"status\":{\"name\":\"در حال اماده سازی\",\"code\":2},\"date\":\"3/2\",\"name\":\"رضایی\",\"mobile\":\"093454400369\",\"address\":\"کوهسنگی\"}," +
+                    "{\"status\":{\"name\":\"در حال پخت\",\"code\":3},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"}," +
+                    "{\"status\":{\"name\" : \"در حال ارسال\", \"code\" : 4},\"date\":\"3/2\", \"name\":\"رضایی\" , \"mobile\" : \"093454400369\", \"address\" : \"کوهسنگی\"}," +
+                    "{\"status\":{\"name\":\"کنسل شده\",\"code\":5},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"}," +
+                    "{\"status\":{\"name\":\"اتمام یافته\",\"code\":6},\"date\":\"3/2\", \"name\":\"کریمی\" , \"mobile\" : \"093454400369\", \"address\" : \"تقی آباد\"}]}"
+
         val dataObject = JSONObject(data)
         val active = dataObject.getJSONArray("orders")
         for (i in 0 until active.length()) {

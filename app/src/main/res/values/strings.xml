@@ -71,6 +71,8 @@
     <string name="support">پشتیبانی</string>
     <string name="orders_list">لیست سفارش ها</string>
     <string name="support_version">نسخه پشتیبانی</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
