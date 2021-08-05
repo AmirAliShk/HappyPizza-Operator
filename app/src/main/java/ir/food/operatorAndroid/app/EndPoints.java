@@ -13,49 +13,39 @@ public class EndPoints {
 
     public static final String IP = (BuildConfig.DEBUG)
 //            ? "http://192.168.1.145"
-            ? "http://www.crm-x.ir"
-            : "http://www.crm-x.ir";
+            ? "http://happypizza.ir"
+            : "http://happypizza.ir";
 //            : "http://192.168.1.145";
 
     public static final String HAKWEYE_IP = (BuildConfig.DEBUG)
 //          ? "http://192.168.1.145"
-            ? "http://www.crm-x.ir"
-            : "http://www.crm-x.ir";
+            ? "http://happypizza.ir"
+            : "http://happypizza.ir";
 //          : "http://192.168.1.145";
 
 
-    public static final String APIPort = (BuildConfig.DEBUG) ? "3000" : "1881";
-
-    public static final String HAWKEYE_APIPort = (BuildConfig.DEBUG) ? "3000" : "1890";
+    public static final String APIPort = (BuildConfig.DEBUG) ? "3010" : "3010";
 
     public static final String ACRA_PATH = "http://turbotaxi.ir:6061/api/v1/crashReport";
 
-    public static final String WEBSERVICE_PATH = IP + ":" + APIPort + "/api/user/v1/";
-
-    public static final String HAWKEYE_PATH = HAKWEYE_IP + ":" + HAWKEYE_APIPort + "/api/user/v1/";
-    public static final String HAWKEYE_LOGIN_PATH = HAKWEYE_IP + ":" + HAWKEYE_APIPort + "/api/user/v1/login/phone/";
+    public static final String WEBSERVICE_PATH = IP + ":" + APIPort + "/api/operator/v1/";
+    public static final String CUSTOMER_PATH = IP + ":" + APIPort + "/api/operator/v1/customer";
+    public static final String ORDER_PATH = IP + ":" + APIPort + "/api/operator/v1/order";
 
     /******************************** Base Api *********************************/
 
     public static final String APP_INFO = WEBSERVICE_PATH + "app/info";
     public static final String LOG_IN = WEBSERVICE_PATH + "login";
-    public static final String SIGN_UP = WEBSERVICE_PATH;
-    public static final String GET_APP_INFO = WEBSERVICE_PATH + "getAppInfo";
+    public static final String SIGN_UP = WEBSERVICE_PATH + "register";
+    public static final String LOGIN_VERIFICATION_CODE = WEBSERVICE_PATH + "login/verificationcode";
+    public static final String VERIFICATION_CODE = WEBSERVICE_PATH + "verificationcode";
 
-    /******************************** refresh token Api *********************************/
-
-    public static final String REFRESH_TOKEN = HAWKEYE_PATH + "token";
-    public static final String VERIFICATION = HAWKEYE_LOGIN_PATH + "verification";
-    public static final String CHECK = HAWKEYE_LOGIN_PATH + "check";
-
-    /******************************** product api *********************************/
-
-    public static final String PRODUCT = WEBSERVICE_PATH + "product/";
-
-    /******************************** order api *********************************/
-
-    public static final String ORDER = WEBSERVICE_PATH + "order/";
-    public static final String CUSTOMER_INFO = WEBSERVICE_PATH + "customer/";
+    public static final String ADD_ORDER = ORDER_PATH;
+    public static final String CANCEL_ORDER = ORDER_PATH;
+    public static final String GET_CUSTOMER = CUSTOMER_PATH;
+    public static final String GET_DELIVERY_LOCATION = ORDER_PATH + "/delivery";
+    public static final String GET_ORDER = ORDER_PATH;
+    public static final String GET_ORDERS = ORDER_PATH;
 
 
 }

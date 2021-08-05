@@ -16,7 +16,7 @@
     <color name="background">#f8f3ef</color>
     <color name="color_light_Red">#f8d9d7</color>
     <color name="darkGray">#4e4c4b</color>
-    <color name="transparent">#97000000</color>
+    <color name="transparent">#00000000</color>
 
 
     <!--order status color, don't change colors anyway-->

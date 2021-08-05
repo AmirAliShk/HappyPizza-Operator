@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_14sdp"
-        app:cardElevation="@dimen/_3sdp"
-        app:cardBackgroundColor="@color/white"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_3sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,10 +66,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:paddingRight="@dimen/_15sdp"
                 android:background="#00ffffff"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/_15sdp"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
@@ -84,13 +84,57 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchList"
+    <ViewFlipper
+        android:id="@+id/vfOrders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:listSelector="@color/transparent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_search" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="موردی ثبت نشده!"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            app:indicatorColor="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_search" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="هنگام دریافت لیست از سرور به خطا خوردیم \n لطفا مجدد امتحان کنید"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/imgRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_refresh" />
+
+        </LinearLayout>
+
+    </ViewFlipper>
 
 </LinearLayout>

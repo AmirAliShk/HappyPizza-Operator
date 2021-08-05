@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.ItemRegisterOrderBinding
+import ir.food.operatorAndroid.databinding.ItemCartBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.CartModel
@@ -12,14 +12,12 @@ import ir.food.operatorAndroid.model.CartModel
 class CartAdapter(list: ArrayList<CartModel>) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
     private val models = list
-    var sum = 1
-    var temp: Int = 0
 
-    class ViewHolder(val binding: ItemRegisterOrderBinding) :
+    class ViewHolder(val binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemRegisterOrderBinding.inflate(
+        val binding = ItemCartBinding.inflate(
             LayoutInflater.from(MyApplication.context), parent, false
         )
         TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
@@ -28,17 +26,11 @@ class CartAdapter(list: ArrayList<CartModel>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = models[position]
-        if (models.contains(model)) {
-            temp = sum++
-        }
-        holder.binding.txtName.text = model.product?.name
-        holder.binding.txtPrice.text = (model.product?.sellingPrice)
-        holder.binding.txtQuantity.text = StringHelper.toPersianDigits(temp.toString())//todo
 
-        holder.binding.imgRemove.setOnClickListener {
-            models.removeAt(position)
-            notifyDataSetChanged()
-        }
+        holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.count.toString())
+        holder.binding.txtName.text = model.name
+        holder.binding.txtPrice.text = StringHelper.toPersianDigits(model.price)
+
     }
 
     override fun getItemCount(): Int {

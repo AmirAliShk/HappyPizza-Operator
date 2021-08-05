@@ -198,19 +198,19 @@ class RegisterOrderFragment : Fragment() {
     }
 
     private fun registerOrder() {
-        customer.put("family", binding.edtCustomerName.text.toString())
-        customer.put("mobile", binding.edtMobile.text.toString())
-        customer.put("birthday", to)//todo
+//        customer.put("family", binding.edtCustomerName.text.toString())
+//        customer.put("mobile", binding.edtMobile.text.toString())
+//        customer.put("birthday", to)//todo
+//
+//        products.put("_id", cartModel.product?.id)
+//        products.put("quantity", 2)//todo
+//        products.put("sellingPrice", cartModel.product?.sellingPrice)
 
-        products.put("_id", cartModel.product?.id)
-        products.put("quantity", 2)//todo
-        products.put("sellingPrice", cartModel.product?.sellingPrice)
-
-        RequestHelper.builder(EndPoints.ORDER)
-            .addParam("customer", customer)
-            .addParam("products", "")
-            .listener(registerOrderCallback)
-            .post()
+//        RequestHelper.builder(EndPoints.ORDER)
+//            .addParam("customer", customer)
+//            .addParam("products", "")
+//            .listener(registerOrderCallback)
+//            .post()
 //                        {
 //                            products: [...{
 //                            _id: "60b72a70e353f0385c2fe5af",

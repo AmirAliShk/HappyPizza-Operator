@@ -8,6 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemSearchBinding
 import ir.food.operatorAndroid.fragment.OrderDetailsFragment
@@ -16,6 +17,8 @@ import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.OrderModel
+import ir.food.operatorAndroid.okHttp.RequestHelper
+import org.json.JSONObject
 
 
 class OrdersAdapter(list: ArrayList<OrderModel>) :
@@ -87,9 +90,7 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
         }
 
         holder.itemView.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, OrderDetailsFragment(model))
-                .add()
+          getOrderDetails(model.id)
         }
 
     }
@@ -97,4 +98,38 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
     override fun getItemCount(): Int {
         return models.size
     }
+
+    private fun getOrderDetails(orderId:String) {
+        RequestHelper.builder(EndPoints.GET_ORDER)
+            .addPath(orderId)
+            .listener(callBack)
+            .get()
+    }
+
+    private val callBack: RequestHelper.Callback =
+        object : RequestHelper.Callback() {
+            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+                MyApplication.handler.post {
+                    try {
+                        val jsonObject = JSONObject(args[0].toString())
+                        val status = jsonObject.getBoolean("success")
+                        val message = jsonObject.getString("message")
+                        if (status) {
+                            val dataObj = jsonObject.getJSONObject("data")
+                            FragmentHelper
+                                .toFragment(MyApplication.currentActivity, OrderDetailsFragment(dataObj.toString()))
+                                .add()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+                MyApplication.handler.post {
+                }
+            }
+        }
+
 }

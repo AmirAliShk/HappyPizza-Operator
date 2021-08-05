@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
+import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.fragment.RegisterOrderFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
@@ -53,30 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onBackPressed() {
-        try {
-            KeyBoardHelper.hideKeyboard()
-            if (fragmentManager.backStackEntryCount > 0 || supportFragmentManager.backStackEntryCount > 0) {
-                super.onBackPressed()
-            } else {
-                if (doubleBackToExitPressedOnce) {
-                    finish()
-                } else {
-                    this.doubleBackToExitPressedOnce = true
-                    MyApplication.Toast(
-                        getString(R.string.txt_please_for_exit_reenter_back),
-                        Toast.LENGTH_SHORT
-                    )
-                    Handler().postDelayed({
-                        doubleBackToExitPressedOnce = false
-                    }, 1500)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         MyApplication.currentActivity = this
@@ -85,5 +62,19 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         MyApplication.currentActivity = this
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            super.onBackPressed()
+        } else {
+            GeneralDialog()
+                .message("آیا از خروج خود اطمینان دارید؟")
+                .firstButton("بله") {
+                    finish()
+                }
+                .secondButton("خیر") {}
+                .show()
+        }
     }
 }

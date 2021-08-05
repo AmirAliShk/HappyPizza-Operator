@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/darkGray"
     android:clickable="true"
     android:layoutDirection="rtl"
@@ -161,21 +162,35 @@
                     android:textColor="@color/color_Red"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnLogin"
+                <ViewFlipper
+                    android:id="@+id/vfCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_margin="@dimen/_5sdp"
+                    android:layout_gravity="center"
                     android:background="@drawable/bg_red"
-                    android:elevation="@dimen/_2sdp"
-                    android:paddingLeft="@dimen/_50sdp"
-                    android:paddingRight="@dimen/_50sdp"
-                    android:text="@string/login"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold" />
+                    android:elevation="@dimen/_2sdp">
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"
+                        android:paddingLeft="@dimen/_50sdp"
+                        android:paddingRight="@dimen/_50sdp"
+                        android:text="@string/login"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18ssp"
+                        android:textStyle="bold" />
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        app:indicatorColor="@color/white"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center" />
+
+                </ViewFlipper>
 
             </LinearLayout>
 

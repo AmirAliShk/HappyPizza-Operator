@@ -1,6 +1,8 @@
 package ir.food.operatorAndroid.model
 
 data class CartModel(
-    var product: ProductsModel?,
-    var quantity: Int,
+    var id: String,
+    var count: Int,
+    var price: String,
+    var name: String
 )

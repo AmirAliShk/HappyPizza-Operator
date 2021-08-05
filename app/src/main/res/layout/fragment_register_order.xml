@@ -302,7 +302,7 @@
                     android:listSelector="#00ffffff"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_register_order" />
+                    tools:listitem="@layout/item_cart" />
 
                 <View
                     android:layout_width="match_parent"

@@ -26,8 +26,8 @@ import org.json.JSONObject
 class LogInFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
-    var mobile = ""
-    private var password = ""
+    lateinit var mobile: String
+    lateinit var verificationCode: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,13 +48,22 @@ class LogInFragment : Fragment() {
         TypefaceUtil.overrideFonts(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            MyApplication.currentActivity.startActivity(
-                Intent(
-                    MyApplication.currentActivity,
-                    MainActivity::class.java
-                )
-            )
-            MyApplication.currentActivity.finish()
+            mobile = binding.edtMobile.text.toString()
+            verificationCode = binding.edtVerificationCode.text.toString()
+            when {
+                mobile.isEmpty() -> {
+                    MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
+                    binding.edtMobile.requestFocus()
+                }
+                verificationCode.isEmpty() -> {
+                    MyApplication.Toast("کد تایید را وارد کنید", Toast.LENGTH_SHORT)
+                    binding.edtVerificationCode.requestFocus()
+                }
+                else -> {
+                    login()
+                }
+
+            }
         }
 
         binding.txtSignup.setOnClickListener {
@@ -65,64 +74,105 @@ class LogInFragment : Fragment() {
                 .add()
         }
 
+        binding.btnSendCode.setOnClickListener {
+            mobile = binding.edtMobile.text.toString()
+            when {
+                mobile.isEmpty() -> {
+                    MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
+                    binding.edtMobile.requestFocus()
+                }
+                else -> {
+                    requestVerificationCode()
+                }
+            }
+        }
+
         return binding.root
     }
 
     private fun login() {
-//        binding.vfLogIn.displayedChild = 1
         RequestHelper.builder(EndPoints.LOG_IN)
-            .addParam("mobileOrEmail", binding.edtMobile.text.toString())
-            .addParam("password", binding.edtVerificationCode.text.toString())
+            .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
+            .addParam("scope", "operator")
+            .addParam("code", verificationCode)
             .listener(loginCallBack)
             .post()
+
     }
 
-    private val loginCallBack: RequestHelper.Callback =
+    private val loginCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+//                    {"success":false,"message":"کاربر در دسترس نمی باشد","data":{}}
+                    val splashJson = JSONObject(args[0].toString())
+                    val success = splashJson.getBoolean("success")
+                    val message = splashJson.getString("message")
+                    if (!success) {
+                        GeneralDialog().message(message).secondButton("باشه") {}.show()
+                    } else {
+                        val dataObj = splashJson.getJSONObject("data")
+                        if (dataObj.getBoolean("status")) {
+                            MyApplication.prefManager.idToken = dataObj.getString("idToken")
+                            MyApplication.prefManager.authorization = dataObj.getString("accessToken")
+                            MyApplication.currentActivity.startActivity(
+                                Intent(
+                                    MyApplication.currentActivity,
+                                    MainActivity::class.java
+                                )
+                            )
+                            MyApplication.currentActivity.finish()
+                        }else{
+                            GeneralDialog().message(message).secondButton("باشه") {}.show()
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            MyApplication.handler.post {
+
+            }
+        }
+    }
+
+    private fun requestVerificationCode() {
+        RequestHelper.builder(EndPoints.LOGIN_VERIFICATION_CODE)
+            .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
+            .addParam("scope", "deliveryMan")
+            .listener(verificationCodeCallBack)
+            .post()
+
+    }
+
+    private val verificationCodeCallBack: RequestHelper.Callback =
         object : RequestHelper.Callback() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
-//                        binding.vfLogIn.displayedChild = 0
-//{"success":true,"message":"کاربر با موفقیت وارد شد","data":{"idToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBkOWJlNGY4ZTJiN2QyOTdjMmU0NjUwIiwidXNlcl9hY3RpdmUiOnRydWUsInVzZXJfZW1wbG95ZXIiOiI2MGQ5YmU0ZjhlMmI3ZDI5N2MyZTQ2NTAiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY0NjQ4MzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.LmSGVrGdlArOdfpwMQGF9f7e4xgs44bjZ9ZdBXF_8iU","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6InVzZXIiLCJpYXQiOjE2MjQ4ODMwMTAsImV4cCI6MTY1MDgwMzAxMCwiYXVkIjoiYXVkaWVuY2UiLCJpc3MiOiJpc3N1ZXIifQ.SRgJvlVA_fggm6KX2D45v_S7Z1tW7h8g3uT4hEfiohw"}}
-//                      {"success":false,"message":"کاربر در دسترس نمی باشد","data":{}}
-                        val response = JSONObject(args[0].toString())
-                        val success = response.getBoolean("success")
-                        val message = response.getString("message")
-                        val dataObject = response.getJSONObject("data")
+                        val splashJson = JSONObject(args[0].toString())
+                        val success = splashJson.getBoolean("success")
+                        val message = splashJson.getString("message")
                         if (success) {
-                            MyApplication.prefManager.idToken = dataObject.getString("idToken")
-                            MyApplication.prefManager.authorization =
-                                dataObject.getString("accessToken")
-                            GetAppInfo().callAppInfoAPI()
-                        } else {
-                            GeneralDialog()
-                                .message(message)
-                                .firstButton("باشه") { GeneralDialog().dismiss() }
-                                .secondButton("تلاش مجدد") { login() }
-                                .show()
+                            MyApplication.Toast(message, Toast.LENGTH_LONG)
                         }
-                    } catch (e: JSONException) {
-//                        binding.vfLogIn.displayedChild = 0
-                        GeneralDialog()
-                            .message("خطایی پیش آمده دوباره امتحان کنید.")
-                            .firstButton("باشه") { GeneralDialog().dismiss() }
-                            .secondButton("تلاش مجدد") { login() }
-                            .show()
+
+
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
             }
 
-            override fun onFailure(reCall: Runnable?, e: Exception?) {
+            override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
-//                    binding.vfLogIn.displayedChild = 0
-                    GeneralDialog()
-                        .message("خطایی پیش آمده دوباره امتحان کنید.")
-                        .firstButton("باشه") { GeneralDialog().dismiss() }
-                        .secondButton("تلاش مجدد") { login() }
-                        .show()
+
                 }
-                super.onFailure(reCall, e)
             }
         }
+
 }

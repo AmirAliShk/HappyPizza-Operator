@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivitySplashBinding
+import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.LogInFragment
 import ir.food.operatorAndroid.fragment.SignUpFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
@@ -54,5 +55,19 @@ class Splash : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         MyApplication.currentActivity = this
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            super.onBackPressed()
+        } else {
+            GeneralDialog()
+                .message("آیا از خروج خود اطمینان دارید؟")
+                .firstButton("بله") {
+                    finish()
+                }
+                .secondButton("خیر") {}
+                .show()
+        }
     }
 }

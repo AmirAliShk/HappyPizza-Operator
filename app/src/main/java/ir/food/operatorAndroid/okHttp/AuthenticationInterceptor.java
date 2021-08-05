@@ -76,62 +76,63 @@ public class AuthenticationInterceptor implements Interceptor {
     }
 
     public boolean refreshToken() {
-        synchronized (this) {
-            boolean statusCode = false;
-            OkHttpClient client = new OkHttpClient.Builder().build();
-            MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
-            JSONObject json = new JSONObject();
-            try {
-                json.put("token", MyApplication.prefManager.getRefreshToken());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            RequestBody body = RequestBody.create(jsonType, json.toString());
-            Request request = new Request.Builder()
-                    .url(EndPoints.REFRESH_TOKEN)
-                    .post(body)
-                    .build();
-
-            Response response;
-
-            try {
-                response = client.newCall(request).execute();
-
-                Log.i(TAG, "refreshToken : input " + json.toString());
-                Log.i(TAG, "refreshToken : url " + request.url().toString());
-
-                if (response != null) {
-                    if (response.code() == 200) {
-                        try {
-                            JSONObject jsonBody = new JSONObject(response.body().string());
-                            boolean success = jsonBody.getBoolean("success");
-                            String message = jsonBody.getString("message");
-
-                            Log.i(TAG, "refreshToken : jsonBody " + jsonBody.toString());
-
-                            if (success) {
-                                JSONObject objData = jsonBody.getJSONObject("data");
-                                String id_token = objData.getString("id_token");
-                                String access_token = objData.getString("access_token");
-                                MyApplication.prefManager.setAuthorization(access_token);
-                                MyApplication.prefManager.setIdToken(id_token);
-                                statusCode = true;
-                            } else {
-                                MyApplication.prefManager.setAuthorization("");
-                                MyApplication.prefManager.setIdToken("");
-                                statusCode = false;
-                            }
-
-                        } catch (JSONException e) {
-                            e.getMessage();
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return statusCode;
-        }
+//        synchronized (this) {
+//            boolean statusCode = false;
+//            OkHttpClient client = new OkHttpClient.Builder().build();
+//            MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
+//            JSONObject json = new JSONObject();
+//            try {
+//                json.put("token", MyApplication.prefManager.getRefreshToken());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            RequestBody body = RequestBody.create(jsonType, json.toString());
+//            Request request = new Request.Builder()
+//                    .url(EndPoints.REFRESH_TOKEN)
+//                    .post(body)
+//                    .build();
+//
+//            Response response;
+//
+//            try {
+//                response = client.newCall(request).execute();
+//
+//                Log.i(TAG, "refreshToken : input " + json.toString());
+//                Log.i(TAG, "refreshToken : url " + request.url().toString());
+//
+//                if (response != null) {
+//                    if (response.code() == 200) {
+//                        try {
+//                            JSONObject jsonBody = new JSONObject(response.body().string());
+//                            boolean success = jsonBody.getBoolean("success");
+//                            String message = jsonBody.getString("message");
+//
+//                            Log.i(TAG, "refreshToken : jsonBody " + jsonBody.toString());
+//
+//                            if (success) {
+//                                JSONObject objData = jsonBody.getJSONObject("data");
+//                                String id_token = objData.getString("id_token");
+//                                String access_token = objData.getString("access_token");
+//                                MyApplication.prefManager.setAuthorization(access_token);
+//                                MyApplication.prefManager.setIdToken(id_token);
+//                                statusCode = true;
+//                            } else {
+//                                MyApplication.prefManager.setAuthorization("");
+//                                MyApplication.prefManager.setIdToken("");
+//                                statusCode = false;
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.getMessage();
+//                        }
+//                    }
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return statusCode;
+//        }
+        return true;
     }
 }
 
