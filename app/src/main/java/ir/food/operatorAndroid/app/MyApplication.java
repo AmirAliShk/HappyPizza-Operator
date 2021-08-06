@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,10 @@ import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.HttpSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
 import org.acra.sender.HttpSender;
+import org.linphone.core.AccountCreator;
+import org.linphone.core.Core;
+import org.linphone.core.ProxyConfig;
+import org.linphone.core.TransportType;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,6 +33,8 @@ import java.util.Map;
 import ir.food.operatorAndroid.BuildConfig;
 import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
+import ir.food.operatorAndroid.push.AvaFactory;
+import ir.food.operatorAndroid.sip.LinphoneService;
 
 public class MyApplication extends Application {
 
@@ -129,36 +136,46 @@ public class MyApplication extends Application {
         toast.show();
     }
 
-//  public static void configureAccount() {
-//    try {
-//      Core core = LinphoneService.getCore();
-//      core.clearAllAuthInfo();
-//      core.clearProxyConfig();
-//
-//      // No account configured, we display the configuration activity
-//      AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
-//
-//      mAccountCreator.setDomain((BuildConfig.DEBUG)
-////              ? "172.16.2.216:4060"
-//              ? prefManager.getSipServer()
-//              : prefManager.getSipServer());
-//      mAccountCreator.setUsername(prefManager.getSipNumber() + "");
-//      mAccountCreator.setPassword(prefManager.getSipPassword());
-//      mAccountCreator.setTransport(TransportType.Udp);
-//
-//      // This will automatically create the proxy config and auth info and add them to the Core
-//      ProxyConfig cfg = mAccountCreator.createProxyConfig();
-//
-//      // Make sure the newly created one is the default
-//      core.setDefaultProxyConfig(cfg);
-//
-//      // At least the 3 below values are required
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//
-//
-//  }
+    public static void avaStart() {
+        if (prefManager.getUserCode() == 0) return;
+        if (prefManager.getPushId() == 0) return;
+        if (prefManager.getPushToken() == null) return;
 
+        Log.i(TAG, "avaStart: " + MyApplication.prefManager.getUserCode());
+        Log.i(TAG, "avaStart: " + MyApplication.prefManager.getPushId());
+        Log.i(TAG, "avaStart: " + MyApplication.prefManager.getPushToken());
+        AvaFactory.getInstance(context)
+                .setUserID(MyApplication.prefManager.getUserCode() + "")
+                .setProjectID(MyApplication.prefManager.getPushId())
+                .setToken(MyApplication.prefManager.getPushToken())
+                .setAddress(EndPoints.PUSH)
+                .start();
+    }
+
+    public static void configureAccount() {
+        try {
+            Core core = LinphoneService.getCore();
+            core.clearAllAuthInfo();
+            core.clearProxyConfig();
+
+            // No account configured, we display the configuration activity
+            AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
+
+            mAccountCreator.setDomain("sbc.turbotaxi.ir:6040");
+            mAccountCreator.setUsername("423");
+            mAccountCreator.setPassword("423");
+            mAccountCreator.setTransport(TransportType.Udp);
+
+            // This will automatically create the proxy config and auth info and add them to the Core
+            ProxyConfig cfg = mAccountCreator.createProxyConfig();
+
+            // Make sure the newly created one is the default
+            core.setDefaultProxyConfig(cfg);
+
+            // At least the 3 below values are required
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

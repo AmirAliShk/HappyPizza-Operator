@@ -26,7 +26,13 @@
                 android:src="@drawable/ic_menu" />
 
             <ImageView
-                android:layout_width="@dimen/_190sdp"
+                android:id="@+id/imgSipStatus"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_menu" />
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_60sdp"
                 android:src="@drawable/ic_happy_pizza" />

@@ -2,9 +2,7 @@ package ir.food.operatorAndroid.activity
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
@@ -14,13 +12,18 @@ import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.fragment.RegisterOrderFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
-import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.sip.LinphoneService
+import org.linphone.core.Core
+import org.linphone.core.CoreListenerStub
+import org.linphone.core.ProxyConfig
+import org.linphone.core.RegistrationState
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var doubleBackToExitPressedOnce = false
+    lateinit var core: Core
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +57,70 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private val mListener = object : CoreListenerStub() {
+        override fun onRegistrationStateChanged(
+            lc: Core,
+            proxy: ProxyConfig,
+            state: RegistrationState,
+            message: String
+        ) {
+            if (core.defaultProxyConfig != null && core.defaultProxyConfig == proxy) {
+                binding.imgSipStatus.setImageResource(getStatusIconResource(state))
+            } else if (core.defaultProxyConfig == null) {
+                binding.imgSipStatus.setImageResource(getStatusIconResource(state))
+            }
+            try {
+                binding.imgSipStatus.setOnClickListener {
+                    val core: Core = LinphoneService.getCore()
+                    if (core != null) {
+                        core.refreshRegisters()
+                    }
+                }
+            } catch (ise: IllegalStateException) {
+                ise.printStackTrace()
+            }
+        }
+    }
+
+    private fun getStatusIconResource(state: RegistrationState): Int {
+        try {
+            val core = LinphoneService.getCore()
+            val defaultAccountConnected =
+                core != null && core.defaultProxyConfig != null && core.defaultProxyConfig.state == RegistrationState.Ok
+            if (state == RegistrationState.Ok && defaultAccountConnected) {
+                return R.drawable.ic_led_connected
+            } else if (state == RegistrationState.Progress) {
+                return R.drawable.ic_led_inprogress
+            } else if (state == RegistrationState.Failed) {
+                return R.drawable.ic_led_error
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return R.drawable.ic_led_error
+    }
+
+
     override fun onResume() {
         super.onResume()
         MyApplication.currentActivity = this
+        core.addListener(mListener)
+        val lpc = core.defaultProxyConfig
+        if (lpc != null) {
+            mListener.onRegistrationStateChanged(core, lpc, lpc.state, null)
+        }
     }
 
     override fun onStart() {
         super.onStart()
         MyApplication.currentActivity = this
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (core != null) {
+            core.removeListener(mListener)
+        }
     }
 
     override fun onBackPressed() {

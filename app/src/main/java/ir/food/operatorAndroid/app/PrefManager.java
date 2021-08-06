@@ -113,9 +113,18 @@ public class PrefManager {
         return pref.getInt(KEY_USER_CODE, 0);
     }
 
+    public void setUserCode(String v) {
+        editor.putString(KEY_USER_CODE, v);
+        editor.commit();
+    }
+
     public void setPushToken(String v) {
         editor.putString(PUSH_TOKEN, v);
         editor.commit();
+    }
+
+    public String getPushToken() {
+        return pref.getString(PUSH_TOKEN, "");
     }
 
     public void setPushId(int v) {

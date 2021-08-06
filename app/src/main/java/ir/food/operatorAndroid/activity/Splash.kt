@@ -35,6 +35,10 @@ class Splash : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
 
+        MyApplication.prefManager.setPushToken("pizzaOperatorAABMohsenX")
+        MyApplication.prefManager.pushId = 12
+        MyApplication.prefManager.setUserCode("1")
+
         MyApplication.handler.postDelayed(
             {
                 FragmentHelper
