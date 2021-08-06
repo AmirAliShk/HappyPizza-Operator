@@ -27,6 +27,7 @@ public class EndPoints {
     public static final String APIPort = (BuildConfig.DEBUG) ? "3010" : "3010";
 
     public static final String ACRA_PATH = "http://turbotaxi.ir:6061/api/v1/crashReport";
+    public static final String PUSH = "http://turbotaxi.ir:6060";
 
     public static final String WEBSERVICE_PATH = IP + ":" + APIPort + "/api/operator/v1/";
     public static final String CUSTOMER_PATH = IP + ":" + APIPort + "/api/operator/v1/customer";

@@ -51,7 +51,7 @@ dependencies {
     implementation 'ch.acra:acra-http:5.6.1'
 
     // Official Socket.io lib
-    implementation('io.socket:socket.io-client:2.0.0') {
+    implementation('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
 
@@ -69,4 +69,10 @@ dependencies {
     implementation 'com.mohamadamin:persianmaterialdatetimepicker:1.2.1'
 
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //noinspection GradleDynamicVersion
+    debugImplementation "org.linphone.minimal:linphone-sdk-android-debug:4.3+"
+    //noinspection GradleDynamicVersion
+    releaseImplementation "org.linphone.minimal:linphone-sdk-android:4.3+"
+
 }

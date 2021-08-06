@@ -40,6 +40,10 @@ public class PrefManager {
     private static final String KEY_ACTIVATION_REMAINING_TIME = "activationRemainingTime";
     private static final String CITY = "city";
     private static final String PRODUCTS = "products";
+    private static final String INCOMINGCALL = "inCall";
+    private static final String GET_CONNECTED_CALL = "connectedCall";
+    private static final String LAST_CALL = "lastCall";
+    private static final String LAST_NOTIFICATION = "lastNotif";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -56,6 +60,42 @@ public class PrefManager {
         editor.commit();
     }
 
+    public String getLastNotification() {
+        return pref.getString(LAST_NOTIFICATION, "");
+    }
+
+    public void setLastNotification(String authorization) {
+        editor.putString(LAST_NOTIFICATION, authorization);
+        editor.commit();
+    }
+
+    public boolean isCallIncoming() {
+        return pref.getBoolean(INCOMINGCALL, false);
+    }
+
+    public void setCallIncoming(boolean b) {
+        editor.putBoolean(INCOMINGCALL, b);
+        editor.commit();
+    }
+
+    public boolean getConnectedCall() {
+        return pref.getBoolean(GET_CONNECTED_CALL, false);
+    }
+
+    public void setConnectedCall(boolean b) {
+        editor.putBoolean(GET_CONNECTED_CALL, b);
+        editor.commit();
+    }
+
+    public String getLastCall() {
+        return pref.getString(LAST_CALL, "");
+    }
+
+    public void setLastCall(String idToken) {
+        editor.putString(LAST_CALL, idToken);
+        editor.commit();
+    }
+
     public String getIdToken() {
         return pref.getString(ID_TOKEN, "");
     }
@@ -69,63 +109,13 @@ public class PrefManager {
         return pref.getString(REFRESH_TOKEN, "");
     }
 
-    public void setRefreshToken(String refreshToken) {
-        editor.putString(REFRESH_TOKEN, refreshToken);
-        editor.commit();
-    }
-
-    public void setAppRun(boolean v) {
-        editor.putBoolean(KEY_APP_STATUS, v);
-        editor.commit();
-    }
-
-    public boolean isAppRun() {
-        return pref.getBoolean(KEY_APP_STATUS, false);
-    }
-
-    public String getComplaint() {
-        return pref.getString(COMPLAINT_TYPE, "");
-    }
-
-    public void setComplaint(String complaint) {
-        editor.putString(COMPLAINT_TYPE, complaint);
-        editor.commit();
-    }
-
-    public void setKey(String key) {
-        editor.putString(KEY_KEY, key);
-        editor.commit();
-    }
-
-    public String getKey() {
-        return pref.getString(KEY_KEY, "");
-    }
-
-    public void setUserCode(int userCode) {
-        editor.putInt(KEY_USER_CODE, userCode);
-        editor.commit();
-    }
-
     public int getUserCode() {
         return pref.getInt(KEY_USER_CODE, 0);
-    }
-
-    public void setRepetitionTime(int repetitionTime) {
-        editor.putInt(REPETITION_TIME, repetitionTime);
-        editor.commit();
-    }
-
-    public int getRepetitionTime() {
-        return pref.getInt(REPETITION_TIME, 0);
     }
 
     public void setPushToken(String v) {
         editor.putString(PUSH_TOKEN, v);
         editor.commit();
-    }
-
-    public String getPushToken() {
-        return pref.getString(PUSH_TOKEN, "");
     }
 
     public void setPushId(int v) {
@@ -137,64 +127,8 @@ public class PrefManager {
         return pref.getInt(PUSH_ID, 5);
     }
 
-    public void setAccountNumber(String accountNumber) {
-        editor.putString(ACCOUNT_NUMBER, accountNumber);
-        editor.commit();
-    }
-
-    public String getAccountNumber() {
-        return pref.getString(ACCOUNT_NUMBER, "");
-    }
-
-    public void setPassword(String pass) {
-        editor.putString(KEY_PASSWORD, pass);
-        editor.commit();
-    }
-
-    public String getPassword() {
-        return pref.getString(KEY_PASSWORD, "0");
-    }
-
-    public void setUserName(String userName) {
-        editor.putString(KEY_USER_NAME, userName);
-        editor.commit();
-    }
-
     public String getUserName() {
         return pref.getString(KEY_USER_NAME, "0");
-    }
-
-    public void isLoggedIn(boolean login) {
-        editor.putBoolean(KEY_IS_LOGGED_IN, login);
-        editor.commit();
-    }
-
-    public boolean getLoggedIn() {
-        return pref.getBoolean(KEY_IS_LOGGED_IN, false);
-    }
-
-    public void setCountRequest(int count) {
-        editor.putInt(KEY_COUNT_REQUEST, count);
-        editor.commit();
-    }
-
-    public int getCountRequest() {
-        return pref.getInt(KEY_COUNT_REQUEST, 0);
-    }
-
-    public void setActivationRemainingTime(long v) {
-        editor.putLong(KEY_ACTIVATION_REMAINING_TIME, v);
-        editor.commit();
-    }
-
-    public long getActivationRemainingTime() {
-        return pref.getLong(KEY_ACTIVATION_REMAINING_TIME, getRepetitionTime());
-    }
-
-    public void setCity(String city) {
-        Log.d("LOG", "setCity: " + city);
-        editor.putString(CITY, city);
-        editor.commit();
     }
 
     public String getCity() {
