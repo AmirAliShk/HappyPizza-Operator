@@ -51,6 +51,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ir.food.operatorAndroid.R;
+import ir.food.operatorAndroid.activity.CallActivity;
+import ir.food.operatorAndroid.activity.OrderRegisterActivity;
 import ir.food.operatorAndroid.app.DataHolder;
 import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.helper.ServiceHelper;
@@ -120,7 +122,7 @@ public class LinphoneService extends Service {
         String basePath = getFilesDir().getAbsolutePath();
         Factory.instance().setLogCollectionPath(basePath);
         Factory.instance().enableLogCollection(LogCollectionState.Enabled);
-        Factory.instance().setDebugMode(false, "AMIR SIP => ");
+        Factory.instance().setDebugMode(false, "SIP ===>> ");
 
         // Dump some useful information about the device we're running on
         Log.i(START_LINPHONE_LOGS);
@@ -410,14 +412,14 @@ public class LinphoneService extends Service {
 
     private void onIncomingReceived() { // TODO uncomment these lines
 //    SoundHelper.ringing(R.raw.ring);
-//        if (ServiceRegisterActivity.Companion.isRunning()) return;
+        if (OrderRegisterActivity.Companion.isRunning()) return;
 
-//        Intent intent = new Intent(this, CallActivity.class);
-        // This flag is required to start an Activity from a Service context
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//
-//        startActivity(intent);
+        Intent intent = new Intent(this, CallActivity.class);
+//         This flag is required to start an Activity from a Service context
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        startActivity(intent);
     }
 
     public static void removeFromUIThreadDispatcher(Runnable r) {

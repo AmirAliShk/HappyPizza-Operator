@@ -75,4 +75,6 @@ dependencies {
     //noinspection GradleDynamicVersion
     releaseImplementation "org.linphone.minimal:linphone-sdk-android:4.3+"
 
+    implementation 'com.gauravbhola.ripplepulsebackground:library:1.0.0'
+
 }

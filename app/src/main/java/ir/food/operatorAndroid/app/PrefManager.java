@@ -42,13 +42,45 @@ public class PrefManager {
     private static final String PRODUCTS = "products";
     private static final String INCOMINGCALL = "inCall";
     private static final String GET_CONNECTED_CALL = "connectedCall";
+    private static final String QUEUE_STATUS = "queueStatus";
     private static final String LAST_CALL = "lastCall";
     private static final String LAST_NOTIFICATION = "lastNotif";
+    private static final String SIP_NUMBER = "sipNumber";
+    private static final String SIP_PASSWORD = "sipPassword";
+    private static final String SIP_SERVER = "sipServer";
+
 
     public PrefManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+    }
+
+    public void setSipNumber(String sipNumber) {
+        editor.putString(SIP_NUMBER, sipNumber);
+        editor.commit();
+    }
+
+    public String getSipNumber() {
+        return pref.getString(SIP_NUMBER, "");
+    }
+
+    public void setSipServer(String sipServer) {
+        editor.putString(SIP_SERVER, sipServer);
+        editor.commit();
+    }
+
+    public String getSipServer() {
+        return pref.getString(SIP_SERVER, "");
+    }
+
+    public void setSipPassword(String sipPassword) {
+        editor.putString(SIP_PASSWORD, sipPassword);
+        editor.commit();
+    }
+
+    public String getSipPassword() {
+        return pref.getString(SIP_PASSWORD, "");
     }
 
     public String getAuthorization() {
@@ -84,6 +116,15 @@ public class PrefManager {
 
     public void setConnectedCall(boolean b) {
         editor.putBoolean(GET_CONNECTED_CALL, b);
+        editor.commit();
+    }
+
+    public boolean getQueueStatus() {
+        return pref.getBoolean(QUEUE_STATUS, false);
+    }
+
+    public void setQueueStatus(boolean b) {
+        editor.putBoolean(QUEUE_STATUS, b);
         editor.commit();
     }
 

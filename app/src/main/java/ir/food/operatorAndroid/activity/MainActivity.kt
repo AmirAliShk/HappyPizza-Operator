@@ -61,14 +61,6 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
-
-        binding.llOrdersList.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, OrdersListFragment())
-                .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
-                .add()
-        }
-
     }
 
     private val mListener = object : CoreListenerStub() {

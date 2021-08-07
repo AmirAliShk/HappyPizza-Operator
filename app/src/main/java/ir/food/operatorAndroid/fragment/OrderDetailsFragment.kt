@@ -57,7 +57,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnSetComplaint.setOnClickListener {
-            MyApplication.currentActivity.onBackPressed()
         }
 
         binding.btnDeliverLocation.setOnClickListener {
@@ -67,7 +66,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnChangeAddress.setOnClickListener {
-            MyApplication.currentActivity.onBackPressed()
         }
 
         parseDetails()
@@ -117,11 +115,11 @@ class OrderDetailsFragment(details: String) : Fragment() {
             var icon = R.drawable.ic_payment
             var color = R.color.payment_color
             when (orderObj.getJSONObject("status").getInt("status")) {
-                0 -> {
+                6 -> {
                     icon = R.drawable.ic_payment
                     color = R.color.payment_color
                 }
-                1 -> {
+                0 -> {
                     icon = R.drawable.ic_waiting
                     color = R.color.waiting
                     binding.txtStatus.setTextColor(
@@ -129,25 +127,29 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.black
                         )
                     )
-                    binding.txtTime.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.black))
+                    binding.txtTime.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.black
+                        )
+                    )
                 }
                 2 -> {
                     icon = R.drawable.ic_chef
                     color = R.color.preparing
                 }
-                3 -> {
+                5 -> {
                     icon = R.drawable.ic_coooking
                     color = R.color.cooking
                 }
-                4 -> {
+                3 -> {
                     icon = R.drawable.ic_delivery
                     color = R.color.delivery
                 }
-                5 -> {
+                1 -> {
                     icon = R.drawable.ic_close
                     color = R.color.canceled
                 }
-                6 -> {
+                4 -> {
                     icon = R.drawable.ic_round_done_24
                     color = R.color.finished
                 }

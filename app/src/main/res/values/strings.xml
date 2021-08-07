@@ -9,6 +9,7 @@
     <string name="email">ایمیل</string>
     <string name="companyName">نام شرکت</string>
     <string name="logIn">ورود</string>
+    <string name="exit">تا اتمام تماس جاری منتظر بمانید</string>
 
     <!-- drawer menu -->
     <string name="registerOrder">ثبت سفارش</string>

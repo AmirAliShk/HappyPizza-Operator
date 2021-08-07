@@ -48,5 +48,8 @@ public class EndPoints {
     public static final String GET_ORDER = ORDER_PATH;
     public static final String GET_ORDERS = ORDER_PATH;
 
+    public static final String ENTER_QUEUE = ORDER_PATH;
+    public static final String EXIT_QUEUE = ORDER_PATH;
+
 
 }

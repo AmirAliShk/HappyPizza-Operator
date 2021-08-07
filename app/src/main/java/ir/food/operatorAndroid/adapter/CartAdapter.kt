@@ -29,7 +29,7 @@ class CartAdapter(list: ArrayList<CartModel>) :
 
         holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.count.toString())
         holder.binding.txtName.text = model.name
-        holder.binding.txtPrice.text = StringHelper.toPersianDigits(model.price)
+        holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
 
     }
 

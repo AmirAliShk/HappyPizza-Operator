@@ -56,11 +56,11 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
         var icon = R.drawable.ic_payment
         var color = R.color.payment_color
         when (model.statusCode) {
-            0 -> {
+            6 -> {
                 icon = R.drawable.ic_payment
                 color = R.color.payment_color
             }
-            1 -> {
+            0 -> {
                 icon = R.drawable.ic_waiting
                 color = R.color.waiting
                 holder.binding.txtStatus.setTextColor(
@@ -78,19 +78,19 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
                 icon = R.drawable.ic_chef
                 color = R.color.preparing
             }
-            3 -> {
+            5 -> {
                 icon = R.drawable.ic_coooking
                 color = R.color.cooking
             }
-            4 -> {
+            3 -> {
                 icon = R.drawable.ic_delivery
                 color = R.color.delivery
             }
-            5 -> {
+            1 -> {
                 icon = R.drawable.ic_close
                 color = R.color.canceled
             }
-            6 -> {
+            4 -> {
                 icon = R.drawable.ic_round_done_24
                 color = R.color.finished
             }

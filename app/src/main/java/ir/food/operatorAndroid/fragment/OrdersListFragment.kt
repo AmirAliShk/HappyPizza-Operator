@@ -20,12 +20,18 @@ import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONObject
+import org.linphone.core.Call
+import org.linphone.core.Core
+import org.linphone.core.CoreListenerStub
 
 class OrdersListFragment : Fragment() {
 
     lateinit var binding: FragmentOrdersListBinding
     var value = "family"
+    lateinit var core: Core
+    lateinit var tellNumber: String
 
     var orderModels: ArrayList<OrderModel> = ArrayList()
 
@@ -61,6 +67,7 @@ class OrdersListFragment : Fragment() {
         binding.imgSearchType.setOnClickListener {
             SearchDialog().show(object : SearchDialog.SearchListener {
                 override fun searchType(searchType: Int) {
+                    binding.edtSearchBar.setText("")
                     when (searchType) {
                         1 -> {
                             binding.imgSearchType.setImageResource(R.drawable.ic_user)
@@ -84,6 +91,30 @@ class OrdersListFragment : Fragment() {
 
         binding.imgBack.setOnClickListener { MyApplication.currentActivity.onBackPressed() }
 
+        if (MyApplication.prefManager.connectedCall) {
+            binding.imgEndCall.setBackgroundResource(R.drawable.bg_pink_edge)
+        } else {
+            binding.imgEndCall.setBackgroundResource(0)
+        }
+
+        binding.imgEndCall.setOnClickListener {
+            if (MyApplication.prefManager.connectedCall) {
+//                CallDialog().show(object : CallDialog.CallDialogInterface { TODO check if call dialog is nessesory or not?
+//                    override fun onDismiss() {}
+//
+//                    override fun onCallReceived() {}
+//
+//                    override fun onCallTransferred() {}
+//
+//                    override fun onCallEnded() {
+//                        binding.imgEndCall.setBackgroundResource(0)
+//                    }
+//                }, true)
+            } else {
+                MyApplication.Toast("در حال حاضر تماسی برقرار نیست", Toast.LENGTH_SHORT)
+            }
+        }
+
         return binding.root
     }
 
@@ -101,6 +132,7 @@ class OrdersListFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        orderModels.clear()
                         val jsonObject = JSONObject(args[0].toString())
                         val status = jsonObject.getBoolean("success")
                         val message = jsonObject.getString("message")
@@ -141,4 +173,27 @@ class OrdersListFragment : Fragment() {
             }
         }
 
+    var mCoreListener: CoreListenerStub = object : CoreListenerStub() {
+        override fun onCallStateChanged(
+            core: Core,
+            call: Call,
+            state: Call.State,
+            message: String
+        ) {
+            if (state == Call.State.End) {
+                binding.imgEndCall.setBackgroundResource(0)
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        core = LinphoneService.getCore()
+        core.addListener(mCoreListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        core.removeListener(mCoreListener)
+    }
 }
