@@ -4,22 +4,27 @@ import android.content.Intent
 import android.net.Uri
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.activity.MainActivity
+import ir.food.operatorAndroid.app.ContinuProssecing
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.app.MyApplication.context
 import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.fragment.LogInFragment
+import ir.food.operatorAndroid.fragment.login.LogInFragment
 import ir.food.operatorAndroid.helper.AppVersionHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
+import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
+import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONException
 import org.json.JSONObject
+
 
 class GetAppInfo {
 
     fun callAppInfoAPI() {
         try {
-            if (MyApplication.prefManager.refreshToken == "") {
+            if (MyApplication.prefManager.pushToken == "") {
                 FragmentHelper
                     .toFragment(MyApplication.currentActivity, LogInFragment())
                     .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
@@ -144,6 +149,37 @@ class GetAppInfo {
                 MyApplication.currentActivity.finish()
             }
             generalDialog.show()
+        }
+    }
+
+    // This thread will periodically check if the Service is ready, and then call onServiceReady
+    class ServiceWaitThread : Thread() {
+        override fun run() {
+            while (!LinphoneService.isReady()) {
+                try {
+                    sleep(30)
+                } catch (e: InterruptedException) {
+                    AvaCrashReporter.send(
+                        e,
+                        "GetAppInfo class, ServiceWaitThread onResponse method"
+                    )
+                    throw RuntimeException("waiting thread sleep() has been interrupted")
+                }
+            }
+            // As we're in a thread, we can't do UI stuff in it, must post a runnable in UI thread
+//            MyApplication.handler.post { run }
+            MyApplication.handler.post { ContinuProssecing().runMainActivity() }
+        }
+    }
+
+    fun startVoipService() {
+        if (LinphoneService.isReady()) {
+            ContinuProssecing().runMainActivity()
+        } else {
+            // If it's not, let's start it
+            ServiceHelper.start(MyApplication.context, LinphoneService::class.java)
+            // And wait for it to be ready, so we can safely use it afterwards
+            ServiceWaitThread().start()
         }
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ViewFlipper
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemSearchBinding
 import ir.food.operatorAndroid.fragment.OrderDetailsFragment
 import ir.food.operatorAndroid.fragment.OrdersListFragment
+import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -25,6 +27,7 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
     RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
 
     private val models = list
+    lateinit var vfDetails: ViewFlipper
 
     class ViewHolder(val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -41,7 +44,11 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
         val model = models[position]
 
         holder.binding.txtStatus.text = model.statusName
-        holder.binding.txtTime.text = StringHelper.toPersianDigits(model.date)
+        holder.binding.txtTime.text = (StringHelper.toPersianDigits(
+            DateHelper.strPersianEghit(
+                DateHelper.parseFormat(model.date + "", null)
+            )
+        ))
         holder.binding.txtName.text = model.name
         holder.binding.txtMobile.text = StringHelper.toPersianDigits(model.mobile)
         holder.binding.txtAddress.text = StringHelper.toPersianDigits(model.address)
@@ -56,8 +63,16 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
             1 -> {
                 icon = R.drawable.ic_waiting
                 color = R.color.waiting
-                holder.binding.txtStatus.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.black))
-                holder.binding.txtTime.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.black))
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.black
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.black
+                    )
+                )
             }
             2 -> {
                 icon = R.drawable.ic_chef
@@ -82,15 +97,24 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
         }
         holder.binding.imgStatus.setImageResource(icon)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val header = AppCompatResources.getDrawable(MyApplication.context, R.drawable.bg_orders_header)
+            val header =
+                AppCompatResources.getDrawable(MyApplication.context, R.drawable.bg_orders_header)
             holder.binding.llHeaderStatus.background = header
-            DrawableCompat.setTint(header!!, MyApplication.currentActivity.resources.getColor(color))
+            DrawableCompat.setTint(
+                header!!,
+                MyApplication.currentActivity.resources.getColor(color)
+            )
         } else {
-            holder.binding.llHeaderStatus.setBackgroundColor(MyApplication.currentActivity.resources.getColor(color))
+            holder.binding.llHeaderStatus.setBackgroundColor(
+                MyApplication.currentActivity.resources.getColor(
+                    color
+                )
+            )
         }
 
         holder.itemView.setOnClickListener {
-          getOrderDetails(model.id)
+            this.vfDetails = holder.binding.vfDetails
+            getOrderDetails(model.id)
         }
 
     }
@@ -99,7 +123,8 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
         return models.size
     }
 
-    private fun getOrderDetails(orderId:String) {
+    private fun getOrderDetails(orderId: String) {
+        this.vfDetails.displayedChild = 1
         RequestHelper.builder(EndPoints.GET_ORDER)
             .addPath(orderId)
             .listener(callBack)
@@ -111,23 +136,29 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        vfDetails.displayedChild = 0
                         val jsonObject = JSONObject(args[0].toString())
                         val status = jsonObject.getBoolean("success")
                         val message = jsonObject.getString("message")
                         if (status) {
                             val dataObj = jsonObject.getJSONObject("data")
                             FragmentHelper
-                                .toFragment(MyApplication.currentActivity, OrderDetailsFragment(dataObj.toString()))
+                                .toFragment(
+                                    MyApplication.currentActivity,
+                                    OrderDetailsFragment(dataObj.toString())
+                                )
                                 .add()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        vfDetails.displayedChild = 0
                     }
                 }
             }
 
             override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
+                    vfDetails.displayedChild = 0
                 }
             }
         }

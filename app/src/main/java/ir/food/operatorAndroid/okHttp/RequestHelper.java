@@ -13,12 +13,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.app.EndPoints;
 import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.dialog.ErrorDialog;
 import ir.food.operatorAndroid.dialog.GeneralDialog;
-import ir.food.operatorAndroid.fragment.LogInFragment;
+import ir.food.operatorAndroid.fragment.login.LogInFragment;
 import ir.food.operatorAndroid.helper.FragmentHelper;
 import ir.food.operatorAndroid.helper.StringHelper;
 import okhttp3.Call;

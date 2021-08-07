@@ -35,12 +35,25 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
 
-                    <ImageView
-                        android:id="@+id/imgStatus"
+                    <ViewFlipper
+                        android:id="@+id/vfDetails"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.25"
-                        android:src="@drawable/ic_payment" />
+                        android:layout_weight="0.25">
+
+                        <ImageView
+                            android:id="@+id/imgStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:layout_gravity="center"
+                            app:indicatorColor="@color/white" />
+
+                    </ViewFlipper>
 
                     <TextView
                         android:id="@+id/txtStatus"

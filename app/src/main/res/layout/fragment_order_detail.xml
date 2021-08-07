@@ -51,7 +51,6 @@
                 android:id="@+id/llHeaderStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_red_top_radus"
                 android:orientation="horizontal"
                 android:padding="@dimen/_7sdp">
 
@@ -59,15 +58,13 @@
                     android:id="@+id/imgStatus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_payment" />
+                    android:layout_weight="0.25"/>
 
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="در انتظار پرداخت"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
@@ -78,7 +75,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="6 مرداد  12:00"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
@@ -105,7 +101,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="سارابنی اسدی"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
@@ -131,7 +126,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="09307278878"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
@@ -157,7 +151,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="امیره 31.آراسته 1.مجت سهند.واحد6. طبقه 3"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
@@ -168,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_light_red"
                 android:orientation="vertical"
+                android:layout_margin="@dimen/_7sdp"
                 android:padding="@dimen/_10sdp">
 
                 <LinearLayout
@@ -227,26 +221,34 @@
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/llDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_7sdp"
-                android:text="@string/Description"
-                android:textColor="@color/color_Titles"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:padding="@dimen/_7sdp">
 
-            <TextView
-                android:id="@+id/txtDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_stroke_red"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/_10sdp"
-                android:text="زنگ خانه خراب است لطفا تماس بگیرید."
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/Description"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_stroke_red"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -268,7 +270,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="10 تومان"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
@@ -294,7 +295,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0 تومان"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 
@@ -320,7 +320,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0 تومان"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 

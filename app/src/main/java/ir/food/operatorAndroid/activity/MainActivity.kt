@@ -1,18 +1,22 @@
 package ir.food.operatorAndroid.activity
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.app.ContinuProssecing
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.fragment.RegisterOrderFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
+import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
@@ -20,6 +24,10 @@ import org.linphone.core.ProxyConfig
 import org.linphone.core.RegistrationState
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        val TAG = MainActivity.javaClass.simpleName
+    }
 
     private lateinit var binding: ActivityMainBinding
     private var doubleBackToExitPressedOnce = false
@@ -40,12 +48,18 @@ class MainActivity : AppCompatActivity() {
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
+        MyApplication.configureAccount()
+        core = LinphoneService.getCore()
 
         binding.llRegisterOrder.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, RegisterOrderFragment())
-                .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
-                .add()
+
+            MyApplication.currentActivity.startActivity(
+                Intent(
+                    MyApplication.currentActivity,
+                    OrderRegisterActivity::class.java
+                )
+            )
+
         }
 
         binding.llOrdersList.setOnClickListener {
@@ -107,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         core.addListener(mListener)
         val lpc = core.defaultProxyConfig
         if (lpc != null) {
-            mListener.onRegistrationStateChanged(core, lpc, lpc.state, null)
+            mListener.onRegistrationStateChanged(core, lpc, lpc.state, "")
         }
     }
 

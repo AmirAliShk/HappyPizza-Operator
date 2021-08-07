@@ -16,6 +16,7 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
 import ir.food.operatorAndroid.dialog.SearchDialog
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
@@ -53,6 +54,7 @@ class OrdersListFragment : Fragment() {
                 binding.edtSearchBar.requestFocus()
                 return@setOnClickListener
             }
+            KeyBoardHelper.hideKeyboard()
             getOrders(binding.edtSearchBar.text.toString())
         }
 
@@ -86,19 +88,6 @@ class OrdersListFragment : Fragment() {
     }
 
     private fun getOrders(searchText: String) {
-
-        var model = OrderModel(
-            "1",
-            "pardakht",
-            1,
-            "23 tir",
-            "fati noori",
-            "09015693808",
-            "mashhad"
-        )
-
-        orderModels.add(model)
-
         binding.vfOrders.displayedChild = 1
         RequestHelper.builder(EndPoints.GET_ORDERS)
             .listener(callBack)
@@ -120,9 +109,9 @@ class OrdersListFragment : Fragment() {
                             for (i in 0 until dataArr.length()) {
                                 val dataObj = dataArr.getJSONObject(i)
                                 var model = OrderModel(
-                                    dataObj.getString("id"),
+                                    dataObj.getString("_id"),
                                     dataObj.getJSONObject("status").getString("name"),
-                                    dataObj.getJSONObject("status").getInt("code"),
+                                    dataObj.getJSONObject("status").getInt("status"),
                                     dataObj.getString("createdAt"),
                                     dataObj.getJSONObject("customer").getString("family"),
                                     dataObj.getJSONObject("customer").getString("mobile"),

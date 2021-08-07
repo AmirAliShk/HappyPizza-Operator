@@ -10,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.75"
-        android:text="رست بیف"
         android:textColor="@color/black"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
         android:paddingLeft="@dimen/_2sdp"
-        android:text="75,000"
         android:textColor="@color/black"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
@@ -31,7 +29,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.20"
-        android:text="2"
         android:textColor="@color/black"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />

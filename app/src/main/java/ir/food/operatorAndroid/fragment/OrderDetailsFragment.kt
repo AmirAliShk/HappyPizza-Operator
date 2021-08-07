@@ -20,6 +20,7 @@ import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.SearchDialog
+import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -35,7 +36,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
     var orderId = "0"
 
     var orderModels: ArrayList<OrderModel> = ArrayList()
-    var adapter: OrdersAdapter = OrdersAdapter(orderModels)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,16 +43,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOrderDetailBinding.inflate(layoutInflater)
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.activity?.window
-            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
-            window?.navigationBarColor =
-                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
-        }
-
         TypefaceUtil.overrideFonts(binding.root)
 
         binding.imgBack.setOnClickListener {
@@ -80,7 +70,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             MyApplication.currentActivity.onBackPressed()
         }
 
-//        parseDetails() TODO uncomment this function
+        parseDetails()
 
         return binding.root
     }
@@ -89,14 +79,10 @@ class OrderDetailsFragment(details: String) : Fragment() {
         try {
             val dataObj = JSONObject(orderDetails)
             val orderObj = dataObj.getJSONObject("order")
-            val productsArr = dataObj.getJSONArray("products")
-            orderId = orderObj.getString("_id")
-            binding.txtStatus.text = dataObj.getJSONObject("status").getString("name")
-            binding.txtTime.text = dataObj.getString("createdAt")
-            binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
-            binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
-            binding.txtAddress.text = orderObj.getString("address")
+            val deliveryLocation = dataObj.getString("deliveryLocation")
+            val tax = dataObj.getString("tax")
 
+            val productsArr = orderObj.getJSONArray("products")
             val cartModels: ArrayList<CartModel> = ArrayList()
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
@@ -109,12 +95,28 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 cartModels.add(cartModel)
             }
 
+            orderId = orderObj.getString("_id")
+            binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
+            binding.txtTime.text = (StringHelper.toPersianDigits(
+                DateHelper.strPersianEghit(
+                    DateHelper.parseFormat(orderObj.getString("createdAt") + "", null)
+                )
+            ));
+            binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
+            binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
+            binding.txtAddress.text = orderObj.getString("address")
+            if (orderObj.getString("description").isEmpty()) {
+                binding.llDesc.visibility = View.GONE
+            } else {
+                binding.txtDescription.text = orderObj.getString("description")
+            }
+
             val cartAdapter = CartAdapter(cartModels)
             binding.orderList.adapter = cartAdapter
 
             var icon = R.drawable.ic_payment
             var color = R.color.payment_color
-            when (dataObj.getJSONObject("status").getInt("code")) {
+            when (orderObj.getJSONObject("status").getInt("status")) {
                 0 -> {
                     icon = R.drawable.ic_payment
                     color = R.color.payment_color
@@ -179,12 +181,12 @@ class OrderDetailsFragment(details: String) : Fragment() {
     private fun cancelService(id: String) {
         binding.vfCancel.displayedChild = 1
         RequestHelper.builder(EndPoints.CANCEL_ORDER)
-            .listener(endServiceCallBack)
+            .listener(cancelServiceCallBack)
             .addParam("orderId", id)
-            .post()
+            .delete()
     }
 
-    private val endServiceCallBack: RequestHelper.Callback =
+    private val cancelServiceCallBack: RequestHelper.Callback =
         object : RequestHelper.Callback() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {

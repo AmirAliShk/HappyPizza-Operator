@@ -1,4 +1,4 @@
-package ir.food.operatorAndroid.fragment
+package ir.food.operatorAndroid.fragment.login
 
 import android.content.Intent
 import android.os.Build
@@ -14,30 +14,29 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.FragmentSignUpBinding
+import ir.food.operatorAndroid.databinding.FragmentLoginBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
-import org.json.JSONException
 import org.json.JSONObject
-import java.lang.Exception
 
-class SignUpFragment : Fragment() {
+class LogInFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignUpBinding
-    lateinit var nameFamily: String
+    companion object {
+        val TAG = LogInFragment.javaClass.simpleName
+    }
+
+    lateinit var binding: FragmentLoginBinding
     lateinit var mobile: String
     lateinit var verificationCode: String
-    lateinit var password: String
-    lateinit var repeatPassword: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentSignUpBinding.inflate(layoutInflater)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
 
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.activity?.window
@@ -49,6 +48,33 @@ class SignUpFragment : Fragment() {
         }
 
         TypefaceUtil.overrideFonts(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            mobile = binding.edtMobile.text.toString()
+            verificationCode = binding.edtVerificationCode.text.toString()
+            when {
+                mobile.isEmpty() -> {
+                    MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
+                    binding.edtMobile.requestFocus()
+                }
+                verificationCode.isEmpty() -> {
+                    MyApplication.Toast("کد تایید را وارد کنید", Toast.LENGTH_SHORT)
+                    binding.edtVerificationCode.requestFocus()
+                }
+                else -> {
+                    login()
+                }
+
+            }
+        }
+
+        binding.txtSignup.setOnClickListener {
+            FragmentHelper
+                .toFragment(MyApplication.currentActivity, SignUpFragment())
+                .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
+                .setAddToBackStack(false)
+                .add()
+        }
 
         binding.btnSendCode.setOnClickListener {
             mobile = binding.edtMobile.text.toString()
@@ -63,92 +89,44 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        binding.btnSignup.setOnClickListener {
-            nameFamily = binding.edtName.text.toString()
-            mobile = binding.edtMobile.text.toString()
-            verificationCode = binding.edtVerificationCode.text.toString()
-            password = binding.edtPassword.text.toString()
-            repeatPassword = binding.edtRepeatPassword.text.toString()
-            when {
-                nameFamily.isEmpty() -> {
-                    MyApplication.Toast("نام و نام خانوادگی را وارد کنید", Toast.LENGTH_SHORT)
-                    binding.edtName.requestFocus()
-                }
-                mobile.isEmpty() -> {
-                    MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
-                    binding.edtMobile.requestFocus()
-                }
-                verificationCode.isEmpty() -> {
-                    MyApplication.Toast("کد تایید را وارد کنید", Toast.LENGTH_SHORT)
-                    binding.edtVerificationCode.requestFocus()
-                }
-                password.isEmpty() -> {
-                    MyApplication.Toast("رمز عبور را وارد کنید", Toast.LENGTH_SHORT)
-                    binding.edtPassword.requestFocus()
-                }
-                repeatPassword.isEmpty() -> {
-                    MyApplication.Toast("رمز عبور را تکرار کنید", Toast.LENGTH_SHORT)
-                    binding.edtRepeatPassword.requestFocus()
-                }
-                repeatPassword != password -> {
-                    MyApplication.Toast("تکرار رمز عبور اشتباه وارد شده است", Toast.LENGTH_SHORT)
-                    binding.edtRepeatPassword.requestFocus()
-                }
-                else -> {
-                    signUp()
-                }
-
-            }
-        }
-
-        binding.txtLogin.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, LogInFragment())
-                .setAddToBackStack(false)
-                .add()
-        }
-
         return binding.root
     }
 
-    private fun signUp() {
-        RequestHelper.builder(EndPoints.SIGN_UP)
-            .addParam("password", password)
-            .addParam("family", nameFamily)
+    private fun login() {
+        RequestHelper.builder(EndPoints.LOG_IN)
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
-            .addParam("code", verificationCode)
             .addParam("scope", "operator")
-            .listener(signupCallBack)
+            .addParam("code", verificationCode)
+            .listener(loginCallBack)
             .post()
+
     }
 
-    private val signupCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+    private val loginCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+//                    {"success":false,"message":"کاربر در دسترس نمی باشد","data":{}}
                     val splashJson = JSONObject(args[0].toString())
                     val success = splashJson.getBoolean("success")
                     val message = splashJson.getString("message")
-                    if (success) {
+                    if (!success) {
+                        GeneralDialog().message(message).secondButton("باشه") {}.show()
+                    } else {
                         val dataObj = splashJson.getJSONObject("data")
                         if (dataObj.getBoolean("status")) {
-                            GeneralDialog().message(message).firstButton("باشه") {
-                                MyApplication.currentActivity.startActivity(
-                                    Intent(
-                                        MyApplication.currentActivity,
-                                        MainActivity::class.java
-                                    )
-                                )
-                                MyApplication.currentActivity.finish()
-                            }.show()
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
                             MyApplication.prefManager.authorization = dataObj.getString("accessToken")
-
+                            MyApplication.currentActivity.startActivity(
+                                Intent(
+                                    MyApplication.currentActivity,
+                                    MainActivity::class.java
+                                )
+                            )
+                            MyApplication.currentActivity.finish()
                         }else{
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }
-                    } else {
-                        GeneralDialog().message(message).secondButton("باشه") {}.show()
                     }
 
                 } catch (e: Exception) {
@@ -165,8 +143,9 @@ class SignUpFragment : Fragment() {
     }
 
     private fun requestVerificationCode() {
-        RequestHelper.builder(EndPoints.VERIFICATION_CODE)
+        RequestHelper.builder(EndPoints.LOGIN_VERIFICATION_CODE)
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
+            .addParam("scope", "operator")
             .listener(verificationCodeCallBack)
             .post()
 
@@ -184,6 +163,7 @@ class SignUpFragment : Fragment() {
                             MyApplication.Toast(message, Toast.LENGTH_LONG)
                         }
 
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -196,4 +176,5 @@ class SignUpFragment : Fragment() {
                 }
             }
         }
+
 }
