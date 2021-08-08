@@ -71,11 +71,35 @@ class GetAppInfo {
                             val updateAvailable = data.getBoolean("update")
                             val forceUpdate = data.getBoolean("isForce")
                             val updateUrl = data.getString("updateUrl")
+                            val sipNumber = data.getString("sipNumber")
+                            val sipPassword = data.getString("sipPassword")
+                            val sipServer = data.getString("sipServer")
+
+                            MyApplication.prefManager.pushToken = data.getString("pushToken")
+                            MyApplication.prefManager.pushId = data.getInt("pushId")
+                            MyApplication.prefManager.setUserCode("1")
+                            MyApplication.prefManager.sipNumber = sipNumber
+                            MyApplication.prefManager.sipPassword = sipPassword
+                            MyApplication.prefManager.sipServer = sipServer
 
                             if (updateAvailable) {
                                 updatePart(forceUpdate, updateUrl)
                                 return@post
                             }
+
+                            startVoipService()
+
+                            MyApplication.handler.postDelayed({
+                                if (sipNumber != MyApplication.prefManager.sipNumber ||
+                                    sipPassword != MyApplication.prefManager.sipPassword ||
+                                    !sipServer.equals(MyApplication.prefManager.sipServer)
+                                ) {
+                                    if (sipNumber != "0") {
+                                        MyApplication.configureAccount();
+                                    }
+                                }
+                            }, 500)
+
                             if (status) {
                                 MyApplication.currentActivity.startActivity(
                                     Intent(
@@ -93,11 +117,6 @@ class GetAppInfo {
                                 .show()
                         }
                     } catch (e: JSONException) {
-                        GeneralDialog()
-                            .message("خطایی پیش آمده دوباره امتحان کنید.")
-                            .firstButton("باشه") { GeneralDialog().dismiss() }
-                            .secondButton("تلاش مجدد") { callAppInfoAPI() }
-                            .show()
                         e.printStackTrace()
                     }
                 }
@@ -105,13 +124,8 @@ class GetAppInfo {
 
             override fun onFailure(reCall: Runnable?, e: Exception?) {
                 MyApplication.handler.post {
-                    GeneralDialog()
-                        .message("خطایی پیش آمده دوباره امتحان کنید.")
-                        .firstButton("باشه") { GeneralDialog().dismiss() }
-                        .secondButton("تلاش مجدد") { callAppInfoAPI() }
-                        .show()
+
                 }
-                super.onFailure(reCall, e)
             }
         }
 
@@ -182,4 +196,6 @@ class GetAppInfo {
             ServiceWaitThread().start()
         }
     }
+
+
 }

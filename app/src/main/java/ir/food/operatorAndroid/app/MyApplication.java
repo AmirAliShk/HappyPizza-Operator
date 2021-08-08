@@ -54,10 +54,7 @@ public class MyApplication extends Application {
     public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static String DIR_DOWNLOAD;
     public static String DIR_ROOT;
-    public static final String VOICE_FOLDER_NAME = "voice";
-    public static FragmentManager fragmentManagerV4;
-    public static final String SOUND = "android.resource://ir.taxi1880.operatormanagement/";
-    public static final String image_path_save = DIR_SDCARD + "/operatormanagement/Image/";
+    public static final String SOUND = "android.resource://ir.food.operatorAndroid/";
 
     @Override
     public void onCreate() {
@@ -75,6 +72,10 @@ public class MyApplication extends Application {
         Configuration config = new Configuration();
         config.locale = locale;
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+
+        if (prefManager.getUserCode() != "0") {
+            avaStart();
+        }
 
         initACRA();
     }
@@ -137,7 +138,7 @@ public class MyApplication extends Application {
     }
 
     public static void avaStart() {
-        if (prefManager.getUserCode() == 0) return;
+        if (prefManager.getUserCode() == "0") return;
         if (prefManager.getPushId() == 0) return;
         if (prefManager.getPushToken() == null) return;
 
@@ -161,9 +162,9 @@ public class MyApplication extends Application {
             // No account configured, we display the configuration activity
             AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
 
-            mAccountCreator.setDomain("sbc.turbotaxi.ir:4060");
-            mAccountCreator.setUsername("423");
-            mAccountCreator.setPassword("423");
+            mAccountCreator.setDomain(prefManager.getSipServer());
+            mAccountCreator.setUsername(prefManager.getSipNumber());
+            mAccountCreator.setPassword(prefManager.getSipPassword());
             mAccountCreator.setTransport(TransportType.Udp);
 
             // This will automatically create the proxy config and auth info and add them to the Core

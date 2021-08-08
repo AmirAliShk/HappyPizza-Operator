@@ -54,6 +54,7 @@ class OrderRegisterActivity : AppCompatActivity() {
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
+        MyApplication.configureAccount()
         refreshQueueStatus()
 
         binding.btnSupport.setOnClickListener {

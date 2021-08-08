@@ -11,16 +11,12 @@ public class EndPoints {
 //    http://api.parsian.ir:1881/api/operator/
 //    http://192.168.1.145/api/findway/citylatinname/address
 
-    public static final String IP = (BuildConfig.DEBUG)
-//            ? "http://192.168.1.145"
-            ? "http://happypizza.ir"
-            : "http://happypizza.ir";
-//            : "http://192.168.1.145";
+    public static final String IP =
+//            "http://happypizza.ir";
+            "http://192.168.1.127";
 
-    public static final String HAKWEYE_IP = (BuildConfig.DEBUG)
-//          ? "http://192.168.1.145"
-            ? "http://happypizza.ir"
-            : "http://happypizza.ir";
+    public static final String HAKWEYE_IP =
+            "http://happypizza.ir";
 //          : "http://192.168.1.145";
 
 

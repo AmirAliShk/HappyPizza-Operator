@@ -17,7 +17,7 @@ class ContinuProssecing {
 //                .remove()
             return
         }
-        if (MyApplication.prefManager.userCode != 0) {
+        if (MyApplication.prefManager.userCode != "0") {
             MyApplication.avaStart()
         }
         MyApplication.handler.post {

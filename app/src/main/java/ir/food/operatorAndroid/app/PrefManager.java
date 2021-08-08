@@ -150,8 +150,8 @@ public class PrefManager {
         return pref.getString(REFRESH_TOKEN, "");
     }
 
-    public int getUserCode() {
-        return pref.getInt(KEY_USER_CODE, 0);
+    public String getUserCode() {
+        return pref.getString(KEY_USER_CODE, "0");
     }
 
     public void setUserCode(String v) {
