@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ViewFlipper
+            android:id="@+id/vfCall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:id="@+id/llRecentCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/bg_item_dialog"
+                    android:elevation="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text=" تماس های اخیر "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_recent_calls" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/bg_item_dialog"
+                    android:elevation="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="تست ارتباط "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_status" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llEndCall"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_end_call"
+                android:elevation="@dimen/_3sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="پایان تماس "
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/ic_end_call" />
+
+            </LinearLayout>
+
+        </ViewFlipper>
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="18dp"
+            android:src="@drawable/ic_close" />
+
+    </LinearLayout>
+
+</RelativeLayout>

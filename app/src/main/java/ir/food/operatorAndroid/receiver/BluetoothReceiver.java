@@ -72,8 +72,8 @@ public class BluetoothReceiver extends BroadcastReceiver {
             int state = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_DISCONNECTED);
             if (state == BluetoothHeadset.STATE_CONNECTED) {
                 Log.i(TAG, "[Bluetooth] Bluetooth headset connected");
-//        if (LinphoneService.getInstance() != null)
-//          LinphoneService.getInstance().bluetoothHeadsetConnectionChanged(true);
+                if (LinphoneService.getInstance() != null)
+                    LinphoneService.getInstance().bluetoothHeadsetConnectionChanged(true);
             } else if (state == BluetoothHeadset.STATE_DISCONNECTED) {
                 Log.i(TAG, "[Bluetooth] Bluetooth headset disconnected");
                 if (LinphoneService.getInstance() != null)

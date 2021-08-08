@@ -1,10 +1,13 @@
 package ir.food.operatorAndroid.activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
@@ -14,11 +17,11 @@ import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
-import ir.food.operatorAndroid.webService.GetAppInfo
 
 class Splash : AppCompatActivity() {
     var TAG = Splash::class.java
     private lateinit var binding: ActivitySplashBinding
+    private val permission = arrayOf(Manifest.permission.RECORD_AUDIO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,7 @@ class Splash : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
 
-        MyApplication.prefManager.setPushToken("pizzaOperatorAABMohsenX")
+        MyApplication.prefManager.pushToken = "pizzaOperatorAABMohsenX"
         MyApplication.prefManager.pushId = 12
         MyApplication.prefManager.setUserCode("1")
 
@@ -44,7 +47,24 @@ class Splash : AppCompatActivity() {
 
         MyApplication.handler.postDelayed(
             {
-//            GetAppInfo().callAppInfoAPI()
+            checkPermission()
+            }, 1500
+        )
+
+    }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            val hasAudioPermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            if (hasAudioPermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    permission,
+                    1
+                )
+            } else {
+//                GetAppInfo().callAppInfoAPI()
                 MyApplication.currentActivity.startActivity(
                     Intent(
                         MyApplication.currentActivity,
@@ -52,9 +72,26 @@ class Splash : AppCompatActivity() {
                     )
                 )
                 MyApplication.currentActivity.finish()
-            }, 1500
-        )
+            }
+        }else{
+//            GetAppInfo().callAppInfoAPI()
+            MyApplication.currentActivity.startActivity(
+                Intent(
+                    MyApplication.currentActivity,
+                    MainActivity::class.java
+                )
+            )
+            MyApplication.currentActivity.finish()
+        }
+    }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        checkPermission()
     }
 
     // This thread will periodically check if the Service is ready, and then call onServiceReady

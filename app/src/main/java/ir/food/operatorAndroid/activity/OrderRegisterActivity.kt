@@ -12,6 +12,7 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityOrderRegisterBinding
+import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
@@ -66,6 +67,25 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.btnActivate.setOnClickListener { enterTheQueue() }
 
         binding.btnDeActivate.setOnClickListener { exitTheQueue() }
+
+        binding.imgCallOption.setOnClickListener {
+            CallDialog().show(object : CallDialog.CallDialogInterface {
+                override fun onDismiss() {
+                    core.addListener(mCoreListener)
+                }
+
+                override fun onCallReceived() {
+                    showCallIncoming()
+                }
+
+                override fun onCallTransferred() {
+//                    MyApplication.handler.postDelayed({ clearData(binding.root) }, 100)
+                }
+
+                override fun onCallEnded() {
+                }
+            }, false)
+        }
 
         binding.rlAccept.setOnClickListener {
             call = core.currentCall
@@ -326,6 +346,9 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.mRipplePulseLayout.stopRippleAnimation()
         binding.rlNewInComingCall.visibility = View.GONE
         binding.rlActionBar.visibility = View.VISIBLE
+        if(!MyApplication.prefManager.connectedCall){
+            binding.imgCallQuality.visibility = View.INVISIBLE
+        }
     }
 
     override fun onResume() {

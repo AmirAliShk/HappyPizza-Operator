@@ -410,8 +410,7 @@ public class LinphoneService extends Service {
         lInputStream.close();
     }
 
-    private void onIncomingReceived() { // TODO uncomment these lines
-//    SoundHelper.ringing(R.raw.ring);
+    private void onIncomingReceived() {
         if (OrderRegisterActivity.Companion.isRunning()) return;
 
         Intent intent = new Intent(this, CallActivity.class);
