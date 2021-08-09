@@ -26,7 +26,7 @@ public class EndPoints {
     public static final String PUSH = "http://turbotaxi.ir:6060";
 
     public static final String WEBSERVICE_PATH = IP + ":" + APIPort + "/api/operator/v1/";
-    public static final String COMPLAINT_PATH = IP + ":" + APIPort + "/api/operator/v1/";
+    public static final String COMPLAINT_PATH = IP + ":" + APIPort + "/api/operator/v1/complaint";
     public static final String ACTIVATE_PATH = IP + ":" + APIPort + "/api/operator/v1/activate";
     public static final String CUSTOMER_PATH = IP + ":" + APIPort + "/api/operator/v1/customer";
     public static final String ORDER_PATH = IP + ":" + APIPort + "/api/operator/v1/order";
@@ -45,6 +45,7 @@ public class EndPoints {
     public static final String GET_ORDER = ORDER_PATH;
     public static final String GET_ORDERS = ORDER_PATH;
     public static final String EDIT_ADDRESS = ORDER_PATH+"/editAddress";
+    public static final String ADD_COMPLAINT = COMPLAINT_PATH;
 
     public static final String ENTER_QUEUE = ACTIVATE_PATH;
 

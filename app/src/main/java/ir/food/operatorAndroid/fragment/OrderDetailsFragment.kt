@@ -18,7 +18,9 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
+import ir.food.operatorAndroid.dialog.EditAddressDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
+import ir.food.operatorAndroid.dialog.RegisterComplaintDialog
 import ir.food.operatorAndroid.dialog.SearchDialog
 import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
@@ -45,6 +47,8 @@ class OrderDetailsFragment(details: String) : Fragment() {
         binding = FragmentOrderDetailBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
 
+        parseDetails()
+
         binding.imgBack.setOnClickListener {
             MyApplication.currentActivity.onBackPressed()
         }
@@ -57,6 +61,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnSetComplaint.setOnClickListener {
+            RegisterComplaintDialog().show(orderId)
         }
 
         binding.btnDeliverLocation.setOnClickListener {
@@ -66,9 +71,8 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnChangeAddress.setOnClickListener {
+            EditAddressDialog().show(orderId, binding.txtAddress.text.toString())
         }
-
-        parseDetails()
 
         return binding.root
     }

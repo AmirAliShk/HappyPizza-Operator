@@ -253,7 +253,7 @@ class OrderRegisterActivity : AppCompatActivity() {
                         val status = jsonObject.getBoolean("success")
                         val message = jsonObject.getString("message")
                         if (status) {
-                            MyApplication.prefManager.setQueueStatus(false)
+                            MyApplication.prefManager.queueStatus = false
                             refreshQueueStatus()
                             GeneralDialog()
                                 .message("شما با موفقیت از صف خارج شدید")

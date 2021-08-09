@@ -11,6 +11,7 @@ import android.widget.Toast
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
+import ir.food.operatorAndroid.databinding.DialogEditAddressBinding
 import ir.food.operatorAndroid.databinding.DialogRegisterComplaintBinding
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.StringHelper
@@ -19,14 +20,14 @@ import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
 
-class RegisterComplaintDialog {
+class EditAddressDialog {
     lateinit var dialog: Dialog
-    lateinit var binding: DialogRegisterComplaintBinding
+    lateinit var binding: DialogEditAddressBinding
 
-    fun show(orderId: String) {
+    fun show(orderId: String, address: String) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        binding = DialogRegisterComplaintBinding.inflate(LayoutInflater.from(MyApplication.context))
+        binding = DialogEditAddressBinding.inflate(LayoutInflater.from(MyApplication.context))
         dialog.setContentView(binding.root)
         TypefaceUtil.overrideFonts(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -37,15 +38,17 @@ class RegisterComplaintDialog {
         dialog.window?.attributes = wlp
         dialog.setCancelable(false)
 
-        binding.btnSubmit.setOnClickListener {
-            val message = binding.edtMessage.text.toString()
+        binding.edtAddress.setText(address)
 
-            if (message.isEmpty()) {
-                MyApplication.Toast("متن شکایت را وارد کنید", Toast.LENGTH_LONG)
-                binding.edtMessage.requestFocus()
+        binding.btnSubmit.setOnClickListener {
+            val adrs = binding.edtAddress.text.toString()
+
+            if (adrs.isEmpty()) {
+                MyApplication.Toast("متن ادرس را وارد کنید", Toast.LENGTH_LONG)
+                binding.edtAddress.requestFocus()
                 return@setOnClickListener
             }
-            complaint(message, orderId)
+            changeAddress(adrs, orderId)
 
         }
 
@@ -61,16 +64,16 @@ class RegisterComplaintDialog {
 
     }
 
-    private fun complaint(message: String, id: String) {
+    private fun changeAddress(adrs: String, id: String) {
         binding.vfLoader.displayedChild = 1
-        RequestHelper.builder(EndPoints.ADD_COMPLAINT)
-            .listener(complaintCallBack)
+        RequestHelper.builder(EndPoints.EDIT_ADDRESS)
+            .listener(changeAddressCallBack)
             .addParam("orderId", id)
-            .addParam("des", message)
-            .post()
+            .addParam("adrs", adrs)
+            .put()
     }
 
-    private val complaintCallBack: RequestHelper.Callback =
+    private val changeAddressCallBack: RequestHelper.Callback =
         object : RequestHelper.Callback() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {

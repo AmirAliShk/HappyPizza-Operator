@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="false"
+    android:background="@drawable/bg_gray"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -13,6 +14,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:clickable="false"
+        android:textColor="@color/white"
         android:gravity="center"
         android:minHeight="?android:attr/actionBarSize"
         android:text="تست توست"
