@@ -139,7 +139,7 @@ class OrderRegisterActivity : AppCompatActivity() {
                 if (MyApplication.prefManager.isCallIncoming) {
                     MyApplication.Toast(getString(R.string.exit), Toast.LENGTH_SHORT)
                 } else {
-                    exitQueue()
+                    exitQueue(MyApplication.prefManager.sipNumber)
                 }
             }
             .secondButton("نیستم", null)
@@ -189,8 +189,9 @@ class OrderRegisterActivity : AppCompatActivity() {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .addParam("sipNumber", sipNumber)
+            .addParam("state", 1)
             .listener(enterTheQueueCallBack)
-            .post()
+            .put()
     }
 
     private val enterTheQueueCallBack: RequestHelper.Callback =
@@ -233,12 +234,13 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
-    private fun exitQueue() {
+    private fun exitQueue(sipNumber: String) {
         LoadingDialog.makeCancelableLoader()
-        RequestHelper.builder(EndPoints.EXIT_QUEUE)
+        RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .listener(exitTheQueueCallBack)
-            .addParam("", JSONObject())
-            .delete()
+            .addParam("sipNumber", sipNumber)
+            .addParam("state", 0)
+            .put()
     }
 
     private val exitTheQueueCallBack: RequestHelper.Callback =

@@ -19,6 +19,7 @@ import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONObject
 
 class LogInFragment : Fragment() {
@@ -117,13 +118,14 @@ class LogInFragment : Fragment() {
                         if (dataObj.getBoolean("status")) {
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
                             MyApplication.prefManager.authorization = dataObj.getString("accessToken")
-                            MyApplication.currentActivity.startActivity(
-                                Intent(
-                                    MyApplication.currentActivity,
-                                    MainActivity::class.java
-                                )
-                            )
-                            MyApplication.currentActivity.finish()
+                            GetAppInfo().callAppInfoAPI()
+//                            MyApplication.currentActivity.startActivity(
+//                                Intent(
+//                                    MyApplication.currentActivity,
+//                                    MainActivity::class.java
+//                                )
+//                            )
+//                            MyApplication.currentActivity.finish()
                         }else{
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }

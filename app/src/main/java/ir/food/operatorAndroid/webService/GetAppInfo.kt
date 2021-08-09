@@ -24,7 +24,7 @@ class GetAppInfo {
 
     fun callAppInfoAPI() {
         try {
-            if (MyApplication.prefManager.pushToken == "") {
+            if (MyApplication.prefManager.authorization == "") {
                 FragmentHelper
                     .toFragment(MyApplication.currentActivity, LogInFragment())
                     .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
