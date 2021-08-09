@@ -65,9 +65,16 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnDeliverLocation.setOnClickListener {
-            FragmentHelper
-                .toFragment(MyApplication.currentActivity, DeliverLocationFragment())
-                .add()
+            val bundle = Bundle()
+//            bundle.putDouble("lat", lat)
+//            bundle.putDouble("lng", lng)
+//            bundle.putString("time", lastPositionTime)
+//            bundle.putString("taxiCode", taxiCode)
+            FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment())
+                .setArguments(bundle).add()
+//            FragmentHelper
+//                .toFragment(MyApplication.currentActivity, DeliverLocationFragment())
+//                .add()
         }
 
         binding.btnChangeAddress.setOnClickListener {

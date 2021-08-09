@@ -1,14 +1,11 @@
 package ir.food.operatorAndroid.fragment
 
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.OrdersAdapter
@@ -147,7 +144,8 @@ class OrdersListFragment : Fragment() {
                                     dataObj.getString("createdAt"),
                                     dataObj.getJSONObject("customer").getString("family"),
                                     dataObj.getJSONObject("customer").getString("mobile"),
-                                    dataObj.getString("address")
+                                    dataObj.getString("address"),
+                                    dataObj.getBoolean("paid")
                                 )
                                 orderModels.add(model)
                             }

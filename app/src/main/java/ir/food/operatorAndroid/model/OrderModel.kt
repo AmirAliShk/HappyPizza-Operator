@@ -7,5 +7,6 @@ data class OrderModel(
     var date: String,
     var name: String,
     var mobile: String,
-    var address: String
+    var address: String,
+    var paid: Boolean
 )

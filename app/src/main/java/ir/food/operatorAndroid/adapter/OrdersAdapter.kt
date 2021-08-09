@@ -1,6 +1,5 @@
 package ir.food.operatorAndroid.adapter
 
-import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemSearchBinding
 import ir.food.operatorAndroid.fragment.OrderDetailsFragment
-import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
@@ -55,46 +53,48 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
 
         var icon = R.drawable.ic_payment
         var color = R.color.payment_color
-        when (model.statusCode) {
-            6 -> {
-                icon = R.drawable.ic_payment
-                color = R.color.payment_color
-            }
-            0 -> {
-                icon = R.drawable.ic_waiting
-                color = R.color.waiting
-                holder.binding.txtStatus.setTextColor(
-                    MyApplication.currentActivity.resources.getColor(
-                        R.color.black
+        if (!model.paid) {
+            icon = R.drawable.ic_payment
+            color = R.color.payment_color
+        } else {
+            when (model.statusCode) {
+                0 -> {
+                    icon = R.drawable.ic_waiting
+                    color = R.color.waiting
+                    holder.binding.txtStatus.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.black
+                        )
                     )
-                )
-                holder.binding.txtTime.setTextColor(
-                    MyApplication.currentActivity.resources.getColor(
-                        R.color.black
+                    holder.binding.txtTime.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.black
+                        )
                     )
-                )
-            }
-            2 -> {
-                icon = R.drawable.ic_chef
-                color = R.color.preparing
-            }
-            5 -> {
-                icon = R.drawable.ic_coooking
-                color = R.color.cooking
-            }
-            3 -> {
-                icon = R.drawable.ic_delivery
-                color = R.color.delivery
-            }
-            1 -> {
-                icon = R.drawable.ic_close
-                color = R.color.canceled
-            }
-            4 -> {
-                icon = R.drawable.ic_round_done_24
-                color = R.color.finished
+                }
+                5 -> {
+                    icon = R.drawable.ic_chef
+                    color = R.color.preparing
+                }
+                2 -> {
+                    icon = R.drawable.ic_coooking
+                    color = R.color.cooking
+                }
+                3 -> {
+                    icon = R.drawable.ic_delivery
+                    color = R.color.delivery
+                }
+                1 -> {
+                    icon = R.drawable.ic_close
+                    color = R.color.canceled
+                }
+                4 -> {
+                    icon = R.drawable.ic_round_done_24
+                    color = R.color.finished
+                }
             }
         }
+
         holder.binding.imgStatus.setImageResource(icon)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val header =
