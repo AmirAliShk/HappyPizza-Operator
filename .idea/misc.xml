@@ -8,10 +8,12 @@
         <entry key="app/src/main/res/drawable/bg_orders_header.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_red.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_stroke_red.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/ic_call_answer.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_coooking.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_delivery.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_peyment.xml" value="0.209375" />
+        <entry key="app/src/main/res/layout/activity_call.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_order_register.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.22" />

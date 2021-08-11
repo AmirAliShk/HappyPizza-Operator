@@ -36,7 +36,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
     lateinit var binding: FragmentOrderDetailBinding
     private val orderDetails = details
     var orderId = "0"
-
+    lateinit var deliveryLocation: String
     var orderModels: ArrayList<OrderModel> = ArrayList()
 
     override fun onCreateView(
@@ -66,15 +66,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
         binding.btnDeliverLocation.setOnClickListener {
             val bundle = Bundle()
-//            bundle.putDouble("lat", lat)
-//            bundle.putDouble("lng", lng)
-//            bundle.putString("time", lastPositionTime)
-//            bundle.putString("taxiCode", taxiCode)
+            bundle.putString("deliveryLocation", deliveryLocation)
             FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment())
                 .setArguments(bundle).add()
-//            FragmentHelper
-//                .toFragment(MyApplication.currentActivity, DeliverLocationFragment())
-//                .add()
         }
 
         binding.btnChangeAddress.setOnClickListener {
@@ -88,7 +82,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         try {
             val dataObj = JSONObject(orderDetails)
             val orderObj = dataObj.getJSONObject("order")
-            val deliveryLocation = dataObj.getString("deliveryLocation")
+            deliveryLocation = dataObj.getString("deliveryLocation")
             val tax = dataObj.getString("tax")
 
             val productsArr = orderObj.getJSONArray("products")

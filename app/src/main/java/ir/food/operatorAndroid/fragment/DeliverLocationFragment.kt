@@ -18,6 +18,8 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentDeliverLocationBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
+import ir.food.operatorAndroid.helper.DateHelper
+import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
@@ -30,13 +32,8 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
 
     var lat = 0.0
     var lng = 0.0
-    var carCode: String? = null
-    var time: String? = null
-    var isFromDriverSupport = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var deliveryLocation: String
+    lateinit var time: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,20 +45,23 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
         MapsInitializer.initialize(activity?.applicationContext)
         binding.map.getMapAsync(this)
 
+        val bundle = arguments
+        if (bundle != null) {
+            deliveryLocation = bundle.getString("deliveryLocation").toString()
+            val loc = JSONObject(deliveryLocation)
+            val locArray = loc.getJSONArray("geo")
+            lng = locArray.get(0) as Double
+            lat = locArray.get(1) as Double
+            binding.txtLastTime.text =
+                StringHelper.toPersianDigits(DateHelper.parseFormat(loc.getString("saveDate")))
+        }
+
         binding.imgBack.setOnClickListener {
             MyApplication.currentActivity.onBackPressed()
         }
-        val bundle = arguments
-        if (bundle != null) {
-            lat = bundle.getDouble("lat")
-            lng = bundle.getDouble("lng")
-            binding.txtLastTime.text = bundle.getString("time")
-            carCode = bundle.getString("taxiCode")
-            isFromDriverSupport = bundle.getBoolean("isFromDriverSupport")
-            if (isFromDriverSupport) {
-//                getLocation()
-            }
-        }
+
+        binding.imgRefresh.setOnClickListener { getLocation("0") }
+
         return binding.root
     }
 
@@ -105,8 +105,8 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun animateToLocation(latitude: Double, longitude: Double) {
-        if ((latitude == 0.0 || longitude == 0.0) && !isFromDriverSupport) {
-            MyApplication.Toast("موقعیت راننده در دسترس نمیباشد", Toast.LENGTH_SHORT)
+        if ((latitude == 0.0 || longitude == 0.0)) {
+            MyApplication.Toast("موقعیت پیک در دسترس نمیباشد.", Toast.LENGTH_SHORT)
             return
         }
         val latlng = LatLng(latitude, longitude)
