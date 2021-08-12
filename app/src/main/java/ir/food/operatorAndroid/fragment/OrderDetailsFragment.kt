@@ -37,6 +37,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
     private val orderDetails = details
     var orderId = "0"
     lateinit var deliveryLocation: String
+    lateinit var deliveryId: String
     var orderModels: ArrayList<OrderModel> = ArrayList()
 
     override fun onCreateView(
@@ -67,6 +68,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         binding.btnDeliverLocation.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("deliveryLocation", deliveryLocation)
+            bundle.putString("deliveryId", deliveryId)
             FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment())
                 .setArguments(bundle).add()
         }
@@ -82,7 +84,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
         try {
             val dataObj = JSONObject(orderDetails)
             val orderObj = dataObj.getJSONObject("order")
+            deliveryId = orderObj.getString("deliveryId")
             deliveryLocation = dataObj.getString("deliveryLocation")
+
             val tax = dataObj.getString("tax")
 
             val productsArr = orderObj.getJSONArray("products")
@@ -100,11 +104,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
             orderId = orderObj.getString("_id")
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
-            binding.txtTime.text = (StringHelper.toPersianDigits(
-                DateHelper.strPersianEghit(
-                    DateHelper.parseFormat(orderObj.getString("createdAt") + "", null)
-                )
-            ));
+            binding.txtTime.text = (StringHelper.toPersianDigits(DateHelper.strPersianEghit(DateHelper.parseFormat(orderObj.getString("createdAt") + "", null))))
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")

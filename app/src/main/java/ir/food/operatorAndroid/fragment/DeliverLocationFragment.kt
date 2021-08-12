@@ -33,6 +33,7 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
     var lat = 0.0
     var lng = 0.0
     lateinit var deliveryLocation: String
+    lateinit var deliveryId: String
     lateinit var time: String
 
     override fun onCreateView(
@@ -48,19 +49,19 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
         val bundle = arguments
         if (bundle != null) {
             deliveryLocation = bundle.getString("deliveryLocation").toString()
+            deliveryId = bundle.getString("deliveryId").toString()
             val loc = JSONObject(deliveryLocation)
-            val locArray = loc.getJSONArray("geo")
-            lng = locArray.get(0) as Double
-            lat = locArray.get(1) as Double
-            binding.txtLastTime.text =
-                StringHelper.toPersianDigits(DateHelper.parseFormat(loc.getString("saveDate")))
+            lng = loc.getDouble("lng")
+            lat = loc.getDouble("lat")
+//            binding.txtLastTime.text =
+//                StringHelper.toPersianDigits(DateHelper.parseFormat(loc.getString("saveDate")))
         }
 
         binding.imgBack.setOnClickListener {
             MyApplication.currentActivity.onBackPressed()
         }
 
-        binding.imgRefresh.setOnClickListener { getLocation("0") }
+        binding.imgRefresh.setOnClickListener { getLocation(deliveryId) }
 
         return binding.root
     }

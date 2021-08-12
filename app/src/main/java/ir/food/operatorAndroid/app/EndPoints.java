@@ -41,7 +41,7 @@ public class EndPoints {
     public static final String ADD_ORDER = ORDER_PATH;
     public static final String CANCEL_ORDER = ORDER_PATH;
     public static final String GET_CUSTOMER = CUSTOMER_PATH;
-    public static final String GET_DELIVERY_LOCATION = ORDER_PATH + "/delivery";
+    public static final String GET_DELIVERY_LOCATION = ORDER_PATH + "/delivery/";
     public static final String GET_ORDER = ORDER_PATH;
     public static final String GET_ORDERS = ORDER_PATH;
     public static final String EDIT_ADDRESS = ORDER_PATH+"/editAddress";
