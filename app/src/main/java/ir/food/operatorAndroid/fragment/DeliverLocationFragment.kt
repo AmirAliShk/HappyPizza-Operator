@@ -24,16 +24,16 @@ import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
 
-class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
+class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : Fragment(),
+    OnMapReadyCallback {
 
     lateinit var binding: FragmentDeliverLocationBinding
     lateinit var myGoogleMap: GoogleMap
     lateinit var myLocationMarker: Marker
+    val deliveryLocation = location
+    val lastLocation = lastTime
 
-    var lat = 0.0
-    var lng = 0.0
-    lateinit var deliveryLocation: String
-    lateinit var deliveryId: String
+    val deliveryId = id
     lateinit var time: String
 
     override fun onCreateView(
@@ -43,23 +43,18 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
         binding = FragmentDeliverLocationBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
         binding.map.onCreate(savedInstanceState)
-        MapsInitializer.initialize(activity?.applicationContext)
+        MapsInitializer.initialize(MyApplication.context)
         binding.map.getMapAsync(this)
-
-        val bundle = arguments
-        if (bundle != null) {
-            deliveryLocation = bundle.getString("deliveryLocation").toString()
-            deliveryId = bundle.getString("deliveryId").toString()
-            val loc = JSONObject(deliveryLocation)
-            lng = loc.getDouble("lng")
-            lat = loc.getDouble("lat")
-//            binding.txtLastTime.text =
-//                StringHelper.toPersianDigits(DateHelper.parseFormat(loc.getString("saveDate")))
-        }
 
         binding.imgBack.setOnClickListener {
             MyApplication.currentActivity.onBackPressed()
         }
+
+        binding.txtLastTime.text = (StringHelper.toPersianDigits(
+            DateHelper.strPersianEghit(
+                DateHelper.parseFormat(lastLocation + "", null)
+            )
+        ))
 
         binding.imgRefresh.setOnClickListener { getLocation(deliveryId) }
 
@@ -77,12 +72,23 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+// data: {status: true, deliveryLocation: {_id: "60b72a70e353f0385c2fe5af",city: "Mashhad",geo : [geo -49.555555, 39.555555],speed : 80, bearing: 32,saveDate: "2021-08-01T09:26:22.320Z" }}}
                         val jsonObject = JSONObject(args[0].toString())
                         val status = jsonObject.getBoolean("success")
                         val message = jsonObject.getString("message")
                         if (status) {
                             val dataObj = jsonObject.getJSONObject("data")
                             if (dataObj.getBoolean("status")) {
+                                val deliveryLocationObj = dataObj.getJSONObject("deliveryLocation")
+                                val lat = deliveryLocationObj.getJSONArray("geo").get(1)
+                                val lng = deliveryLocationObj.getJSONArray("geo").get(0)
+                                val saveDate = deliveryLocationObj.getString("saveDate")
+                                animateToLocation(lat as Double, lng as Double)
+                                binding.txtLastTime.text = (StringHelper.toPersianDigits(
+                                    DateHelper.strPersianEghit(
+                                        DateHelper.parseFormat(saveDate + "", null)
+                                    )
+                                ))
                             }
                         } else {
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
@@ -102,7 +108,7 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         myGoogleMap = p0
 
-        animateToLocation(lat, lng)
+        animateToLocation(deliveryLocation.latitude, deliveryLocation.longitude)
     }
 
     private fun animateToLocation(latitude: Double, longitude: Double) {
@@ -122,16 +128,14 @@ class DeliverLocationFragment : Fragment(), OnMapReadyCallback {
         )
         val bitmapdraw = resources.getDrawable(R.mipmap.pin) as BitmapDrawable
         val b = bitmapdraw.bitmap
-        val smallMarker = Bitmap.createScaledBitmap(b, 60, 100, false)
-        if (myGoogleMap != null) {
-            myGoogleMap.clear()
-            myLocationMarker = myGoogleMap.addMarker(
-                MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+        val smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false)
+        myGoogleMap.clear()
+        myLocationMarker = myGoogleMap.addMarker(
+            MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
 //                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-                    .position(latlng)
-            )
-        }
+                .position(latlng)
+        )
     }
 
     override fun onDestroyView() {

@@ -11,6 +11,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.model.LatLng
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.CartAdapter
 import ir.food.operatorAndroid.adapter.OrdersAdapter
@@ -36,8 +37,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
     lateinit var binding: FragmentOrderDetailBinding
     private val orderDetails = details
     var orderId = "0"
-    lateinit var deliveryLocation: String
     lateinit var deliveryId: String
+    private lateinit var deliveryLocation: LatLng
+    private lateinit var deliveryLastLocation: String
     var orderModels: ArrayList<OrderModel> = ArrayList()
 
     override fun onCreateView(
@@ -66,11 +68,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnDeliverLocation.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("deliveryLocation", deliveryLocation)
-            bundle.putString("deliveryId", deliveryId)
-            FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment())
-                .setArguments(bundle).add()
+
+            FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment(orderId,deliveryLocation,deliveryLastLocation))
+                .add()
         }
 
         binding.btnChangeAddress.setOnClickListener {
@@ -85,9 +85,11 @@ class OrderDetailsFragment(details: String) : Fragment() {
             val dataObj = JSONObject(orderDetails)
             val orderObj = dataObj.getJSONObject("order")
             deliveryId = orderObj.getString("deliveryId")
-            deliveryLocation = dataObj.getString("deliveryLocation")
-
-            val tax = dataObj.getString("tax")
+            deliveryLastLocation =  dataObj.getJSONObject("deliveryLocation").getString("date")
+            deliveryLocation = LatLng(
+                dataObj.getJSONObject("deliveryLocation").getDouble("lat"),
+                dataObj.getJSONObject("deliveryLocation").getDouble("lng")
+            )
 
             val productsArr = orderObj.getJSONArray("products")
             val cartModels: ArrayList<CartModel> = ArrayList()
@@ -104,7 +106,20 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
             orderId = orderObj.getString("_id")
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
-            binding.txtTime.text = (StringHelper.toPersianDigits(DateHelper.strPersianEghit(DateHelper.parseFormat(orderObj.getString("createdAt") + "", null))))
+            binding.txtTaxPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("tax")))
+            binding.txtTotalPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("total")))
+            binding.txtSendPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma("10000"))
+            binding.txtTime.text = (StringHelper.toPersianDigits(
+                DateHelper.strPersianEghit(
+                    DateHelper.parseFormat(
+                        orderObj.getString("createdAt") + "",
+                        null
+                    )
+                )
+            ))
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")

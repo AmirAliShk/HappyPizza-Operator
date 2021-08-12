@@ -5,6 +5,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
@@ -110,6 +111,22 @@ class OrdersListFragment : Fragment() {
             } else {
                 MyApplication.Toast("در حال حاضر تماسی برقرار نیست", Toast.LENGTH_SHORT)
             }
+        }
+
+        binding.edtSearchBar.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                if (binding.edtSearchBar.text.toString() == "") {
+                    MyApplication.Toast("لطفا موردی برای جست و جو وارد کنید", Toast.LENGTH_LONG)
+                    binding.edtSearchBar.requestFocus()
+                    return@setOnEditorActionListener false
+                }
+                KeyBoardHelper.hideKeyboard()
+                getOrders(binding.edtSearchBar.text.toString())
+
+                return@setOnEditorActionListener true
+            }
+            false
         }
 
         return binding.root

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layoutDirection="rtl"
-    android:gravity="center"
     android:background="@color/background"
+    android:gravity="center"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
     tools:context=".activity.OrderRegisterActivity">
 
     <RelativeLayout
@@ -156,7 +156,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@+id/imgBack"
-            android:src="@drawable/ic_quality_0"
             android:visibility="invisible" />
 
         <LinearLayout
@@ -194,13 +193,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/_8sdp">
 
                 <LinearLayout
@@ -228,7 +226,7 @@
                             android:background="@drawable/bg_item"
                             android:inputType="number"
                             android:maxLength="11"
-                            android:nextFocusDown="@id/edtMobile"
+                            android:nextFocusDown="@id/edtCustomerName"
                             android:padding="@dimen/_7sdp"
                             android:singleLine="true"
                             android:textColor="@color/black" />
@@ -252,6 +250,10 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="1dp" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -270,9 +272,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_item"
-                        android:inputType="number"
-                        android:maxLength="11"
-                        android:nextFocusDown="@id/edtMobile"
+                        android:inputType="text"
+                        android:nextFocusDown="@id/edtAddress"
                         android:padding="@dimen/_7sdp"
                         android:singleLine="true"
                         android:textColor="@color/black" />
@@ -283,8 +284,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_8sdp">
 
@@ -333,18 +333,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
-                android:layout_weight="4"
                 android:background="@drawable/bg_item"
                 android:orientation="vertical"
                 android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_weight="0.3"
                     android:gravity="center_vertical"
                     android:paddingRight="@dimen/_9sdp"
                     android:text="@string/cart"
@@ -353,8 +351,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
+                    android:layout_height="@dimen/_30sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -412,8 +409,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingVertical="@dimen/_5sdp"
                     android:paddingRight="@dimen/_9sdp">
@@ -447,8 +443,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/orderList"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
                     android:divider="@null"
                     android:listSelector="#00ffffff"
                     android:orientation="horizontal"
@@ -462,8 +457,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingVertical="@dimen/_5sdp"
                     android:paddingRight="@dimen/_9sdp">
@@ -490,28 +484,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_6sdp"
-                    android:layout_weight="0.5"
                     android:text="@string/Description"
                     android:textColor="@color/color_Titles" />
 
                 <EditText
                     android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_weight="1"
                     android:background="@drawable/bg_item"
-                    android:elevation="@dimen/_2sdp"
                     android:padding="@dimen/_6sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
@@ -520,8 +510,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp">
 

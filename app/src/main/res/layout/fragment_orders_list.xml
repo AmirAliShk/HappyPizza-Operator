@@ -73,10 +73,10 @@
 
             <EditText
                 android:id="@+id/edtSearchBar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#00ffffff"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:paddingRight="@dimen/_15sdp"
                 android:singleLine="true"

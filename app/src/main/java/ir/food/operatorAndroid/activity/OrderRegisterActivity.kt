@@ -315,7 +315,7 @@ class OrderRegisterActivity : AppCompatActivity() {
 
     private fun updateQualityOfSignalIcon(quality: Float) {
         val iQuality = quality.toInt()
-        var imageRes = R.drawable.ic_quality_0
+        var imageRes = 0
         if (iQuality == mDisplayedQuality) return
         when {
             quality >= 4 -> { // Good Quality
@@ -349,9 +349,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.mRipplePulseLayout.stopRippleAnimation()
         binding.rlNewInComingCall.visibility = View.GONE
         binding.rlActionBar.visibility = View.VISIBLE
-        if(!MyApplication.prefManager.connectedCall){
-            binding.imgCallQuality.visibility = View.INVISIBLE
-        }
+        binding.imgCallQuality.visibility = View.INVISIBLE
     }
 
     override fun onResume() {

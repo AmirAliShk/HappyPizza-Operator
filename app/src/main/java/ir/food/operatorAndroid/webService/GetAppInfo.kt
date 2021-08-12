@@ -77,7 +77,7 @@ class GetAppInfo {
 
                             MyApplication.prefManager.pushToken = data.getString("pushToken")
                             MyApplication.prefManager.pushId = data.getInt("pushId")
-                            MyApplication.prefManager.setUserCode("1")
+                            MyApplication.prefManager.userCode = "1"
                             MyApplication.prefManager.sipNumber = sipNumber
                             MyApplication.prefManager.sipPassword = sipPassword
                             MyApplication.prefManager.sipServer = sipServer
@@ -100,15 +100,6 @@ class GetAppInfo {
                                 }
                             }, 500)
 
-                            if (status) {
-                                MyApplication.currentActivity.startActivity(
-                                    Intent(
-                                        MyApplication.currentActivity,
-                                        MainActivity::class.java
-                                    )
-                                )
-                                MyApplication.currentActivity.finish()
-                            }
                         } else {
                             GeneralDialog()
                                 .message(message)
