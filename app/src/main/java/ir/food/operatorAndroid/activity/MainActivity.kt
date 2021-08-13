@@ -51,6 +51,21 @@ class MainActivity : AppCompatActivity() {
         MyApplication.configureAccount()
         core = LinphoneService.getCore()
 
+        binding.imgLogout.setOnClickListener {
+            GeneralDialog().message("ایا از خروج از حساب کاربری خود اطمینان دارید؟")
+                .firstButton("بله") {
+                    MyApplication.prefManager.authorization = ""
+                    MyApplication.currentActivity.startActivity(
+                        Intent(
+                            MyApplication.currentActivity,
+                            Splash::class.java
+                        )
+                    )
+                    MyApplication.currentActivity.finish()
+                }.secondButton("خیر") {}
+                .show()
+        }
+
         binding.llRegisterOrder.setOnClickListener {
 
             MyApplication.currentActivity.startActivity(
