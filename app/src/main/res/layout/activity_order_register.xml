@@ -231,7 +231,8 @@
                             android:singleLine="true"
                             android:textColor="@color/black" />
 
-                        <LinearLayout
+                        <ViewFlipper
+                            android:id="@+id/vfDownload"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_alignParentLeft="true"
@@ -244,7 +245,14 @@
                                 android:padding="@dimen/_5sdp"
                                 android:src="@drawable/ic_downloadd" />
 
-                        </LinearLayout>
+                            <com.wang.avi.AVLoadingIndicatorView
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_7sdp"
+                                app:indicatorColor="@color/color_Red" />
+
+                        </ViewFlipper>
 
                     </RelativeLayout>
 
