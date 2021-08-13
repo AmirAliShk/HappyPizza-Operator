@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_blue"
+                    android:background="@drawable/bg_deli_location_btn"
                     android:text="@string/location_delivery"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_17sdp"
@@ -348,14 +348,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:background="@drawable/bg_red"
+                    android:background="@drawable/bg_cancel_btn"
                     android:layout_weight="1">
 
                     <Button
                         android:id="@+id/btnCancelOrder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/transparent"
+                        android:background="@drawable/bg_cancel_btn"
                         android:text="@string/Cancel"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_17sdp"

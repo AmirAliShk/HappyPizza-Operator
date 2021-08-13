@@ -69,7 +69,10 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
         binding.btnDeliverLocation.setOnClickListener {
 
-            FragmentHelper.toFragment(MyApplication.currentActivity, DeliverLocationFragment(orderId,deliveryLocation,deliveryLastLocation))
+            FragmentHelper.toFragment(
+                MyApplication.currentActivity,
+                DeliverLocationFragment(orderId, deliveryLocation, deliveryLastLocation)
+            )
                 .add()
         }
 
@@ -85,7 +88,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             val dataObj = JSONObject(orderDetails)
             val orderObj = dataObj.getJSONObject("order")
             deliveryId = orderObj.getString("deliveryId")
-            deliveryLastLocation =  dataObj.getJSONObject("deliveryLocation").getString("date")
+            deliveryLastLocation = dataObj.getJSONObject("deliveryLocation").getString("date")
             deliveryLocation = LatLng(
                 dataObj.getJSONObject("deliveryLocation").getDouble("lat"),
                 dataObj.getJSONObject("deliveryLocation").getDouble("lng")
@@ -134,44 +137,55 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
             var icon = R.drawable.ic_payment
             var color = R.color.payment_color
-            when (orderObj.getJSONObject("status").getInt("status")) {
-                6 -> {
-                    icon = R.drawable.ic_payment
-                    color = R.color.payment_color
-                }
-                0 -> {
-                    icon = R.drawable.ic_waiting
-                    color = R.color.waiting
-                    binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.black
+            if (!orderObj.getBoolean("paid")) {
+                binding.btnDeliverLocation.isEnabled=false
+                binding.btnSetComplaint.isEnabled=false
+                icon = R.drawable.ic_payment
+                color = R.color.payment_color
+            } else {
+                when (orderObj.getJSONObject("status").getInt("status")) {
+                    0 -> {
+                        binding.btnDeliverLocation.isEnabled=false
+                        icon = R.drawable.ic_waiting
+                        color = R.color.waiting
+                        binding.txtStatus.setTextColor(
+                            MyApplication.currentActivity.resources.getColor(
+                                R.color.black
+                            )
                         )
-                    )
-                    binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.black
+                        binding.txtTime.setTextColor(
+                            MyApplication.currentActivity.resources.getColor(
+                                R.color.black
+                            )
                         )
-                    )
-                }
-                2 -> {
-                    icon = R.drawable.ic_chef
-                    color = R.color.preparing
-                }
-                5 -> {
-                    icon = R.drawable.ic_coooking
-                    color = R.color.cooking
-                }
-                3 -> {
-                    icon = R.drawable.ic_delivery
-                    color = R.color.delivery
-                }
-                1 -> {
-                    icon = R.drawable.ic_close
-                    color = R.color.canceled
-                }
-                4 -> {
-                    icon = R.drawable.ic_round_done_24
-                    color = R.color.finished
+                    }
+                    2 -> {
+                        binding.btnCancelOrder.isEnabled=false
+                        binding.btnDeliverLocation.isEnabled=false
+                        icon = R.drawable.ic_chef
+                        color = R.color.preparing
+                    }
+                    5 -> {
+                        binding.btnCancelOrder.isEnabled=false
+                        binding.btnDeliverLocation.isEnabled=false
+                        icon = R.drawable.ic_coooking
+                        color = R.color.cooking
+                    }
+                    3 -> {
+                        binding.btnCancelOrder.isEnabled=false
+                        icon = R.drawable.ic_delivery
+                        color = R.color.delivery
+                    }
+                    1 -> {
+                        binding.btnCancelOrder.isEnabled=false
+                        icon = R.drawable.ic_close
+                        color = R.color.canceled
+                    }
+                    4 -> {
+                        binding.btnCancelOrder.isEnabled=false
+                        icon = R.drawable.ic_round_done_24
+                        color = R.color.finished
+                    }
                 }
             }
             binding.imgStatus.setImageResource(icon)
