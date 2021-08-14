@@ -18,6 +18,7 @@ import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import ir.food.operatorAndroid.webService.GetAppInfo
+import org.acra.ACRA
 
 class Splash : AppCompatActivity() {
     var TAG = Splash::class.java
@@ -39,7 +40,10 @@ class Splash : AppCompatActivity() {
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
-
+        ACRA.getErrorReporter().putCustomData("LineCode",
+            MyApplication.prefManager.userCode.toString()
+        )
+        ACRA.getErrorReporter().putCustomData("projectId", MyApplication.prefManager.pushId.toString())
         MyApplication.handler.postDelayed(
             {
             checkPermission()

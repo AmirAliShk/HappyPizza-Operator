@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentManager;
 
 import org.acra.ACRA;
+import org.acra.annotation.AcraHttpSender;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.HttpSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
@@ -35,6 +36,11 @@ import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
 import ir.food.operatorAndroid.push.AvaFactory;
 import ir.food.operatorAndroid.sip.LinphoneService;
+
+@AcraHttpSender(
+        uri = "http://turbotaxi.ir:6061/api/crashReport",
+        httpMethod = HttpSender.Method.POST
+)
 
 public class MyApplication extends Application {
 
@@ -81,22 +87,22 @@ public class MyApplication extends Application {
     }
 
     private void initACRA() {
-        Map<String, String> authHeaderMap = new HashMap<>();
-        authHeaderMap.put("Authorization", MyApplication.prefManager.getAuthorization());
-        authHeaderMap.put("id_token", MyApplication.prefManager.getIdToken());
-
-        CoreConfigurationBuilder builder = new CoreConfigurationBuilder(this)
-                .setBuildConfigClass(BuildConfig.class)
-                .setReportFormat(StringFormat.JSON);
-
-        HttpSenderConfigurationBuilder httpPluginConfigBuilder
-                = builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder.class)
-                .setUri(EndPoints.ACRA_PATH)
-                .setHttpMethod(HttpSender.Method.POST)
-                .setHttpHeaders(authHeaderMap)
-                .setEnabled(true);
+//        Map<String, String> authHeaderMap = new HashMap<>();
+//        authHeaderMap.put("Authorization", MyApplication.prefManager.getAuthorization());
+//        authHeaderMap.put("id_token", MyApplication.prefManager.getIdToken());
+//
+//        CoreConfigurationBuilder builder = new CoreConfigurationBuilder(this)
+//                .setBuildConfigClass(BuildConfig.class)
+//                .setReportFormat(StringFormat.JSON);
+//
+//        HttpSenderConfigurationBuilder httpPluginConfigBuilder
+//                = builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder.class)
+//                .setUri(EndPoints.ACRA_PATH)
+//                .setHttpMethod(HttpSender.Method.POST)
+//                .setHttpHeaders(authHeaderMap)
+//                .setEnabled(true);
 //        if (!BuildConfig.DEBUG)
-        ACRA.init(this, builder);
+        ACRA.init(this);
 
 
     }

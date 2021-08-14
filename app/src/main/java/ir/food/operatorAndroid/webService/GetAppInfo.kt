@@ -77,7 +77,7 @@ class GetAppInfo {
 
                             MyApplication.prefManager.pushToken = data.getString("pushToken")
                             MyApplication.prefManager.pushId = data.getInt("pushId")
-                            MyApplication.prefManager.userCode = "1"
+                            MyApplication.prefManager.userCode = data.getString("userId")
                             MyApplication.prefManager.sipNumber = sipNumber
                             MyApplication.prefManager.sipPassword = sipPassword
                             MyApplication.prefManager.sipServer = sipServer
