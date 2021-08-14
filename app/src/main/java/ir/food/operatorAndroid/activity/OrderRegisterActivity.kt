@@ -19,6 +19,7 @@ import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.NumberValidation
+import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONObject
@@ -45,7 +46,6 @@ class OrderRegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -54,6 +54,7 @@ class OrderRegisterActivity : AppCompatActivity() {
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
         }
+        TypefaceUtil.overrideFonts(binding.root)
         MyApplication.configureAccount()
         refreshQueueStatus()
 
@@ -113,6 +114,15 @@ class OrderRegisterActivity : AppCompatActivity() {
                     call.terminate()
                 }
             }
+        }
+
+        binding.imgDownload.setOnClickListener {
+            if (binding.edtMobile.text.toString() == "") {
+                MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
+                binding.edtMobile.requestFocus()
+                return@setOnClickListener
+            }
+            getCustomer(binding.edtMobile.text.toString())
         }
 
     }
@@ -230,6 +240,50 @@ class OrderRegisterActivity : AppCompatActivity() {
             override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
                     LoadingDialog.dismissCancelableDialog()
+                }
+            }
+        }
+
+    private fun getCustomer(mobileNo: String) {
+        binding.vfDownload.displayedChild = 1
+        RequestHelper.builder(EndPoints.GET_CUSTOMER)
+            .addPath(if (mobileNo.startsWith("0")) mobileNo else "0$mobileNo")
+            .listener(getCustomerCallBack)
+            .get()
+    }
+
+    private val getCustomerCallBack: RequestHelper.Callback =
+        object : RequestHelper.Callback() {
+            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+                MyApplication.handler.post {
+                    try {
+                        binding.vfDownload.displayedChild = 0
+                        val jsonObject = JSONObject(args[0].toString())
+                        val success = jsonObject.getBoolean("success")
+                        val message = jsonObject.getString("message")
+                        if (success) {
+                            val dataObj = jsonObject.getJSONObject("data")
+                            if (dataObj.getBoolean("status")) {
+                                val customerObj = dataObj.getJSONObject("customer")
+                                binding.edtMobile.setText(customerObj.getString("mobile"))
+                                binding.edtCustomerName.setText(customerObj.getString("family"))
+                            } else {
+                                MyApplication.Toast(message, Toast.LENGTH_LONG)
+                            }
+                        } else {
+                            MyApplication.Toast(message, Toast.LENGTH_LONG)
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        binding.vfDownload.displayedChild = 0
+                    }
+                }
+            }
+
+            override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+                MyApplication.handler.post {
+                    binding.vfDownload.displayedChild = 0
                 }
             }
         }
