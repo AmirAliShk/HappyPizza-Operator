@@ -111,6 +111,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun signUp() {
+        binding.vfSignup.displayedChild = 1
         RequestHelper.builder(EndPoints.SIGN_UP)
             .addParam("password", password)
             .addParam("family", nameFamily)
@@ -125,6 +126,7 @@ class SignUpFragment : Fragment() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+                    binding.vfSignup.displayedChild = 0
                     val splashJson = JSONObject(args[0].toString())
                     val success = splashJson.getBoolean("success")
                     val message = splashJson.getString("message")
@@ -141,29 +143,31 @@ class SignUpFragment : Fragment() {
                                 MyApplication.currentActivity.finish()
                             }.show()
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
-                            MyApplication.prefManager.authorization = dataObj.getString("accessToken")
+                            MyApplication.prefManager.authorization =
+                                dataObj.getString("accessToken")
 
-                        }else{
+                        } else {
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {}.show()
                     }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    binding.vfSignup.displayedChild = 0
                 }
             }
         }
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
             MyApplication.handler.post {
-
+                binding.vfSignup.displayedChild = 0
             }
         }
     }
 
     private fun requestVerificationCode() {
+        binding.vfSendCode.displayedChild = 1
         RequestHelper.builder(EndPoints.VERIFICATION_CODE)
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
             .listener(verificationCodeCallBack)
@@ -176,22 +180,23 @@ class SignUpFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        binding.vfSendCode.displayedChild = 0
                         val splashJson = JSONObject(args[0].toString())
                         val success = splashJson.getBoolean("success")
                         val message = splashJson.getString("message")
                         if (success) {
                             MyApplication.Toast(message, Toast.LENGTH_LONG)
                         }
-
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        binding.vfSendCode.displayedChild = 0
                     }
                 }
             }
 
             override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
-
+                    binding.vfSendCode.displayedChild = 0
                 }
             }
         }

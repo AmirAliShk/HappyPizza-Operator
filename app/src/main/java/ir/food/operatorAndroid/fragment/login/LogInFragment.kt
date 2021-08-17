@@ -1,6 +1,5 @@
 package ir.food.operatorAndroid.fragment.login
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentLoginBinding
@@ -94,6 +92,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun login() {
+        binding.vfLogin.displayedChild = 1
         RequestHelper.builder(EndPoints.LOG_IN)
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
             .addParam("scope", "operator")
@@ -108,6 +107,7 @@ class LogInFragment : Fragment() {
             MyApplication.handler.post {
                 try {
 //                    {"success":false,"message":"کاربر در دسترس نمی باشد","data":{}}
+                    binding.vfLogin.displayedChild = 0
                     val splashJson = JSONObject(args[0].toString())
                     val success = splashJson.getBoolean("success")
                     val message = splashJson.getString("message")
@@ -117,34 +117,29 @@ class LogInFragment : Fragment() {
                         val dataObj = splashJson.getJSONObject("data")
                         if (dataObj.getBoolean("status")) {
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
-                            MyApplication.prefManager.authorization = dataObj.getString("accessToken")
+                            MyApplication.prefManager.authorization =
+                                dataObj.getString("accessToken")
                             GetAppInfo().callAppInfoAPI()
-//                            MyApplication.currentActivity.startActivity(
-//                                Intent(
-//                                    MyApplication.currentActivity,
-//                                    MainActivity::class.java
-//                                )
-//                            )
-//                            MyApplication.currentActivity.finish()
-                        }else{
+                        } else {
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }
                     }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    binding.vfLogin.displayedChild = 0
                 }
             }
         }
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
             MyApplication.handler.post {
-
+                binding.vfLogin.displayedChild = 0
             }
         }
     }
 
     private fun requestVerificationCode() {
+        binding.vfSendCode.displayedChild = 1
         RequestHelper.builder(EndPoints.LOGIN_VERIFICATION_CODE)
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
             .addParam("scope", "operator")
@@ -158,25 +153,24 @@ class LogInFragment : Fragment() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        binding.vfSendCode.displayedChild = 0
                         val splashJson = JSONObject(args[0].toString())
                         val success = splashJson.getBoolean("success")
                         val message = splashJson.getString("message")
                         if (success) {
                             MyApplication.Toast(message, Toast.LENGTH_LONG)
                         }
-
-
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        binding.vfSendCode.displayedChild = 0
                     }
                 }
             }
 
             override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
-
+                    binding.vfSendCode.displayedChild = 0
                 }
             }
         }
-
 }

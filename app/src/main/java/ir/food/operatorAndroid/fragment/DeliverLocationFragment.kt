@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -56,7 +57,15 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
             )
         ))
 
-        binding.imgRefresh.setOnClickListener { getLocation(deliveryId) }
+        binding.imgRefresh.setOnClickListener {
+            binding.imgRefresh.startAnimation(
+                AnimationUtils.loadAnimation(
+                    MyApplication.context,
+                    R.anim.rotate
+                )
+            )
+            getLocation(deliveryId)
+        }
 
         return binding.root
     }
@@ -73,6 +82,7 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
                 MyApplication.handler.post {
                     try {
 // data: {status: true, deliveryLocation: {_id: "60b72a70e353f0385c2fe5af",city: "Mashhad",geo : [geo -49.555555, 39.555555],speed : 80, bearing: 32,saveDate: "2021-08-01T09:26:22.320Z" }}}
+                        binding.imgRefresh.clearAnimation()
                         val jsonObject = JSONObject(args[0].toString())
                         val status = jsonObject.getBoolean("success")
                         val message = jsonObject.getString("message")
@@ -95,12 +105,14 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        binding.imgRefresh.clearAnimation()
                     }
                 }
             }
 
             override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
                 MyApplication.handler.post {
+                    binding.imgRefresh.clearAnimation()
                 }
             }
         }

@@ -42,7 +42,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
 
         TypefaceUtil.overrideFonts(binding.root)
         binding.edtSearchBar.requestFocus()
-        if (tellNumber != ""){
+        if (tellNumber != "") {
             binding.edtSearchBar.setText(tellNumber)
             binding.imgSearchType.setImageResource(R.drawable.ic_phone)
             binding.edtSearchBar.inputType = InputType.TYPE_CLASS_NUMBER

@@ -2,27 +2,21 @@ package ir.food.operatorAndroid.fragment
 
 import android.os.Build
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.CartAdapter
-import ir.food.operatorAndroid.adapter.OrdersAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
-import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
 import ir.food.operatorAndroid.dialog.EditAddressDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.RegisterComplaintDialog
-import ir.food.operatorAndroid.dialog.SearchDialog
 import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
@@ -138,14 +132,14 @@ class OrderDetailsFragment(details: String) : Fragment() {
             var icon = R.drawable.ic_payment
             var color = R.color.payment_color
             if (!orderObj.getBoolean("paid")) {
-                binding.btnDeliverLocation.isEnabled=false
-                binding.btnSetComplaint.isEnabled=false
+                binding.btnDeliverLocation.isEnabled = false
+                binding.btnSetComplaint.isEnabled = false
                 icon = R.drawable.ic_payment
                 color = R.color.payment_color
             } else {
                 when (orderObj.getJSONObject("status").getInt("status")) {
                     0 -> {
-                        binding.btnDeliverLocation.isEnabled=false
+                        binding.btnDeliverLocation.isEnabled = false
                         icon = R.drawable.ic_waiting
                         color = R.color.waiting
                         binding.txtStatus.setTextColor(
@@ -160,29 +154,29 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         )
                     }
                     2 -> {
-                        binding.btnCancelOrder.isEnabled=false
-                        binding.btnDeliverLocation.isEnabled=false
+                        binding.btnCancelOrder.isEnabled = false
+                        binding.btnDeliverLocation.isEnabled = false
                         icon = R.drawable.ic_chef
                         color = R.color.preparing
                     }
                     5 -> {
-                        binding.btnCancelOrder.isEnabled=false
-                        binding.btnDeliverLocation.isEnabled=false
+                        binding.btnCancelOrder.isEnabled = false
+                        binding.btnDeliverLocation.isEnabled = false
                         icon = R.drawable.ic_coooking
                         color = R.color.cooking
                     }
                     3 -> {
-                        binding.btnCancelOrder.isEnabled=false
+                        binding.btnCancelOrder.isEnabled = false
                         icon = R.drawable.ic_delivery
                         color = R.color.delivery
                     }
                     1 -> {
-                        binding.btnCancelOrder.isEnabled=false
+                        binding.btnCancelOrder.isEnabled = false
                         icon = R.drawable.ic_close
                         color = R.color.canceled
                     }
                     4 -> {
-                        binding.btnCancelOrder.isEnabled=false
+                        binding.btnCancelOrder.isEnabled = false
                         icon = R.drawable.ic_round_done_24
                         color = R.color.finished
                     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/darkGray"
     android:clickable="true"
     android:layoutDirection="rtl"
@@ -73,9 +73,6 @@
 
                     <EditText
                         android:id="@+id/edtName"
-                        android:singleLine="true"
-                        android:inputType="text"
-                        android:nextFocusDown="@id/edtMobile"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_3sdp"
@@ -83,7 +80,10 @@
                         android:layout_weight="0.5"
                         android:background="@drawable/bg_item"
                         android:elevation="@dimen/_2sdp"
-                        android:padding="@dimen/_7sdp" />
+                        android:inputType="text"
+                        android:nextFocusDown="@id/edtMobile"
+                        android:padding="@dimen/_7sdp"
+                        android:singleLine="true" />
 
                     <View
                         android:layout_width="0dp"
@@ -124,9 +124,6 @@
 
                     <EditText
                         android:id="@+id/edtMobile"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:nextFocusDown="@id/edtVerificationCode"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_5sdp"
@@ -134,7 +131,10 @@
                         android:layout_weight="0.5"
                         android:background="@drawable/bg_item"
                         android:elevation="@dimen/_2sdp"
-                        android:padding="@dimen/_7sdp" />
+                        android:inputType="number"
+                        android:nextFocusDown="@id/edtVerificationCode"
+                        android:padding="@dimen/_7sdp"
+                        android:singleLine="true" />
 
                     <View
                         android:layout_width="0dp"
@@ -174,9 +174,6 @@
 
                     <EditText
                         android:id="@+id/edtVerificationCode"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:nextFocusDown="@id/edtPassword"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_5sdp"
@@ -184,20 +181,37 @@
                         android:layout_weight="0.5"
                         android:background="@drawable/bg_item"
                         android:elevation="@dimen/_2sdp"
-                        android:padding="@dimen/_7sdp" />
+                        android:inputType="number"
+                        android:nextFocusDown="@id/edtPassword"
+                        android:padding="@dimen/_7sdp"
+                        android:singleLine="true" />
 
-                    <Button
-                        android:id="@+id/btnSendCode"
+                    <ViewFlipper
+                        android:id="@+id/vfSendCode"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="0.25"
                         android:background="@drawable/bg_light_red"
-                        android:elevation="@dimen/_2sdp"
-                        android:text="@string/send_code"
-                        android:textColor="@color/color_Red"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="bold" />
+                        android:elevation="@dimen/_2sdp">
+
+                        <Button
+                            android:id="@+id/btnSendCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00ffffff"
+                            android:text="@string/send_code"
+                            android:textColor="@color/color_Red"
+                            android:textSize="@dimen/_16sdp" />
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="center"
+                            app:indicatorColor="@color/white" />
+
+                    </ViewFlipper>
 
                 </LinearLayout>
 
@@ -232,22 +246,22 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        app:passwordToggleEnabled="true"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        app:passwordToggleEnabled="true">
 
                         <EditText
                             android:id="@+id/edtPassword"
-                            android:textAlignment="viewStart"
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/bg_item"
+                            android:gravity="start"
                             android:inputType="textPassword"
                             android:nextFocusDown="@id/edtRepeatPassword"
                             android:padding="@dimen/_7sdp"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textAlignment="viewStart" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -290,23 +304,23 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        app:passwordToggleEnabled="true"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        app:passwordToggleEnabled="true">
 
                         <EditText
                             android:id="@+id/edtRepeatPassword"
-                            android:textDirection="rtl"
-                            android:textAlignment="viewStart"
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/bg_item"
+                            android:gravity="start"
                             android:inputType="textPassword"
                             android:nextFocusDown="@id/edtRepeatPassword"
                             android:padding="@dimen/_7sdp"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textAlignment="viewStart"
+                            android:textDirection="rtl" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -330,11 +344,11 @@
                     android:textStyle="bold" />
 
                 <ViewFlipper
-                    android:id="@+id/vfCancel"
+                    android:id="@+id/vfSignup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
                     android:background="@drawable/bg_red"
                     android:elevation="@dimen/_2sdp">
 
@@ -351,10 +365,10 @@
                         android:textStyle="bold" />
 
                     <com.wang.avi.AVLoadingIndicatorView
-                        app:indicatorColor="@color/white"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        app:indicatorColor="@color/white" />
 
                 </ViewFlipper>
 

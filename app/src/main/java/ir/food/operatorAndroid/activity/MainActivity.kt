@@ -7,16 +7,10 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.app.ContinuProssecing
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.fragment.OrdersListFragment
-import ir.food.operatorAndroid.fragment.RegisterOrderFragment
-import ir.food.operatorAndroid.helper.FragmentHelper
-import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub

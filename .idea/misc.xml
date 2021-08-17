@@ -25,10 +25,10 @@
         <entry key="app/src/main/res/layout/dialog_loder.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/dialog_search.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_deliver_location.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_orders_list.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/fragment_register_order.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_register_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/fragment_support.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/item_list.xml" value="0.25" />

@@ -283,7 +283,7 @@ class OrderRegisterActivity : AppCompatActivity() {
                                     2 ->//recently add order
                                     {
                                         val msg =
-                                            " مسافر ${orderStatus.getInt("orderInterval")} دقیقه پیش سفری درخواست داده است \n وضعیت سفر : ${
+                                            " کاربر ${orderStatus.getInt("orderInterval")} دقیقه پیش سفارشی ثبت کرده است \n وضعیت سفارش : ${
                                                 orderStatus.getString(
                                                     "orderState"
                                                 )
