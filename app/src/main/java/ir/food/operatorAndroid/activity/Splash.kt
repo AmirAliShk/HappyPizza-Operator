@@ -39,6 +39,7 @@ class Splash : AppCompatActivity() {
             window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         ACRA.getErrorReporter().putCustomData("LineCode",
             MyApplication.prefManager.userCode.toString()

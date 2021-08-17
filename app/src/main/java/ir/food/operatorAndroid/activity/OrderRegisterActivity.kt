@@ -53,13 +53,15 @@ class OrderRegisterActivity : AppCompatActivity() {
             window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
             window?.navigationBarColor =
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         TypefaceUtil.overrideFonts(binding.root)
         MyApplication.configureAccount()
         refreshQueueStatus()
 
         binding.btnSupport.setOnClickListener {
-            FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment()).replace()
+            FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
+                .replace()
         }
 
         binding.imgBack.setOnClickListener {
@@ -267,8 +269,44 @@ class OrderRegisterActivity : AppCompatActivity() {
                                 val customerObj = dataObj.getJSONObject("customer")
                                 binding.edtMobile.setText(customerObj.getString("mobile"))
                                 binding.edtCustomerName.setText(customerObj.getString("family"))
+
+                                val orderStatus = dataObj.getJSONObject("orderStatus")
+
+                                when (orderStatus.getInt("status")) {
+                                    0 ->//new order
+                                    {
+
+                                    }
+                                    1 -> {//customer is lock
+                                        binding.txtLockCustomer.visibility = View.VISIBLE
+                                    }
+                                    2 ->//recently add order
+                                    {
+                                        val msg =
+                                            " مسافر ${orderStatus.getInt("orderInterval")} دقیقه پیش سفری درخواست داده است \n وضعیت سفر : ${
+                                                orderStatus.getString(
+                                                    "orderState"
+                                                )
+                                            }"
+                                        binding.vfDownload.displayedChild = 0
+
+                                        GeneralDialog()
+                                            .message(msg)
+                                            .cancelable(false)
+                                            .firstButton("بستن", null)
+                                            .secondButton("پشتیبانی") {
+                                                FragmentHelper.toFragment(
+                                                    MyApplication.currentActivity,
+                                                    OrdersListFragment(customerObj.getString("mobile"))
+                                                ).replace()
+                                            }
+                                            .show()
+                                    }
+                                }
                             } else {
+                                //new customer
                                 MyApplication.Toast(message, Toast.LENGTH_LONG)
+                                binding.txtNewCustomer.visibility = View.VISIBLE
                             }
                         } else {
                             MyApplication.Toast(message, Toast.LENGTH_LONG)

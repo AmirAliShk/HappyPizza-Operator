@@ -24,12 +24,12 @@ import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
 
-class OrdersListFragment : Fragment() {
+class OrdersListFragment(mobile: String) : Fragment() {
 
     lateinit var binding: FragmentOrdersListBinding
     var value = "family"
     lateinit var core: Core
-    lateinit var tellNumber: String
+    var tellNumber: String = mobile
 
     var orderModels: ArrayList<OrderModel> = ArrayList()
 
@@ -42,6 +42,13 @@ class OrdersListFragment : Fragment() {
 
         TypefaceUtil.overrideFonts(binding.root)
         binding.edtSearchBar.requestFocus()
+        if (tellNumber != ""){
+            binding.edtSearchBar.setText(tellNumber)
+            binding.imgSearchType.setImageResource(R.drawable.ic_phone)
+            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_NUMBER
+            value = "mobile"
+            getOrders(binding.edtSearchBar.text.toString())
+        }
 
         binding.imgRefresh.setOnClickListener {
             if (binding.edtSearchBar.text.toString() == "") {

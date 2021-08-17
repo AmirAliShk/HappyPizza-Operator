@@ -103,8 +103,6 @@ public class MyApplication extends Application {
 //                .setEnabled(true);
 //        if (!BuildConfig.DEBUG)
         ACRA.init(this);
-
-
     }
 
     private void initTypeface() {
