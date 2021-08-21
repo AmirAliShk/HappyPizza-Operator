@@ -18,7 +18,8 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    //pass = team-x_PizzaOperator
+    //alias = Happy Pizza Operator
     buildTypes {
         release {
             minifyEnabled false
