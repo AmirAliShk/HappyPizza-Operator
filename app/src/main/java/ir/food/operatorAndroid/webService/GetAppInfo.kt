@@ -83,7 +83,7 @@ class GetAppInfo {
                             MyApplication.prefManager.sipServer = sipServer
 
                             if (updateAvailable) {
-                                updatePart(forceUpdate, updateUrl)
+                                update(forceUpdate, updateUrl)
                                 return@post
                             }
 
@@ -120,42 +120,32 @@ class GetAppInfo {
             }
         }
 
-    private fun updatePart(isForce: Boolean, url: String) {
-        val generalDialog = GeneralDialog()
+    fun update(isForce: Boolean, url: String) {
         if (isForce) {
-            generalDialog.title("به روز رسانی")
-            generalDialog.cancelable(false)
-            generalDialog.message("برای برنامه نسخه جدیدی موجود است لطفا برنامه را به روز رسانی کنید")
-            generalDialog.firstButton("به روز رسانی") {
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                MyApplication.currentActivity.startActivity(i)
-                MyApplication.currentActivity.finish()
-            }
-            generalDialog.secondButton("بستن برنامه") { MyApplication.currentActivity.finish() }
-            generalDialog.show()
+            GeneralDialog()
+                .message("برای برنامه نسخه جدیدی موجود است لطفا برنامه را به روز رسانی کنید")
+                .firstButton("به روز رسانی") {
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    MyApplication.currentActivity.startActivity(i)
+                    MyApplication.currentActivity.finish()
+                }.secondButton("بستن") {
+                    MyApplication.currentActivity.finish()
+                }.cancelable(false).show()
         } else {
-            generalDialog.title("به روز رسانی")
-            generalDialog.cancelable(false)
-            generalDialog.message("برای برنامه نسخه جدیدی موجود است در صورت تمایل میتوانید برنامه را به روز رسانی کنید")
-            generalDialog.firstButton("به روز رسانی") {
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                MyApplication.currentActivity.startActivity(i)
-                MyApplication.currentActivity.finish()
-            }
-            generalDialog.secondButton("فعلا نه") {
-                MyApplication.currentActivity.startActivity(
-                    Intent(
-                        MyApplication.currentActivity,
-                        MainActivity::class.java
-                    )
-                )
-                MyApplication.currentActivity.finish()
-            }
-            generalDialog.show()
+            GeneralDialog()
+                .message("برای برنامه نسخه جدیدی موجود است در صورت تمایل میتوانید برنامه را به روز رسانی کنید")
+                .firstButton("به روز رسانی") {
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    MyApplication.currentActivity.startActivity(i)
+                    MyApplication.currentActivity.finish()
+                }.secondButton("فعلا نه") {
+                    startVoipService()
+                }.cancelable(false).show()
         }
     }
+
 
     // This thread will periodically check if the Service is ready, and then call onServiceReady
     class ServiceWaitThread : Thread() {
