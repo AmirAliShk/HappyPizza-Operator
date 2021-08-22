@@ -252,6 +252,7 @@ public class LinphoneService extends Service {
                     MyApplication.prefManager.setConnectedCall(true);
                     //if don't receive push notification from server we call missingPushApi
                     AvaFactory.getInstance(getApplicationContext()).readMissingPush();
+                    MyApplication.prefManager.setCallIncoming(false);
 
                 }
 

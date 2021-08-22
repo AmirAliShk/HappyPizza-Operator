@@ -35,7 +35,7 @@
         <ImageView
             android:id="@+id/imgEndCall"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/imgBack"
             android:padding="8dp"

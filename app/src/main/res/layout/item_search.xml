@@ -59,10 +59,10 @@
                         android:id="@+id/txtStatus"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.75"
                         android:gravity="center_vertical"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -72,7 +72,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -91,7 +91,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/name"
                         android:textColor="@color/color_Titles"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -101,7 +101,7 @@
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
                 </LinearLayout>
 
@@ -120,7 +120,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/nummber"
                         android:textColor="@color/color_Titles"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -130,7 +130,7 @@
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
                 </LinearLayout>
 
@@ -148,7 +148,7 @@
                         android:layout_weight="0.5"
                         android:text="@string/address"
                         android:textColor="@color/color_Titles"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -157,7 +157,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
                 </LinearLayout>
 

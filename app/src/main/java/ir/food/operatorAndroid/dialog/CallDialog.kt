@@ -45,12 +45,11 @@ class CallDialog {
         dialog.setCancelable(true)
 
         core = LinphoneService.getCore()
+        call = core.currentCall
+        core.addListener(coreListener)
+        binding.vfCall.displayedChild = if (call == null) 0 else 1 // todo uncomment this later
 
-        MyApplication.handler.postDelayed({
-            call = core.currentCall
-            binding.vfCall.displayedChild = if (call == null) 0 else 1// todo uncomment this later
-        }, 100)
-
+        this.callDialogInterface = callDialogInterface
         core.addListener(coreListener)
 
         this.callDialogInterface = callDialogInterface

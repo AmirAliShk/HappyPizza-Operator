@@ -464,6 +464,10 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
+        if(MyApplication.prefManager.isCallIncoming()){
+            showCallIncoming()
+        }
+
     }
 
     override fun onStart() {

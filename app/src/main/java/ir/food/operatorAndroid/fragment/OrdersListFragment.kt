@@ -13,6 +13,7 @@ import ir.food.operatorAndroid.adapter.OrdersAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
+import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.SearchDialog
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -104,17 +105,17 @@ class OrdersListFragment(mobile: String) : Fragment() {
 
         binding.imgEndCall.setOnClickListener {
             if (MyApplication.prefManager.connectedCall) {
-//                CallDialog().show(object : CallDialog.CallDialogInterface { TODO check if call dialog is nessesory or not?
-//                    override fun onDismiss() {}
-//
-//                    override fun onCallReceived() {}
-//
-//                    override fun onCallTransferred() {}
-//
-//                    override fun onCallEnded() {
-//                        binding.imgEndCall.setBackgroundResource(0)
-//                    }
-//                }, true)
+                CallDialog().show(object : CallDialog.CallDialogInterface {
+                    override fun onDismiss() {}
+
+                    override fun onCallReceived() {}
+
+                    override fun onCallTransferred() {}
+
+                    override fun onCallEnded() {
+                        binding.imgEndCall.setBackgroundResource(0)
+                    }
+                }, true)
             } else {
                 MyApplication.Toast("در حال حاضر تماسی برقرار نیست", Toast.LENGTH_SHORT)
             }

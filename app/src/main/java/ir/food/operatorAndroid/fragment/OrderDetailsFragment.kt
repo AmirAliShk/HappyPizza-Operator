@@ -34,7 +34,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
     lateinit var deliveryId: String
     private lateinit var deliveryLocation: LatLng
     private lateinit var deliveryLastLocation: String
-    var orderModels: ArrayList<OrderModel> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
