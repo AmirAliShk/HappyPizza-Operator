@@ -92,15 +92,15 @@ class OrderDetailsFragment(details: String) : Fragment() {
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
                 val cartModel = CartModel(
-                    productObj.getJSONObject("_id").getString("_id"),
+                    productObj.getBoolean("discount"),
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
-                    productObj.getJSONObject("_id").getString("name")
+                    productObj.getString("name")
                 )
                 cartModels.add(cartModel)
             }
 
-            orderId = orderObj.getString("_id")
+            orderId = orderObj.getString("id")
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
             binding.txtTaxPrice.text =
                 StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("tax")))

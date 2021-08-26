@@ -1,6 +1,7 @@
 package ir.food.operatorAndroid.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.food.operatorAndroid.app.MyApplication
@@ -20,16 +21,22 @@ class CartAdapter(list: ArrayList<CartModel>) :
         val binding = ItemCartBinding.inflate(
             LayoutInflater.from(MyApplication.context), parent, false
         )
-        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
+        TypefaceUtil.overrideFonts(binding.root)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = models[position]
 
-        holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.count.toString())
+        holder.binding.txtCount.text = StringHelper.toPersianDigits(model.count.toString())
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
+
+        if(model.discount){
+            holder.binding.txtDiscount.visibility= View.VISIBLE
+        }else{
+            holder.binding.txtDiscount.visibility= View.INVISIBLE
+        }
 
     }
 

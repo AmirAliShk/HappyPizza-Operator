@@ -64,7 +64,7 @@
                     android:id="@+id/txtStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.75"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
