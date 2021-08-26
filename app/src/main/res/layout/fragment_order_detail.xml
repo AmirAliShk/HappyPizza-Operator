@@ -50,11 +50,14 @@
             <LinearLayout
                 android:id="@+id/llHeaderStatus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/bg_orders_header"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_3sdp"
+                android:paddingHorizontal="@dimen/_7sdp">
 
                 <ImageView
+                    android:padding="@dimen/_3sdp"
                     android:id="@+id/imgStatus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -63,8 +66,9 @@
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.75"
+                    android:gravity="right|center_vertical"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
@@ -72,9 +76,9 @@
                 <TextView
                     android:id="@+id/txtTime"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="left|center_vertical"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
@@ -355,7 +359,7 @@
                         android:id="@+id/btnCancelOrder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_cancel_btn"
+                        android:background="@drawable/selector_cancel_btn"
                         android:text="@string/Cancel"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_17sdp"
@@ -395,7 +399,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_gray"
+                    android:background="@drawable/selector_complaint_btn"
                     android:text="@string/record_complaint"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_17sdp"
