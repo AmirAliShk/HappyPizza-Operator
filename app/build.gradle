@@ -5,13 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
-
+    compileSdkVersion 28
     defaultConfig {
         applicationId "ir.food.operatorAndroid"
-        minSdkVersion 17
-        targetSdkVersion 30
+        minSdkVersion 19
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0.0"
 
