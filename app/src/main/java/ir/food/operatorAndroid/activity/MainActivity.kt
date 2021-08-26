@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window?.statusBarColor = ContextCompat.getColor(MyApplication.context, R.color.darkGray)
             window?.navigationBarColor =
-                ContextCompat.getColor(MyApplication.context, R.color.darkGray)
+                ContextCompat.getColor(MyApplication.context, R.color.page_background)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         MyApplication.configureAccount()
