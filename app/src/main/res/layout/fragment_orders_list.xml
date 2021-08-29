@@ -101,6 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -108,12 +109,15 @@
             android:text="موردی ثبت نشده!"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/black" />
+-->
 
+<!--
         <com.wang.avi.AVLoadingIndicatorView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
             app:indicatorColor="@color/color_Red" />
+-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchList"
