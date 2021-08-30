@@ -53,15 +53,15 @@
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/bg_orders_header"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_3sdp"
-                android:paddingHorizontal="@dimen/_7sdp">
+                android:paddingHorizontal="@dimen/_7sdp"
+                android:paddingVertical="@dimen/_3sdp">
 
                 <ImageView
-                    android:padding="@dimen/_3sdp"
                     android:id="@+id/imgStatus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.25" />
+                    android:layout_weight="0.25"
+                    android:padding="@dimen/_3sdp" />
 
                 <TextView
                     android:id="@+id/txtStatus"
@@ -282,7 +282,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:padding="@dimen/_7sdp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -291,6 +292,7 @@
                     android:text="@string/Taxation"
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_16sdp"
+
                     android:textStyle="bold" />
 
                 <TextView
@@ -319,6 +321,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtDiscount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
