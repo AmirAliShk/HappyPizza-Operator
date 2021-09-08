@@ -63,15 +63,15 @@
                 android:id="@+id/imgSearchType"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_user"
-                android:layout_marginRight="@dimen/_8sdp"/>
+                android:src="@drawable/ic_user" />
 
             <View
                 android:layout_width="@dimen/_1sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/bg_red"
-                android:layout_marginRight="@dimen/_8sdp"/>
+                android:layout_marginRight="@dimen/_8sdp"
+                android:background="@drawable/bg_red" />
 
             <EditText
                 android:id="@+id/edtSearchBar"
@@ -100,6 +100,7 @@
         android:id="@+id/vfOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <TextView
             android:layout_width="match_parent"

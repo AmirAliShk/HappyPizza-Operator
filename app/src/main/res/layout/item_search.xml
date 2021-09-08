@@ -24,7 +24,6 @@
                 android:id="@+id/llItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_5sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -63,7 +62,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:gravity="right|center_vertical"
-                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
@@ -73,7 +71,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
-                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 

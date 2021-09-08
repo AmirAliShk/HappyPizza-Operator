@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rlActionBar"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_light_red"
+        android:background="@drawable/bg_red"
         android:elevation="5dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -56,7 +56,7 @@
             android:gravity="right"
             android:text="زمان آخرین موقعیت پیک :"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/txtLastTime"
@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

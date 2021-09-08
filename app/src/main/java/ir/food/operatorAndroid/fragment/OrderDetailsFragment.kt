@@ -104,10 +104,12 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
             binding.txtTaxPrice.text =
                 StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("tax")))
+            binding.txtDiscount.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("discounts")))
             binding.txtTotalPrice.text =
                 StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("total")))
             binding.txtSendPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma("10000"))
+                StringHelper.toPersianDigits(StringHelper.setComma(orderObj.getInt("deliveryCost").toString()))
             binding.txtTime.text = (StringHelper.toPersianDigits(
                 DateHelper.strPersianEghit(
                     DateHelper.parseFormat(
