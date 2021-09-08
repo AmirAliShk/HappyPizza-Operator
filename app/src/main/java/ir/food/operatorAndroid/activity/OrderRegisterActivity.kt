@@ -1,5 +1,6 @@
 package ir.food.operatorAndroid.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -496,7 +497,13 @@ class OrderRegisterActivity : AppCompatActivity() {
             GeneralDialog()
                 .message("آیا از خروج خود اطمینان دارید؟")
                 .firstButton("بله") {
-                    finish()
+                    MyApplication.currentActivity.startActivity(
+                        Intent(
+                            MyApplication.currentActivity,
+                            MainActivity::class.java
+                        )
+                    )
+                    MyApplication.currentActivity.finish()
                 }
                 .secondButton("خیر") {}
                 .show()

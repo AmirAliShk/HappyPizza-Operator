@@ -19,6 +19,7 @@ import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONObject
 import java.lang.Exception
 
@@ -134,13 +135,7 @@ class SignUpFragment : Fragment() {
                         val dataObj = splashJson.getJSONObject("data")
                         if (dataObj.getBoolean("status")) {
                             GeneralDialog().message(message).firstButton("باشه") {
-                                MyApplication.currentActivity.startActivity(
-                                    Intent(
-                                        MyApplication.currentActivity,
-                                        MainActivity::class.java
-                                    )
-                                )
-                                MyApplication.currentActivity.finish()
+                                GetAppInfo().callAppInfoAPI()
                             }.show()
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
                             MyApplication.prefManager.authorization =
