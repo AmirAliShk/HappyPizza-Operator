@@ -132,12 +132,12 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
             var icon = R.drawable.ic_payment
             var color = R.color.payment_color
-            if (!orderObj.getBoolean("paid")) {
-                binding.btnDeliverLocation.isEnabled = false
-                binding.btnSetComplaint.isEnabled = false
-                icon = R.drawable.ic_payment
-                color = R.color.payment_color
-            } else {
+//            if (!orderObj.getBoolean("paid")) {
+//                binding.btnDeliverLocation.isEnabled = false
+//                binding.btnSetComplaint.isEnabled = false
+//                icon = R.drawable.ic_payment
+//                color = R.color.payment_color
+//            } else {
                 when (orderObj.getJSONObject("status").getInt("status")) {
                     0 -> {
                         binding.btnDeliverLocation.isEnabled = false
@@ -182,7 +182,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         color = R.color.finished
                     }
                 }
-            }
+//            }
             binding.imgStatus.setImageResource(icon)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

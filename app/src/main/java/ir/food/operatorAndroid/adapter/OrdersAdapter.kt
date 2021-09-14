@@ -53,10 +53,10 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
 
         var icon = R.drawable.ic_payment
         var color = R.color.payment_color
-        if (!model.paid) {
-            icon = R.drawable.ic_payment
-            color = R.color.payment_color
-        } else {
+//        if (!model.paid) {
+//            icon = R.drawable.ic_payment
+//            color = R.color.payment_color
+//        } else {
             when (model.statusCode) {
                 0 -> {
                     icon = R.drawable.ic_waiting
@@ -143,7 +143,7 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
                     )
                 }
             }
-        }
+//        }
 
         holder.binding.imgStatus.setImageResource(icon)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
