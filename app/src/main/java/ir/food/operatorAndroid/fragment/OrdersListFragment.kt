@@ -142,10 +142,16 @@ class OrdersListFragment(mobile: String) : Fragment() {
 
     private fun getOrders(searchText: String) {
         binding.vfOrders.displayedChild = 1
+        var text = searchText
+        if (value == "mobile") {
+            if (!searchText.startsWith("0")) {
+                text = "0$searchText"
+            }
+        }
         RequestHelper.builder(EndPoints.GET_ORDERS)
             .listener(callBack)
             .addPath(value)
-            .addPath(searchText)
+            .addPath(text)
             .get()
     }
 

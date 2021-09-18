@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -29,8 +29,7 @@
             android:gravity="center_vertical"
             android:text="@string/service_detail"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_20sdp" />
 
     </RelativeLayout>
 
@@ -81,6 +80,7 @@
                     android:gravity="left|center_vertical"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
+                    android:paddingLeft="@dimen/_3sdp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -89,7 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -114,7 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -139,7 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -166,7 +169,8 @@
                 android:layout_margin="@dimen/_7sdp"
                 android:background="@drawable/bg_light_red"
                 android:orientation="vertical"
-                android:padding="@dimen/_10sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,7 +233,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -257,7 +262,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -282,7 +288,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp"
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
                 android:visibility="gone">
 
                 <TextView
@@ -309,7 +316,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -334,7 +342,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -361,7 +370,8 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <Button
                     android:id="@+id/btnDeliverLocation"
@@ -408,7 +418,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_7sdp"
+                android:paddingHorizontal="@dimen/_10sdp">
 
                 <Button
                     android:id="@+id/btnChangeAddress"

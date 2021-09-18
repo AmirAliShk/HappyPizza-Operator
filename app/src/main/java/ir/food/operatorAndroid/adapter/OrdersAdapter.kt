@@ -57,92 +57,97 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
 //            icon = R.drawable.ic_payment
 //            color = R.color.payment_color
 //        } else {
-            when (model.statusCode) {
-                0 -> {
-                    icon = R.drawable.ic_waiting
-                    color = R.color.waiting
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.black
-                        )
+        when (model.statusCode) {
+            0 -> {
+                icon = R.drawable.ic_waiting
+                color = R.color.waiting
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.black
                     )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.black
-                        )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.black
                     )
-                }
-                5 -> {
-                    icon = R.drawable.ic_chef
-                    color = R.color.preparing
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
+                )
+                holder.binding.vfLoader.setIndicatorColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.black
                     )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                }
-                2 -> {
-                    icon = R.drawable.ic_coooking
-                    color = R.color.cooking
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                }
-                3 -> {
-                    icon = R.drawable.ic_delivery
-                    color = R.color.delivery
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                }
-                1 -> {
-                    icon = R.drawable.ic_close
-                    color = R.color.canceled
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                }
-                4 -> {
-                    icon = R.drawable.ic_round_done_24
-                    color = R.color.finished
-                    holder.binding.txtStatus.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                    holder.binding.txtTime.setTextColor(
-                        MyApplication.currentActivity.resources.getColor(
-                            R.color.white
-                        )
-                    )
-                }
+                )
             }
+            5 -> {
+                icon = R.drawable.ic_chef
+                color = R.color.preparing
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            2 -> {
+                icon = R.drawable.ic_coooking
+                color = R.color.cooking
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            3 -> {
+                icon = R.drawable.ic_delivery
+                color = R.color.delivery
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            1 -> {
+                icon = R.drawable.ic_close
+                color = R.color.canceled
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            4 -> {
+                icon = R.drawable.ic_round_done_24
+                color = R.color.finished
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+        }
 //        }
 
         holder.binding.imgStatus.setImageResource(icon)

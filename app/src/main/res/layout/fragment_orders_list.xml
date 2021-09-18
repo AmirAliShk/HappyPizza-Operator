@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/page_background"
     android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical">
@@ -21,8 +21,7 @@
             android:gravity="center_vertical"
             android:text="لیست سفارش ها"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_20sdp" />
 
         <ImageView
             android:id="@+id/imgBack"
@@ -80,6 +79,7 @@
                 android:layout_weight="1"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
+                android:inputType="numberDecimal"
                 android:paddingRight="@dimen/_15sdp"
                 android:singleLine="true"
                 android:textColor="@color/black"

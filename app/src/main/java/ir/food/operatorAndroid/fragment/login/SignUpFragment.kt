@@ -1,6 +1,5 @@
 package ir.food.operatorAndroid.fragment.login
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +10,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentSignUpBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.webService.GetAppInfo
@@ -140,7 +139,7 @@ class SignUpFragment : Fragment() {
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
                             MyApplication.prefManager.authorization =
                                 dataObj.getString("accessToken")
-
+                            KeyBoardHelper.hideKeyboard()
                         } else {
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }
@@ -154,7 +153,7 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+        override fun onFailure(reCall: Runnable?, e: Exception?) {
             MyApplication.handler.post {
                 binding.vfSignup.displayedChild = 0
             }
@@ -189,7 +188,7 @@ class SignUpFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            override fun onFailure(reCall: Runnable?, e: Exception?) {
                 MyApplication.handler.post {
                     binding.vfSendCode.displayedChild = 0
                 }

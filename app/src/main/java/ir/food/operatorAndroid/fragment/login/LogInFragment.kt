@@ -15,6 +15,7 @@ import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentLoginBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.FragmentHelper
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.webService.GetAppInfo
@@ -120,6 +121,7 @@ class LogInFragment : Fragment() {
                             MyApplication.prefManager.authorization =
                                 dataObj.getString("accessToken")
                             GetAppInfo().callAppInfoAPI()
+                            KeyBoardHelper.hideKeyboard()
                         } else {
                             GeneralDialog().message(message).secondButton("باشه") {}.show()
                         }

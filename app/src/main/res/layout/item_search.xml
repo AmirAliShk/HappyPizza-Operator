@@ -48,6 +48,7 @@
                             android:padding="@dimen/_3sdp" />
 
                         <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/vfLoader"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
@@ -60,7 +61,7 @@
                         android:id="@+id/txtStatus"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.75"
+                        android:layout_weight="0.8"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />

@@ -51,12 +51,12 @@ class SearchDialog {
         this.listener = searchListener
 
         binding.llCustomerName.setOnClickListener {
-            listener.searchType(1)
+            listener.searchType(2)
             dismiss()
         }
 
         binding.llMobile.setOnClickListener {
-            listener.searchType(2)
+            listener.searchType(1)
             dismiss()
         }
 

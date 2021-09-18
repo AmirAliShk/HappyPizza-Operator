@@ -28,7 +28,6 @@ import org.linphone.core.Address
 import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
-import java.lang.System.exit
 
 class OrderRegisterActivity : AppCompatActivity() {
 
