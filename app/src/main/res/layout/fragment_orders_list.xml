@@ -65,7 +65,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_8sdp"
                 android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_user" />
+                android:src="@drawable/ic_phone" />
 
             <View
                 android:layout_width="@dimen/_1sdp"

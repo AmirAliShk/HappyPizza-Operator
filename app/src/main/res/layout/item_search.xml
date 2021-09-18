@@ -32,8 +32,8 @@
                     android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/bg_orders_header"
                     android:orientation="horizontal"
-                    android:paddingVertical="@dimen/_3sdp"
-                    android:paddingHorizontal="@dimen/_7sdp">
+                    android:paddingHorizontal="@dimen/_7sdp"
+                    android:paddingVertical="@dimen/_3sdp">
 
                     <ViewFlipper
                         android:id="@+id/vfDetails"
@@ -42,16 +42,16 @@
                         android:layout_weight="0.25">
 
                         <ImageView
-                            android:padding="@dimen/_3sdp"
                             android:id="@+id/imgStatus"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/_3sdp" />
 
                         <com.wang.avi.AVLoadingIndicatorView
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
-                            android:padding="@dimen/_3sdp"
                             android:layout_gravity="center"
+                            android:padding="@dimen/_3sdp"
                             app:indicatorColor="@color/white" />
 
                     </ViewFlipper>
@@ -79,20 +79,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_7sdp"
-                    android:layout_marginTop="@dimen/_2sdp">
+                    android:padding="@dimen/_7sdp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:gravity="center_vertical"
+                        android:paddingRight="@dimen/_10sdp"
                         android:text="@string/name"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"
-                        android:paddingRight="@dimen/_10sdp"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtName"
@@ -117,11 +117,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:gravity="center_vertical"
+                        android:paddingRight="@dimen/_10sdp"
                         android:text="@string/nummber"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"
-                        android:paddingRight="@dimen/_10sdp"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtMobile"
@@ -145,11 +145,11 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:paddingRight="@dimen/_10sdp"
                         android:text="@string/address"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"
-                        android:paddingRight="@dimen/_10sdp"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtAddress"
@@ -164,12 +164,12 @@
             </LinearLayout>
 
             <com.wang.avi.AVLoadingIndicatorView
-                android:visibility="gone"
                 android:id="@+id/loader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 app:indicatorColor="@color/black" />
 
         </RelativeLayout>

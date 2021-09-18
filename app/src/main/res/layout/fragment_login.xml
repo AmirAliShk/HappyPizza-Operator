@@ -154,7 +154,7 @@
                             android:background="#00ffffff"
                             android:text="@string/send_code"
                             android:textColor="@color/color_Red"
-                            android:textSize="@dimen/_16sdp"/>
+                            android:textSize="@dimen/_16sdp" />
 
                         <com.wang.avi.AVLoadingIndicatorView
                             android:layout_width="@dimen/_30sdp"

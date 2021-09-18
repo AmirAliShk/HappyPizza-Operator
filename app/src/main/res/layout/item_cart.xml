@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/_5sdp"
-        android:gravity="center_vertical">
+        android:paddingTop="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/txtName"
@@ -33,20 +33,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:gravity="left"
                 android:paddingLeft="@dimen/_2sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15ssp"
-                android:gravity="left"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtDiscount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.30"
                 android:layout_marginRight="@dimen/_4sdp"
-                android:textColor="@color/color_Red"
+                android:layout_weight="0.30"
                 android:text="باتخفیف"
+                android:textColor="@color/color_Red"
                 android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
@@ -63,7 +63,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
 
 </LinearLayout>
 

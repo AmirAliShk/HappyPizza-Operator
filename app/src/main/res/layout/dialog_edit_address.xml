@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:gravity="center"
     android:layoutDirection="rtl">
@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_margin="@dimen/_15sdp"
         android:elevation="@dimen/_5sdp"
-        android:layout_margin="@dimen/_15sdp">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,10 +26,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_4sdp">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -37,8 +37,8 @@
                     android:gravity="right"
                     android:padding="@dimen/_8sdp"
                     android:text="ویرایش ادرس"
-                    android:textSize="17sp"
                     android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -56,13 +56,13 @@
                     android:id="@+id/edtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:maxHeight="@dimen/_100sdp"
-                    android:minHeight="@dimen/_100sdp"
                     android:layout_margin="5dp"
-                    android:elevation="@dimen/_3sdp"
-                    android:maxLines="3"
                     android:background="@drawable/bg_item"
+                    android:elevation="@dimen/_3sdp"
                     android:gravity="right"
+                    android:maxHeight="@dimen/_100sdp"
+                    android:maxLines="3"
+                    android:minHeight="@dimen/_100sdp"
                     android:padding="@dimen/_10sdp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/black" />

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="false"
     android:background="@drawable/bg_gray"
+    android:clickable="false"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -14,11 +14,11 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:clickable="false"
-        android:textColor="@color/white"
         android:gravity="center"
         android:minHeight="?android:attr/actionBarSize"
         android:text="تست توست"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
 </LinearLayout>

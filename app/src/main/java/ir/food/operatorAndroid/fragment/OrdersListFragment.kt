@@ -28,7 +28,7 @@ import org.linphone.core.CoreListenerStub
 class OrdersListFragment(mobile: String) : Fragment() {
 
     lateinit var binding: FragmentOrdersListBinding
-    var value = "family"
+    var value = "mobile"
     lateinit var core: Core
     var tellNumber: String = mobile
 
@@ -76,14 +76,14 @@ class OrdersListFragment(mobile: String) : Fragment() {
                     binding.edtSearchBar.setText("")
                     when (searchType) {
                         1 -> {
-                            binding.imgSearchType.setImageResource(R.drawable.ic_user)
-                            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_TEXT
-                            value = "family"
-                        }
-                        2 -> {
                             binding.imgSearchType.setImageResource(R.drawable.ic_phone)
                             binding.edtSearchBar.inputType = InputType.TYPE_CLASS_NUMBER
                             value = "mobile"
+                        }
+                        2 -> {
+                            binding.imgSearchType.setImageResource(R.drawable.ic_user)
+                            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_TEXT
+                            value = "family"
                         }
                         3 -> {
                             binding.imgSearchType.setImageResource(R.drawable.ic_gps)

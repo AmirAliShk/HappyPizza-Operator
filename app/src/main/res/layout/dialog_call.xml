@@ -55,7 +55,6 @@
                         android:layout_weight="0.5"
                         android:src="@drawable/ic_recent_calls" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,7 +84,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.5"
                         android:src="@drawable/ic_status" />
-
 
                 </LinearLayout>
 

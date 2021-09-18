@@ -29,30 +29,6 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/llCustomerName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/bg_item"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_user" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/customer_namee"
-                android:textColor="@color/darkGray" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/llMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,6 +48,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="@string/mobile"
+                android:textColor="@color/darkGray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/bg_item"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_user" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/customer_namee"
                 android:textColor="@color/darkGray" />
 
         </LinearLayout>
