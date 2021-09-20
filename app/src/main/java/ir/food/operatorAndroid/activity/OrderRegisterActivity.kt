@@ -197,7 +197,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun enterTheQueue(sipNumber: String) {
+    private fun enterTheQueue(sipNumber: Int) {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .addParam("sipNumber", sipNumber)
@@ -326,7 +326,7 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
-    private fun exitQueue(sipNumber: String) {
+    private fun exitQueue(sipNumber: Int) {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .listener(exitTheQueueCallBack)
@@ -374,7 +374,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         }
 
     private fun refreshQueueStatus() {
-        if (MyApplication.prefManager.getQueueStatus()) {
+        if (MyApplication.prefManager.queueStatus) {
             binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
             binding.btnDeActivate.setBackgroundColor(Color.parseColor("#00FFB2B2"))
             binding.btnDeActivate.setTextColor(Color.parseColor("#ffffff"))
@@ -398,7 +398,7 @@ class OrderRegisterActivity : AppCompatActivity() {
                         val newQuality = mCurrentCall.currentQuality
                         updateQualityOfSignalIcon(newQuality);
 
-                        if (MyApplication.prefManager.getConnectedCall())
+                        if (MyApplication.prefManager.connectedCall)
                             LinphoneService.dispatchOnUIThreadAfter(this, 1000);
                     }
                 }, 1000
@@ -464,7 +464,7 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
-        if(MyApplication.prefManager.isCallIncoming()){
+        if(MyApplication.prefManager.isCallIncoming){
             showCallIncoming()
         }
 

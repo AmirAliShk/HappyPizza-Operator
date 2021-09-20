@@ -56,13 +56,13 @@ public class PrefManager {
         editor = pref.edit();
     }
 
-    public void setSipNumber(String sipNumber) {
-        editor.putString(SIP_NUMBER, sipNumber);
+    public void setSipNumber(int sipNumber) {
+        editor.putInt(SIP_NUMBER, sipNumber);
         editor.commit();
     }
 
-    public String getSipNumber() {
-        return pref.getString(SIP_NUMBER, "");
+    public int getSipNumber() {
+        return pref.getInt(SIP_NUMBER, 0);
     }
 
     public void setSipServer(String sipServer) {

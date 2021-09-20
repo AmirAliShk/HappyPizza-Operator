@@ -60,6 +60,7 @@ public class MyApplication extends Application {
     public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static String DIR_DOWNLOAD;
     public static String DIR_ROOT;
+    public static final String VOICE_FOLDER_NAME = "voice";
     public static final String SOUND = "android.resource://ir.food.operatorAndroid/";
 
     @Override
@@ -167,7 +168,7 @@ public class MyApplication extends Application {
             AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
 
             mAccountCreator.setDomain(prefManager.getSipServer());
-            mAccountCreator.setUsername(prefManager.getSipNumber());
+            mAccountCreator.setUsername(prefManager.getSipNumber() + "");
             mAccountCreator.setPassword(prefManager.getSipPassword());
             mAccountCreator.setTransport(TransportType.Udp);
 

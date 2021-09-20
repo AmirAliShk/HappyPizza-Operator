@@ -70,7 +70,17 @@ class CallDialog {
         }
 
         binding.llRecentCall.setOnClickListener {
+            RecentCallsDialog()
+                .show(
+                    "0",
+                    "0",
+                    MyApplication.prefManager.sipNumber,
+                    false,
+                    object : RecentCallsDialog.DismissInterface {
+                        override fun onDismiss(b: Boolean) {
 
+                        }
+                    })
         }
 
         binding.llEndCall.setOnClickListener {
