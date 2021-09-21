@@ -373,6 +373,34 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
+    private fun clearData() {
+        binding.edtMobile.requestFocus()
+        binding.txtLockCustomer.visibility = View.GONE
+        binding.txtNewCustomer.visibility = View.GONE
+        binding.edtMobile.setText("")
+        binding.edtCustomerName.setText("")
+        binding.edtAddress.setText("")
+        binding.edtDescription.setText("")
+        //todo reinit spinners
+        voipId = "0"
+    }
+
+    private fun enableViews() {
+        binding.edtCustomerName.isEnabled = true
+        binding.edtAddress.isEnabled = true
+        binding.edtDescription.isEnabled = true
+        binding.spProductType.isEnabled = true//todo
+        binding.spProduct.isEnabled = true
+    }
+
+    private fun disableViews() {
+        binding.edtCustomerName.isEnabled = false
+        binding.edtAddress.isEnabled = false
+        binding.edtDescription.isEnabled = false
+        binding.spProductType.isEnabled = false
+        binding.spProduct.isEnabled = false
+    }
+
     private fun refreshQueueStatus() {
         if (MyApplication.prefManager.queueStatus) {
             binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
@@ -464,7 +492,7 @@ class OrderRegisterActivity : AppCompatActivity() {
             }
         }
 
-        if(MyApplication.prefManager.isCallIncoming){
+        if (MyApplication.prefManager.isCallIncoming) {
             showCallIncoming()
         }
 
