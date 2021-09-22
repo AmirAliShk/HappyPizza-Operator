@@ -127,6 +127,8 @@ class OrderRegisterActivity : AppCompatActivity() {
             getCustomer(binding.edtMobile.text.toString())
         }
 
+        binding.imgClear.setOnClickListener { clearData() }
+
     }
 
     private fun enterTheQueue() {

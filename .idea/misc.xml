@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/drawable/ic_sip.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/ic_stop.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/ic_timer.xml" value="0.35625" />
+        <entry key="app/src/main/res/drawable/ic_trash.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/selector_complaint_btn.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_call.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />

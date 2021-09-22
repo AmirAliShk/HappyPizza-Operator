@@ -307,16 +307,31 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edtCustomerName"
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_item"
-                        android:inputType="text"
-                        android:nextFocusDown="@id/edtAddress"
-                        android:padding="@dimen/_7sdp"
-                        android:singleLine="true"
-                        android:textColor="@color/black" />
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edtCustomerName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item"
+                            android:inputType="text"
+                            android:nextFocusDown="@id/edtAddress"
+                            android:padding="@dimen/_7sdp"
+                            android:singleLine="true"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/imgClear"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_alignParentLeft="true"
+                            android:padding="4dp"
+                            android:src="@drawable/ic_trash" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

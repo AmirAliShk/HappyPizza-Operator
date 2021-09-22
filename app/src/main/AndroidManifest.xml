@@ -38,11 +38,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.Splash">
+        <activity
+            android:name=".activity.Splash"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
-                    android:windowSoftInputMode="adjustResize" />
+                    android:windowSoftInputMode="adjustNothing" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -51,6 +53,7 @@
         <service
             android:name=".sip.LinphoneService"
             android:label="@string/app_name" />
+
         <receiver
             android:name=".push.AutoStart"
             android:enabled="true"
@@ -74,6 +77,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCxQFlAU2fOE4PRaRlCGCUQ4aOKBbwqlZo" />
+
     </application>
 
 </manifest>
