@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityCallBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -134,7 +135,7 @@ class CallActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         MyApplication.currentActivity = this
-//        MyApplication.prefManager.setAppRun(true)
+        MyApplication.prefManager.isAppRun = true
         try {
             val core = LinphoneService.getCore()
             core?.addListener(mCoreListener)
@@ -154,17 +155,17 @@ class CallActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-//        MyApplication.prefManager.setAppRun(true)
+        MyApplication.prefManager.isAppRun = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
-//        MyApplication.prefManager.setAppRun(false)
+        MyApplication.prefManager.isAppRun = false
     }
 
 
     override fun onPause() {
-//        MyApplication.prefManager.setAppRun(false)
+        MyApplication.prefManager.isAppRun = false
         val core = LinphoneService.getCore()
         core?.removeListener(mCoreListener)
         super.onPause()
@@ -172,6 +173,6 @@ class CallActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-//        MyApplication.prefManager.setAppRun(false)
+        MyApplication.prefManager.isAppRun = false
     }
 }

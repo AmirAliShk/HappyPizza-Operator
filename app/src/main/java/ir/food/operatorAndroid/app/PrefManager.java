@@ -48,6 +48,8 @@ public class PrefManager {
     private static final String SIP_NUMBER = "sipNumber";
     private static final String SIP_PASSWORD = "sipPassword";
     private static final String SIP_SERVER = "sipServer";
+    private static final String VOIP_ID = "voipId";
+    private static final String QUEUE = "queue";
 
 
     public PrefManager(Context context) {
@@ -193,5 +195,32 @@ public class PrefManager {
 
     public String getProducts() {
         return pref.getString(PRODUCTS, "");
+    }
+
+    public String getVoipId() {
+        return pref.getString(VOIP_ID, "");
+    }
+
+    public void setVoipId(String voipId) {
+        editor.putString(VOIP_ID, voipId);
+        editor.commit();
+    }
+
+    public String getQueue() {
+        return pref.getString(QUEUE, "");
+    }
+
+    public void setQueue(String queue) {
+        editor.putString(QUEUE, queue);
+        editor.commit();
+    }
+
+    public void setAppRun(boolean v) {
+        editor.putBoolean(KEY_APP_STATUS, v);
+        editor.commit();
+    }
+
+    public boolean isAppRun() {
+        return pref.getBoolean(KEY_APP_STATUS, false);
     }
 }

@@ -4,6 +4,7 @@ public class DataHolder {
     private static DataHolder ourInstance;
     public String reserveDate = "0";
     public String voipId = "0";
+    public String pushType = null;
 
     public String getVoipId() {
         return ourInstance.voipId;
@@ -26,5 +27,13 @@ public class DataHolder {
             ourInstance = new DataHolder();
         }
         return ourInstance;
+    }
+
+    public String getPushType() {
+        return ourInstance.pushType;
+    }
+
+    public void setPushType(String pushType) {
+        ourInstance.pushType = pushType;
     }
 }

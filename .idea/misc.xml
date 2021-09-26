@@ -5,12 +5,15 @@
       <map>
         <entry key="app/src/main/res/drawable/bg_blue.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_deli_location_btn.xml" value="0.35625" />
+        <entry key="app/src/main/res/drawable/bg_disable_btn.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/drawable/bg_gray.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/bg_orders_header.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_red.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_stroke_red.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_top_right_radius.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/bg_unknown.xml" value="0.35625" />
+        <entry key="app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/drawable/ic_baseline_remove_from_queue_24.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/drawable/ic_call_answer.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_coooking.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_date.xml" value="0.35625" />
@@ -46,6 +49,7 @@
         <entry key="app/src/main/res/layout/fragment_register_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.33487179487179486" />
         <entry key="app/src/main/res/layout/fragment_support.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/ic_baseline_message_24.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/layout/item_cart.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/item_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_order.xml" value="0.19322916666666667" />
@@ -54,11 +58,13 @@
         <entry key="app/src/main/res/layout/item_search.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/item_spinner.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/item_toast.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/notification_collapsed.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.10520833333333333" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

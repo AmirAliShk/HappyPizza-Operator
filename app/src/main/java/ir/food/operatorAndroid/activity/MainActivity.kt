@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         MyApplication.currentActivity = this
+        MyApplication.prefManager.isAppRun = true;
         core.addListener(mListener)
         val lpc = core.defaultProxyConfig
         if (lpc != null) {
@@ -134,6 +135,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        MyApplication.prefManager.isAppRun = false;
         if (core != null) {
             core.removeListener(mListener)
         }

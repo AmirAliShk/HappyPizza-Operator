@@ -1,5 +1,7 @@
 package ir.food.operatorAndroid.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -10,19 +12,21 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
+import ir.food.operatorAndroid.app.Keys
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityOrderRegisterBinding
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
-import ir.food.operatorAndroid.helper.FragmentHelper
-import ir.food.operatorAndroid.helper.KeyBoardHelper
-import ir.food.operatorAndroid.helper.NumberValidation
-import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.helper.*
+import ir.food.operatorAndroid.model.CallModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
+import org.json.JSONException
 import org.json.JSONObject
 import org.linphone.core.Address
 import org.linphone.core.Call
@@ -41,6 +45,7 @@ class OrderRegisterActivity : AppCompatActivity() {
     lateinit var call: Call
     lateinit var core: Core
     var voipId = "0"
+    var queue = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -403,6 +408,86 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.spProduct.isEnabled = false
     }
 
+    //receive push notification from local broadcast
+    var pushReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val result = intent.getStringExtra(Keys.KEY_MESSAGE)
+            parseNotification(result)?.let { handleCallerInfo(it) }
+        }
+    }
+
+    //receive userStatus from local broadcast
+    var userStatusReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val messageUserStatus = intent.getStringExtra(Keys.KEY_MESSAGE_USER_STATUS)
+            val userStatus = intent.getBooleanExtra(Keys.KEY_USER_STATUS, false)
+            if (!userStatus) {
+                binding.btnDeActivate.setBackgroundResource(R.drawable.bg_pink_edge)
+                binding.btnActivate.setBackgroundColor(Color.parseColor("#00FFB2B2"))
+                MyApplication.prefManager.queueStatus = false
+            } else {
+                binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
+                binding.btnDeActivate.setBackgroundColor(Color.parseColor("#00FFB2B2"))
+                MyApplication.prefManager.queueStatus = true
+            }
+        }
+    }
+
+    private fun handleCallerInfo(callModel: CallModel) {
+        try {
+            if (voipId == "0") {
+                //show CallerId
+                if (callModel == null) {
+                    return
+                }
+                val participant: String =
+                    PhoneNumberValidation.removePrefix(callModel.participant)
+                queue = callModel.queue
+                voipId = callModel.voipId
+                DataHolder.getInstance().setVoipId(voipId)
+                if (binding.edtMobile == null) return
+                if (participant == null) return
+                binding.edtMobile.setText(participant)
+                MyApplication.handler.postDelayed({ binding.imgDownload.callOnClick() }, 400)
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "TripRegisterActivity class, handleCallerInfo method")
+        }
+    }
+
+    /**
+     * @param info have below format
+     * sample : {"type":"callerInfo","exten":"456","participant":"404356734579","queue":"999","voipId":"1584260434.9922480"}
+     */
+    private fun parseNotification(info: String?): CallModel? {
+        if (info == null) return null
+        try {
+            val `object` = JSONObject(info)
+            val strMessage = `object`.getString("message")
+            val messages = JSONObject(strMessage)
+            val typee = messages.getString("type")
+            if (typee == "callerInfo") {
+                val message = JSONObject(strMessage)
+                return CallModel(
+                    message.getString("type"),
+                    message.getInt("exten"),
+                    message.getString("participant"),
+                    message.getString("queue"),
+                    message.getString("voipId")
+                )
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+            AvaCrashReporter.send(
+                e,
+                "TripRegisterActivity class, parseNotification method ,info : $info"
+            )
+            return null
+        }
+        return null
+    }
+
     private fun refreshQueueStatus() {
         if (MyApplication.prefManager.queueStatus) {
             binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
@@ -478,7 +563,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         super.onResume()
         MyApplication.currentActivity = this
         showTitleBar()
-
+        MyApplication.prefManager.isAppRun = true;
         if (MyApplication.prefManager.connectedCall) {
             startCallQuality()
             binding.imgCallOption.setImageResource(R.drawable.ic_call_dialog_enable)
@@ -511,6 +596,7 @@ class OrderRegisterActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         isRunning = false
+        MyApplication.prefManager.isAppRun = false;
     }
 
     override fun onDestroy() {

@@ -41,13 +41,15 @@ class Splash : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        ACRA.getErrorReporter().putCustomData("LineCode",
+        ACRA.getErrorReporter().putCustomData(
+            "LineCode",
             MyApplication.prefManager.userCode.toString()
         )
-        ACRA.getErrorReporter().putCustomData("projectId", MyApplication.prefManager.pushId.toString())
+        ACRA.getErrorReporter()
+            .putCustomData("projectId", MyApplication.prefManager.pushId.toString())
         MyApplication.handler.postDelayed(
             {
-            checkPermission()
+                checkPermission()
             }, 1500
         )
 
@@ -66,7 +68,7 @@ class Splash : AppCompatActivity() {
             } else {
                 GetAppInfo().callAppInfoAPI()
             }
-        }else{
+        } else {
             GetAppInfo().callAppInfoAPI()
         }
     }
@@ -83,11 +85,17 @@ class Splash : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         MyApplication.currentActivity = this
+        MyApplication.prefManager.isAppRun = true;
     }
 
     override fun onStart() {
         super.onStart()
         MyApplication.currentActivity = this
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MyApplication.prefManager.isAppRun = false;
     }
 
     override fun onBackPressed() {
