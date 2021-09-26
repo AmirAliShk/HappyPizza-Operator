@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.Keys
@@ -32,6 +34,7 @@ import org.linphone.core.Address
 import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
+import java.util.*
 
 class OrderRegisterActivity : AppCompatActivity() {
 
@@ -46,6 +49,7 @@ class OrderRegisterActivity : AppCompatActivity() {
     lateinit var core: Core
     var voipId = "0"
     var queue = "0"
+    var isEnableView = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,6 +138,89 @@ class OrderRegisterActivity : AppCompatActivity() {
 
         binding.imgClear.setOnClickListener { clearData() }
 
+        MyApplication.handler.postDelayed({
+            initWaitingTimeSpinner()
+        }, 500)
+
+    }
+
+    private fun initWaitingTimeSpinner() {
+        val waitingTime = ArrayList(
+            listOf(
+                "سس", "سالاد", "نوشیدنی", "پیتزا", "پیش غذا"
+            )
+        )
+        try {
+//            binding.spProductType.isEnabled = isEnableView
+            binding.spProductType.adapter = SpinnerAdapter(
+                MyApplication.currentActivity,
+                R.layout.item_spinner,
+                waitingTime
+            )
+            binding.spProductType.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        //                    if (spWaitingTime != null)
+                        //                        ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                        when (position) {
+                            0 -> initProductSpinner(0)
+                            1 -> initProductSpinner(1)
+                            2 -> initProductSpinner(2)
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun initProductSpinner(type: Int) {
+        val waitingTime = ArrayList(
+            when (type) {
+                0 ->listOf(
+                    "خردل" ,"سیر")
+                1 -> listOf(
+                    "کاهو", "شیرازی", "سزار")
+                2 -> listOf(
+                    "آب", "دوغ", "دلستر", "نوشابه")
+                else -> listOf("")
+            }
+        )
+        try {
+//            binding.spProductType.isEnabled = isEnableView
+            binding.spProduct.adapter = SpinnerAdapter(
+                MyApplication.currentActivity,
+                R.layout.item_spinner,
+                waitingTime
+            )
+
+
+
+
+            binding.spProduct.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        //                    if (spWaitingTime != null)
+                        //                        ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun enterTheQueue() {
