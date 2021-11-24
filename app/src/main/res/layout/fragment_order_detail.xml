@@ -78,9 +78,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/_3sdp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
-                    android:paddingLeft="@dimen/_3sdp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -89,8 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -115,8 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -141,8 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -169,8 +169,8 @@
                 android:layout_margin="@dimen/_7sdp"
                 android:background="@drawable/bg_light_red"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -233,8 +233,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -262,8 +262,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -288,8 +288,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp"
                 android:visibility="gone">
 
                 <TextView
@@ -299,7 +299,6 @@
                     android:text="@string/Taxation"
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_16sdp"
-
                     android:textStyle="bold" />
 
                 <TextView
@@ -316,8 +315,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -342,8 +341,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -370,8 +369,8 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <Button
                     android:id="@+id/btnDeliverLocation"
@@ -391,7 +390,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_cancel_btn">
+                    android:background="@drawable/bg_cancel_btn"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/btnCancelOrder"
@@ -418,8 +418,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/_7sdp"
-                android:paddingHorizontal="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_7sdp">
 
                 <Button
                     android:id="@+id/btnChangeAddress"

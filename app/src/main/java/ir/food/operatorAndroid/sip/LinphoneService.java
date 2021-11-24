@@ -55,6 +55,7 @@ import ir.food.operatorAndroid.activity.CallActivity;
 import ir.food.operatorAndroid.activity.OrderRegisterActivity;
 import ir.food.operatorAndroid.app.DataHolder;
 import ir.food.operatorAndroid.app.MyApplication;
+import ir.food.operatorAndroid.helper.NotificationSingleton;
 import ir.food.operatorAndroid.helper.ServiceHelper;
 import ir.food.operatorAndroid.push.AvaCrashReporter;
 import ir.food.operatorAndroid.push.AvaFactory;
@@ -78,7 +79,6 @@ public class LinphoneService extends Service {
     private Core mCore;
     private CoreListenerStub mCoreListener;
     long[] pattern = {0, 70, 70};
-    public static final String CHANNEL_ID = "ForegroundServiceChannel";
 
     public static boolean isReady() {
         return sInstance != null;
@@ -253,9 +253,7 @@ public class LinphoneService extends Service {
                     //if don't receive push notification from server we call missingPushApi
                     AvaFactory.getInstance(getApplicationContext()).readMissingPush();
                     MyApplication.prefManager.setCallIncoming(false);
-
                 }
-
             }
 
             @Override
@@ -289,6 +287,10 @@ public class LinphoneService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground(NotificationSingleton.getNotificationId(), NotificationSingleton.getNotification(this));
+        }
+
         // If our Service is already running, no need to continue
         if (sInstance != null) {
             return START_STICKY;
@@ -307,12 +309,9 @@ public class LinphoneService extends Service {
             @Override
             public void run() {
                 mHandler.post(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mCore != null) {
-                                    mCore.iterate();
-                                }
+                        () -> {
+                            if (mCore != null) {
+                                mCore.iterate();
                             }
                         });
             }
@@ -445,7 +444,6 @@ public class LinphoneService extends Service {
     private BluetoothReceiver mBluetoothReceiver;
     private HeadsetReceiver mHeadsetReceiver;
     private boolean mHeadsetReceiverRegistered;
-
     private boolean mIsRinging;
     private boolean mAudioFocused;
     private boolean mEchoTesterIsRunning;
@@ -710,7 +708,6 @@ public class LinphoneService extends Service {
             e.printStackTrace();
             Log.e(e, "[Audio Manager] Cannot handle incoming call");
             AvaCrashReporter.send(e, "LinphoneService class, startRinging method");
-
         }
         mIsRinging = true;
     }

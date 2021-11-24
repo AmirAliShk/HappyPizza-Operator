@@ -3,12 +3,14 @@ package ir.food.operatorAndroid.push;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ir.food.operatorAndroid.app.MyApplication;
+import ir.food.operatorAndroid.helper.NotificationSingleton;
 
 public class AvaService extends Service {
 
@@ -46,7 +48,9 @@ public class AvaService extends Service {
             if (MyApplication.context == null) {
                 MyApplication.context = this;
             }
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForeground(NotificationSingleton.getNotificationId(), NotificationSingleton.getNotification(this));
+            }
 //      MyApplication.prefManager.incrementResetPushServiceCount();
 
             avaPref = new AvaPref();

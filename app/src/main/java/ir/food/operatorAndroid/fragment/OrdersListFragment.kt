@@ -121,7 +121,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
             }
         }
 
-        binding.edtSearchBar.setOnEditorActionListener { v, actionId, event ->
+        binding.edtSearchBar.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
 
                 if (binding.edtSearchBar.text.toString() == "") {
@@ -168,7 +168,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
                             val dataArr = jsonObject.getJSONArray("data")
                             for (i in 0 until dataArr.length()) {
                                 val dataObj = dataArr.getJSONObject(i)
-                                var model = OrderModel(
+                                val model = OrderModel(
                                     dataObj.getString("_id"),
                                     dataObj.getJSONObject("status").getString("name"),
                                     dataObj.getJSONObject("status").getInt("status"),

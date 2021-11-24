@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "ir.food.operatorAndroid"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0.0"
 
@@ -54,9 +54,6 @@ dependencies {
     implementation('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
-
-    implementation 'com.jakewharton:butterknife:8.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'

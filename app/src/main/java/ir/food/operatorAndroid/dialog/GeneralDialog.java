@@ -7,24 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.databinding.DialogGeneralBinding;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
-
-/***
- * Created by Amirreza Erfanian on 2018/July/26.
- * v : 1.0.0
- */
 
 public class GeneralDialog {
     private Runnable bodyRunnable = null;

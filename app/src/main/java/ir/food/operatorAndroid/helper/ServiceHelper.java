@@ -3,18 +3,24 @@ package ir.food.operatorAndroid.helper;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import ir.food.operatorAndroid.app.MyApplication;
-
 
 public class ServiceHelper {
 
     // Method to start the service
     public static void start(Context activity, Class<?> serviceClass) {
         try {
-            if (activity != null)
-                if (!isRunning(activity, serviceClass))
-                    activity.startService(new Intent(activity, serviceClass));
+            if (activity != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (!isRunning(activity, serviceClass))
+                        activity.startForegroundService(new Intent(activity, serviceClass));
+                } else {
+                    if (!isRunning(activity, serviceClass))
+                        activity.startService(new Intent(activity, serviceClass));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

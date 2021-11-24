@@ -64,14 +64,12 @@ class LogInFragment : Fragment() {
                 else -> {
                     login()
                 }
-
             }
         }
 
         binding.txtSignup.setOnClickListener {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, SignUpFragment())
-                .setStatusBarColor(MyApplication.currentActivity.resources.getColor(R.color.black))
                 .setAddToBackStack(false)
                 .add()
         }
@@ -147,7 +145,6 @@ class LogInFragment : Fragment() {
             .addParam("scope", "operator")
             .listener(verificationCodeCallBack)
             .post()
-
     }
 
     private val verificationCodeCallBack: RequestHelper.Callback =
@@ -161,6 +158,7 @@ class LogInFragment : Fragment() {
                         val message = splashJson.getString("message")
                         if (success) {
                             MyApplication.Toast(message, Toast.LENGTH_LONG)
+                            KeyBoardHelper.hideKeyboard()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
