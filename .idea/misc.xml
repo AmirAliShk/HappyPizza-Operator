@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../layout/custom_preview.xml" value="0.4343302990897269" />
         <entry key="app/src/main/res/drawable/bg_blue.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_deli_location_btn.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/bg_disable_btn.xml" value="0.19947916666666668" />
@@ -53,11 +54,11 @@
         <entry key="app/src/main/res/layout/ic_baseline_message_24.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/layout/item_cart.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/item_list.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/item_order.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/item_order.xml" value="0.3328125" />
         <entry key="app/src/main/res/layout/item_recent_calls.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/item_register_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_search.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/item_spinner.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/layout/item_spinner.xml" value="0.3328125" />
         <entry key="app/src/main/res/layout/item_toast.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/notification_collapsed.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10520833333333333" />

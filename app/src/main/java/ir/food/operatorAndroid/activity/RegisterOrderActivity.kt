@@ -14,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
@@ -26,6 +27,7 @@ import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.*
 import ir.food.operatorAndroid.model.CallModel
+import ir.food.operatorAndroid.model.PendingCartModel
 import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.ProductsTypeModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
@@ -40,6 +42,7 @@ import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.log
 
 class RegisterOrderActivity : AppCompatActivity() {
 
@@ -57,8 +60,10 @@ class RegisterOrderActivity : AppCompatActivity() {
     var isEnableView = false
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
+    var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var productTypes: String = ""
-    var product: String = ""
+    var productId: String = ""
+    var pendingCartAdapter = PendingCartAdapter(pendingCartModels, productId)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,6 +152,28 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.imgClear.setOnClickListener { clearData() }
 
+        binding.imgAddOrder.setOnClickListener {
+            if (productId.isEmpty()) {
+                return@setOnClickListener
+            }
+            val productsArr = JSONArray(MyApplication.prefManager.productsList)
+            for (i in 0 until productsArr.length()) {
+                if (productsModels[i].id == productId) {
+                    var model = PendingCartModel(
+                        productId,
+                        productsModels[i].name,
+                        productsModels[i].size.getJSONObject(0).getString("price"),
+                        productsModels[i].size.getJSONObject(0).getString("name")
+                    )
+                    pendingCartModels.add(model)
+                }
+            }
+
+            pendingCartAdapter = PendingCartAdapter(pendingCartModels, productId)
+            binding.orderList.adapter = pendingCartAdapter;
+            pendingCartAdapter.notifyDataSetChanged()
+        }
+
         MyApplication.handler.postDelayed({
             getProductsAndLists()
         }, 500)
@@ -194,7 +221,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     private fun initProductTypeSpinner() {
         val typesList = ArrayList<String>()
         try {
-            typesList.add(0, "انتخاب نشده")
+            typesList.add(0, "نوع محصول")
             val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
             for (i in 0 until typesArr.length()) {
                 val types = ProductsTypeModel(
@@ -238,9 +265,9 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun initProductSpinner(type: String) {
         val productsList = ArrayList<String>()
+        val productsArr = JSONArray(MyApplication.prefManager.productsList)
         try {
-            productsList.add(0, "انتخاب نشده")
-            val productsArr = JSONArray(MyApplication.prefManager.productsList)
+            productsList.add(0, "محصولات")
             for (i in 0 until productsArr.length()) {
                 val products = ProductsModel(
                     productsArr.getJSONObject(i).getString("_id"),
@@ -269,7 +296,13 @@ class RegisterOrderActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-                        product = productsModels[position].id
+                        Log.i("TAG", "onItemSelected: ${binding.spProduct.selectedItem}")
+                        for (i in 0 until productsArr.length()) {
+                            if (binding.spProduct.selectedItem.toString() == productsModels[position].name) {//todo
+                                productId = productsModels[i].id
+                            }
+                        }
+                        Log.i("TAG", "onItemSelected: $productId")
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}

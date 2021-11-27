@@ -21,7 +21,7 @@ import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.CartModel
+import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
 
@@ -87,16 +87,16 @@ class OrderDetailsFragment(details: String) : Fragment() {
             )
 
             val productsArr = orderObj.getJSONArray("products")
-            val cartModels: ArrayList<CartModel> = ArrayList()
+            val supportCartModels: ArrayList<SupportCartModel> = ArrayList()
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
-                val cartModel = CartModel(
+                val cartModel = SupportCartModel(
                     productObj.getBoolean("discount"),
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
                     productObj.getString("name")
                 )
-                cartModels.add(cartModel)
+                supportCartModels.add(cartModel)
             }
 
             orderId = orderObj.getString("id")
@@ -130,7 +130,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 binding.txtDescription.text = orderObj.getString("description")
             }
 
-            val cartAdapter = CartAdapter(cartModels)
+            val cartAdapter = CartAdapter(supportCartModels)
             binding.orderList.adapter = cartAdapter
 
             var icon = R.drawable.ic_payment

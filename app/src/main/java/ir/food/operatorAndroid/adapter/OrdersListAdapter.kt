@@ -20,9 +20,8 @@ import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
 
-
-class OrdersAdapter(list: ArrayList<OrderModel>) :
-    RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
+class OrdersListAdapter(list: ArrayList<OrderModel>) :
+    RecyclerView.Adapter<OrdersListAdapter.ViewHolder>() {
 
     private val models = list
     lateinit var vfDetails: ViewFlipper
