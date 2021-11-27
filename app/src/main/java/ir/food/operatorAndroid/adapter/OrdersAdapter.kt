@@ -180,7 +180,7 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
 
     private fun getOrderDetails(orderId: String) {
         this.vfDetails.displayedChild = 1
-        RequestHelper.builder(EndPoints.GET_ORDER)
+        RequestHelper.builder(EndPoints.GET_ORDER_DETAILS)
             .addPath(orderId)
             .listener(callBack)
             .get()

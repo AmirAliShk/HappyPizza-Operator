@@ -7,8 +7,7 @@
     android:background="@color/page_background"
     android:gravity="center"
     android:layoutDirection="rtl"
-    android:orientation="vertical"
-    tools:context=".activity.OrderRegisterActivity">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rlNewInComingCall"

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityCallBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
@@ -104,7 +103,7 @@ class CallActivity : AppCompatActivity() {
     }
 
     private fun gotoCalling() {
-        var intent = Intent(this, OrderRegisterActivity::class.java)
+        var intent = Intent(this, RegisterOrderActivity::class.java)
 //        if (MyApplication.prefManager.getActivityStatus() === 1) {  //you are enable in trip register queue
 //            intent = Intent(this, ServiceRegisterActivity::class.java)
 //        } else if (MyApplication.prefManager.getActivityStatus() === 2) { // you are enable in support queue (800)

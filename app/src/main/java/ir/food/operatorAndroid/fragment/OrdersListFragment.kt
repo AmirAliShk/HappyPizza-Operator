@@ -148,7 +148,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
                 text = "0$searchText"
             }
         }
-        RequestHelper.builder(EndPoints.GET_ORDERS)
+        RequestHelper.builder(EndPoints.GET_ORDERS_LIST)
             .listener(callBack)
             .addPath(value)
             .addPath(text)
