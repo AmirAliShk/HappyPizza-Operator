@@ -61,9 +61,25 @@ class RegisterOrderActivity : AppCompatActivity() {
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
+    var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
     var productTypes: String = ""
     var productId: String = ""
-    var pendingCartAdapter = PendingCartAdapter(pendingCartModels, productId)
+    var sum = 0
+    private var pendingCartAdapter =
+        PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
+            override fun collectTotalPrice(s: Int) {
+                sum = 0
+                if (s == 0) {
+                    binding.txtSumPrice.text = "۰ تومان"
+                    return
+                }
+                for (i in 0 until s) {
+                    sum += Integer.valueOf(pendingCartModels[i].price)
+                    binding.txtSumPrice.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+                }
+            }
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +94,10 @@ class RegisterOrderActivity : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.page_background)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        TypefaceUtil.overrideFonts(binding.root)
+        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
         MyApplication.configureAccount()
         refreshQueueStatus()
+        binding.orderList.adapter = pendingCartAdapter
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
@@ -156,27 +173,34 @@ class RegisterOrderActivity : AppCompatActivity() {
             if (productId.isEmpty()) {
                 return@setOnClickListener
             }
-            val productsArr = JSONArray(MyApplication.prefManager.productsList)
-            for (i in 0 until productsArr.length()) {
+            for (i in 0 until JSONArray(MyApplication.prefManager.productsList).length()) {
                 if (productsModels[i].id == productId) {
-                    var model = PendingCartModel(
-                        productId,
-                        productsModels[i].name,
-                        productsModels[i].size.getJSONObject(0).getString("price"),
-                        productsModels[i].size.getJSONObject(0).getString("name")
+                    val pendingCart = PendingCartModel(
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getString("_id"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getString("name"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("name")
                     )
-                    pendingCartModels.add(model)
+                    pendingCartModels.add(pendingCart)
+                    pendingCartAdapter.notifyDataSetChanged()
+                    sum += Integer.valueOf(
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("price")
+                    )
+                    binding.txtSumPrice.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
                 }
             }
-
-            pendingCartAdapter = PendingCartAdapter(pendingCartModels, productId)
-            binding.orderList.adapter = pendingCartAdapter;
-            pendingCartAdapter.notifyDataSetChanged()
         }
 
-        MyApplication.handler.postDelayed({
-            getProductsAndLists()
-        }, 500)
+        getProductsAndLists()
 
     }
 
@@ -252,6 +276,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             productTypes = ""
                             return
                         }
+                        tempProductsModels.clear()
                         productTypes = typesModels[position - 1].id
                         initProductSpinner(productTypes)
                     }
@@ -277,8 +302,18 @@ class RegisterOrderActivity : AppCompatActivity() {
                     productsArr.getJSONObject(i).getJSONObject("type")
                 )
                 productsModels.add(products)
-                if (productsModels[i].type.getString("_id").equals(type))
+                if (productsModels[i].type.getString("_id").equals(type)) {
+                    val pendingCart = PendingCartModel(
+                        productsArr.getJSONObject(i).getString("_id"),
+                        productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("name")
+                    )
+                    tempProductsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("name"))
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -290,19 +325,18 @@ class RegisterOrderActivity : AppCompatActivity() {
                 SpinnerAdapter(MyApplication.context, R.layout.item_spinner, productsList)
             binding.spProduct.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
+
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View,
                         position: Int,
                         id: Long
                     ) {
-                        Log.i("TAG", "onItemSelected: ${binding.spProduct.selectedItem}")
-                        for (i in 0 until productsArr.length()) {
-                            if (binding.spProduct.selectedItem.toString() == productsModels[position].name) {//todo
-                                productId = productsModels[i].id
-                            }
+                        if (position == 0) {
+                            productId = ""
+                            return
                         }
-                        Log.i("TAG", "onItemSelected: $productId")
+                        productId = tempProductsModels[position - 1].id
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -564,7 +598,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtCustomerName.setText("")
         binding.edtAddress.setText("")
         binding.edtDescription.setText("")
-        //todo reinit spinners
+        initProductTypeSpinner()
         voipId = "0"
     }
 
@@ -572,7 +606,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtCustomerName.isEnabled = true
         binding.edtAddress.isEnabled = true
         binding.edtDescription.isEnabled = true
-        binding.spProductType.isEnabled = true//todo
+        binding.spProductType.isEnabled = true
         binding.spProduct.isEnabled = true
     }
 

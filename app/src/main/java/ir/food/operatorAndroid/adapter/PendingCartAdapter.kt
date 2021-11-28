@@ -1,7 +1,6 @@
 package ir.food.operatorAndroid.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.food.operatorAndroid.app.MyApplication
@@ -9,11 +8,14 @@ import ir.food.operatorAndroid.databinding.ItemOrderBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.PendingCartModel
-import ir.food.operatorAndroid.model.ProductsModel
 
-class PendingCartAdapter(list: ArrayList<PendingCartModel>, id: String) :
+class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: TotalPrice) :
     RecyclerView.Adapter<PendingCartAdapter.ViewHolder>() {
     private val models = list
+
+    interface TotalPrice {
+        fun collectTotalPrice(s: Int)
+    }
 
     class ViewHolder(val binding: ItemOrderBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -39,6 +41,12 @@ class PendingCartAdapter(list: ArrayList<PendingCartModel>, id: String) :
 //        } else {
 //            holder.binding.txtDiscount.visibility = View.INVISIBLE
 //        }
+
+        holder.binding.imgReduce.setOnClickListener {
+            models.removeAt(position)
+            totalPrice.collectTotalPrice(models.size)
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int {
