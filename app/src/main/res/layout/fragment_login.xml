@@ -203,7 +203,7 @@
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="center"
-                        app:indicatorColor="@color/white" />
+                        app:indicatorColor="@color/color_Red" />
 
                 </ViewFlipper>
 

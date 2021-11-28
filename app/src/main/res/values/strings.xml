@@ -77,6 +77,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lock">قفل</string>
     <string name="newCustomer">جدید</string>
+    <string name="options">گزینه ها</string>
 
 
 </resources>
