@@ -98,6 +98,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         MyApplication.configureAccount()
         refreshQueueStatus()
         binding.orderList.adapter = pendingCartAdapter
+        disableViews()
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
@@ -167,9 +168,16 @@ class RegisterOrderActivity : AppCompatActivity() {
             getCustomer(binding.edtMobile.text.toString())
         }
 
-        binding.imgClear.setOnClickListener { clearData() }
+        binding.imgClear.setOnClickListener {
+            GeneralDialog()
+                .message("میخواهید اطلاعات صفحه را پاک کنید؟")
+                .firstButton("بله") { clearData() }
+                .secondButton("نه", null)
+                .show()
+        }
 
         binding.imgAddOrder.setOnClickListener {
+            KeyBoardHelper.hideKeyboard()
             if (productId.isEmpty()) {
                 return@setOnClickListener
             }
@@ -229,6 +237,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             MyApplication.prefManager.productsTypeList =
                                 data.getJSONArray("types").toString()
                             initProductTypeSpinner()
+                            initProductSpinner("")
                         }
                     }
                 } catch (e: Exception) {
@@ -482,6 +491,9 @@ class RegisterOrderActivity : AppCompatActivity() {
                         val message = jsonObject.getString("message")
                         if (success) {
                             val dataObj = jsonObject.getJSONObject("data")
+                            enableViews()
+                            binding.edtCustomerName.requestFocus()
+                            KeyBoardHelper.showKeyboard(MyApplication.context)
                             if (dataObj.getBoolean("status")) {
                                 val customerObj = dataObj.getJSONObject("customer")
                                 binding.edtMobile.setText(customerObj.getString("mobile"))
@@ -500,7 +512,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                                     2 ->//recently add order
                                     {
                                         val msg =
-                                            " کاربر ${orderStatus.getInt("orderInterval")} دقیقه پیش سفارشی ثبت کرده است \n وضعیت سفارش : ${
+                                            " مشتری ${orderStatus.getInt("orderInterval")} دقیقه پیش سفارشی ثبت کرده است \n وضعیت سفارش : ${
                                                 orderStatus.getString(
                                                     "orderState"
                                                 )
@@ -591,31 +603,81 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
     private fun clearData() {
+        binding.edtMobile.setText("")
         binding.edtMobile.requestFocus()
+        binding.edtCustomerName.setText("")
         binding.txtLockCustomer.visibility = View.GONE
         binding.txtNewCustomer.visibility = View.GONE
-        binding.edtMobile.setText("")
-        binding.edtCustomerName.setText("")
         binding.edtAddress.setText("")
+        binding.edtStationCode.setText("")
         binding.edtDescription.setText("")
+        pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
+        pendingCartModels.clear()
+        productId = ""
         initProductTypeSpinner()
+        initProductSpinner("")
+        binding.txtSumPrice.text = "۰ تومان"
         voipId = "0"
+        disableViews()
     }
 
     private fun enableViews() {
+        binding.llClear.isEnabled = true
+        binding.imgClear.isEnabled = true
+        binding.llSendMenu.isEnabled = true
+        binding.llCustomerName.isEnabled = true
         binding.edtCustomerName.isEnabled = true
+        binding.llAddress.isEnabled = true
         binding.edtAddress.isEnabled = true
-        binding.edtDescription.isEnabled = true
+        binding.imgAddressList.isEnabled = true
+        binding.edtStationCode.isEnabled = true
+        binding.llCart.isEnabled = true
+        binding.llProductType.isEnabled = true
         binding.spProductType.isEnabled = true
+        binding.llProduct.isEnabled = true
         binding.spProduct.isEnabled = true
+        binding.imgAddOrder.isEnabled = true
+        binding.edtDescription.isEnabled = true
     }
 
     private fun disableViews() {
+        binding.llClear.isEnabled = false
+        binding.imgClear.isEnabled = false
+        binding.llSendMenu.isEnabled = false
+        binding.llCustomerName.isEnabled = false
         binding.edtCustomerName.isEnabled = false
+        binding.llAddress.isEnabled = false
         binding.edtAddress.isEnabled = false
-        binding.edtDescription.isEnabled = false
+        binding.imgAddressList.isEnabled = false
+        binding.edtStationCode.isEnabled = false
+        binding.llCart.isEnabled = false
+        binding.llProductType.isEnabled = false
         binding.spProductType.isEnabled = false
+        binding.llProduct.isEnabled = false
         binding.spProduct.isEnabled = false
+        binding.imgAddOrder.isEnabled = false
+        binding.edtDescription.isEnabled = false
+    }
+
+    private fun submitOrder() {
+//        {products: [...{_id: "60b72a70e353f0385c2fe5af", quantity: 2,price: "30000",size: "medium"}],
+//            customer: {family: "شکوهی",mobile: "09307580142",},address: "معلم 24",description: "ساعت 21:00 تحویل داده شود"}
+        RequestHelper.builder(EndPoints.ADD_ORDER)
+            .addParam("station", binding.edtStationCode.text.toString())//todo
+            .addParam("address", binding.edtAddress.text.toString())
+            .addParam("description", binding.edtDescription.text.toString())
+            .listener(submitOrderCallBack)
+            .post()
+    }
+
+    private val submitOrderCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+        }
     }
 
     //receive push notification from local broadcast

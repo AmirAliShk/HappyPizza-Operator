@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:minHeight="50dp"
+    android:minHeight="40dp"
     android:text="تست"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:textColor="#000000" />
