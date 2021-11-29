@@ -37,6 +37,13 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_recent_calls" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -48,12 +55,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_recent_calls" />
 
                 </LinearLayout>
 
@@ -67,6 +68,13 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_status" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -78,12 +86,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_status" />
 
                 </LinearLayout>
 
