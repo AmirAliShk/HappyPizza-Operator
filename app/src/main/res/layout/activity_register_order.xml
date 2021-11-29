@@ -427,7 +427,7 @@
                         <Spinner
                             android:id="@+id/spProductType"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:textColor="@color/color_light_Red"
                             tools:listitem="@layout/item_spinner" />
@@ -441,7 +441,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/bg_light_red"
                         android:orientation="horizontal">
@@ -449,7 +449,7 @@
                         <Spinner
                             android:id="@+id/spProduct"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:textColor="@color/color_light_Red"
                             tools:listitem="@layout/item_spinner" />
