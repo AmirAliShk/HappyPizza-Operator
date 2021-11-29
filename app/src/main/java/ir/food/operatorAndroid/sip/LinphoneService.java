@@ -52,7 +52,7 @@ import java.util.TimerTask;
 
 import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.activity.CallActivity;
-import ir.food.operatorAndroid.activity.OrderRegisterActivity;
+import ir.food.operatorAndroid.activity.RegisterOrderActivity;
 import ir.food.operatorAndroid.app.DataHolder;
 import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.helper.NotificationSingleton;
@@ -411,7 +411,7 @@ public class LinphoneService extends Service {
     }
 
     private void onIncomingReceived() {
-        if (OrderRegisterActivity.Companion.isRunning()) return;
+        if (RegisterOrderActivity.Companion.isRunning()) return;
 
         Intent intent = new Intent(this, CallActivity.class);
 //         This flag is required to start an Activity from a Service context

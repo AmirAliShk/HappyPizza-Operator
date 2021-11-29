@@ -7,27 +7,33 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
+import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.Keys
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.ActivityOrderRegisterBinding
+import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.*
 import ir.food.operatorAndroid.model.CallModel
+import ir.food.operatorAndroid.model.PendingCartModel
+import ir.food.operatorAndroid.model.ProductsModel
+import ir.food.operatorAndroid.model.ProductsTypeModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.linphone.core.Address
@@ -35,14 +41,16 @@ import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.log
 
-class OrderRegisterActivity : AppCompatActivity() {
+class RegisterOrderActivity : AppCompatActivity() {
 
     companion object {
         var isRunning = false
     }
 
-    lateinit var binding: ActivityOrderRegisterBinding
+    lateinit var binding: ActivityRegisterOrderBinding
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
@@ -50,10 +58,32 @@ class OrderRegisterActivity : AppCompatActivity() {
     var voipId = "0"
     var queue = "0"
     var isEnableView = false
+    var productsModels: ArrayList<ProductsModel> = ArrayList()
+    var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
+    var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
+    var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
+    var productTypes: String = ""
+    var productId: String = ""
+    var sum = 0
+    private var pendingCartAdapter =
+        PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
+            override fun collectTotalPrice(s: Int) {
+                sum = 0
+                if (s == 0) {
+                    binding.txtSumPrice.text = "۰ تومان"
+                    return
+                }
+                for (i in 0 until s) {
+                    sum += Integer.valueOf(pendingCartModels[i].price)
+                    binding.txtSumPrice.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+                }
+            }
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOrderRegisterBinding.inflate(layoutInflater)
+        binding = ActivityRegisterOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -64,9 +94,10 @@ class OrderRegisterActivity : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.page_background)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        TypefaceUtil.overrideFonts(binding.root)
+        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
         MyApplication.configureAccount()
         refreshQueueStatus()
+        binding.orderList.adapter = pendingCartAdapter
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
@@ -138,25 +169,101 @@ class OrderRegisterActivity : AppCompatActivity() {
 
         binding.imgClear.setOnClickListener { clearData() }
 
-        MyApplication.handler.postDelayed({
-            initWaitingTimeSpinner()
-        }, 500)
+        binding.imgAddOrder.setOnClickListener {
+            if (productId.isEmpty()) {
+                return@setOnClickListener
+            }
+            for (i in 0 until JSONArray(MyApplication.prefManager.productsList).length()) {
+                if (productsModels[i].id == productId) {
+                    val pendingCart = PendingCartModel(
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getString("_id"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getString("name"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("name")
+                    )
+                    pendingCartModels.add(pendingCart)
+                    pendingCartAdapter.notifyDataSetChanged()
+                    sum += Integer.valueOf(
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getJSONArray("size").getJSONObject(0)
+                            .getString("price")
+                    )
+                    binding.txtSumPrice.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+                }
+            }
+        }
+
+        getProductsAndLists()
 
     }
 
-    private fun initWaitingTimeSpinner() {
-        val waitingTime = ArrayList(
-            listOf(
-                "سس", "سالاد", "نوشیدنی", "پیتزا", "پیش غذا"
-            )
-        )
+    private fun getProductsAndLists() {
+        RequestHelper.builder(EndPoints.GET_PRODUCTS)
+            .listener(productsCallBack)
+            .get()
+    }
+
+    private val productsCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+                    productsModels.clear()
+                    typesModels.clear()
+//{"success":true,"message":"محصولات سفارش با موفقیت ارسال شد","data":{"products":[{"_id":"61091b0ca9335b389819e894","size":[{"name":"medium","price":"75000","discount":"15000"}],"name":"رست بیف","description":"گوشت گوساله . پنیر . قارچ . فلفل دلمه ای . پیازجه","type":{"_id":"610916826f9446153c5e268d","name":"پیتزا"}}],"types":[{"_id":"610916826f9446153c5e268d","name":"پیتزا"}],"status":true}}
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    val message = jsonObject.getString("message")
+                    if (success) {
+                        val data = jsonObject.getJSONObject("data")
+                        val status = data.getBoolean("status")
+                        if (status) {
+                            MyApplication.prefManager.productsList =
+                                data.getJSONArray("products").toString()
+                            MyApplication.prefManager.productsTypeList =
+                                data.getJSONArray("types").toString()
+                            initProductTypeSpinner()
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+        }
+    }
+
+    private fun initProductTypeSpinner() {
+        val typesList = ArrayList<String>()
         try {
-//            binding.spProductType.isEnabled = isEnableView
-            binding.spProductType.adapter = SpinnerAdapter(
-                MyApplication.currentActivity,
-                R.layout.item_spinner,
-                waitingTime
-            )
+            typesList.add(0, "نوع محصول")
+            val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
+            for (i in 0 until typesArr.length()) {
+                val types = ProductsTypeModel(
+                    typesArr.getJSONObject(i).getString("_id"),
+                    typesArr.getJSONObject(i).getString("name")
+                )
+                typesModels.add(types)
+
+                typesList.add(i + 1, typesArr.getJSONObject(i).getString("name"))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        if (binding.spProductType == null) return
+
+        try {
+            binding.spProductType.adapter =
+                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, typesList)
             binding.spProductType.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -165,13 +272,13 @@ class OrderRegisterActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-                        //                    if (spWaitingTime != null)
-                        //                        ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
-                        when (position) {
-                            0 -> initProductSpinner(0)
-                            1 -> initProductSpinner(1)
-                            2 -> initProductSpinner(2)
+                        if (position == 0) {
+                            productTypes = ""
+                            return
                         }
+                        tempProductsModels.clear()
+                        productTypes = typesModels[position - 1].id
+                        initProductSpinner(productTypes)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -181,39 +288,55 @@ class OrderRegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun initProductSpinner(type: Int) {
-        val waitingTime = ArrayList(
-            when (type) {
-                0 ->listOf(
-                    "خردل" ,"سیر")
-                1 -> listOf(
-                    "کاهو", "شیرازی", "سزار")
-                2 -> listOf(
-                    "آب", "دوغ", "دلستر", "نوشابه")
-                else -> listOf("")
-            }
-        )
+    private fun initProductSpinner(type: String) {
+        val productsList = ArrayList<String>()
+        val productsArr = JSONArray(MyApplication.prefManager.productsList)
         try {
-//            binding.spProductType.isEnabled = isEnableView
-            binding.spProduct.adapter = SpinnerAdapter(
-                MyApplication.currentActivity,
-                R.layout.item_spinner,
-                waitingTime
-            )
+            productsList.add(0, "محصولات")
+            for (i in 0 until productsArr.length()) {
+                val products = ProductsModel(
+                    productsArr.getJSONObject(i).getString("_id"),
+                    productsArr.getJSONObject(i).getJSONArray("size"),
+                    productsArr.getJSONObject(i).getString("name"),
+                    productsArr.getJSONObject(i).getString("description"),
+                    productsArr.getJSONObject(i).getJSONObject("type")
+                )
+                productsModels.add(products)
+                if (productsModels[i].type.getString("_id").equals(type)) {
+                    val pendingCart = PendingCartModel(
+                        productsArr.getJSONObject(i).getString("_id"),
+                        productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("name")
+                    )
+                    tempProductsModels.add(pendingCart)
+                    productsList.add(productsArr.getJSONObject(i).getString("name"))
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        if (binding.spProduct == null) return
 
-
-
-
+        try {
+            binding.spProduct.adapter =
+                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, productsList)
             binding.spProduct.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
+
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View,
                         position: Int,
                         id: Long
                     ) {
-                        //                    if (spWaitingTime != null)
-                        //                        ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                        if (position == 0) {
+                            productId = ""
+                            return
+                        }
+                        productId = tempProductsModels[position - 1].id
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -475,7 +598,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.edtCustomerName.setText("")
         binding.edtAddress.setText("")
         binding.edtDescription.setText("")
-        //todo reinit spinners
+        initProductTypeSpinner()
         voipId = "0"
     }
 
@@ -483,7 +606,7 @@ class OrderRegisterActivity : AppCompatActivity() {
         binding.edtCustomerName.isEnabled = true
         binding.edtAddress.isEnabled = true
         binding.edtDescription.isEnabled = true
-        binding.spProductType.isEnabled = true//todo
+        binding.spProductType.isEnabled = true
         binding.spProduct.isEnabled = true
     }
 

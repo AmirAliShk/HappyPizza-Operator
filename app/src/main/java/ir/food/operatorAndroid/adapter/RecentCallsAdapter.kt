@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.downloader.*
 import com.warkiz.widget.IndicatorSeekBar
 import com.warkiz.widget.OnSeekChangeListener
 import com.warkiz.widget.SeekParams
@@ -62,7 +61,7 @@ class RecentCallsAdapter(private val recentCallsModels: ArrayList<RecentCallsMod
             this.position = position
             VoiceDownloader().skbTimer = holder.binding.skbTimer
             holder.binding.vfPlayPause.displayedChild = 1
-            Log.i("URL", "show: " + EndPoints.GET_ORDER + model.voipId)//todo
+            Log.i("URL", "show: " + EndPoints.GET_ORDER_DETAILS + model.voipId)//todo
             val voiceName: String = model.voipId + ".mp3"
             val file: File = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                 File(
@@ -80,7 +79,7 @@ class RecentCallsAdapter(private val recentCallsModels: ArrayList<RecentCallsMod
                 MyApplication.Toast("صوتی برای این تماس وجود ندارد", Toast.LENGTH_SHORT)
                 holder.binding.vfPlayPause.displayedChild = 0
             } else {
-                VoiceDownloader().startDownload(EndPoints.GET_ORDER + model.voipId, voiceName)//todo
+                VoiceDownloader().startDownload(EndPoints.GET_ORDER_DETAILS + model.voipId, voiceName)//todo
             }
             holder.binding.skbTimer.onSeekChangeListener = object : OnSeekChangeListener {
                 override fun onSeeking(seekParams: SeekParams) {

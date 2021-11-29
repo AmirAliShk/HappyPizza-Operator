@@ -20,9 +20,8 @@ import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
 
-
-class OrdersAdapter(list: ArrayList<OrderModel>) :
-    RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
+class OrdersListAdapter(list: ArrayList<OrderModel>) :
+    RecyclerView.Adapter<OrdersListAdapter.ViewHolder>() {
 
     private val models = list
     lateinit var vfDetails: ViewFlipper
@@ -180,7 +179,7 @@ class OrdersAdapter(list: ArrayList<OrderModel>) :
 
     private fun getOrderDetails(orderId: String) {
         this.vfDetails.displayedChild = 1
-        RequestHelper.builder(EndPoints.GET_ORDER)
+        RequestHelper.builder(EndPoints.GET_ORDER_DETAILS)
             .addPath(orderId)
             .listener(callBack)
             .get()

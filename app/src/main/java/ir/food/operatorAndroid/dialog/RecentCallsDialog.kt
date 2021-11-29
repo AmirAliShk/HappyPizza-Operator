@@ -110,7 +110,7 @@ class RecentCallsDialog {
 
     private fun getRecentCalls(type: String, num: String?, dateInterval: String) {
         binding.vfDownload.displayedChild = 0
-        RequestHelper.builder(EndPoints.GET_ORDERS + "/" + num!!.trim { it <= ' ' } + type + dateInterval)//todo
+        RequestHelper.builder(EndPoints.GET_ORDERS_LIST + "/" + num!!.trim { it <= ' ' } + type + dateInterval)//todo
             .listener(recentCallsCallBack)
             .get()
     }

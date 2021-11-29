@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.adapter.OrdersAdapter
+import ir.food.operatorAndroid.adapter.OrdersListAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
@@ -148,7 +148,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
                 text = "0$searchText"
             }
         }
-        RequestHelper.builder(EndPoints.GET_ORDERS)
+        RequestHelper.builder(EndPoints.GET_ORDERS_LIST)
             .listener(callBack)
             .addPath(value)
             .addPath(text)
@@ -184,7 +184,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
                                 binding.vfOrders.displayedChild = 0
                             } else {
                                 binding.vfOrders.displayedChild = 2
-                                val adapter = OrdersAdapter(orderModels)
+                                val adapter = OrdersListAdapter(orderModels)
                                 binding.searchList.adapter = adapter
                             }
                         }

@@ -98,7 +98,6 @@ class LogInFragment : Fragment() {
             .addParam("code", verificationCode)
             .listener(loginCallBack)
             .post()
-
     }
 
     private val loginCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {

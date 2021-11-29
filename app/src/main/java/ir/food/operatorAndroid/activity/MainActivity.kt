@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             MyApplication.currentActivity.startActivity(
                 Intent(
                     MyApplication.currentActivity,
-                    OrderRegisterActivity::class.java
+                    RegisterOrderActivity::class.java
                 )
             )
 

@@ -8,9 +8,9 @@ import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemCartBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.CartModel
+import ir.food.operatorAndroid.model.SupportCartModel
 
-class CartAdapter(list: ArrayList<CartModel>) :
+class CartAdapter(list: ArrayList<SupportCartModel>) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
     private val models = list
 
@@ -32,12 +32,11 @@ class CartAdapter(list: ArrayList<CartModel>) :
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
 
-        if(model.discount){
-            holder.binding.txtDiscount.visibility= View.VISIBLE
-        }else{
-            holder.binding.txtDiscount.visibility= View.INVISIBLE
+        if (model.discount) {
+            holder.binding.txtDiscount.visibility = View.VISIBLE
+        } else {
+            holder.binding.txtDiscount.visibility = View.INVISIBLE
         }
-
     }
 
     override fun getItemCount(): Int {
