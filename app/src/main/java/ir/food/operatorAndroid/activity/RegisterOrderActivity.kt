@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
@@ -44,6 +46,8 @@ import java.nio.file.Files
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
+import android.app.Activity
+
 
 class RegisterOrderActivity : AppCompatActivity() {
 
@@ -63,6 +67,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
+    val cartJArray = JSONArray()
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
@@ -100,6 +105,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         refreshQueueStatus()
         binding.orderList.adapter = pendingCartAdapter
         disableViews()
+        getProductsAndLists()
+        binding.edtMobile.requestFocus()
+        KeyBoardHelper.showKeyboard(MyApplication.context)
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
@@ -223,7 +231,31 @@ class RegisterOrderActivity : AppCompatActivity() {
             sendMenu()
         }
 
-        getProductsAndLists()
+        binding.edtMobile.setOnEditorActionListener { v, actionId, event ->
+            if (actionId === EditorInfo.IME_ACTION_NEXT) {
+                if (binding.edtCustomerName.text.toString().isEmpty())
+                    if (binding.edtMobile.text.toString() == "") {
+                        MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
+                        binding.edtMobile.requestFocus()
+                        false
+                    }
+                getCustomer(binding.edtMobile.text.toString())
+                true
+            }
+            false
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            for (i in 0 until pendingCartModels.size) {
+                val cartJObj = JSONObject()
+                cartJObj.put("_id", pendingCartModels[i].id)
+                cartJObj.put("quantity", pendingCartModels[i].quantity)
+                cartJObj.put("size", pendingCartModels[i].size)
+
+                cartJArray.put(cartJObj)
+            }
+            submitOrder()
+        }
 
     }
 
@@ -500,6 +532,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        clearData()
                         binding.vfDownload.displayedChild = 0
                         val jsonObject = JSONObject(args[0].toString())
                         val success = jsonObject.getBoolean("success")
@@ -640,7 +673,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.llClear.isEnabled = true
         binding.imgClear.isEnabled = true
         binding.llSendMenu.isEnabled = true
-        binding.llCustomerName.isEnabled = true
         binding.edtCustomerName.isEnabled = true
         binding.llAddress.isEnabled = true
         binding.edtAddress.isEnabled = true
@@ -659,7 +691,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.llClear.isEnabled = false
         binding.imgClear.isEnabled = false
         binding.llSendMenu.isEnabled = false
-        binding.llCustomerName.isEnabled = false
         binding.edtCustomerName.isEnabled = false
         binding.llAddress.isEnabled = false
         binding.edtAddress.isEnabled = false
@@ -731,10 +762,12 @@ class RegisterOrderActivity : AppCompatActivity() {
 //        {products: [...{_id: "60b72a70e353f0385c2fe5af", quantity: 2,price: "30000",size: "medium"}],
 //            customer: {family: "شکوهی",mobile: "09307580142",},address: "معلم 24",description: "ساعت 21:00 تحویل داده شود"}
         RequestHelper.builder(EndPoints.ADD_ORDER)
-            .addParam("family", binding.edtCustomerName.text.toString())
             .addParam("mobile", binding.edtMobile.text.toString())
-            .addParam("station", binding.edtStationCode.text.toString())//todo
+            .addParam("family", binding.edtCustomerName.text.toString())
             .addParam("address", binding.edtAddress.text.toString())
+            .addParam("addressId", 0)
+            .addParam("station", binding.edtStationCode.text.toString())
+            .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.toString())
             .listener(submitOrderCallBack)
             .post()
