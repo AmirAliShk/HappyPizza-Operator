@@ -33,6 +33,7 @@ object EndPoints {
     val GET_CUSTOMER = CUSTOMER_PATH
     val GET_PRODUCTS = "$ORDER_PATH/product"
     val ADD_ORDER = ORDER_PATH
+    val SEND_MENU = "$ORDER_PATH/menu"
 
     /******************************** support order Api  *********************************/
 

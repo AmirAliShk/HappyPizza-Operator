@@ -40,6 +40,7 @@ import org.linphone.core.Address
 import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
+import java.nio.file.Files
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -193,7 +194,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("price"),
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
                             .getJSONArray("size").getJSONObject(0)
-                            .getString("name")
+                            .getString("name"),
+                        1
                     )
                     pendingCartModels.add(pendingCart)
                     pendingCartAdapter.notifyDataSetChanged()
@@ -206,6 +208,19 @@ class RegisterOrderActivity : AppCompatActivity() {
                         StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
                 }
             }
+        }
+
+        binding.llSendMenu.setOnClickListener {
+            if (binding.edtMobile.text.toString().trim()
+                    .isEmpty() || (if (binding.edtMobile.text.toString().trim()
+                        .startsWith("0")
+                ) binding.edtMobile.text.toString()
+                    .trim() else "0${binding.edtMobile.text.toString().trim()}").length < 11
+            ) {
+                MyApplication.Toast("لطفا شماره همراه را وارد نمایید.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
+            sendMenu()
         }
 
         getProductsAndLists()
@@ -318,7 +333,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("price"),
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("name")
+                            .getString("name"), 1
                     )
                     tempProductsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("name"))
@@ -659,10 +674,65 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtDescription.isEnabled = false
     }
 
+    private fun sendMenu() {
+        RequestHelper.builder(EndPoints.SEND_MENU)
+            .addParam(
+                "mobile",
+                if (StringHelper.toEnglishDigits(binding.edtMobile.text.toString())
+                        .startsWith("0")
+                ) StringHelper.toEnglishDigits(binding.edtMobile.text.toString()) else "0${
+                    StringHelper.toEnglishDigits(
+                        binding.edtMobile.text.toString()
+                    )
+                }"
+            )
+            .listener(sendMenuCallBack)
+            .post()
+    }
+
+    private val sendMenuCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+//            {"success":true,"message":"اس ام اس منو با موفقیت برای مشتری ارسال شد","data":{"status":true}}
+            MyApplication.handler.post {
+                try {
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    val message = jsonObject.getString("message")
+                    if (success) {
+                        val data = jsonObject.getJSONObject("data")
+                        val status = data.getBoolean("status")
+                        if (status) {
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { null }
+                                .cancelable(true)
+                                .show()
+                        }
+                    } else {
+                        GeneralDialog()
+                            .message(message)
+                            .secondButton("باشه") { null }
+                            .cancelable(true)
+                            .show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+        }
+    }
+
     private fun submitOrder() {
 //        {products: [...{_id: "60b72a70e353f0385c2fe5af", quantity: 2,price: "30000",size: "medium"}],
 //            customer: {family: "شکوهی",mobile: "09307580142",},address: "معلم 24",description: "ساعت 21:00 تحویل داده شود"}
         RequestHelper.builder(EndPoints.ADD_ORDER)
+            .addParam("family", binding.edtCustomerName.text.toString())
+            .addParam("mobile", binding.edtMobile.text.toString())
             .addParam("station", binding.edtStationCode.text.toString())//todo
             .addParam("address", binding.edtAddress.text.toString())
             .addParam("description", binding.edtDescription.text.toString())

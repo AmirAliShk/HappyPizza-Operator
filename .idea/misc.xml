@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/bg_gray.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/bg_gray_disable.xml" value="0.22763157894736843" />
         <entry key="app/src/main/res/drawable/bg_item.xml" value="0.22039473684210525" />
+        <entry key="app/src/main/res/drawable/bg_item_dialog.xml" value="0.22039473684210525" />
         <entry key="app/src/main/res/drawable/bg_orders_header.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_red.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/bg_stroke_red.xml" value="0.209375" />

@@ -3,7 +3,7 @@
 
     <item android:drawable="@drawable/bg_stroke_red" android:state_focused="true" /> <!-- focused -->
 
-    <item android:drawable="@drawable/bg_item_dialog" android:state_active="true" />
+    <item android:drawable="@drawable/bg_item" android:state_active="true" />
 
     <item android:drawable="@drawable/bg_disable" android:state_enabled="false" />
 

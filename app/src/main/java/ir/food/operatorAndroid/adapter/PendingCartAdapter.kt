@@ -31,7 +31,11 @@ class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: Tota
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = models[position]
 
-        holder.binding.txtQuantity.text = "1"
+//        if (model.contains(model)) {
+//            quantity++
+//        }
+
+        holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.quantity.toString())
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text =
             StringHelper.toPersianDigits(StringHelper.setComma(model.price))
