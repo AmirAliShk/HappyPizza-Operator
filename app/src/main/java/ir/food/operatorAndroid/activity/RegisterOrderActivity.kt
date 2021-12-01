@@ -759,8 +759,18 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun submitOrder() {
-//        {products: [...{_id: "60b72a70e353f0385c2fe5af", quantity: 2,price: "30000",size: "medium"}],
-//            customer: {family: "شکوهی",mobile: "09307580142",},address: "معلم 24",description: "ساعت 21:00 تحویل داده شود"}
+//        products: [...{
+//        _id: "60b72a70e353f0385c2fe5af",
+//        quantity: 2,
+//        size: "medium"
+//    }],
+//        family: " شکوهی",
+//        mobile: "09307580131",
+//        description: "با سس قرمز تند",
+//        address: "معلم 3",
+//        addressId: 0,
+//        station: 31
+//    }
         RequestHelper.builder(EndPoints.ADD_ORDER)
             .addParam("mobile", binding.edtMobile.text.toString())
             .addParam("family", binding.edtCustomerName.text.toString())
@@ -775,7 +785,39 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private val submitOrderCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-            TODO("Not yet implemented")
+            MyApplication.handler.post {
+                try {
+//                    {"success":true,"message":"ایستگاه موجود نمی باشد","data":{"status":false}}
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    val message = jsonObject.getString("message")
+                    if (success) {
+                        val data = jsonObject.getJSONObject("data")
+                        val status = data.getBoolean("status")
+                        if (status) {
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { clearData() }
+                                .cancelable(true)
+                                .show()
+                        } else {
+                            GeneralDialog()
+                                .message(message)
+                                .secondButton("باشه") { null }
+                                .cancelable(true)
+                                .show()
+                        }
+                    } else {
+                        GeneralDialog()
+                            .message(message)
+                            .secondButton("باشه") { null }
+                            .cancelable(true)
+                            .show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
