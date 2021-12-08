@@ -29,7 +29,8 @@ object EndPoints {
 
     /******************************** register order Api  *********************************/
 
-    val ENTER_QUEUE = ACTIVATE_PATH
+    val ENTER_QUEUE = "${WEBSERVICE_PATH}queue/enter"
+    val EXIT_QUEUE = "${WEBSERVICE_PATH}queue/exit"
     val GET_CUSTOMER = CUSTOMER_PATH
     val GET_PRODUCTS = "$ORDER_PATH/product"
     val ADD_ORDER = ORDER_PATH

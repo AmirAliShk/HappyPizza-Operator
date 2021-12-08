@@ -81,6 +81,7 @@ class GetAppInfo {
                             MyApplication.prefManager.sipNumber = sipNumber
                             MyApplication.prefManager.sipPassword = sipPassword
                             MyApplication.prefManager.sipServer = sipServer
+                            MyApplication.prefManager.queueStatus = data.getBoolean("activeInQueue")
 
                             if (updateAvailable) {
                                 update(forceUpdate, updateUrl)

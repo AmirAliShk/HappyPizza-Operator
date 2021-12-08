@@ -474,9 +474,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .addParam("sipNumber", sipNumber)
-            .addParam("state", 1)
+            .addParam("sipPassword", MyApplication.prefManager.sipPassword)
             .listener(enterTheQueueCallBack)
-            .put()
+            .post()
     }
 
     private val enterTheQueueCallBack: RequestHelper.Callback =
@@ -605,11 +605,10 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun exitQueue(sipNumber: Int) {
         LoadingDialog.makeCancelableLoader()
-        RequestHelper.builder(EndPoints.ENTER_QUEUE)
+        RequestHelper.builder(EndPoints.EXIT_QUEUE)
             .listener(exitTheQueueCallBack)
             .addParam("sipNumber", sipNumber)
-            .addParam("state", 0)
-            .put()
+            .delete()
     }
 
     private val exitTheQueueCallBack: RequestHelper.Callback =
