@@ -38,7 +38,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOrderDetailBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
 
@@ -60,7 +60,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnDeliverLocation.setOnClickListener {
-
             FragmentHelper.toFragment(
                 MyApplication.currentActivity,
                 DeliverLocationFragment(orderId, deliveryLocation, deliveryLastLocation)
@@ -124,6 +123,13 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")
+
+            if (orderObj.getBoolean("paid")) {
+                binding.imgIsPaid.setImageResource(R.drawable.ic_done_green)
+            } else {
+                binding.imgIsPaid.setImageResource(R.drawable.ic_close_red)
+            }
+
             if (orderObj.getString("description").isEmpty()) {
                 binding.llDesc.visibility = View.GONE
             } else {

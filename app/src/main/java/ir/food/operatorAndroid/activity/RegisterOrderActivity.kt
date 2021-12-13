@@ -980,7 +980,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     if (voipId == "0") {
                         val address = call.remoteAddress
                         binding.edtMobile.setText(NumberValidation.removePrefix(address.username))
-//                        MyApplication.handler.postDelayed({ onPressDownload() }, 600)
+                        MyApplication.handler.postDelayed({ getCustomer(address.username) }, 600)
                     }
                 }
             }
@@ -989,7 +989,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         if (MyApplication.prefManager.isCallIncoming) {
             showCallIncoming()
         }
-
     }
 
     override fun onStart() {

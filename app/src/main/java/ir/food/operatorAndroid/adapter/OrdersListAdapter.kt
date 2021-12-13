@@ -12,10 +12,7 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemSearchBinding
 import ir.food.operatorAndroid.fragment.OrderDetailsFragment
-import ir.food.operatorAndroid.helper.DateHelper
-import ir.food.operatorAndroid.helper.FragmentHelper
-import ir.food.operatorAndroid.helper.StringHelper
-import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.helper.*
 import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import org.json.JSONObject
@@ -170,7 +167,6 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
             this.vfDetails = holder.binding.vfDetails
             getOrderDetails(model.id)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -196,6 +192,7 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                         val message = jsonObject.getString("message")
                         if (status) {
                             val dataObj = jsonObject.getJSONObject("data")
+                            KeyBoardHelper.hideKeyboard()
                             FragmentHelper
                                 .toFragment(
                                     MyApplication.currentActivity,
@@ -216,5 +213,4 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                 }
             }
         }
-
 }
