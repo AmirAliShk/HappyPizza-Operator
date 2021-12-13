@@ -1,7 +1,6 @@
 package ir.food.operatorAndroid.activity
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,10 +12,8 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivitySplashBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.helper.ServiceHelper
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.push.AvaCrashReporter
-import ir.food.operatorAndroid.sip.LinphoneService
 import ir.food.operatorAndroid.webService.GetAppInfo
 import org.acra.ACRA
 
@@ -95,7 +92,8 @@ class Splash : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        MyApplication.prefManager.isAppRun = false;
+        MyApplication.prefManager.isAppRun = false
+        KeyBoardHelper.hideKeyboard()
     }
 
     override fun onBackPressed() {

@@ -35,7 +35,7 @@ class LogInFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
         if (Build.VERSION.SDK_INT >= 21) {

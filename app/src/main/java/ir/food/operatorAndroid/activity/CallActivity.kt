@@ -10,6 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityCallBinding
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
@@ -44,6 +45,7 @@ class CallActivity : AppCompatActivity() {
         )
 
         TypefaceUtil.overrideFonts(binding.root)
+        KeyBoardHelper.hideKeyboard()
 
         binding.ripple.startRippleAnimation()
 
@@ -62,7 +64,7 @@ class CallActivity : AppCompatActivity() {
                 val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(
                     "passengerTell",
-                    binding.txtCallerNum.getText().toString()
+                    binding.txtCallerNum.text.toString()
                 )
                 clipboard.setPrimaryClip(clip)
             } catch (e: Exception) {
@@ -161,7 +163,6 @@ class CallActivity : AppCompatActivity() {
         super.onDestroy()
         MyApplication.prefManager.isAppRun = false
     }
-
 
     override fun onPause() {
         MyApplication.prefManager.isAppRun = false

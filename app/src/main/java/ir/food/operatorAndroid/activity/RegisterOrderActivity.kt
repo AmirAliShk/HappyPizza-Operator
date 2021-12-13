@@ -7,12 +7,10 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
@@ -42,12 +40,8 @@ import org.linphone.core.Address
 import org.linphone.core.Call
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
-import java.nio.file.Files
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.log
-import android.app.Activity
-
 
 class RegisterOrderActivity : AppCompatActivity() {
 
@@ -62,7 +56,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     lateinit var core: Core
     var voipId = "0"
     var queue = "0"
-    var isEnableView = false
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
@@ -147,8 +140,10 @@ class RegisterOrderActivity : AppCompatActivity() {
             val i = calls.size
             if (call != null) {
                 call.accept()
+                getCustomer(binding.txtCallerNum.text.toString())
             } else if (calls.isNotEmpty()) {
                 calls[0].accept()
+                getCustomer(binding.txtCallerNum.text.toString())
             }
         }
 
@@ -669,8 +664,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun enableViews() {
-        binding.llClear.isEnabled = true
-        binding.imgClear.isEnabled = true
         binding.llSendMenu.isEnabled = true
         binding.edtCustomerName.isEnabled = true
         binding.llAddress.isEnabled = true
@@ -687,8 +680,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun disableViews() {
-        binding.llClear.isEnabled = false
-        binding.imgClear.isEnabled = false
         binding.llSendMenu.isEnabled = false
         binding.edtCustomerName.isEnabled = false
         binding.llAddress.isEnabled = false
@@ -1012,7 +1003,8 @@ class RegisterOrderActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         isRunning = false
-        MyApplication.prefManager.isAppRun = false;
+        MyApplication.prefManager.isAppRun = false
+        KeyBoardHelper.hideKeyboard()
     }
 
     override fun onDestroy() {

@@ -35,7 +35,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -96,7 +96,6 @@ class SignUpFragment : Fragment() {
                 else -> {
                     signUp()
                 }
-
             }
         }
 
@@ -166,7 +165,6 @@ class SignUpFragment : Fragment() {
             .addParam("mobile", if (mobile.startsWith("0")) mobile else "0$mobile")
             .listener(verificationCodeCallBack)
             .post()
-
     }
 
     private val verificationCodeCallBack: RequestHelper.Callback =

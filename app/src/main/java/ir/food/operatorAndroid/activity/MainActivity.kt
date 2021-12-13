@@ -10,6 +10,7 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityMainBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
+import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.linphone.core.Core
@@ -135,7 +136,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        MyApplication.prefManager.isAppRun = false;
+        MyApplication.prefManager.isAppRun = false
+        KeyBoardHelper.hideKeyboard()
         if (core != null) {
             core.removeListener(mListener)
         }
