@@ -213,7 +213,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         }
 
-        binding.llSendMenu.setOnClickListener {
+        binding.txtSendMenu.setOnClickListener {
             if (binding.edtMobile.text.toString().trim()
                     .isEmpty() || (if (binding.edtMobile.text.toString().trim()
                         .startsWith("0")
@@ -664,14 +664,14 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun enableViews() {
-        binding.llSendMenu.isEnabled = true
+        binding.txtSendMenu.isEnabled = true
         binding.edtCustomerName.isEnabled = true
         binding.llAddress.isEnabled = true
         binding.edtAddress.isEnabled = true
         binding.imgAddressList.isEnabled = true
         binding.edtStationCode.isEnabled = true
         binding.llCart.isEnabled = true
-        binding.llProductType.isEnabled = true
+        binding.rlProductType.isEnabled = true
         binding.spProductType.isEnabled = true
         binding.llProduct.isEnabled = true
         binding.spProduct.isEnabled = true
@@ -680,14 +680,14 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun disableViews() {
-        binding.llSendMenu.isEnabled = false
+        binding.txtSendMenu.isEnabled = false
         binding.edtCustomerName.isEnabled = false
         binding.llAddress.isEnabled = false
         binding.edtAddress.isEnabled = false
         binding.imgAddressList.isEnabled = false
         binding.edtStationCode.isEnabled = false
         binding.llCart.isEnabled = false
-        binding.llProductType.isEnabled = false
+        binding.rlProductType.isEnabled = false
         binding.spProductType.isEnabled = false
         binding.llProduct.isEnabled = false
         binding.spProduct.isEnabled = false
