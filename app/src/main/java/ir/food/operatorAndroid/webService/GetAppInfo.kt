@@ -83,6 +83,15 @@ class GetAppInfo {
                             MyApplication.prefManager.sipServer = sipServer
                             MyApplication.prefManager.queueStatus = data.getBoolean("activeInQueue")
 
+                            if (!data.getBoolean("hired")) {
+                                GeneralDialog()
+                                    .message("استخدام شما هنوز به تایید مدیر مجموعه نرسیده است.\n لطفا با پشتیبانی تماس بگیرید.")
+                                    .secondButton("بستن") {
+                                        MyApplication.currentActivity.finish()
+                                    }.cancelable(false).show()
+                                return@post
+                            }
+
                             if (updateAvailable) {
                                 update(forceUpdate, updateUrl)
                                 return@post
