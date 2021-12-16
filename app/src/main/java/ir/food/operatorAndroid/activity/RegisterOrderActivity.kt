@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.PendingCartAdapter
@@ -20,7 +20,6 @@ import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.Keys
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.ActivityRegisterOrder1Binding
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
@@ -50,7 +49,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         var isRunning = false
     }
 
-    lateinit var binding: ActivityRegisterOrder1Binding
+    lateinit var binding: ActivityRegisterOrderBinding
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
@@ -83,7 +82,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterOrder1Binding.inflate(layoutInflater)
+        binding = ActivityRegisterOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -100,8 +99,11 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.orderList.adapter = pendingCartAdapter
         disableViews()
         getProductsAndLists()
-        binding.edtMobile.requestFocus()
-        KeyBoardHelper.showKeyboard(MyApplication.context)
+
+        MyApplication.handler.postDelayed({
+            binding.edtMobile.requestFocus()
+            KeyBoardHelper.showKeyboard(MyApplication.context)
+        }, 500)
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
@@ -165,7 +167,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.imgDownload.setOnClickListener {
-            if (binding.edtMobile.text.toString() == "") {
+            if (binding.edtMobile.text.toString() == "" || binding.edtMobile.text.toString().length < 10) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
                 binding.edtMobile.requestFocus()
                 return@setOnClickListener
@@ -227,21 +229,47 @@ class RegisterOrderActivity : AppCompatActivity() {
             sendMenu()
         }
 
-        binding.edtMobile.setOnEditorActionListener { v, actionId, event ->
+        binding.edtMobile.setOnEditorActionListener { _, actionId, _ ->
             if (actionId === EditorInfo.IME_ACTION_NEXT) {
                 if (binding.edtCustomerName.text.toString().isEmpty())
-                    if (binding.edtMobile.text.toString() == "") {
+                    if (binding.edtMobile.text.toString() == "" || binding.edtMobile.text.toString().length < 10) {
                         MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
                         binding.edtMobile.requestFocus()
-                        false
+                        return@setOnEditorActionListener false
                     }
                 getCustomer(binding.edtMobile.text.toString())
-                true
+                return@setOnEditorActionListener true
             }
-            false
+            return@setOnEditorActionListener false
         }
 
         binding.btnSubmit.setOnClickListener {
+            if (binding.edtMobile.text.toString() == "" || binding.edtMobile.text.toString().length < 10) {
+                MyApplication.Toast("لطفا شماره موبایل را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtMobile.requestFocus()
+                return@setOnClickListener
+            }
+            if (binding.edtCustomerName.text.toString() == "") {
+                MyApplication.Toast("لطفا نام را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtCustomerName.requestFocus()
+                return@setOnClickListener
+            }
+            if (binding.edtAddress.text.toString() == "") {
+                MyApplication.Toast("لطفا آدرس را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtAddress.requestFocus()
+                return@setOnClickListener
+            }
+            if (binding.edtStationCode.text.toString() == "") {
+                MyApplication.Toast("لطفا ایستگاه را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtStationCode.requestFocus()
+                return@setOnClickListener
+            }
+            if (pendingCartModels.size == 0) {
+                MyApplication.Toast("لطفا محصول را انتخاب کنید.", Toast.LENGTH_SHORT)
+                binding.spProductType.callOnClick()
+                return@setOnClickListener
+            }
+
             for (i in 0 until pendingCartModels.size) {
                 val cartJObj = JSONObject()
                 cartJObj.put("_id", pendingCartModels[i].id)
@@ -528,7 +556,6 @@ class RegisterOrderActivity : AppCompatActivity() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
-                        clearData()
                         binding.vfDownload.displayedChild = 0
                         val jsonObject = JSONObject(args[0].toString())
                         val success = jsonObject.getBoolean("success")
@@ -540,7 +567,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                             KeyBoardHelper.showKeyboard(MyApplication.context)
                             if (dataObj.getBoolean("status")) {
                                 val customerObj = dataObj.getJSONObject("customer")
-                                binding.edtMobile.setText(customerObj.getString("mobile"))
                                 binding.edtCustomerName.setText(customerObj.getString("family"))
 
                                 val orderStatus = dataObj.getJSONObject("orderStatus")

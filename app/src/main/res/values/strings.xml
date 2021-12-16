@@ -27,7 +27,6 @@
     <string name="birthday">تاریخ تولد:</string>
     <string name="cart">سبد خرید</string>
     <string name="price">قیمت</string>
-    <string name="service_detail">جزئیات سرویس</string>
 
     <string name="date">تاریخ:</string>
     <string name="time">ساعت:</string>
@@ -46,7 +45,6 @@
     <string name="charge">شارژ من : </string>
     <string name="customer_name">نام مشتری : </string>
     <string name="customer_namee">نام مشتری  </string>
-    <string name="Accept_service_title">قبول سرویس : </string>
     <string name="Address">آدرس  </string>
     <string name="order_detail">جزئیات سفارش</string>
     <string name="View_route">مشاهده مسیر</string>
@@ -56,7 +54,6 @@
     <string name="Verification_code">کد تایید</string>
     <string name="login">ورود</string>
     <string name="send_code">ارسال کد</string>
-    <string name="Accept_service_button">قبول سرویس</string>
     <string name="sign_up">ثبت نام</string>
     <string name="already_registered">قبلا ثبت نام کردم</string>
     <string name="password">رمز عبور</string>

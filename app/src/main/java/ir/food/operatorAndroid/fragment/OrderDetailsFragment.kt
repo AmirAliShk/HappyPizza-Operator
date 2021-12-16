@@ -130,6 +130,16 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 binding.imgIsPaid.setImageResource(R.drawable.ic_close_red)
             }
 
+            when (orderObj.getInt("paymentType")) {
+                0 -> binding.txtPaymentType.text = "حضوری"
+                1 -> binding.txtPaymentType.text = "آنلاین"
+            }
+
+            when (orderObj.getInt("paymentType")) {
+                0 -> binding.txtOrderType.text = "تلفنی"
+                1 -> binding.txtOrderType.text = "آنلاین"
+            }
+
             if (orderObj.getString("description").isEmpty()) {
                 binding.llDesc.visibility = View.GONE
             } else {
