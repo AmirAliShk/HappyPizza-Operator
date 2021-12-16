@@ -46,7 +46,7 @@ class SearchDialog {
         dialog.setCancelable(true)
         KeyBoardHelper.hideKeyboard()
 
-        binding.blrView.setOnClickListener { dismiss() }
+       /* binding.blrView.setOnClickListener { dismiss() }*/
 
         this.listener = searchListener
 

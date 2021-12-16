@@ -186,7 +186,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:fillViewport="false"
+        android:fillViewport="true"
         android:scrollbars="none">
 
         <LinearLayout
@@ -197,23 +197,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="70dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:text="@string/mobile"
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_height="@dimen/_30sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -230,10 +230,10 @@
                             android:layout_weight="1"
                             android:background="@color/transparent"
                             android:gravity="right|center_vertical"
-                            android:inputType="phone"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:inputType="number"
                             android:maxLength="11"
                             android:nextFocusDown="@id/edtCustomerName"
-                            android:padding="@dimen/_5sdp"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
@@ -295,6 +295,7 @@
                         android:layout_weight="0.60"
                         android:background="@drawable/bg_btn_gray_style"
                         android:elevation="@dimen/_4sdp"
+                        android:padding="7dp"
                         android:gravity="center"
                         android:text="ارسال منو"
                         android:textColor="@color/white"
@@ -307,20 +308,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="70dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_margin="@dimen/_2sdp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
                         android:text="@string/customer_namee"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_10sdp" />
@@ -350,14 +352,13 @@
                 <EditText
                     android:id="@+id/edtCustomerName"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.2"
+                    android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/edit_text_style"
                     android:gravity="center_vertical"
                     android:inputType="text"
                     android:nextFocusDown="@id/edtAddress"
-                    android:padding="@dimen/_7sdp"
                     android:singleLine="true"
+                    android:paddingHorizontal="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -365,8 +366,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -378,8 +380,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:paddingRight="@dimen/_5sdp"
                         android:text="@string/Address"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_10sdp" />
@@ -387,8 +389,7 @@
                     <LinearLayout
                         android:id="@+id/llAddress"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_height="@dimen/_30sdp"
                         android:background="@drawable/edit_text_style"
                         android:orientation="horizontal">
 
@@ -422,8 +423,8 @@
                             android:background="@color/transparent"
                             android:gravity="center_vertical"
                             android:inputType="text"
+                            android:paddingHorizontal="@dimen/_10sdp"
                             android:nextFocusDown="@id/edtStationCode"
-                            android:padding="@dimen/_7sdp"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
@@ -442,8 +443,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:paddingRight="@dimen/_2sdp"
                         android:text="@string/station"
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_10sdp" />
@@ -451,13 +452,11 @@
                     <EditText
                         android:id="@+id/edtStationCode"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_height="@dimen/_30sdp"
                         android:background="@drawable/edit_text_style"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:maxLength="3"
-                        android:padding="@dimen/_7sdp"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
@@ -469,18 +468,16 @@
             <LinearLayout
                 android:id="@+id/llCart"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_light_gry"
-                android:minHeight="80dp"
                 android:orientation="vertical"
                 android:padding="@dimen/_10sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="40dp"
+                    android:minHeight="@dimen/_30sdp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -488,14 +485,15 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_gray"
+                        android:background="@drawable/bg_btn_gray_style"
                         android:orientation="horizontal">
 
                         <Spinner
                             android:id="@+id/spProductType"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:background="@drawable/bg_btn_gray_style"
+                            android:background="@color/transparent"
+                            android:layout_margin="5dp"
                             android:dropDownWidth="match_parent"
                             android:gravity="center_vertical"
                             android:textColor="@color/white"
@@ -511,7 +509,6 @@
 
                     </RelativeLayout>
 
-
                     <View
                         android:layout_width="8dp"
                         android:layout_height="0dp" />
@@ -521,14 +518,15 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_gray"
+                        android:background="@drawable/bg_btn_gray_style"
                         android:orientation="horizontal">
 
                         <Spinner
                             android:id="@+id/spProduct"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:background="@drawable/bg_btn_gray_style"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:background="@color/transparent"
                             android:dropDownWidth="match_parent"
                             android:gravity="center_vertical"
                             android:textColor="@color/white"
@@ -598,7 +596,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/orderList"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="@dimen/_130sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:divider="@null"
                     android:listSelector="#00ffffff"
@@ -613,7 +611,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/_5sdp"
@@ -645,14 +643,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:text="@string/Description"
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_10sdp" />
@@ -660,62 +659,63 @@
                 <EditText
                     android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="right|top"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|top"
                     android:background="@drawable/edit_text_style"
-                    android:minHeight="60dp"
-                    android:paddingHorizontal="@dimen/_6sdp"
+                    android:lines="2"
+                    android:paddingHorizontal="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp">
+
+                <ViewFlipper
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/bg_green">
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16ssp" />
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        app:indicatorColor="@color/white" />
+
+                </ViewFlipper>
+
+                <Button
+                    android:id="@+id/btnSupport"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_gray"
+                    android:text="@string/options"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16ssp" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="70dp"
-        android:paddingBottom="@dimen/_1sdp">
-
-        <ViewFlipper
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
-            android:layout_weight="1.5"
-            android:background="@drawable/bg_red">
-
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"
-                android:text="@string/submit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp" />
-
-            <com.wang.avi.AVLoadingIndicatorView
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="center"
-                app:indicatorColor="@color/white" />
-
-        </ViewFlipper>
-
-        <Button
-            android:id="@+id/btnSupport"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_7sdp"
-            android:layout_weight="0.5"
-            android:background="@drawable/bg_gray"
-            android:text="@string/options"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp" />
-
-    </LinearLayout>
 
 </LinearLayout>

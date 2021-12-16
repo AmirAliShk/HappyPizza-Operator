@@ -20,6 +20,7 @@ import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.Keys
 import ir.food.operatorAndroid.app.MyApplication
+import ir.food.operatorAndroid.databinding.ActivityRegisterOrder1Binding
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
@@ -49,7 +50,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         var isRunning = false
     }
 
-    lateinit var binding: ActivityRegisterOrderBinding
+    lateinit var binding: ActivityRegisterOrder1Binding
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
@@ -82,7 +83,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterOrderBinding.inflate(layoutInflater)
+        binding = ActivityRegisterOrder1Binding.inflate(layoutInflater)
         setContentView(binding.root)
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -93,7 +94,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.page_background)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSMedume)
+        TypefaceUtil.overrideFonts(binding.root, MyApplication.IraSanSLight)
         MyApplication.configureAccount()
         refreshQueueStatus()
         binding.orderList.adapter = pendingCartAdapter

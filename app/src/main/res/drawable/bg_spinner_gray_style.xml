@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/bg_grays" android:state_focused="true" /> <!-- focused -->
+
+    <item android:drawable="@drawable/bg_grays" android:state_active="true" />
+
+    <item android:drawable="@drawable/bg_gray_disables" android:state_enabled="false" />
+
+    <item android:drawable="@drawable/bg_grays" /> <!-- default -->
+
+</selector>
