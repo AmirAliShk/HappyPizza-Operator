@@ -185,6 +185,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/_5sdp"
         android:layout_weight="1"
         android:fillViewport="true"
         android:scrollbars="none">
@@ -198,7 +199,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -216,20 +216,18 @@
                     android:layout_height="@dimen/_30sdp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/llMobile"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/edit_text_style"
-                        android:orientation="horizontal">
+                        android:background="@drawable/edit_text_style">
 
                         <EditText
                             android:id="@+id/edtMobile"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/transparent"
+                            android:background="@drawable/edit_text_style"
                             android:gravity="right|center_vertical"
                             android:inputType="number"
                             android:maxLength="11"
@@ -244,6 +242,7 @@
                             android:id="@+id/vfDownload"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true">
 
                             <ImageView
@@ -262,7 +261,7 @@
 
                         </ViewFlipper>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="@dimen/_8sdp"
@@ -290,19 +289,31 @@
                         android:layout_width="@dimen/_8sdp"
                         android:layout_height="0dp" />
 
-                    <TextView
-                        android:id="@+id/txtSendMenu"
+                    <ViewFlipper
+                        android:id="@+id/vfSendMenu"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.60"
-                        android:background="@drawable/bg_btn_gray_style"
-                        android:elevation="@dimen/_4sdp"
-                        android:gravity="center"
-                        android:padding="7dp"
-                        android:text="ارسال منو"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp" />
+                        android:layout_weight="0.6"
+                        android:background="@drawable/bg_btn_gray_style">
 
+                        <TextView
+                            android:id="@+id/txtSendMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:elevation="@dimen/_4sdp"
+                            android:gravity="center"
+                            android:padding="7dp"
+                            android:text="@string/send_menu"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="center"
+                            app:indicatorColor="@color/white" />
+
+                    </ViewFlipper>
 
                 </LinearLayout>
 
@@ -398,7 +409,8 @@
                         <ViewFlipper
                             android:id="@+id/vfAddressList"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/imgAddressList"
@@ -406,8 +418,7 @@
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_gravity="center"
                                 android:paddingRight="@dimen/_7sdp"
-                                android:src="@drawable/ic_more"
-                                android:visibility="gone" />
+                                android:src="@drawable/ic_more" />
 
                             <com.wang.avi.AVLoadingIndicatorView
                                 android:layout_width="@dimen/_30sdp"
@@ -423,7 +434,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@color/transparent"
+                            android:background="@drawable/edit_text_style"
                             android:gravity="center_vertical"
                             android:inputType="text"
                             android:nextFocusDown="@id/edtStationCode"
@@ -487,7 +498,7 @@
                         android:id="@+id/rlProductType"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:background="@drawable/bg_btn_gray_style"
                         android:orientation="horizontal">
 
@@ -553,7 +564,7 @@
                         android:id="@+id/imgAddOrder"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5"
+                        android:layout_weight="0.4"
                         android:background="@drawable/bg_btn_gray_style"
                         android:padding="@dimen/_7sdp"
                         android:src="@drawable/ic_add" />

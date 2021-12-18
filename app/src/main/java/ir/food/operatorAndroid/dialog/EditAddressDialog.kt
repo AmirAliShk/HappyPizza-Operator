@@ -114,6 +114,4 @@ class EditAddressDialog {
             AvaCrashReporter.send(e, "EditAddressDialog class, dismiss method")
         }
     }
-
-
 }

@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
@@ -171,6 +172,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.black
                         )
                     )
+                    binding.llCancelAndLocation.visibility = GONE
                 }
                 5 -> {
                     icon = R.drawable.ic_chef
@@ -185,6 +187,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
+                    binding.llCancelAndLocation.visibility = GONE
                 }
                 2 -> {
                     icon = R.drawable.ic_coooking
@@ -199,6 +202,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
+                    binding.llCancelAndLocation.visibility = GONE
                 }
                 3 -> {
                     icon = R.drawable.ic_delivery
@@ -227,6 +231,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
+                    binding.llCancelAndLocation.visibility = GONE
                 }
                 4 -> {
                     icon = R.drawable.ic_round_done_24
@@ -308,5 +313,4 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 }
             }
         }
-
 }

@@ -32,11 +32,11 @@
 
             <TextView
                 android:id="@+id/txtDate"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <ImageView
@@ -46,11 +46,11 @@
 
             <TextView
                 android:id="@+id/txtTime"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -70,11 +70,11 @@
 
             <TextView
                 android:id="@+id/txtPassengerTell"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -94,11 +94,11 @@
 
             <TextView
                 android:id="@+id/txtDestinationOperator"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>

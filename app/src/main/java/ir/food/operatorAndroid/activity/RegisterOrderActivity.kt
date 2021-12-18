@@ -692,6 +692,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun enableViews() {
         binding.txtSendMenu.isEnabled = true
+        binding.vfSendMenu.isEnabled = true
         binding.edtCustomerName.isEnabled = true
         binding.llAddress.isEnabled = true
         binding.edtAddress.isEnabled = true
@@ -708,6 +709,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun disableViews() {
         binding.txtSendMenu.isEnabled = false
+        binding.vfSendMenu.isEnabled = false
         binding.edtCustomerName.isEnabled = false
         binding.llAddress.isEnabled = false
         binding.edtAddress.isEnabled = false
@@ -723,6 +725,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun sendMenu() {
+        binding.vfSendMenu.displayedChild = 1
         RequestHelper.builder(EndPoints.SEND_MENU)
             .addParam(
                 "mobile",
@@ -739,11 +742,11 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private val sendMenuCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
-
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
 //            {"success":true,"message":"اس ام اس منو با موفقیت برای مشتری ارسال شد","data":{"status":true}}
             MyApplication.handler.post {
                 try {
+                    binding.vfSendMenu.displayedChild = 0
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
@@ -753,14 +756,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                         if (status) {
                             GeneralDialog()
                                 .message(message)
-                                .firstButton("باشه") { null }
+                                .firstButton("باشه") {}
                                 .cancelable(true)
                                 .show()
                         }
                     } else {
                         GeneralDialog()
                             .message(message)
-                            .secondButton("باشه") { null }
+                            .secondButton("باشه") {}
                             .cancelable(true)
                             .show()
                     }
@@ -820,14 +823,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                         } else {
                             GeneralDialog()
                                 .message(message)
-                                .secondButton("باشه") { null }
+                                .secondButton("باشه") {}
                                 .cancelable(true)
                                 .show()
                         }
                     } else {
                         GeneralDialog()
                             .message(message)
-                            .secondButton("باشه") { null }
+                            .secondButton("باشه") {}
                             .cancelable(true)
                             .show()
                     }

@@ -16,7 +16,6 @@ class SearchDialog {
     private lateinit var binding: DialogSearchBinding
     private lateinit var dialog: Dialog
 
-
     interface SearchListener {
         fun searchType(searchType: Int)
     }
@@ -45,8 +44,6 @@ class SearchDialog {
         }
         dialog.setCancelable(true)
         KeyBoardHelper.hideKeyboard()
-
-       /* binding.blrView.setOnClickListener { dismiss() }*/
 
         this.listener = searchListener
 
