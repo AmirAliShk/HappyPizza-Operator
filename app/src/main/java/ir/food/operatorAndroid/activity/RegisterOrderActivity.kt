@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -60,6 +61,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
+    var existPendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     val cartJArray = JSONArray()
     var productTypes: String = ""
     var productId: String = ""
@@ -73,9 +75,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                     return
                 }
                 for (i in 0 until s) {
-                    sum += Integer.valueOf(pendingCartModels[i].price)
+                    sum += Integer.valueOf(pendingCartModels[i].price.toInt() * pendingCartModels[i].quantity)
                     binding.txtSumPrice.text =
                         StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+
+                    if (existPendingCartModels[i].quantity == 0 && pendingCartModels[i].quantity == 0) {
+                        existPendingCartModels.removeAt(i)
+                        pendingCartModels.removeAt(i)
+                    }
                 }
             }
         })
@@ -203,8 +210,36 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("name"),
                         1
                     )
-                    pendingCartModels.add(pendingCart)
-                    pendingCartAdapter.notifyDataSetChanged()
+                    if (pendingCartModels.size == 0) {
+                        pendingCartModels.add(pendingCart)
+                        existPendingCartModels.add(pendingCart)
+                        pendingCartAdapter.notifyDataSetChanged()
+                    } else {
+                        for (j in existPendingCartModels.indices) {
+                            if (existPendingCartModels[j].id == pendingCart.id) {
+                                existPendingCartModels[j].quantity++
+                                pendingCartAdapter.notifyDataSetChanged()
+                                Log.i("TAF_IF", "$j")
+                                Log.i("TAF_IF", "${pendingCart.id}")
+                                Log.i("TAF_IF", "${pendingCart.name}")
+                                Log.i("TAF_IF", "${existPendingCartModels[j].id}")
+                                Log.i("TAF_IF", "${existPendingCartModels[j].name}")
+
+                            } else {
+                                pendingCartModels.add(pendingCart)
+                                existPendingCartModels.add(pendingCart)
+                                pendingCartAdapter.notifyDataSetChanged()
+                                Log.i("TAF_ELSE", "$j")
+                                Log.i("TAF_ELSE", "${pendingCart.id}")
+                                Log.i("TAF_ELSE", "${pendingCart.name}")
+                                Log.i("TAF_ELSE", "${existPendingCartModels[j].id}")
+                                Log.i("TAF_ELSE", "${existPendingCartModels[j].name}")
+
+                            }
+                        }
+                    }
+
+
                     sum += Integer.valueOf(
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
                             .getJSONArray("size").getJSONObject(0)
@@ -672,6 +707,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
     private fun clearData() {
+        binding.orderList.clearOnChildAttachStateChangeListeners()
         binding.edtMobile.setText("")
         binding.edtMobile.requestFocus()
         binding.edtCustomerName.setText("")
@@ -682,6 +718,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtDescription.setText("")
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
+        existPendingCartModels.clear()
         productId = ""
         initProductTypeSpinner()
         initProductSpinner("")

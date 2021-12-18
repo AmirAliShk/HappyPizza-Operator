@@ -8,6 +8,7 @@ import ir.food.operatorAndroid.databinding.ItemOrderBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.PendingCartModel
+import ir.food.operatorAndroid.model.ProductsModel
 
 class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: TotalPrice) :
     RecyclerView.Adapter<PendingCartAdapter.ViewHolder>() {
@@ -34,7 +35,6 @@ class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: Tota
 //        if (model.contains(model)) {
 //            quantity++
 //        }
-
         holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.quantity.toString())
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text =
@@ -47,7 +47,9 @@ class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: Tota
 //        }
 
         holder.binding.imgReduce.setOnClickListener {
-            models.removeAt(position)
+
+            if (model.quantity == 1) models.removeAt(position)
+            else model.quantity --
             totalPrice.collectTotalPrice(models.size)
             notifyDataSetChanged()
         }
