@@ -1,8 +1,6 @@
 package ir.food.operatorAndroid.activity
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -17,10 +15,7 @@ import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
-import ir.food.operatorAndroid.app.DataHolder
-import ir.food.operatorAndroid.app.EndPoints
-import ir.food.operatorAndroid.app.Keys
-import ir.food.operatorAndroid.app.MyApplication
+import ir.food.operatorAndroid.app.*
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
@@ -61,11 +56,11 @@ class RegisterOrderActivity : AppCompatActivity() {
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
-    var existPendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     val cartJArray = JSONArray()
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
+    var isSame = false
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
@@ -78,11 +73,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                     sum += Integer.valueOf(pendingCartModels[i].price.toInt() * pendingCartModels[i].quantity)
                     binding.txtSumPrice.text =
                         StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
-
-                    if (existPendingCartModels[i].quantity == 0 && pendingCartModels[i].quantity == 0) {
-                        existPendingCartModels.removeAt(i)
-                        pendingCartModels.removeAt(i)
-                    }
                 }
             }
         })
@@ -212,30 +202,23 @@ class RegisterOrderActivity : AppCompatActivity() {
                     )
                     if (pendingCartModels.size == 0) {
                         pendingCartModels.add(pendingCart)
-                        existPendingCartModels.add(pendingCart)
-                        pendingCartAdapter.notifyDataSetChanged()
                     } else {
-                        for (j in existPendingCartModels.indices) {
-                            if (existPendingCartModels[j].id == pendingCart.id) {
-                                existPendingCartModels[j].quantity++
-                                pendingCartAdapter.notifyDataSetChanged()
+                        for (j in 0 until pendingCartModels.size) {
+                            if (pendingCartModels[j].id == productId) {
+                                pendingCartModels[j].quantity++
+                                isSame = true
                                 Log.i("TAF_IF", "$j")
                                 Log.i("TAF_IF", "${pendingCart.id}")
                                 Log.i("TAF_IF", "${pendingCart.name}")
-                                Log.i("TAF_IF", "${existPendingCartModels[j].id}")
-                                Log.i("TAF_IF", "${existPendingCartModels[j].name}")
-
-                            } else {
-                                pendingCartModels.add(pendingCart)
-                                existPendingCartModels.add(pendingCart)
-                                pendingCartAdapter.notifyDataSetChanged()
-                                Log.i("TAF_ELSE", "$j")
-                                Log.i("TAF_ELSE", "${pendingCart.id}")
-                                Log.i("TAF_ELSE", "${pendingCart.name}")
-                                Log.i("TAF_ELSE", "${existPendingCartModels[j].id}")
-                                Log.i("TAF_ELSE", "${existPendingCartModels[j].name}")
-
+                                Log.i("TAF_IF", "${pendingCartModels[j].id}")
+                                Log.i("TAF_IF", "${pendingCartModels[j].name}")
+                                break
                             }
+                        }
+                        if (!isSame) {
+                            pendingCartModels.add(pendingCart)
+                        } else {
+                            isSame = false
                         }
                     }
 
@@ -247,8 +230,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                     )
                     binding.txtSumPrice.text =
                         StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+                    break
                 }
             }
+
+            pendingCartAdapter.notifyDataSetChanged()
         }
 
         binding.txtSendMenu.setOnClickListener {
@@ -313,7 +299,14 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                 cartJArray.put(cartJObj)
             }
-            submitOrder()
+            GeneralDialog()
+                .cancelable(false)
+                .message("آیا از ثبت سفارش اطمینان دارید؟")
+                .firstButton("بله") {
+                    submitOrder()
+                }
+                .secondButton("خیر", null)
+                .show()
         }
 
     }
@@ -591,6 +584,12 @@ class RegisterOrderActivity : AppCompatActivity() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        val clipboard =
+                            getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip =
+                            ClipData.newPlainText("tell", binding.edtMobile.text.toString())
+                        clipboard.setPrimaryClip(clip)
+
                         binding.vfDownload.displayedChild = 0
                         val jsonObject = JSONObject(args[0].toString())
                         val success = jsonObject.getBoolean("success")
@@ -707,7 +706,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
     private fun clearData() {
-        binding.orderList.clearOnChildAttachStateChangeListeners()
         binding.edtMobile.setText("")
         binding.edtMobile.requestFocus()
         binding.edtCustomerName.setText("")
@@ -718,8 +716,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtDescription.setText("")
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
-        existPendingCartModels.clear()
         productId = ""
+        isSame = false
         initProductTypeSpinner()
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
@@ -828,8 +826,14 @@ class RegisterOrderActivity : AppCompatActivity() {
 //        addressId: 0,
 //        station: 31
 //    }
+        LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ADD_ORDER)
-            .addParam("mobile", binding.edtMobile.text.toString())
+            .addParam(
+                "mobile",
+                if (binding.edtMobile.text.toString()
+                        .startsWith("0")
+                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text}"
+            )
             .addParam("family", binding.edtCustomerName.text.toString())
             .addParam("address", binding.edtAddress.text.toString())
             .addParam("addressId", 0)
@@ -844,6 +848,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+                    LoadingDialog.dismissCancelableDialog()
 //                    {"success":true,"message":"ایستگاه موجود نمی باشد","data":{"status":false}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
@@ -873,12 +878,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    LoadingDialog.dismissCancelableDialog()
                 }
             }
         }
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
             super.onFailure(reCall, e)
+            LoadingDialog.dismissCancelableDialog()
         }
     }
 
@@ -1086,13 +1093,8 @@ class RegisterOrderActivity : AppCompatActivity() {
             GeneralDialog()
                 .message("آیا از خروج خود اطمینان دارید؟")
                 .firstButton("بله") {
-                    MyApplication.currentActivity.startActivity(
-                        Intent(
-                            MyApplication.currentActivity,
-                            MainActivity::class.java
-                        )
-                    )
-                    MyApplication.currentActivity.finish()
+                    startActivity(Intent(MyApplication.currentActivity, MainActivity::class.java))
+                    finish()
                 }
                 .secondButton("خیر") {}
                 .show()

@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     RegisterOrderActivity::class.java
                 )
             )
-
+            MyApplication.currentActivity.finish()
         }
     }
 
