@@ -136,7 +136,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 1 -> binding.txtPaymentType.text = "آنلاین"
             }
 
-            when (orderObj.getInt("paymentType")) {
+            when (orderObj.getInt("orderType")) {
                 0 -> binding.txtOrderType.text = "تلفنی"
                 1 -> binding.txtOrderType.text = "آنلاین"
             }
