@@ -4,6 +4,8 @@ import android.content.*
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -20,15 +22,13 @@ import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.*
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
+import ir.food.operatorAndroid.dialog.AddressDialog
 import ir.food.operatorAndroid.dialog.CallDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.*
-import ir.food.operatorAndroid.model.CallModel
-import ir.food.operatorAndroid.model.PendingCartModel
-import ir.food.operatorAndroid.model.ProductsModel
-import ir.food.operatorAndroid.model.ProductsTypeModel
+import ir.food.operatorAndroid.model.*
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
@@ -59,11 +59,17 @@ class RegisterOrderActivity : AppCompatActivity() {
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
+    var addressModels: ArrayList<AddressModel> = ArrayList()
     val cartJArray = JSONArray()
+    var customerAddresses = ""
+    var customerAddressId = "0"
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
     var isSame = false
+    var addressChangeCounter =
+        0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
+    var addressLength = 0
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
@@ -112,6 +118,11 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.imgBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.vfAddressList.setOnClickListener {
+            KeyBoardHelper.hideKeyboard()
+            customerAddressDialog()
         }
 
         binding.btnActivate.setOnClickListener { enterTheQueue() }
@@ -313,6 +324,63 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         setCursorEnd(window.decorView.rootView)
+
+        binding.edtAddress.addTextChangedListener(addressTW)
+
+//        binding.edtMobile.addTextChangedListener(tellTW)
+    }
+
+//    private val tellTW = object : TextWatcher {
+//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+//
+//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            disableViews()
+//        }
+//
+//        override fun afterTextChanged(p0: Editable?) {
+//            if (NumberValidation.havePrefix(p0.toString())) {
+//                NumberValidation.removePrefix(p0.toString())
+//            }
+//            if (NumberValidation.isValid(p0.toString())) {
+//                binding.edtMobile.text = p0
+//            } else {
+//                binding.edtAddress.setText("")
+//                binding.edtDescription.setText("")
+//                addressChangeCounter = 0
+//                binding.edtAddress.setText("")
+//                binding.edtStationCode.setText("")
+//            }
+//        }
+//    }
+
+    private var addressTW: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(
+            charSequence: CharSequence,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            addressChangeCounter += 1
+            // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
+            if (addressChangeCounter >= addressLength * 50 / 100) {
+            }
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            if (editable.toString().isEmpty()) {
+                customerAddressId = "0"
+                addressLength = 0
+                binding.edtStationCode.text.clear()
+            }
+        }
     }
 
     private fun setCursorEnd(v: View?) {
@@ -600,6 +668,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
     private fun getCustomer(mobileNo: String) {
+        addressModels.clear()
         binding.vfDownload.displayedChild = 1
         RequestHelper.builder(EndPoints.GET_CUSTOMER)
             .addPath(if (mobileNo.startsWith("0")) mobileNo else "0$mobileNo")
@@ -629,9 +698,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                             KeyBoardHelper.showKeyboard(MyApplication.context)
                             if (dataObj.getBoolean("status")) {
                                 val customerObj = dataObj.getJSONObject("customer")
+                                customerAddresses = customerObj.getJSONArray("locations").toString()
                                 binding.edtCustomerName.setText(customerObj.getString("family"))
 
                                 val orderStatus = dataObj.getJSONObject("orderStatus")
+
+                                addressChangeCounter = 0
 
                                 when (orderStatus.getInt("status")) {
                                     0 ->//new order
@@ -744,6 +816,10 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtDescription.setText("")
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
+        addressModels.clear()
+        customerAddressId = "0"
+        addressChangeCounter = 0
+        addressLength = 0
         productId = ""
         isSame = false
         initProductTypeSpinner()
@@ -842,19 +918,13 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun submitOrder() {
-//        products: [...{
-//        _id: "60b72a70e353f0385c2fe5af",
-//        quantity: 2,
-//        size: "medium"
-//    }],
-//        family: " شکوهی",
-//        mobile: "09307580131",
-//        description: "با سس قرمز تند",
-//        address: "معلم 3",
-//        addressId: 0,
-//        station: 31
-//    }
         LoadingDialog.makeCancelableLoader()
+
+        val addressPercent: Int = addressLength * 50 / 100
+        if (addressChangeCounter >= addressPercent) {
+            customerAddressId = "0"
+        }
+
         RequestHelper.builder(EndPoints.ADD_ORDER)
             .addParam(
                 "mobile",
@@ -864,7 +934,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             )
             .addParam("family", binding.edtCustomerName.text.toString())
             .addParam("address", binding.edtAddress.text.toString())
-            .addParam("addressId", 0)
+            .addParam("addressId", customerAddressId)
             .addParam("station", binding.edtStationCode.text.toString())
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.toString())
@@ -1066,6 +1136,32 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.rlNewInComingCall.visibility = View.GONE
         binding.rlActionBar.visibility = View.VISIBLE
         binding.imgCallQuality.visibility = View.INVISIBLE
+    }
+
+    private fun customerAddressDialog() {
+        val addressArr = JSONArray(customerAddresses)
+        for (i in 0 until addressArr.length()) {
+            val addressObj = addressArr.getJSONObject(i)
+            val addressModel = AddressModel(
+                addressObj.getString("address"),
+                if (addressObj.has("_id")) addressObj.getString("_id") else "0",
+                if (addressObj.has("station")) addressObj.getString("station") else "0"
+            )
+            addressModels.add(addressModel)
+        }
+        if (addressModels.size == 0) {
+            MyApplication.Toast("ادرسی موجود نیست", Toast.LENGTH_SHORT)
+        } else {
+            AddressDialog().show(
+                addressModels
+            ) { addressModel ->
+                addressChangeCounter = 0
+                addressLength = addressModel.address.length
+                customerAddressId = addressModel.addressId
+                binding.edtAddress.setText(addressModel.address)
+                binding.edtStationCode.setText(addressModel.stationId)
+            }
+        }
     }
 
     override fun onResume() {

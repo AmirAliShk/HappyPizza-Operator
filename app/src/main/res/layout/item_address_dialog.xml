@@ -24,7 +24,6 @@
             android:gravity="center"
             android:paddingRight="5dp"
             android:singleLine="true"
-            android:text="199"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#6d6b6d" />
 
@@ -40,7 +39,6 @@
             android:layout_weight="1.5"
             android:gravity="right|center_vertical"
             android:paddingRight="@dimen/_10sdp"
-            android:text="کلاهدور 50"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/black" />
 
@@ -49,6 +47,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_35sdp"
             android:elevation="@dimen/_8sdp"
+            android:visibility="gone"
             android:padding="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:src="@drawable/ic_recyclebin" />

@@ -399,18 +399,31 @@
                         android:textColor="@color/color_Titles"
                         android:textSize="@dimen/_10sdp" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/llAddress"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:background="@drawable/edit_text_style"
                         android:orientation="horizontal">
 
+                        <EditText
+                            android:id="@+id/edtAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edit_text_style"
+                            android:gravity="center_vertical"
+                            android:inputType="text"
+                            android:nextFocusDown="@id/edtStationCode"
+                            android:paddingRight="@dimen/_35sdp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp" />
+
                         <ViewFlipper
                             android:id="@+id/vfAddressList"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/imgAddressList"
@@ -429,21 +442,7 @@
 
                         </ViewFlipper>
 
-                        <EditText
-                            android:id="@+id/edtAddress"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/edit_text_style"
-                            android:gravity="center_vertical"
-                            android:inputType="text"
-                            android:nextFocusDown="@id/edtStationCode"
-                            android:paddingHorizontal="@dimen/_10sdp"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
+                    </RelativeLayout>
 
                 </LinearLayout>
 
