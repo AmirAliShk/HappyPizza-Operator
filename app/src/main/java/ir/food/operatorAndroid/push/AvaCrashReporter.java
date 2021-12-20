@@ -21,12 +21,9 @@ public class AvaCrashReporter {
 //    } catch (Exception ee) {
 //      ee.printStackTrace();
 //    }
-
-        String PUSH_PROJECT_ID = "5";
-
         try {
             JSONObject customeData = new JSONObject();
-            customeData.put("projectId", PUSH_PROJECT_ID);
+            customeData.put("projectId", MyApplication.prefManager.getPushId());
             customeData.put("IS_CATCH", true);
             customeData.put("CATCH_LINE_NUMBER", AvaSocket.getSocketParams());
             customeData.put("CATCH_ID", arg.length > 0 ? arg[0] : 0);

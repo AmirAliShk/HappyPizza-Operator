@@ -81,7 +81,7 @@ public class AvaService extends Service {
         stopGetMissingPush();
         stopCheckConnection();
         AvaSocket.getConnection(context).disconnectSocket();
-        Intent intent = new Intent("ir.taxi1880.operatormanagement.PUSH_SERVICE_DESTROY");
+        Intent intent = new Intent("ir.food.operatorAndroid.PUSH_SERVICE_DESTROY");
         sendBroadcast(intent);
 
         AvaLog.e("push service Stopped");

@@ -43,7 +43,7 @@ public class PushReceiver extends BroadcastReceiver {
 
             JSONObject object = new JSONObject(result);
             String strMessage = object.getString("message");
-            Log.i(TAG, "AMIRREZA=> onReceive: " + strMessage);
+            Log.i(TAG, "onReceive=>: " + strMessage);
 
             JSONObject messages = new JSONObject(strMessage);
             String typee = messages.getString("type");
@@ -177,7 +177,7 @@ public class PushReceiver extends BroadcastReceiver {
         mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL, "turboTaxi_userStatus", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(CHANNEL, "HPizza_userStatus", NotificationManager.IMPORTANCE_HIGH);
             mNotificationManager.createNotificationChannel(channel);
             mBuilder.setChannelId(CHANNEL);
         }

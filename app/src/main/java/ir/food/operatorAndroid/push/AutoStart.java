@@ -27,7 +27,7 @@ public class AutoStart extends BroadcastReceiver {
                     AvaLog.i("start push service by boot completed");
                     ServiceHelper.start(context, AvaService.class);
                     break;
-                case "ir.team_x.ariana.operator.push.PUSH_SERVICE_DESTROY":
+                case "ir.food.operatorAndroid.PUSH_SERVICE_DESTROY":
                     MyApplication.handler.postDelayed(() -> {
                         if (!ServiceHelper.isRunning(context, AvaService.class)) {
                             ServiceHelper.start(context, AvaService.class);

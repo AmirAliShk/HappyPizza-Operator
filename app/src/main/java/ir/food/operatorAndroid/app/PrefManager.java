@@ -178,7 +178,7 @@ public class PrefManager {
     }
 
     public int getPushId() {
-        return pref.getInt(PUSH_ID, 5);
+        return pref.getInt(PUSH_ID, 12);
     }
 
     public String getUserName() {

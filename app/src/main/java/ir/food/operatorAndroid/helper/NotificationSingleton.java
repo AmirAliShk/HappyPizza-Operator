@@ -17,12 +17,10 @@ import ir.food.operatorAndroid.activity.Splash;
 
 public class NotificationSingleton {
 
-    private static final int NOTIFICATION_ID = 1880;
-    private static final String CHANNEL_ID = "Foreground Service Channel";
+    // TODO change the group names and NOTIFICATION_ID in other application
     private static Notification notification;
-
-    // TODO change the group names in other application
-
+    private static final int NOTIFICATION_ID = 1882;
+    private static final String CHANNEL_ID = "Foreground Service Channel";
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Notification getNotification(Context context) {
         if (notification == null) {
@@ -45,7 +43,6 @@ public class NotificationSingleton {
                     .setOngoing(true)
                     .build();
         }
-
         return notification;
     }
 
