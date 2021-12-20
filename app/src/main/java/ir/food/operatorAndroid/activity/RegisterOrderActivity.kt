@@ -6,9 +6,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -309,6 +312,31 @@ class RegisterOrderActivity : AppCompatActivity() {
                 .show()
         }
 
+        setCursorEnd(window.decorView.rootView)
+    }
+
+    private fun setCursorEnd(v: View?) {
+        try {
+            if (v is ViewGroup) {
+                val vg = v
+                for (i in 0 until vg.childCount) {
+                    val child = vg.getChildAt(i)
+                    setCursorEnd(child)
+                }
+            } else if (v is EditText) {
+                val e = v
+                e.onFocusChangeListener = OnFocusChangeListener { view: View?, b: Boolean ->
+                    if (b) MyApplication.handler.postDelayed(
+                        { e.setSelection(e.text.length) },
+                        200
+                    )
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "RegisterOrderActivity class, setCursorEnd method")
+            // ignore
+        }
     }
 
     private fun getProductsAndLists() {
