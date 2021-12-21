@@ -60,7 +60,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
     var addressModels: ArrayList<AddressModel> = ArrayList()
-    val cartJArray = JSONArray()
+    private lateinit var cartJArray: JSONArray
     var customerAddresses = ""
     var customerAddressId = "0"
     var productTypes: String = ""
@@ -294,7 +294,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.edtAddress.requestFocus()
                 return@setOnClickListener
             }
-            if (binding.edtStationCode.text.toString() == "") {
+            if (binding.edtStationCode.text.toString() == "" || binding.edtStationCode.text.toString() == "0") {
                 MyApplication.Toast("لطفا ایستگاه را وارد کنید.", Toast.LENGTH_SHORT)
                 binding.edtStationCode.requestFocus()
                 return@setOnClickListener
@@ -305,6 +305,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            cartJArray = JSONArray()
             for (i in 0 until pendingCartModels.size) {
                 val cartJObj = JSONObject()
                 cartJObj.put("_id", pendingCartModels[i].id)
@@ -371,6 +372,8 @@ class RegisterOrderActivity : AppCompatActivity() {
             addressChangeCounter += 1
             // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
             if (addressChangeCounter >= addressLength * 50 / 100) {
+                binding.edtStationCode.setText("")
+                customerAddressId = "0"
             }
         }
 
@@ -669,6 +672,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun getCustomer(mobileNo: String) {
         addressModels.clear()
+        customerAddresses = ""
         binding.vfDownload.displayedChild = 1
         RequestHelper.builder(EndPoints.GET_CUSTOMER)
             .addPath(if (mobileNo.startsWith("0")) mobileNo else "0$mobileNo")
@@ -704,7 +708,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 val orderStatus = dataObj.getJSONObject("orderStatus")
 
                                 addressChangeCounter = 0
-
+                                showLastAddress()
                                 when (orderStatus.getInt("status")) {
                                     0 ->//new order
                                     {
@@ -722,12 +726,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                                                 )
                                             }"
                                         binding.vfDownload.displayedChild = 0
-
                                         GeneralDialog()
                                             .message(msg)
                                             .cancelable(false)
                                             .firstButton("بستن", null)
                                             .secondButton("پشتیبانی") {
+                                                KeyBoardHelper.hideKeyboard()
                                                 FragmentHelper.toFragment(
                                                     MyApplication.currentActivity,
                                                     OrdersListFragment(customerObj.getString("mobile"))
@@ -817,6 +821,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
         addressModels.clear()
+        customerAddresses = ""
         customerAddressId = "0"
         addressChangeCounter = 0
         addressLength = 0
@@ -932,12 +937,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                         .startsWith("0")
                 ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text}"
             )
-            .addParam("family", binding.edtCustomerName.text.toString())
-            .addParam("address", binding.edtAddress.text.toString())
+            .addParam("family", binding.edtCustomerName.text.trim().toString())
+            .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
-            .addParam("station", binding.edtStationCode.text.toString())
+            .addParam("station", (binding.edtStationCode.text.trim()))
             .addParam("products", cartJArray)
-            .addParam("description", binding.edtDescription.text.toString())
+            .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)
             .post()
     }
@@ -992,23 +997,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
             val result = intent.getStringExtra(Keys.KEY_MESSAGE)
             parseNotification(result)?.let { handleCallerInfo(it) }
-        }
-    }
-
-    //receive userStatus from local broadcast
-    var userStatusReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val messageUserStatus = intent.getStringExtra(Keys.KEY_MESSAGE_USER_STATUS)
-            val userStatus = intent.getBooleanExtra(Keys.KEY_USER_STATUS, false)
-            if (!userStatus) {
-                binding.btnDeActivate.setBackgroundResource(R.drawable.bg_pink_edge)
-                binding.btnActivate.setBackgroundColor(Color.parseColor("#00FFB2B2"))
-                MyApplication.prefManager.queueStatus = false
-            } else {
-                binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
-                binding.btnDeActivate.setBackgroundColor(Color.parseColor("#00FFB2B2"))
-                MyApplication.prefManager.queueStatus = true
-            }
         }
     }
 
@@ -1138,14 +1126,33 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.imgCallQuality.visibility = View.INVISIBLE
     }
 
+    private fun showLastAddress() {
+        val addressArr = JSONArray(customerAddresses)
+        val addressObj = addressArr.getJSONObject(addressArr.length() - 1)
+        val address = addressObj.getString("address")
+        binding.edtAddress.setText(address)
+        binding.edtStationCode.setText(
+            if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
+                .toString() else "0"
+        )
+        addressLength = address.length
+        customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+    }
+
     private fun customerAddressDialog() {
+        addressModels.clear()
+        if (customerAddresses == "") {
+            MyApplication.Toast("ادرسی موجود نیست", Toast.LENGTH_SHORT)
+            return
+        }
         val addressArr = JSONArray(customerAddresses)
         for (i in 0 until addressArr.length()) {
             val addressObj = addressArr.getJSONObject(i)
             val addressModel = AddressModel(
                 addressObj.getString("address"),
                 if (addressObj.has("_id")) addressObj.getString("_id") else "0",
-                if (addressObj.has("station")) addressObj.getString("station") else "0"
+                if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
+                    .toString() else "0"
             )
             addressModels.add(addressModel)
         }

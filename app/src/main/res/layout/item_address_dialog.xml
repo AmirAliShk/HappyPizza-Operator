@@ -23,9 +23,8 @@
             android:layout_weight="0.35"
             android:gravity="center"
             android:paddingRight="5dp"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#6d6b6d" />
+            android:singleLine="true" android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/darkGray" />
 
         <ImageView
             android:layout_width="1dp"
@@ -39,7 +38,7 @@
             android:layout_weight="1.5"
             android:gravity="right|center_vertical"
             android:paddingRight="@dimen/_10sdp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/black" />
 
         <ImageView
@@ -54,11 +53,11 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:background="#D6D4D4" />
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.5dp"-->
+<!--        android:layout_marginLeft="25dp"-->
+<!--        android:layout_marginRight="25dp"-->
+<!--        android:background="#D6D4D4" />-->
 
 </LinearLayout>

@@ -41,6 +41,7 @@
                     android:layout_weight="1.65"
                     android:text="آدرس"
                     android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/color_Red"/>
 
                 <TextView
@@ -49,6 +50,7 @@
                     android:layout_weight="0.5"
                     android:text="ایستگاه"
                     android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/color_Red"
                     android:layout_marginRight="@dimen/_10sdp"/>
 

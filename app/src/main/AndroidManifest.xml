@@ -24,7 +24,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".activity.CallActivity" />
+        <activity android:name=".activity.CallActivity"
+            android:excludeFromRecents="true"/>
 
         <activity
             android:name=".activity.RegisterOrderActivity"
