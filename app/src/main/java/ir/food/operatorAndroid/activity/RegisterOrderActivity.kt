@@ -35,10 +35,7 @@ import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.linphone.core.Address
-import org.linphone.core.Call
-import org.linphone.core.Core
-import org.linphone.core.CoreListenerStub
+import org.linphone.core.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -54,7 +51,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     lateinit var call: Call
     lateinit var core: Core
     var voipId = "0"
-    var queue = "0"
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
@@ -992,69 +988,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
-    //receive push notification from local broadcast
-    var pushReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val result = intent.getStringExtra(Keys.KEY_MESSAGE)
-            parseNotification(result)?.let { handleCallerInfo(it) }
-        }
-    }
-
-    private fun handleCallerInfo(callModel: CallModel) {
-        try {
-            if (voipId == "0") {
-                //show CallerId
-                if (callModel == null) {
-                    return
-                }
-                val participant: String =
-                    PhoneNumberValidation.removePrefix(callModel.participant)
-                queue = callModel.queue
-                voipId = callModel.voipId
-                DataHolder.getInstance().setVoipId(voipId)
-                if (binding.edtMobile == null) return
-                if (participant == null) return
-                binding.edtMobile.setText(participant)
-                MyApplication.handler.postDelayed({ binding.imgDownload.callOnClick() }, 400)
-            }
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "TripRegisterActivity class, handleCallerInfo method")
-        }
-    }
-
-    /**
-     * @param info have below format
-     * sample : {"type":"callerInfo","exten":"456","participant":"404356734579","queue":"999","voipId":"1584260434.9922480"}
-     */
-    private fun parseNotification(info: String?): CallModel? {
-        if (info == null) return null
-        try {
-            val `object` = JSONObject(info)
-            val strMessage = `object`.getString("message")
-            val messages = JSONObject(strMessage)
-            val typee = messages.getString("type")
-            if (typee == "callerInfo") {
-                val message = JSONObject(strMessage)
-                return CallModel(
-                    message.getString("type"),
-                    message.getInt("exten"),
-                    message.getString("participant"),
-                    message.getString("queue"),
-                    message.getString("voipId")
-                )
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-            AvaCrashReporter.send(
-                e,
-                "TripRegisterActivity class, parseNotification method ,info : $info"
-            )
-            return null
-        }
-        return null
-    }
-
     private fun refreshQueueStatus() {
         if (MyApplication.prefManager.queueStatus) {
             binding.btnActivate.setBackgroundResource(R.drawable.bg_green_edge)
@@ -1108,6 +1041,49 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.imgCallQuality.visibility = View.VISIBLE
         binding.imgCallQuality.setImageResource(imageRes)
         mDisplayedQuality = iQuality
+    }
+
+    private val mListener = object : CoreListenerStub() {
+        override fun onRegistrationStateChanged(
+            lc: Core,
+            proxy: ProxyConfig,
+            state: RegistrationState,
+            message: String
+        ) {
+            if (core.defaultProxyConfig != null && core.defaultProxyConfig == proxy) {
+                binding.imgSipStatus.setImageResource(getStatusIconResource(state))
+            } else if (core.defaultProxyConfig == null) {
+                binding.imgSipStatus.setImageResource(getStatusIconResource(state))
+            }
+            try {
+                binding.imgSipStatus.setOnClickListener {
+                    val core: Core = LinphoneService.getCore()
+                    if (core != null) {
+                        core.refreshRegisters()
+                    }
+                }
+            } catch (ise: IllegalStateException) {
+                ise.printStackTrace()
+            }
+        }
+    }
+
+    private fun getStatusIconResource(state: RegistrationState): Int {
+        try {
+            val core = LinphoneService.getCore()
+            val defaultAccountConnected =
+                core != null && core.defaultProxyConfig != null && core.defaultProxyConfig.state == RegistrationState.Ok
+            if (state == RegistrationState.Ok && defaultAccountConnected) {
+                return R.drawable.ic_led_connected
+            } else if (state == RegistrationState.Progress) {
+                return R.drawable.ic_led_inprogress
+            } else if (state == RegistrationState.Failed) {
+                return R.drawable.ic_led_error
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return R.drawable.ic_led_error
     }
 
     private fun showCallIncoming() {
@@ -1175,7 +1151,12 @@ class RegisterOrderActivity : AppCompatActivity() {
         super.onResume()
         MyApplication.currentActivity = this
         showTitleBar()
-        MyApplication.prefManager.isAppRun = true;
+        MyApplication.prefManager.isAppRun = true
+        core.addListener(mListener)
+        val lpc = core.defaultProxyConfig
+        if (lpc != null) {
+            mListener.onRegistrationStateChanged(core, lpc, lpc.state, "")
+        }
         if (MyApplication.prefManager.connectedCall) {
             startCallQuality()
             binding.imgCallOption.setImageResource(R.drawable.ic_call_dialog_enable)
@@ -1209,6 +1190,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         isRunning = false
         MyApplication.prefManager.isAppRun = false
         KeyBoardHelper.hideKeyboard()
+        if (core != null) {
+            core.removeListener(mListener)
+        }
     }
 
     override fun onDestroy() {

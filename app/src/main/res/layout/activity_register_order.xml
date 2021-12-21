@@ -155,6 +155,15 @@
             android:layout_toRightOf="@+id/imgBack"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/imgSipStatus"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/llStatus"
+            android:padding="@dimen/_3sdp" />
+
+
         <LinearLayout
             android:id="@+id/llEndCall"
             android:layout_width="80dp"
