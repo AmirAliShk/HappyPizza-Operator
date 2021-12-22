@@ -71,7 +71,7 @@ class GetAppInfo {
                             val updateAvailable = data.getBoolean("update")
                             val forceUpdate = data.getBoolean("isForce")
                             val updateUrl = data.getString("updateUrl")
-                            val sipNumber = data.getInt("sipNumber")
+                            val sipNumber = data.getString("sipNumber")
                             val sipPassword = data.getString("sipPassword")
                             val sipServer = data.getString("sipServer")
 
@@ -104,7 +104,7 @@ class GetAppInfo {
                                     sipPassword != MyApplication.prefManager.sipPassword ||
                                     !sipServer.equals(MyApplication.prefManager.sipServer)
                                 ) {
-                                    if (sipNumber != 0) {
+                                    if (sipNumber != "0") {
                                         MyApplication.configureAccount();
                                     }
                                 }

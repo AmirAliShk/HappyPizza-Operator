@@ -41,7 +41,7 @@ class RecentCallsDialog {
     fun show(
         tell: String,
         mobile: String,
-        sip: Int,
+        sip: String,
         fromPassengerCalls: Boolean,
         dismissInterface: DismissInterface?
     ) {
@@ -82,7 +82,7 @@ class RecentCallsDialog {
             }
         } else {
             binding.vfHeader.displayedChild = 0
-            getRecentCalls("/dst", sip.toString() + "", "/1")
+            getRecentCalls("/dst", sip + "", "/1")
         }
 
         binding.imgClose.setOnClickListener { dismiss() }

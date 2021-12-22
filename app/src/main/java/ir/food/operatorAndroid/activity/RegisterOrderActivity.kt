@@ -617,7 +617,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
-    private fun enterTheQueue(sipNumber: Int) {
+    private fun enterTheQueue(sipNumber: String) {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.ENTER_QUEUE)
             .addParam("sipNumber", sipNumber)
@@ -738,11 +738,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 }
                             } else {
                                 //new customer
-                                MyApplication.Toast(message, Toast.LENGTH_LONG)
                                 binding.txtNewCustomer.visibility = View.VISIBLE
                             }
-                        } else {
-                            MyApplication.Toast(message, Toast.LENGTH_LONG)
                         }
 
                     } catch (e: Exception) {
@@ -759,7 +756,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         }
 
-    private fun exitQueue(sipNumber: Int) {
+    private fun exitQueue(sipNumber: String) {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.EXIT_QUEUE)
             .listener(exitTheQueueCallBack)
@@ -826,6 +823,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         initProductTypeSpinner()
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
+        sum = 0
         voipId = "0"
         disableViews()
     }
