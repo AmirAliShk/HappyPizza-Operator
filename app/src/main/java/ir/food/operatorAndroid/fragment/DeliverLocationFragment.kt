@@ -40,7 +40,7 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDeliverLocationBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
         binding.map.onCreate(savedInstanceState)

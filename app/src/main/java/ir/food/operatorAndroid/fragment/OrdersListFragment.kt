@@ -38,7 +38,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOrdersListBinding.inflate(layoutInflater)
 
         TypefaceUtil.overrideFonts(binding.root)

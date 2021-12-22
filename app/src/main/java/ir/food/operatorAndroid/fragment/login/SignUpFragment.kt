@@ -52,7 +52,7 @@ class SignUpFragment : Fragment() {
         binding.btnSendCode.setOnClickListener {
             mobile = binding.edtMobile.text.toString()
             when {
-                mobile.isEmpty() -> {
+                mobile.isEmpty() || mobile.length < 10 -> {
                     MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtMobile.requestFocus()
                 }
@@ -73,11 +73,11 @@ class SignUpFragment : Fragment() {
                     MyApplication.Toast("نام و نام خانوادگی را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtName.requestFocus()
                 }
-                mobile.isEmpty() -> {
+                mobile.isEmpty() || mobile.length < 10 -> {
                     MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtMobile.requestFocus()
                 }
-                verificationCode.isEmpty() -> {
+                verificationCode.isEmpty() || verificationCode.length < 4  -> {
                     MyApplication.Toast("کد تایید را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtVerificationCode.requestFocus()
                 }
@@ -103,7 +103,7 @@ class SignUpFragment : Fragment() {
             FragmentHelper
                 .toFragment(MyApplication.currentActivity, LogInFragment())
                 .setAddToBackStack(false)
-                .add()
+                .replace()
         }
 
         return binding.root

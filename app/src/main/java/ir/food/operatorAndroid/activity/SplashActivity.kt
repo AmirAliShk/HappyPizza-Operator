@@ -1,13 +1,11 @@
 package ir.food.operatorAndroid.activity
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -54,7 +52,6 @@ class SplashActivity : AppCompatActivity() {
                 checkPermission()
             }, 500
         )
-
     }
 
     private fun checkPermission() {
@@ -88,9 +85,9 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==107){
-            if(resultCode== RESULT_OK || resultCode== RESULT_CANCELED)
-            GetAppInfo().callAppInfoAPI()
+        if (requestCode == 107) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED)
+                GetAppInfo().callAppInfoAPI()
         }
     }
 
@@ -112,16 +109,12 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            super.onBackPressed()
-        } else {
-            GeneralDialog()
-                .message("آیا از خروج خود اطمینان دارید؟")
-                .firstButton("بله") {
-                    finish()
-                }
-                .secondButton("خیر") {}
-                .show()
-        }
+        GeneralDialog()
+            .message("آیا از خروج خود اطمینان دارید؟")
+            .firstButton("بله") {
+                finish()
+            }
+            .secondButton("خیر") {}
+            .show()
     }
 }

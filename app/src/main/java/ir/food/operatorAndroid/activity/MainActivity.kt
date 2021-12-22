@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.llRegisterOrder.setOnClickListener {
-
             MyApplication.currentActivity.startActivity(
                 Intent(
                     MyApplication.currentActivity,
@@ -116,7 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
         return R.drawable.ic_led_error
     }
-
 
     override fun onResume() {
         super.onResume()

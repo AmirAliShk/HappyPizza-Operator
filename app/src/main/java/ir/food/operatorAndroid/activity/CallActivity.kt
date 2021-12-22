@@ -101,11 +101,10 @@ class CallActivity : AppCompatActivity() {
                 finish()
             }
         }
-
     }
 
     private fun gotoCalling() {
-        var intent = Intent(this, RegisterOrderActivity::class.java)
+        val intent = Intent(this, RegisterOrderActivity::class.java)
 //        if (MyApplication.prefManager.getActivityStatus() === 1) {  //you are enable in trip register queue
 //            intent = Intent(this, ServiceRegisterActivity::class.java)
 //        } else if (MyApplication.prefManager.getActivityStatus() === 2) { // you are enable in support queue (800)
@@ -126,9 +125,9 @@ class CallActivity : AppCompatActivity() {
             message: String
         ) {
             if (state == Call.State.End || state == Call.State.Released) {
-                finish();
+                finish()
             } else if (state == Call.State.Connected) {
-                gotoCalling();
+                gotoCalling()
             }
         }
     }
@@ -150,7 +149,7 @@ class CallActivity : AppCompatActivity() {
             }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "callIncomingActivity class, onResume method")
+            AvaCrashReporter.send(e, "callActivity class, onResume method")
         }
     }
 
