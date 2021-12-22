@@ -12,6 +12,7 @@ import android.view.WindowManager
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogOverlayPermissionBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.webService.GetAppInfo
 
 class OverlayPermissionDialog {
 
@@ -39,6 +40,7 @@ class OverlayPermissionDialog {
         }
 
         binding.btnDismiss.setOnClickListener {
+            GetAppInfo().callAppInfoAPI()
             dialog.dismiss()
         }
 
