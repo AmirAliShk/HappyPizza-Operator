@@ -1,9 +1,13 @@
 package ir.food.operatorAndroid.activity
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -12,13 +16,14 @@ import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivitySplashBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
+import ir.food.operatorAndroid.dialog.OverlayPermissionDialog
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.webService.GetAppInfo
 import org.acra.ACRA
 
-class Splash : AppCompatActivity() {
-    var TAG = Splash::class.java
+class SplashActivity : AppCompatActivity() {
+    var TAG = SplashActivity::class.java
     private lateinit var binding: ActivitySplashBinding
     private val permission = arrayOf(Manifest.permission.RECORD_AUDIO)
 
@@ -62,6 +67,8 @@ class Splash : AppCompatActivity() {
                     permission,
                     1
                 )
+            } else if (!Settings.canDrawOverlays(MyApplication.context)) {
+                OverlayPermissionDialog().show()
             } else {
                 GetAppInfo().callAppInfoAPI()
             }
@@ -77,6 +84,14 @@ class Splash : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         checkPermission()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==107){
+            if(resultCode== RESULT_OK || resultCode== RESULT_CANCELED)
+            GetAppInfo().callAppInfoAPI()
+        }
     }
 
     override fun onResume() {

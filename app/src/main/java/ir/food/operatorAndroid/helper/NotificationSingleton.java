@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import ir.food.operatorAndroid.R;
-import ir.food.operatorAndroid.activity.Splash;
+import ir.food.operatorAndroid.activity.SplashActivity;
 
 public class NotificationSingleton {
 
@@ -24,7 +24,7 @@ public class NotificationSingleton {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Notification getNotification(Context context) {
         if (notification == null) {
-            Intent intent = new Intent(context, Splash.class);
+            Intent intent = new Intent(context, SplashActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

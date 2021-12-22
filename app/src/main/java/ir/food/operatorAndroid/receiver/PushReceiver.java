@@ -23,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ir.food.operatorAndroid.R;
-import ir.food.operatorAndroid.activity.Splash;
+import ir.food.operatorAndroid.activity.SplashActivity;
 import ir.food.operatorAndroid.app.Constant;
 import ir.food.operatorAndroid.app.DataHolder;
 import ir.food.operatorAndroid.app.MyApplication;
@@ -121,7 +121,7 @@ public class PushReceiver extends BroadcastReceiver {
 
         NotificationManager mNotificationManager;
         String CHANNEL = "pushChannel";
-        Intent intent = new Intent(context, Splash.class);
+        Intent intent = new Intent(context, SplashActivity.class);
         RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
 
         if (type.equals(Constant.PUSH_NOTIFICATION_MESSAGE_TYPE)) {
@@ -161,7 +161,7 @@ public class PushReceiver extends BroadcastReceiver {
 
         NotificationManager mNotificationManager;
         String CHANNEL = "pushStatusChannel";
-        Intent intent = new Intent(context, Splash.class);
+        Intent intent = new Intent(context, SplashActivity.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, Constant.USER_STATUS_NOTIFICATION_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

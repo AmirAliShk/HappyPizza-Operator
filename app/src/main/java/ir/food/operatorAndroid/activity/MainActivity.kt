@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     MyApplication.currentActivity.startActivity(
                         Intent(
                             MyApplication.currentActivity,
-                            Splash::class.java
+                            SplashActivity::class.java
                         )
                     )
                     MyApplication.currentActivity.finish()
