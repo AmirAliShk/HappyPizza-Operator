@@ -247,7 +247,7 @@ public class LinphoneService extends Service {
                 if (state == Call.State.Connected) {
                     if (MyApplication.prefManager.isCallIncoming()) {
                         Address address = call.getRemoteAddress();
-                        MyApplication.prefManager.setLastCall(address.getUsername());
+                        MyApplication.prefManager.setLastCallNumber(address.getUsername());
                     }
                     MyApplication.prefManager.setConnectedCall(true);
                     //if don't receive push notification from server we call missingPushApi
