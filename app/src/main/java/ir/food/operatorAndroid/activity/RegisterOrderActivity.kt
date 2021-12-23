@@ -335,31 +335,36 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.edtAddress.addTextChangedListener(addressTW)
 
-//        binding.edtMobile.addTextChangedListener(tellTW)
+        binding.edtMobile.addTextChangedListener(tellTW)
     }
 
-//    private val tellTW = object : TextWatcher {
-//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            disableViews()
-//        }
-//
-//        override fun afterTextChanged(p0: Editable?) {
-//            if (NumberValidation.havePrefix(p0.toString())) {
-//                NumberValidation.removePrefix(p0.toString())
-//            }
-//            if (NumberValidation.isValid(p0.toString())) {
-//                binding.edtMobile.text = p0
-//            } else {
-//                binding.edtAddress.setText("")
-//                binding.edtDescription.setText("")
-//                addressChangeCounter = 0
-//                binding.edtAddress.setText("")
-//                binding.edtStationCode.setText("")
-//            }
-//        }
-//    }
+    private val tellTW = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            disableViews()
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            if (NumberValidation.havePrefix(p0.toString())) {
+                NumberValidation.removePrefix(p0.toString())
+            }
+
+            if (!NumberValidation.isValid(p0.toString())) {
+                binding.edtAddress.setText("")
+                pendingCartModels.clear()
+                pendingCartAdapter.notifyDataSetChanged()
+                initProductSpinner("")
+                initProductTypeSpinner()
+                sum = 0
+                binding.txtSumPrice.text = "۰ تومان"
+                binding.edtCustomerName.setText("")
+                binding.edtDescription.setText("")
+                addressChangeCounter = 0
+                binding.edtStationCode.setText("")
+            }
+        }
+    }
 
     private var addressTW: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(
