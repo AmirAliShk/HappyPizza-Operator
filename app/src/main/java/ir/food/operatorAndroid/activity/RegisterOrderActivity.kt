@@ -50,7 +50,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-    var voipId = "0"
+    var phoneNumber = "0"
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
@@ -153,10 +153,13 @@ class RegisterOrderActivity : AppCompatActivity() {
             val i = calls.size
             if (call != null) {
                 call.accept()
-                getCustomer(binding.txtCallerNum.text.toString())
             } else if (calls.isNotEmpty()) {
                 calls[0].accept()
-                getCustomer(binding.txtCallerNum.text.toString())
+            }
+
+            if (phoneNumber == "0") { // if there is no call running
+                phoneNumber = call.remoteAddress.username
+                getCustomer(binding.edtMobile.text.toString().trim())
             }
         }
 
@@ -265,7 +268,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                         binding.edtMobile.requestFocus()
                         return@setOnEditorActionListener false
                     }
-                getCustomer(binding.edtMobile.text.toString())
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
@@ -303,11 +305,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.edtStationCode.setText("0")
             }
 
-            customerAddressId = if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
-                "0"
-            } else {
-                tempAddressId
-            }
+            customerAddressId =
+                if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
+                    "0"
+                } else {
+                    tempAddressId
+                }
 
             cartJArray = JSONArray()
             for (i in 0 until pendingCartModels.size) {
@@ -601,10 +604,6 @@ class RegisterOrderActivity : AppCompatActivity() {
             } else if (state == Call.State.Connected) {
                 startCallQuality()
                 binding.imgCallOption.setImageResource(R.drawable.ic_call_dialog_enable)
-                val address = call.remoteAddress
-                if (voipId == "0") {
-                    binding.edtMobile.setText(NumberValidation.removePrefix(address.username))
-                }
                 showTitleBar()
             } else if (state == Call.State.Error) {
                 showTitleBar()
@@ -827,7 +826,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
         sum = 0
-        voipId = "0"
+        phoneNumber = "0"
         disableViews()
     }
 
@@ -953,7 +952,15 @@ class RegisterOrderActivity : AppCompatActivity() {
                         if (status) {
                             GeneralDialog()
                                 .message(message)
-                                .firstButton("باشه") { clearData() }
+                                .firstButton("باشه") {
+                                    val tempNumber = phoneNumber
+                                    clearData()
+                                    if (!MyApplication.prefManager.lastCallNumber.equals(tempNumber)) {
+                                        getCustomer(MyApplication.prefManager.lastCallNumber)
+                                        binding.edtMobile.setText(MyApplication.prefManager.lastCallNumber)
+                                        MyApplication.prefManager.lastCallNumber = "0"
+                                    }
+                                }
                                 .cancelable(true)
                                 .show()
                         } else {
@@ -1162,7 +1169,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             val calls = core.calls
             for (call in calls) {
                 if (call != null && call.state == Call.State.StreamsRunning) {
-                    if (voipId == "0") {
+                    if (phoneNumber == "0") {
                         val address = call.remoteAddress
                         binding.edtMobile.setText(NumberValidation.removePrefix(address.username))
                         MyApplication.handler.postDelayed({ getCustomer(address.username) }, 600)

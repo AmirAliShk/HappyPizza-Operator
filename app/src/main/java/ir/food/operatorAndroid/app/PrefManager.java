@@ -43,7 +43,7 @@ public class PrefManager {
     private static final String INCOMINGCALL = "inCall";
     private static final String GET_CONNECTED_CALL = "connectedCall";
     private static final String QUEUE_STATUS = "queueStatus";
-    private static final String LAST_CALL = "lastCall";
+    private static final String LAST_CALL_NUMBER = "lastCallNumber";
     private static final String LAST_NOTIFICATION = "lastNotif";
     private static final String SIP_NUMBER = "sipNumber";
     private static final String SIP_PASSWORD = "sipPassword";
@@ -132,12 +132,12 @@ public class PrefManager {
         editor.commit();
     }
 
-    public String getLastCall() {
-        return pref.getString(LAST_CALL, "");
+    public String getLastCallNumber() {
+        return pref.getString(LAST_CALL_NUMBER, "");
     }
 
-    public void setLastCall(String idToken) {
-        editor.putString(LAST_CALL, idToken);
+    public void setLastCallNumber(String idToken) {
+        editor.putString(LAST_CALL_NUMBER, idToken);
         editor.commit();
     }
 
