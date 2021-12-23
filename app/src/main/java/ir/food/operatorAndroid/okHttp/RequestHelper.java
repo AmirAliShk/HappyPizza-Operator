@@ -1,5 +1,6 @@
 package ir.food.operatorAndroid.okHttp;
 
+import android.content.Intent;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -13,12 +14,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ir.food.operatorAndroid.activity.SplashActivity;
 import ir.food.operatorAndroid.app.EndPoints;
 import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.dialog.ErrorDialog;
 import ir.food.operatorAndroid.dialog.GeneralDialog;
-import ir.food.operatorAndroid.fragment.login.LogInFragment;
-import ir.food.operatorAndroid.helper.FragmentHelper;
 import ir.food.operatorAndroid.helper.StringHelper;
 import okhttp3.Call;
 import okhttp3.Headers;
@@ -35,8 +35,6 @@ import okhttp3.Response;
  * **************** version changes *******************
  *
  * @version 1.1.0 : added Interceptor for append header to all api
- * ***************** Readme *******************
- * @auther Amirreza Erfanian on 2018/01/12.
  */
 public class RequestHelper implements okhttp3.Callback {
 
@@ -205,7 +203,6 @@ public class RequestHelper implements okhttp3.Callback {
                 .build();
 
         request();
-
     }
 
     public void post() {
@@ -220,7 +217,6 @@ public class RequestHelper implements okhttp3.Callback {
                 .build();
 
         request();
-
     }
 
     public void put() {
@@ -234,7 +230,6 @@ public class RequestHelper implements okhttp3.Callback {
                 .build();
 
         request();
-
     }
 
     public void delete() {
@@ -362,7 +357,7 @@ public class RequestHelper implements okhttp3.Callback {
     }
 
     Call call;
-    Runnable runnable = () -> request();
+    Runnable runnable = this::request;
 
     private void requestSuccess(Object res) {
         if (listener != null) {
@@ -382,7 +377,6 @@ public class RequestHelper implements okhttp3.Callback {
     }
 
     private void requestFailed(int code, Exception e) {
-
         if (listener != null)
             listener.onFailure(runnable, e);
         Log.e(TAG, "requestFailed: ", e);
@@ -477,17 +471,15 @@ public class RequestHelper implements okhttp3.Callback {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-
             }
         });
     }
 
     private void logout() {
         MyApplication.handler.post(() -> {
-            FragmentHelper
-                    .toFragment(MyApplication.currentActivity, new LogInFragment())
-                    .setAddToBackStack(false)
-                    .replace();
+            MyApplication.currentActivity.finish();
+            MyApplication.prefManager.cleanPrefManger();
+            MyApplication.currentActivity.startActivity(new Intent(MyApplication.currentActivity, SplashActivity.class));
         });
     }
 }

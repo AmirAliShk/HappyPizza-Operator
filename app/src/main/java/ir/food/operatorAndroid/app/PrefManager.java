@@ -243,4 +243,8 @@ public class PrefManager {
     public boolean isAppRun() {
         return pref.getBoolean(KEY_APP_STATUS, false);
     }
+
+    public void cleanPrefManger() {
+        pref.edit().clear().apply();
+    }
 }

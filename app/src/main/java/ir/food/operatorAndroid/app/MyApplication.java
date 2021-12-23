@@ -14,24 +14,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
-
 import org.acra.ACRA;
 import org.acra.annotation.AcraHttpSender;
-import org.acra.config.CoreConfigurationBuilder;
-import org.acra.config.HttpSenderConfigurationBuilder;
-import org.acra.data.StringFormat;
 import org.acra.sender.HttpSender;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.Core;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.TransportType;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
-import ir.food.operatorAndroid.BuildConfig;
 import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
 import ir.food.operatorAndroid.push.AvaFactory;
@@ -183,5 +175,4 @@ public class MyApplication extends Application {
             e.printStackTrace();
         }
     }
-
 }
