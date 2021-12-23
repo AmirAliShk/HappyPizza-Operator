@@ -61,6 +61,9 @@ class RegisterOrderActivity : AppCompatActivity() {
     var customerAddressId = "0"
     var productTypes: String = ""
     var productId: String = ""
+    var tempAddressId = "0" // it is a temp variable for save addressId for first time.
+    var originAddress =
+        "" // it is a temp variable for save address for first time. if you change the editText content it never will change
     var sum = 0
     var isSame = false
     var addressChangeCounter =
@@ -217,11 +220,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                             if (pendingCartModels[j].id == productId) {
                                 pendingCartModels[j].quantity++
                                 isSame = true
-                                Log.i("TAF_IF", "$j")
-                                Log.i("TAF_IF", "${pendingCart.id}")
-                                Log.i("TAF_IF", "${pendingCart.name}")
-                                Log.i("TAF_IF", "${pendingCartModels[j].id}")
-                                Log.i("TAF_IF", "${pendingCartModels[j].name}")
                                 break
                             }
                         }
@@ -231,7 +229,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                             isSame = false
                         }
                     }
-
 
                     sum += Integer.valueOf(
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
@@ -300,6 +297,17 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProductType.callOnClick()
                 return@setOnClickListener
             }
+            // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
+            val addressPercent: Int = addressLength * 50 / 100
+            if (addressChangeCounter >= addressPercent) {
+                binding.edtStationCode.setText("0")
+            }
+
+            customerAddressId = if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
+                "0"
+            } else {
+                tempAddressId
+            }
 
             cartJArray = JSONArray()
             for (i in 0 until pendingCartModels.size) {
@@ -366,11 +374,6 @@ class RegisterOrderActivity : AppCompatActivity() {
             count: Int
         ) {
             addressChangeCounter += 1
-            // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
-            if (addressChangeCounter >= addressLength * 50 / 100) {
-                binding.edtStationCode.setText("")
-                customerAddressId = "0"
-            }
         }
 
         override fun afterTextChanged(editable: Editable) {
@@ -918,12 +921,6 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun submitOrder() {
         LoadingDialog.makeCancelableLoader()
-
-        val addressPercent: Int = addressLength * 50 / 100
-        if (addressChangeCounter >= addressPercent) {
-            customerAddressId = "0"
-        }
-
         RequestHelper.builder(EndPoints.ADD_ORDER)
             .addParam(
                 "mobile",
@@ -934,7 +931,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("family", binding.edtCustomerName.text.trim().toString())
             .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
-            .addParam("station", (binding.edtStationCode.text.trim()))
+            .addParam("station", binding.edtStationCode.text.trim())
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)
@@ -1104,6 +1101,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         val addressArr = JSONArray(customerAddresses)
         val addressObj = addressArr.getJSONObject(addressArr.length() - 1)
         val address = addressObj.getString("address")
+        originAddress = address
         binding.edtAddress.setText(address)
         binding.edtStationCode.setText(
             if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
@@ -1111,6 +1109,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         )
         addressLength = address.length
         customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+        tempAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
     }
 
     private fun customerAddressDialog() {
@@ -1139,7 +1138,9 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressChangeCounter = 0
                 addressLength = addressModel.address.length
                 customerAddressId = addressModel.addressId
+                tempAddressId = addressModel.addressId
                 binding.edtAddress.setText(addressModel.address)
+                originAddress = addressModel.address
                 binding.edtStationCode.setText(addressModel.stationId)
             }
         }

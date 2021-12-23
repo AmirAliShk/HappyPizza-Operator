@@ -156,7 +156,6 @@ class GetAppInfo {
         }
     }
 
-
     // This thread will periodically check if the Service is ready, and then call onServiceReady
     class ServiceWaitThread : Thread() {
         override fun run() {
