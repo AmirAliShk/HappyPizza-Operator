@@ -296,7 +296,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
             if (pendingCartModels.size == 0) {
                 MyApplication.Toast("لطفا محصول را انتخاب کنید.", Toast.LENGTH_SHORT)
-                binding.spProductType.callOnClick()
+                binding.spProductType.performClick()
                 return@setOnClickListener
             }
             // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
@@ -935,7 +935,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("family", binding.edtCustomerName.text.trim().toString())
             .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
-            .addParam("station", binding.edtStationCode.text.trim())
+            .addParam("station", binding.edtStationCode.text.trim().toString())
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)
@@ -958,6 +958,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             GeneralDialog()
                                 .message(message)
                                 .firstButton("باشه") {
+                                    getProductsAndLists()
                                     val tempNumber = phoneNumber
                                     clearData()
                                     if (!MyApplication.prefManager.lastCallNumber.equals(tempNumber)) {
