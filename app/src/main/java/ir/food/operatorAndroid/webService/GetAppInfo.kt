@@ -3,8 +3,7 @@ package ir.food.operatorAndroid.webService
 import android.content.Intent
 import android.net.Uri
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.activity.MainActivity
-import ir.food.operatorAndroid.app.ContinuProssecing
+import ir.food.operatorAndroid.app.ContinueProcessing
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.app.MyApplication.context
@@ -18,7 +17,6 @@ import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONException
 import org.json.JSONObject
-
 
 class GetAppInfo {
 
@@ -172,13 +170,13 @@ class GetAppInfo {
             }
             // As we're in a thread, we can't do UI stuff in it, must post a runnable in UI thread
 //            MyApplication.handler.post { run }
-            MyApplication.handler.post { ContinuProssecing().runMainActivity() }
+            MyApplication.handler.post { ContinueProcessing().runMainActivity() }
         }
     }
 
     fun startVoipService() {
         if (LinphoneService.isReady()) {
-            ContinuProssecing().runMainActivity()
+            ContinueProcessing().runMainActivity()
         } else {
             // If it's not, let's start it
             ServiceHelper.start(MyApplication.context, LinphoneService::class.java)
@@ -186,6 +184,4 @@ class GetAppInfo {
             ServiceWaitThread().start()
         }
     }
-
-
 }

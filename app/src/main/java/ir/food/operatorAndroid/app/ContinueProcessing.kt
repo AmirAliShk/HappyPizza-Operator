@@ -5,7 +5,7 @@ import ir.food.operatorAndroid.activity.MainActivity
 import ir.food.operatorAndroid.fragment.login.LogInFragment
 import ir.food.operatorAndroid.helper.FragmentHelper
 
-class ContinuProssecing {
+class ContinueProcessing {
     fun runMainActivity() {
         //if this not checked, the program will be closed when login fragment open from mainActivity
         if (MyApplication.currentActivity.toString().contains(MainActivity.TAG)) {
