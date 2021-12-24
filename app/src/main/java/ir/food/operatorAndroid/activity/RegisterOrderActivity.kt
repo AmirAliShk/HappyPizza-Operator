@@ -902,14 +902,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                             GeneralDialog()
                                 .message(message)
                                 .firstButton("باشه") {}
-                                .cancelable(true)
+                                .cancelable(false)
                                 .show()
                         }
                     } else {
                         GeneralDialog()
                             .message(message)
                             .secondButton("باشه") {}
-                            .cancelable(true)
+                            .cancelable(false)
                             .show()
                     }
                 } catch (e: Exception) {
@@ -950,7 +950,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 //                    {"success":true,"message":"ایستگاه موجود نمی باشد","data":{"status":false}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
-                    val message = jsonObject.getString("message")
+                    var message = jsonObject.getString("message")
                     if (success) {
                         val data = jsonObject.getJSONObject("data")
                         val status = data.getBoolean("status")
@@ -967,20 +967,32 @@ class RegisterOrderActivity : AppCompatActivity() {
                                         MyApplication.prefManager.lastCallNumber = "0"
                                     }
                                 }
-                                .cancelable(true)
+                                .cancelable(false)
                                 .show()
                         } else {
+                            if(data.has("products")){
+                                var productsName = ""
+                                val productsArr= data.getJSONArray("products")
+                                for(i in 0 until productsArr.length()){
+                                    if(i==0){
+                                        productsName = "${productsArr[i]}"
+                                    }else{
+                                        productsName = "$productsName و ${productsArr[i]}"
+                                    }
+                                }
+                                message = " موجودی محصول $productsName کافی نمیباشد "
+                            }
                             GeneralDialog()
                                 .message(message)
                                 .secondButton("باشه") {}
-                                .cancelable(true)
+                                .cancelable(false)
                                 .show()
                         }
                     } else {
                         GeneralDialog()
                             .message(message)
                             .secondButton("باشه") {}
-                            .cancelable(true)
+                            .cancelable(false)
                             .show()
                     }
                 } catch (e: Exception) {
