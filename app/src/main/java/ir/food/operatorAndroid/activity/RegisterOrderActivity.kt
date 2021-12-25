@@ -46,6 +46,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     lateinit var binding: ActivityRegisterOrderBinding
+    val TAG = RegisterOrderActivity.javaClass.simpleName
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
@@ -447,6 +448,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    AvaCrashReporter.send(e, "$TAG class, productsCallBack method")
                 }
             }
         }
@@ -472,6 +474,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initProductTypeSpinner method")
         }
         if (binding.spProductType == null) return
 
@@ -531,6 +534,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initProductSpinner method")
         }
         if (binding.spProduct == null) return
 
@@ -662,6 +666,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         LoadingDialog.dismissCancelableDialog()
+                        AvaCrashReporter.send(e, "$TAG class, enterTheQueueCallBack method")
                     }
                 }
             }
@@ -752,6 +757,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfDownload.displayedChild = 0
+                        AvaCrashReporter.send(e, "$TAG class, getCustomerCallBack method")
                     }
                 }
             }
@@ -798,6 +804,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         LoadingDialog.dismissCancelableDialog()
+                        AvaCrashReporter.send(e, "$TAG class, exitTheQueueCallBack method")
                     }
                 }
             }
@@ -914,6 +921,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    AvaCrashReporter.send(e, "$TAG class, sendMenuCallBack method")
                 }
             }
         }
@@ -970,14 +978,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 .cancelable(false)
                                 .show()
                         } else {
-                            if(data.has("products")){
+                            if (data.has("products")) {
                                 var productsName = ""
-                                val productsArr= data.getJSONArray("products")
-                                for(i in 0 until productsArr.length()){
-                                    if(i==0){
-                                        productsName = "${productsArr[i]}"
-                                    }else{
-                                        productsName = "$productsName و ${productsArr[i]}"
+                                val productsArr = data.getJSONArray("products")
+                                for (i in 0 until productsArr.length()) {
+                                    productsName = if (i == 0) {
+                                        "${productsArr[i]}"
+                                    } else {
+                                        "$productsName و ${productsArr[i]}"
                                     }
                                 }
                                 message = " موجودی محصول $productsName کافی نمیباشد "
@@ -998,6 +1006,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     LoadingDialog.dismissCancelableDialog()
+                    AvaCrashReporter.send(e, "$TAG class, submitOrderCallBack method")
                 }
             }
         }
@@ -1102,6 +1111,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, getStatusIconResource method")
         }
         return R.drawable.ic_led_error
     }

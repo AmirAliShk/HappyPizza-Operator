@@ -12,6 +12,7 @@ import ir.food.operatorAndroid.databinding.ActivityMainBinding
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.linphone.core.Core
 import org.linphone.core.CoreListenerStub
@@ -112,6 +113,7 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG, getStatusIconResource method")
         }
         return R.drawable.ic_led_error
     }

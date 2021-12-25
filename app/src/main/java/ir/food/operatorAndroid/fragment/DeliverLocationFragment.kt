@@ -23,6 +23,7 @@ import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
 
 class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : Fragment(),
@@ -106,6 +107,10 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.imgRefresh.clearAnimation()
+                        AvaCrashReporter.send(
+                            e,
+                            "DeliverLocationFragment class, locationCallBack method"
+                        )
                     }
                 }
             }

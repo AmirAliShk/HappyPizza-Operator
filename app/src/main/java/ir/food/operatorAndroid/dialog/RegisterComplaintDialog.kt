@@ -93,6 +93,10 @@ class RegisterComplaintDialog {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfLoader.displayedChild = 0
+                        AvaCrashReporter.send(
+                            e,
+                            "RegisterComplaintDialog class, complaintCallBack method"
+                        )
                     }
                 }
             }
@@ -108,7 +112,8 @@ class RegisterComplaintDialog {
         try {
             dialog.dismiss()
         } catch (e: Exception) {
-            AvaCrashReporter.send(e, "EditAddressDialog class, dismiss method")
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "RegisterComplaintDialog class, dismiss method")
         }
     }
 

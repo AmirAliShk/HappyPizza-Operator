@@ -96,6 +96,10 @@ class EditAddressDialog {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfLoader.displayedChild = 0
+                        AvaCrashReporter.send(
+                            e,
+                            "EditAddressDialog class, changeAddressCallBack method"
+                        )
                     }
                 }
             }
@@ -111,6 +115,7 @@ class EditAddressDialog {
         try {
             dialog.dismiss()
         } catch (e: Exception) {
+            e.printStackTrace()
             AvaCrashReporter.send(e, "EditAddressDialog class, dismiss method")
         }
     }

@@ -138,6 +138,7 @@ class CallDialog {
             dialog.dismiss()
             core.removeListener(coreListener)
         } catch (e: Exception) {
+            e.printStackTrace()
             AvaCrashReporter.send(e, "CallDialog class, dismiss method")
         }
     }

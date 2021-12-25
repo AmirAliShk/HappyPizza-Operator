@@ -117,6 +117,7 @@ class GetAppInfo {
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
+                        AvaCrashReporter.send(e, "GetAppInfo class, appInfoCallBack method")
                     }
                 }
             }
