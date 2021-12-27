@@ -24,6 +24,7 @@ import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
 
 class OrderDetailsFragment(details: String) : Fragment() {
@@ -272,6 +273,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
         } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "OrderDetailsFragment class, parseDetails method")
         }
     }
 
@@ -303,6 +305,10 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfCancel.displayedChild = 0
+                        AvaCrashReporter.send(
+                            e,
+                            "OrderDetailsFragment class, cancelServiceCallBack method"
+                        )
                     }
                 }
             }

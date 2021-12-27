@@ -18,6 +18,7 @@ import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONObject
 
@@ -126,6 +127,7 @@ class LogInFragment : Fragment() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     binding.vfLogin.displayedChild = 0
+                    AvaCrashReporter.send(e, "$TAG class, loginCallBack method")
                 }
             }
         }
@@ -162,6 +164,7 @@ class LogInFragment : Fragment() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfSendCode.displayedChild = 0
+                        AvaCrashReporter.send(e, "$TAG class, verificationCodeCallBack method")
                     }
                 }
             }

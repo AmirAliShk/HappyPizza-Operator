@@ -15,6 +15,7 @@ import ir.food.operatorAndroid.fragment.OrderDetailsFragment
 import ir.food.operatorAndroid.helper.*
 import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
 
 class OrdersListAdapter(list: ArrayList<OrderModel>) :
@@ -203,6 +204,10 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                     } catch (e: Exception) {
                         e.printStackTrace()
                         vfDetails.displayedChild = 0
+                        AvaCrashReporter.send(
+                            e,
+                            "OrdersListAdapter class, getOrderDetailsCallBack method"
+                        )
                     }
                 }
             }

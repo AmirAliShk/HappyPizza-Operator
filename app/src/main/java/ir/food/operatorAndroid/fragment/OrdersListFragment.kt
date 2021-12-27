@@ -19,6 +19,7 @@ import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.OrderModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
+import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONObject
 import org.linphone.core.Call
@@ -191,6 +192,10 @@ class OrdersListFragment(mobile: String) : Fragment() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfOrders.displayedChild = 3
+                        AvaCrashReporter.send(
+                            e,
+                            "OrdersListFragment class, getOrdersCallBack method"
+                        )
                     }
                 }
             }
