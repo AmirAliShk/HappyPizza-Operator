@@ -146,6 +146,8 @@ public class LinphoneService extends Service {
             public void onCallStateChanged(Core core, final Call call, Call.State state, String message) {
 
                 if (state == Call.State.IncomingReceived || (state == Call.State.IncomingEarlyMedia && mContext.getResources().getBoolean(R.bool.allow_ringing_while_early_media))) {
+                    onIncomingReceived();
+                    MyApplication.prefManager.setCallIncoming(true);
                     // Brighten screen for at least 10 seconds
                     if (core.getCallsNb() == 1) {
 
@@ -161,6 +163,11 @@ public class LinphoneService extends Service {
                 }
 
                 if (state == Call.State.Connected) {
+                    MyApplication.prefManager.setConnectedCall(true);
+                    //if don't receive push notification from server we call missingPushApi
+                    AvaFactory.getInstance(getApplicationContext()).readMissingPush();
+                    MyApplication.prefManager.setCallIncoming(false);
+
                     if (core.getCallsNb() == 1) {
                         // It is for incoming calls, because outgoing calls enter
                         // MODE_IN_COMMUNICATION immediately when they start.
@@ -183,6 +190,11 @@ public class LinphoneService extends Service {
                         enableHeadsetReceiver();
                     }
                 } else if (state == Call.State.End || state == Call.State.Error) {
+                    MyApplication.prefManager.setCallIncoming(false);
+                    MyApplication.prefManager.setConnectedCall(false);
+                    DataHolder.getInstance().setVoipId("0");
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.cancel(0);
                     if (core.getCallsNb() == 0) {
                         if (mAudioFocused) {
                             int res = mAudioManager.abandonAudioFocus(null);
@@ -231,29 +243,6 @@ public class LinphoneService extends Service {
                     }
                 }
 
-                if (state == Call.State.End) {
-                    MyApplication.prefManager.setCallIncoming(false);
-                    MyApplication.prefManager.setConnectedCall(false);
-                    DataHolder.getInstance().setVoipId("0");
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.cancel(0);
-                }
-
-                if (state == Call.State.IncomingReceived) {
-                    onIncomingReceived();
-                    MyApplication.prefManager.setCallIncoming(true);
-                }
-
-                if (state == Call.State.Connected) {
-                    if (MyApplication.prefManager.isCallIncoming()) {
-                        Address address = call.getRemoteAddress();
-                        MyApplication.prefManager.setLastCallNumber(address.getUsername());
-                    }
-                    MyApplication.prefManager.setConnectedCall(true);
-                    //if don't receive push notification from server we call missingPushApi
-                    AvaFactory.getInstance(getApplicationContext()).readMissingPush();
-                    MyApplication.prefManager.setCallIncoming(false);
-                }
             }
 
             @Override

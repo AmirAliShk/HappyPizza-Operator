@@ -132,15 +132,6 @@ public class PrefManager {
         editor.commit();
     }
 
-    public String getLastCallNumber() {
-        return pref.getString(LAST_CALL_NUMBER, "");
-    }
-
-    public void setLastCallNumber(String idToken) {
-        editor.putString(LAST_CALL_NUMBER, idToken);
-        editor.commit();
-    }
-
     public String getIdToken() {
         return pref.getString(ID_TOKEN, "");
     }

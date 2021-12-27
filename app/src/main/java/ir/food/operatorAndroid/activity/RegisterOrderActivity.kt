@@ -1,5 +1,6 @@
 package ir.food.operatorAndroid.activity
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Color
 import android.os.Build
@@ -50,7 +51,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-    var phoneNumber = "0"
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
@@ -58,6 +58,9 @@ class RegisterOrderActivity : AppCompatActivity() {
     var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
     var customerAddresses = ""
+    var phoneNumber = "0"
+    var phoneNumberNew = "0"
+    var isFull = false // this variable will check the fields in page is full or not
     var customerAddressId = "0"
     var productTypes: String = ""
     var productId: String = ""
@@ -155,11 +158,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 call.accept()
             } else if (calls.isNotEmpty()) {
                 calls[0].accept()
-            }
-
-            if (phoneNumber == "0") { // if there is no call running
-                phoneNumber = call.remoteAddress.username
-                getCustomer(binding.edtMobile.text.toString().trim())
             }
         }
 
@@ -620,6 +618,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                     LinphoneService.removeFromUIThreadDispatcher(mCallQualityUpdater)
                     mCallQualityUpdater = null
                 }
+            } else if (state == Call.State.StreamsRunning) {
+                if (!isFull) {
+                    phoneNumber = call.remoteAddress.username
+                    binding.edtMobile.setText(PhoneNumberValidation.removePrefix(phoneNumber))
+                    getCustomer(PhoneNumberValidation.removePrefix(phoneNumber))
+                } else {
+                    phoneNumberNew = call.remoteAddress.username
+                }
             }
         }
     }
@@ -688,6 +694,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             override fun onResponse(reCall: Runnable?, vararg args: Any?) {
                 MyApplication.handler.post {
                     try {
+                        isFull = true
                         val clipboard =
                             getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                         val clip =
@@ -810,6 +817,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
     private fun clearData() {
+        isFull = false
         binding.edtMobile.setText("")
         binding.edtMobile.requestFocus()
         binding.edtCustomerName.setText("")
@@ -831,7 +839,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
         sum = 0
-        phoneNumber = "0"
         disableViews()
     }
 
@@ -935,7 +942,8 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("family", binding.edtCustomerName.text.trim().toString())
             .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
-            .addParam("station", binding.edtStationCode.text.trim().toString())
+//            .addParam("station", binding.edtStationCode.text.trim().toString())
+            .addParam("station", 31)
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)
@@ -943,6 +951,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private val submitOrderCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        @SuppressLint("NotifyDataSetChanged")
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
@@ -959,24 +968,32 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 .message(message)
                                 .firstButton("باشه") {
                                     getProductsAndLists()
-                                    val tempNumber = phoneNumber
                                     clearData()
-                                    if (!MyApplication.prefManager.lastCallNumber.equals(tempNumber)) {
-                                        getCustomer(MyApplication.prefManager.lastCallNumber)
-                                        binding.edtMobile.setText(MyApplication.prefManager.lastCallNumber)
-                                        MyApplication.prefManager.lastCallNumber = "0"
+                                    if (phoneNumberNew != "0") {
+                                        if (phoneNumberNew == phoneNumber) return@firstButton
+                                        binding.edtMobile.setText(
+                                            PhoneNumberValidation.removePrefix(
+                                                phoneNumberNew
+                                            )
+                                        )
+                                        getCustomer(PhoneNumberValidation.removePrefix(phoneNumberNew))
+                                        phoneNumber = phoneNumberNew
+                                        phoneNumberNew = "0"
                                     }
+
                                 }
                                 .cancelable(false)
                                 .show()
                         } else {
-                            if(data.has("products")){
+                            if (data.has("products") && data.getJSONArray("products")
+                                    .length() != 0
+                            ) {
                                 var productsName = ""
-                                val productsArr= data.getJSONArray("products")
-                                for(i in 0 until productsArr.length()){
-                                    if(i==0){
+                                val productsArr = data.getJSONArray("products")
+                                for (i in 0 until productsArr.length()) {
+                                    if (i == 0) {
                                         productsName = "${productsArr[i]}"
-                                    }else{
+                                    } else {
                                         productsName = "$productsName و ${productsArr[i]}"
                                     }
                                 }
@@ -1124,17 +1141,19 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun showLastAddress() {
         val addressArr = JSONArray(customerAddresses)
-        val addressObj = addressArr.getJSONObject(addressArr.length() - 1)
-        val address = addressObj.getString("address")
-        originAddress = address
-        binding.edtAddress.setText(address)
-        binding.edtStationCode.setText(
-            if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
-                .toString() else "0"
-        )
-        addressLength = address.length
-        customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
-        tempAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+        if (addressArr.length() != 0) {
+            val addressObj = addressArr.getJSONObject(addressArr.length() - 1)
+            val address = addressObj.getString("address")
+            originAddress = address
+            binding.edtAddress.setText(address)
+            binding.edtStationCode.setText(
+                if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
+                    .toString() else "0"
+            )
+            addressLength = address.length
+            customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+            tempAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+        }
     }
 
     private fun customerAddressDialog() {

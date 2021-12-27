@@ -61,12 +61,6 @@ class CallActivity : AppCompatActivity() {
                         calls[0].accept()
                     }
                 }
-                val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(
-                    "passengerTell",
-                    binding.txtCallerNum.text.toString()
-                )
-                clipboard.setPrimaryClip(clip)
             } catch (e: Exception) {
                 e.printStackTrace()
                 AvaCrashReporter.send(e, "CallIncomingActivity class, onAcceptPress")
