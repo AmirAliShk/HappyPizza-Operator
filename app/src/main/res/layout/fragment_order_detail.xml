@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -263,7 +263,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
+
+                <ImageView
+                    android:id="@+id/imgIsPaid"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -273,13 +280,6 @@
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imgIsPaid"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16sdp" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -287,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -313,7 +313,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -339,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -365,7 +365,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp"
+                android:paddingVertical="@dimen/_4sdp"
                 android:visibility="gone">
 
                 <TextView
@@ -392,7 +392,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -418,7 +418,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -440,6 +440,84 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/bakeTime"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtBakeTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/finishTime"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtFinishTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/sendTime"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSendTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/llCancelAndLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -447,7 +525,7 @@
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <Button
                     android:id="@+id/btnDeliverLocation"
@@ -496,7 +574,7 @@
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_7sdp">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <Button
                     android:id="@+id/btnChangeAddress"

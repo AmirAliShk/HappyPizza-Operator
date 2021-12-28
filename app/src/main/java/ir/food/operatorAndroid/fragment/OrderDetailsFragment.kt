@@ -2,6 +2,7 @@ package ir.food.operatorAndroid.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -125,7 +126,45 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")
+            binding.txtFinishTime.text = if (orderObj.has("finishDate")) {
+                (StringHelper.toPersianDigits(
+                    DateHelper.strPersianFour1(
+                        DateHelper.parseFormat(
+                            orderObj.getString("finishDate") + "",
+                            null
+                        )
+                    )
+                ))
+            } else {
+                "ثبت نشده"
+            }
+            binding.txtBakeTime.text = if (orderObj.has("bakingDate")) {
+                (StringHelper.toPersianDigits(
+                    DateHelper.strPersianFour1(
+                        DateHelper.parseFormat(
+                            orderObj.getString("bakingDate") + "",
+                            null
+                        )
+                    )
+                ))
+            } else {
+                "ثبت نشده"
+            }
 
+            val deliveryTime = dataObj.getJSONObject("deliveryLocation").getString("date").trim()
+            Log.i("TAG", "parseDetails: $deliveryTime")
+            binding.txtSendTime.text = if(deliveryTime!=""){
+                (StringHelper.toPersianDigits(
+                    DateHelper.strPersianFour1(
+                        DateHelper.parseFormat(
+                            deliveryTime + "",
+                            null
+                        )
+                    )
+                ))
+            }else{
+                "ثبت نشده"
+            }
             if (orderObj.getBoolean("paid")) {
                 binding.imgIsPaid.setImageResource(R.drawable.ic_done_green)
             } else {
