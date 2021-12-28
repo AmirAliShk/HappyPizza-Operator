@@ -298,12 +298,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProductType.performClick()
                 return@setOnClickListener
             }
-            // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
-            val addressPercent: Int = addressLength * 50 / 100
-            if (addressChangeCounter >= addressPercent) {
-                binding.edtStationCode.setText("0")
-            }
-
             customerAddressId =
                 if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
                     "0"
@@ -320,6 +314,13 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                 cartJArray.put(cartJObj)
             }
+
+            Log.i(
+                TAG, "onCreate:edtAddress = ${binding.edtAddress.text.trim()}\n" +
+                        "customerAddressId = ${customerAddressId}\n" +
+                        "edtStationCode = ${binding.edtStationCode.text.trim()}\n"
+            )
+
             GeneralDialog()
                 .cancelable(false)
                 .message("آیا از ثبت سفارش اطمینان دارید؟")
@@ -381,13 +382,19 @@ class RegisterOrderActivity : AppCompatActivity() {
             count: Int
         ) {
             addressChangeCounter += 1
+
+            // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
+            val addressPercent: Int = addressLength * 50 / 100
+            if (addressChangeCounter >= addressPercent) {
+                binding.edtStationCode.setText("0")
+            }
         }
 
         override fun afterTextChanged(editable: Editable) {
             if (editable.toString().isEmpty()) {
                 customerAddressId = "0"
                 addressLength = 0
-                binding.edtStationCode.text.clear()
+                binding.edtStationCode.setText("0")
             }
         }
     }
@@ -950,8 +957,8 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("family", binding.edtCustomerName.text.trim().toString())
             .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
-//            .addParam("station", binding.edtStationCode.text.trim().toString())
-            .addParam("station", 31)
+            .addParam("station", binding.edtStationCode.text.trim().toString())
+//            .addParam("station", 31)
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)
@@ -984,7 +991,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                                                 phoneNumberNew
                                             )
                                         )
-                                        getCustomer(PhoneNumberValidation.removePrefix(phoneNumberNew))
+                                        getCustomer(
+                                            PhoneNumberValidation.removePrefix(
+                                                phoneNumberNew
+                                            )
+                                        )
                                         phoneNumber = phoneNumberNew
                                         phoneNumberNew = "0"
                                     }
@@ -993,13 +1004,15 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 .cancelable(false)
                                 .show()
                         } else {
-                            if (data.has("products") && data.getJSONArray("products").length() != 0) {
+                            if (data.has("products") && data.getJSONArray("products")
+                                    .length() != 0
+                            ) {
                                 var productsName = ""
-                                val productsArr= data.getJSONArray("products")
-                                for(i in 0 until productsArr.length()){
-                                    if(i==0){
+                                val productsArr = data.getJSONArray("products")
+                                for (i in 0 until productsArr.length()) {
+                                    if (i == 0) {
                                         productsName = "${productsArr[i]}"
-                                    }else{
+                                    } else {
                                         productsName = "$productsName و ${productsArr[i]}"
                                     }
                                 }
