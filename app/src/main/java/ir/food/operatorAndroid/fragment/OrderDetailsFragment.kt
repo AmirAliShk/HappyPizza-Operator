@@ -153,7 +153,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
             val deliveryTime = dataObj.getJSONObject("deliveryLocation").getString("date").trim()
             Log.i("TAG", "parseDetails: $deliveryTime")
-            binding.txtSendTime.text = if(deliveryTime!=""){
+            binding.txtSendTime.text = if (deliveryTime != "") {
                 (StringHelper.toPersianDigits(
                     DateHelper.strPersianFour1(
                         DateHelper.parseFormat(
@@ -162,13 +162,15 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         )
                     )
                 ))
-            }else{
+            } else {
                 "ثبت نشده"
             }
             if (orderObj.getBoolean("paid")) {
-                binding.imgIsPaid.setImageResource(R.drawable.ic_done_green)
+                binding.txtIsPaid.text = " شده "
+                binding.txtIsPaid.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.color_green))
             } else {
-                binding.imgIsPaid.setImageResource(R.drawable.ic_close_red)
+                binding.txtIsPaid.text = " نشده "
+                binding.txtIsPaid.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.color_Red))
             }
 
             when (orderObj.getInt("paymentType")) {
