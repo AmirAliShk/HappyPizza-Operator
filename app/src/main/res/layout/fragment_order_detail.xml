@@ -94,8 +94,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/name"
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_16sdp"
@@ -119,8 +119,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/nummber"
                     android:textColor="@color/color_Titles"
@@ -145,8 +145,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/address"
                     android:textColor="@color/color_Titles"
@@ -165,7 +165,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_margin="@dimen/_7sdp"
                 android:background="@drawable/bg_light_red"
                 android:orientation="vertical"
@@ -222,7 +223,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@null"
-                    android:listSelector="#00ffffff"
+                    android:listSelector="#0fff"
+                    tools:itemCount="30"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_cart" />
 
@@ -239,11 +241,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|right"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="توضیحات : "
                     android:textColor="@color/color_Titles"
                     android:textSize="@dimen/_16sdp"
-                    android:layout_gravity="top|right"
                     android:textStyle="bold" />
 
                 <TextView
@@ -262,6 +264,7 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_4sdp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -288,8 +291,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="نوع پرداخت : "
                     android:textColor="@color/color_Titles"
@@ -314,8 +317,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="نوع ثبت سفارش : "
                     android:textColor="@color/color_Titles"
@@ -340,8 +343,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/bakeTime"
                     android:textColor="@color/color_Titles"
@@ -366,34 +369,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:text="@string/finishTime"
-                    android:textColor="@color/color_Titles"
-                    android:textSize="@dimen/_16sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtFinishTime"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_4sdp">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/sendTime"
                     android:textColor="@color/color_Titles"
@@ -410,11 +387,37 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="@string/finishTime"
+                    android:textColor="@color/color_Titles"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtFinishTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
-                android:background="@color/gray_light"/>
+                android:background="@color/gray_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -424,8 +427,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/transport_cost"
                     android:textColor="@color/color_Titles"
@@ -477,8 +480,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/Discounts"
                     android:textColor="@color/color_Titles"
@@ -503,8 +506,8 @@
                 android:paddingVertical="@dimen/_4sdp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="@string/total"
                     android:textColor="@color/color_Titles"

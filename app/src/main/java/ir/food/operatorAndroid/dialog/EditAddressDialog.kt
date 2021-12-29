@@ -16,6 +16,7 @@ import ir.food.operatorAndroid.databinding.DialogRegisterComplaintBinding
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.model.AddressModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
@@ -23,8 +24,13 @@ import org.json.JSONObject
 class EditAddressDialog {
     lateinit var dialog: Dialog
     lateinit var binding: DialogEditAddressBinding
+    lateinit var listener: Listener
 
-    fun show(orderId: String, address: String) {
+    interface Listener {
+        fun address(address: String?)
+    }
+
+    fun show(orderId: String, address: String, listener: Listener) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         binding = DialogEditAddressBinding.inflate(LayoutInflater.from(MyApplication.context))
@@ -37,6 +43,7 @@ class EditAddressDialog {
         wlp?.windowAnimations = R.style.ExpandAnimation
         dialog.window?.attributes = wlp
         dialog.setCancelable(false)
+        this.listener = listener
 
         binding.edtAddress.setText(address)
 
@@ -49,7 +56,6 @@ class EditAddressDialog {
                 return@setOnClickListener
             }
             changeAddress(adrs, orderId)
-
         }
 
         binding.imgClose.setOnClickListener {
@@ -57,11 +63,9 @@ class EditAddressDialog {
                 dismiss()
                 KeyBoardHelper.hideKeyboard()
             }, 200)
-
         }
 
         dialog.show()
-
     }
 
     private fun changeAddress(adrs: String, id: String) {
@@ -85,6 +89,7 @@ class EditAddressDialog {
                         if (status) {
                             val dataObj = jsonObject.getJSONObject("data")
                             if (dataObj.getBoolean("status")) {
+                                listener.address(binding.edtAddress.text.toString())
                                 GeneralDialog().message(message).firstButton("باشه") { dismiss() }
                                     .show()
                             } else {

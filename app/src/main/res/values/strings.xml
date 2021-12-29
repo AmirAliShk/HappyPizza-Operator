@@ -78,8 +78,8 @@
     <string name="station">ایستگاه</string>
     <string name="send_menu">ارسال منو</string>
     <string name="setting">تنظیمات</string>
-    <string name="bakeTime">زمان پخت : </string>
-    <string name="finishTime">زمان اتمام : </string>
+    <string name="bakeTime">زمان شروع پخت : </string>
+    <string name="finishTime">زمان پایان : </string>
     <string name="sendTime">زمان ارسال : </string>
 
 

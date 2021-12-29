@@ -1,7 +1,10 @@
 package ir.food.operatorAndroid.webService
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.app.ContinueProcessing
 import ir.food.operatorAndroid.app.EndPoints
@@ -11,6 +14,7 @@ import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.login.LogInFragment
 import ir.food.operatorAndroid.helper.AppVersionHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
+import ir.food.operatorAndroid.helper.ScreenHelper
 import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
@@ -20,6 +24,7 @@ import org.json.JSONObject
 
 class GetAppInfo {
 
+    @SuppressLint("HardwareIds")
     fun callAppInfoAPI() {
         try {
             if (MyApplication.prefManager.authorization == "") {
@@ -29,20 +34,32 @@ class GetAppInfo {
                     .setAddToBackStack(false)
                     .add()
             } else {
-//                JSONObject deviceInfo = new JSONObject();
-//                @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(MyApplication.currentActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
-//                deviceInfo.put("MODEL", Build.MODEL);
-//                deviceInfo.put("HARDWARE", Build.HARDWARE);
-//                deviceInfo.put("BRAND", Build.BRAND);
-//                deviceInfo.put("DISPLAY", Build.DISPLAY);
-//                deviceInfo.put("BOARD", Build.BOARD);
-//                deviceInfo.put("SDK_INT", Build.VERSION.SDK_INT);
-//                deviceInfo.put("BOOTLOADER", Build.BOOTLOADER);
-//                deviceInfo.put("DEVICE", Build.DEVICE);
-//                deviceInfo.put("DISPLAY_HEIGHT", ScreenHelper.getRealDeviceSizeInPixels(MyApplication.currentActivity).getHeight());
-//                deviceInfo.put("DISPLAY_WIDTH", ScreenHelper.getRealDeviceSizeInPixels(MyApplication.currentActivity).getWidth());
-//                deviceInfo.put("DISPLAY_SIZE", ScreenHelper.getScreenSize(MyApplication.currentActivity));
-//                deviceInfo.put("ANDROID_ID", android_id);
+                val android_id = Settings.Secure.getString(
+                    MyApplication.currentActivity.contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+                val deviceInfo: JSONObject? = null
+                deviceInfo?.put("MODEL", Build.MODEL);
+                deviceInfo?.put("HARDWARE", Build.HARDWARE);
+                deviceInfo?.put("BRAND", Build.BRAND);
+                deviceInfo?.put("DISPLAY", Build.DISPLAY);
+                deviceInfo?.put("BOARD", Build.BOARD);
+                deviceInfo?.put("SDK_INT", Build.VERSION.SDK_INT);
+                deviceInfo?.put("BOOTLOADER", Build.BOOTLOADER);
+                deviceInfo?.put("DEVICE", Build.DEVICE);
+                deviceInfo?.put(
+                    "DISPLAY_HEIGHT",
+                    ScreenHelper.getRealDeviceSizeInPixels(MyApplication.currentActivity).height
+                )
+                deviceInfo?.put(
+                    "DISPLAY_WIDTH",
+                    ScreenHelper.getRealDeviceSizeInPixels(MyApplication.currentActivity).width
+                )
+                deviceInfo?.put(
+                    "DISPLAY_SIZE",
+                    ScreenHelper.getScreenSize(MyApplication.currentActivity)
+                )
+                deviceInfo?.put("ANDROID_ID", android_id)
                 RequestHelper.builder(EndPoints.APP_INFO)
                     .addParam("versionCode", AppVersionHelper(context).versionCode)
                     .addParam("os", "Android")
@@ -107,24 +124,18 @@ class GetAppInfo {
                                     }
                                 }
                             }, 500)
-
                         } else {
                             GeneralDialog()
                                 .message(message)
                                 .firstButton("باشه") { GeneralDialog().dismiss() }
                                 .secondButton("تلاش مجدد") { callAppInfoAPI() }
+                                .cancelable(false)
                                 .show()
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                         AvaCrashReporter.send(e, "GetAppInfo class, appInfoCallBack method")
                     }
-                }
-            }
-
-            override fun onFailure(reCall: Runnable?, e: Exception?) {
-                MyApplication.handler.post {
-
                 }
             }
         }
@@ -180,7 +191,7 @@ class GetAppInfo {
             ContinueProcessing().runMainActivity()
         } else {
             // If it's not, let's start it
-            ServiceHelper.start(MyApplication.context, LinphoneService::class.java)
+            ServiceHelper.start(context, LinphoneService::class.java)
             // And wait for it to be ready, so we can safely use it afterwards
             ServiceWaitThread().start()
         }

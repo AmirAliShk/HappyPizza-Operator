@@ -71,7 +71,14 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnChangeAddress.setOnClickListener {
-            EditAddressDialog().show(orderId, binding.txtAddress.text.toString())
+            EditAddressDialog().show(
+                orderId,
+                binding.txtAddress.text.toString(),
+                object : EditAddressDialog.Listener {
+                    override fun address(address: String?) {
+                        binding.txtAddress.text = address
+                    }
+                })
         }
 
         return binding.root
@@ -136,7 +143,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 ))
             } else {
-                "ثبت نشده"
+                ""
             }
             binding.txtBakeTime.text = if (orderObj.has("bakingDate")) {
                 (StringHelper.toPersianDigits(
@@ -148,7 +155,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 ))
             } else {
-                "ثبت نشده"
+                ""
             }
 
             val deliveryTime = dataObj.getJSONObject("deliveryLocation").getString("date").trim()
@@ -163,7 +170,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 ))
             } else {
-                "ثبت نشده"
+                ""
             }
             if (orderObj.getBoolean("paid")) {
                 binding.txtIsPaid.text = " شده "
