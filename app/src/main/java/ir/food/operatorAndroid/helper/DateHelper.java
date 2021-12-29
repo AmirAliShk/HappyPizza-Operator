@@ -626,26 +626,25 @@ public class DateHelper {
         return strPersianFour1(parseFormat(date, null));
     }
 
-//  /**
-//   *
-//   * @param date format input is : yyyy/MM/dd
-//   * @param time format input is : hh:mm:ss
-//   * @return string text is return
-//     */
-//  public static String parseDate(String date ,String time){
-//
-//    String[] date1 = date.split("/");
-//    String[] time1 = time.split(":");
-//
-//    Date d = DateHelper.jalaliToGregorian(new DateHelper.YearMonthDate(
-//            Integer.parseInt(date1[0])
-//            ,Integer.parseInt(date1[1])
-//            ,Integer.parseInt(date1[2])
-//            ,Integer.parseInt(time1[0])
-//            ,Integer.parseInt(time1[1])
-//            ,Integer.parseInt(time1[2])));
-//    return DateHelper.strPersianDate(d);
-//  }
+    /**
+     * @param date format input is : yyyy/MM/dd
+     * @param time format input is : hh:mm:ss
+     * @return string text is return
+     */
+    public static String parseDate(String date, String time) {
+
+        String[] date1 = date.split("/");
+        String[] time1 = time.split(":");
+
+        Date d = DateHelper.jalaliToGregorian(new DateHelper.YearMonthDate(
+                Integer.parseInt(date1[0])
+                , Integer.parseInt(date1[1])
+                , Integer.parseInt(date1[2])
+                , Integer.parseInt(time1[0])
+                , Integer.parseInt(time1[1])
+                , Integer.parseInt(time1[2])));
+        return DateHelper.strPersianDate(d);
+    }
 
     public static String parseStrDate(String date, String time) {
         try {

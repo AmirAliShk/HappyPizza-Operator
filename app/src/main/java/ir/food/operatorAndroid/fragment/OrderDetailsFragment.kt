@@ -2,7 +2,6 @@ package ir.food.operatorAndroid.fragment
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -133,6 +132,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")
+
             binding.txtFinishTime.text = if (orderObj.has("finishDate")) {
                 (StringHelper.toPersianDigits(
                     DateHelper.strPersianFour1(
@@ -145,6 +145,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             } else {
                 ""
             }
+
             binding.txtBakeTime.text = if (orderObj.has("bakingDate")) {
                 (StringHelper.toPersianDigits(
                     DateHelper.strPersianFour1(
@@ -158,13 +159,11 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 ""
             }
 
-            val deliveryTime = dataObj.getJSONObject("deliveryLocation").getString("date").trim()
-            Log.i("TAG", "parseDetails: $deliveryTime")
-            binding.txtSendTime.text = if (deliveryTime != "") {
+            binding.txtSendTime.text = if (orderObj.has("deliveryDate")) {
                 (StringHelper.toPersianDigits(
                     DateHelper.strPersianFour1(
                         DateHelper.parseFormat(
-                            deliveryTime + "",
+                            orderObj.getString("deliveryDate") + "",
                             null
                         )
                     )
@@ -172,6 +171,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             } else {
                 ""
             }
+
             if (orderObj.getBoolean("paid")) {
                 binding.txtIsPaid.text = " شده "
                 binding.txtIsPaid.setTextColor(MyApplication.currentActivity.resources.getColor(R.color.color_green))
