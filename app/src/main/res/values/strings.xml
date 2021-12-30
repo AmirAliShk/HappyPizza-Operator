@@ -1,7 +1,7 @@
 <resources>
 
     <!-- signUp & logIn-->
-    <string name="app_name">Happy Pizza Operator</string>
+    <string name="app_name">Happy Pizza</string>
     <string name="signUp">ثبت نام</string>
     <string name="mobile">موبایل</string>
     <string name="name">نام :</string>
@@ -69,7 +69,7 @@
     <string name="customer_is_not_answer">پاسخگو نیستن</string>
     <string name="support">پشتیبانی</string>
     <string name="orders_list">لیست سفارش ها</string>
-    <string name="support_version">نسخه پشتیبانی</string>
+    <string name="support_version">نسخه کاربران پشتیبانی</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lock">قفل</string>
