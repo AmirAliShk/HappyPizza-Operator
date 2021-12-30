@@ -81,49 +81,57 @@ class GetAppInfo {
                         val message = response.getString("message")
                         if (success) {
                             val data: JSONObject = response.getJSONObject("data")
-                            val status = data.getBoolean("status")
+                            val statusMessage = data.getString("statusMessage")
 
-                            val updateAvailable = data.getBoolean("update")
-                            val forceUpdate = data.getBoolean("isForce")
-                            val updateUrl = data.getString("updateUrl")
-                            val sipNumber = data.getString("sipNumber")
-                            val sipPassword = data.getString("sipPassword")
-                            val sipServer = data.getString("sipServer")
+                            if (data.getInt("userStatus") == 0) { // it means every thing is ok
+                                val updateAvailable = data.getBoolean("update")
+                                val forceUpdate = data.getBoolean("isForce")
+                                val updateUrl = data.getString("updateUrl")
+                                val sipNumber = data.getString("sipNumber")
+                                val sipPassword = data.getString("sipPassword")
+                                val sipServer = data.getString("sipServer")
 
-                            MyApplication.prefManager.pushToken = data.getString("pushToken")
-                            MyApplication.prefManager.pushId = data.getInt("pushId")
-                            MyApplication.prefManager.userCode = data.getString("userId")
-                            MyApplication.prefManager.sipNumber = sipNumber
-                            MyApplication.prefManager.sipPassword = sipPassword
-                            MyApplication.prefManager.sipServer = sipServer
-                            MyApplication.prefManager.queueStatus = data.getInt("activeInQueue") == 1
+                                MyApplication.prefManager.pushToken = data.getString("pushToken")
+                                MyApplication.prefManager.pushId = data.getInt("pushId")
+                                MyApplication.prefManager.userCode = data.getString("userId")
+                                MyApplication.prefManager.sipNumber = sipNumber
+                                MyApplication.prefManager.sipPassword = sipPassword
+                                MyApplication.prefManager.sipServer = sipServer
+                                MyApplication.prefManager.queueStatus = data.getInt("activeInQueue") == 1
 
-                            if (!data.getBoolean("hired")) {
-                                GeneralDialog()
-                                    .message("استخدام شما هنوز به تایید مدیر مجموعه نرسیده است.\n لطفا با پشتیبانی تماس بگیرید.")
-                                    .secondButton("بستن") {
-                                        MyApplication.currentActivity.finish()
-                                    }.cancelable(false).show()
-                                return@post
-                            }
-
-                            if (updateAvailable) {
-                                update(forceUpdate, updateUrl)
-                                return@post
-                            }
-
-                            startVoipService()
-
-                            MyApplication.handler.postDelayed({
-                                if (sipNumber != MyApplication.prefManager.sipNumber ||
-                                    sipPassword != MyApplication.prefManager.sipPassword ||
-                                    !sipServer.equals(MyApplication.prefManager.sipServer)
-                                ) {
-                                    if (sipNumber != "0") {
-                                        MyApplication.configureAccount();
-                                    }
+                                if (updateAvailable) {
+                                    update(forceUpdate, updateUrl)
+                                    return@post
                                 }
-                            }, 500)
+
+                                startVoipService()
+
+                                MyApplication.handler.postDelayed({
+                                    if (sipNumber != MyApplication.prefManager.sipNumber ||
+                                        sipPassword != MyApplication.prefManager.sipPassword ||
+                                        !sipServer.equals(MyApplication.prefManager.sipServer)
+                                    ) {
+                                        if (sipNumber != "0") {
+                                            MyApplication.configureAccount();
+                                        }
+                                    }
+                                }, 500)
+
+                            } else if (data.getInt("userStatus") == 1 || data.getInt("userStatus") == 4) { // 1 = means use deleted so we logout..., and 4 = means the job changed.
+                                GeneralDialog()
+                                    .message(statusMessage)
+                                    .secondButton("بستن") {
+                                        MyApplication.prefManager.cleanPrefManger()
+                                        MyApplication.currentActivity.finish()
+                                    }
+                                    .show()
+                            } else {
+                                GeneralDialog()
+                                    .message(statusMessage)
+                                    .secondButton("بستن") { MyApplication.currentActivity.finish() }
+                                    .show()
+                            }
+
                         } else {
                             GeneralDialog()
                                 .message(message)
