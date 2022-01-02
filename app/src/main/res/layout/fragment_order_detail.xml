@@ -552,8 +552,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_cancel_btn"
-                    android:visibility="gone">
+                    android:background="@drawable/bg_cancel_btn">
 
                     <Button
                         android:id="@+id/btnCancelOrder"

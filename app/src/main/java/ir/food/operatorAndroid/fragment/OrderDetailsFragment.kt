@@ -221,7 +221,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.black
                         )
                     )
-                    binding.llCancelAndLocation.visibility = GONE
+                    binding.btnDeliverLocation.visibility = GONE
                 }
                 5 -> {
                     icon = R.drawable.ic_chef
@@ -236,7 +236,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
-                    binding.llCancelAndLocation.visibility = GONE
+                    binding.btnDeliverLocation.visibility = GONE
                 }
                 2 -> {
                     icon = R.drawable.ic_coooking
@@ -251,7 +251,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
-                    binding.llCancelAndLocation.visibility = GONE
+                    binding.btnDeliverLocation.visibility = GONE
                 }
                 3 -> {
                     icon = R.drawable.ic_delivery
@@ -280,7 +280,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             R.color.white
                         )
                     )
-                    binding.llCancelAndLocation.visibility = GONE
+                    binding.btnDeliverLocation.visibility = GONE
                 }
                 4 -> {
                     icon = R.drawable.ic_round_done_24
