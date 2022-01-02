@@ -386,7 +386,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             // this condition is for when you select an address that has credit, then you change(remove) 50 percent of that, so it is not a credit address any more
             val addressPercent: Int = addressLength * 50 / 100
             if (addressChangeCounter >= addressPercent) {
-                binding.edtStationCode.setText("0")
+                binding.edtStationCode.setText("")
             }
         }
 
@@ -394,7 +394,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             if (editable.toString().isEmpty()) {
                 customerAddressId = "0"
                 addressLength = 0
-                binding.edtStationCode.setText("0")
+                binding.edtStationCode.setText("")
             }
         }
     }
@@ -1169,7 +1169,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             binding.edtAddress.setText(address)
             binding.edtStationCode.setText(
                 if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
-                    .toString() else "0"
+                    .toString() else ""
             )
             addressLength = address.length
             customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
