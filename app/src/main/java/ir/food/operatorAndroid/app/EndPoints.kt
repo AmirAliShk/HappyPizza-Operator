@@ -1,16 +1,12 @@
 package ir.food.operatorAndroid.app
 
-import ir.food.operatorAndroid.BuildConfig
-
 object EndPoints {
     /*TODO : check apis and ports before release*/
     const val IP = "http://happypizza.ir"
 
-    //            "http://192.168.43.93";
     const val HAKWEYE_IP = "http://happypizza.ir"
 
-    //          : "http://192.168.1.145";
-    private val APIPort = if (BuildConfig.DEBUG) "3010" else "3010"
+    private val APIPort = "3010"
     const val ACRA_PATH = "http://turbotaxi.ir:6061/api/v1/crashReport"
     const val PUSH = "http://turbotaxi.ir:6060"
     private val WEBSERVICE_PATH = "$IP:$APIPort/api/operator/v1/"

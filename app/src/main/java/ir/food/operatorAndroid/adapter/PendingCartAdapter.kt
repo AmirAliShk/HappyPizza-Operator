@@ -1,6 +1,5 @@
 package ir.food.operatorAndroid.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +8,6 @@ import ir.food.operatorAndroid.databinding.ItemOrderBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.PendingCartModel
-import ir.food.operatorAndroid.model.ProductsModel
 
 class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: TotalPrice) :
     RecyclerView.Adapter<PendingCartAdapter.ViewHolder>() {
@@ -50,7 +48,7 @@ class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: Tota
         holder.binding.imgReduce.setOnClickListener {
 
             if (model.quantity == 1) models.removeAt(position)
-            else model.quantity --
+            else model.quantity--
             totalPrice.collectTotalPrice(models.size)
             notifyDataSetChanged()
         }

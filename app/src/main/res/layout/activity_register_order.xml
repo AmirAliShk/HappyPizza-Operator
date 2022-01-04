@@ -629,7 +629,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_red" />
+                    android:background="@drawable/bg_red"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -637,7 +638,8 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_9sdp">
+                    android:paddingRight="@dimen/_9sdp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"

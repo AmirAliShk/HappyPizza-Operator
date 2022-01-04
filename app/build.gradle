@@ -6,14 +6,13 @@ plugins {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "21.0.1"
 
     defaultConfig {
         applicationId "ir.food.operatorAndroid"
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.0"
+        targetSdkVersion 29
+        versionCode 2
+        versionName "1.2.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

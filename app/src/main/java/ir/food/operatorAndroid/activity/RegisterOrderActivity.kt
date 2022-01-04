@@ -34,7 +34,6 @@ import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import org.linphone.core.*
 import java.util.*
@@ -179,6 +178,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.imgDownload.setOnClickListener {
+            getProductsAndLists()
             if (binding.edtMobile.text.toString() == "" || binding.edtMobile.text.toString().length < 10) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
                 binding.edtMobile.requestFocus()
@@ -208,6 +208,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
                             .getString("name"),
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
+                            .getString("nameWithSupply"),
+                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
                             .getJSONArray("size").getJSONObject(0)
                             .getString("price"),
                         JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
@@ -219,6 +221,10 @@ class RegisterOrderActivity : AppCompatActivity() {
                         pendingCartModels.add(pendingCart)
                     } else {
                         for (j in 0 until pendingCartModels.size) {
+                            if (productsModels[i].supply == pendingCartModels[j].quantity) {
+                                MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
+                                return@setOnClickListener
+                            }
                             if (pendingCartModels[j].id == productId) {
                                 pendingCartModels[j].quantity++
                                 isSame = true
@@ -457,16 +463,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
             }
         }
-
-        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
-            super.onFailure(reCall, e)
-        }
     }
 
     private fun initProductTypeSpinner() {
         val typesList = ArrayList<String>()
         try {
-            typesList.add(0, "نوع محصول")
+//            typesList.add(0, "نوع محصول")
             val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
             for (i in 0 until typesArr.length()) {
                 val types = ProductsTypeModel(
@@ -475,7 +477,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 )
                 typesModels.add(types)
 
-                typesList.add(i + 1, typesArr.getJSONObject(i).getString("name"))
+                typesList.add(i, typesArr.getJSONObject(i).getString("name"))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -494,12 +496,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-                        if (position == 0) {
-                            productTypes = ""
-                            return
-                        }
+//                        if (position == 0) {
+//                            productTypes = ""
+//                            return
+//                        }
                         tempProductsModels.clear()
-                        productTypes = typesModels[position - 1].id
+                        productTypes = typesModels[position].id
                         initProductSpinner(productTypes)
                     }
 
@@ -507,6 +509,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initProductTypeSpinner method2")
         }
     }
 
@@ -521,20 +524,22 @@ class RegisterOrderActivity : AppCompatActivity() {
                     productsArr.getJSONObject(i).getJSONArray("size"),
                     productsArr.getJSONObject(i).getString("name"),
                     productsArr.getJSONObject(i).getString("description"),
-                    productsArr.getJSONObject(i).getJSONObject("type")
+                    productsArr.getJSONObject(i).getJSONObject("type"),
+                    productsArr.getJSONObject(i).getInt("supply")
                 )
                 productsModels.add(products)
                 if (productsModels[i].type.getString("_id").equals(type)) {
                     val pendingCart = PendingCartModel(
                         productsArr.getJSONObject(i).getString("_id"),
                         productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("price"),
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("name"), 1
                     )
                     tempProductsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("name"))
+                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
         } catch (e: Exception) {

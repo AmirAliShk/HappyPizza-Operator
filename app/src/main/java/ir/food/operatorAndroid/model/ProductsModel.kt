@@ -9,4 +9,5 @@ data class ProductsModel(
     var name: String,
     var description: String,
     var type: JSONObject,
+    var supply: Int
 )
