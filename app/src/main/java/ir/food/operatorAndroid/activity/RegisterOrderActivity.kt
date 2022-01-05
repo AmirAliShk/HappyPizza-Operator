@@ -191,7 +191,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             GeneralDialog()
                 .message("میخواهید اطلاعات صفحه را پاک کنید؟")
                 .firstButton("بله") { clearData() }
-                .secondButton("نه", null)
+                .secondButton("نه") {}
                 .show()
         }
 
@@ -333,7 +333,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 .firstButton("بله") {
                     submitOrder()
                 }
-                .secondButton("خیر", null)
+                .secondButton("خیر") {}
                 .show()
         }
 
@@ -539,7 +539,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("name"), 1
                     )
                     tempProductsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
+                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))//todo
                 }
             }
         } catch (e: Exception) {
@@ -582,7 +582,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             .firstButton("مطمئنم") {
                 enterTheQueue(MyApplication.prefManager.sipNumber)
             }
-            .secondButton("نیستم", null)
+            .secondButton("نیستم") {}
             .show()
     }
 
@@ -599,7 +599,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     exitQueue(MyApplication.prefManager.sipNumber)
                 }
             }
-            .secondButton("نیستم", null)
+            .secondButton("نیستم") {}
             .show()
     }
 
@@ -756,7 +756,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                                         GeneralDialog()
                                             .message(msg)
                                             .cancelable(false)
-                                            .firstButton("بستن", null)
+                                            .firstButton("بستن") {}
                                             .secondButton("پشتیبانی") {
                                                 KeyBoardHelper.hideKeyboard()
                                                 FragmentHelper.toFragment(

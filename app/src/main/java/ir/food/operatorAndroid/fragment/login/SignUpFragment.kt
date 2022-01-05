@@ -77,7 +77,7 @@ class SignUpFragment : Fragment() {
                     MyApplication.Toast("موبایل را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtMobile.requestFocus()
                 }
-                verificationCode.isEmpty() || verificationCode.length < 4  -> {
+                verificationCode.isEmpty() || verificationCode.length < 4 -> {
                     MyApplication.Toast("کد تایید را وارد کنید", Toast.LENGTH_SHORT)
                     binding.edtVerificationCode.requestFocus()
                 }
@@ -134,7 +134,7 @@ class SignUpFragment : Fragment() {
                         if (dataObj.getBoolean("status")) {
                             GeneralDialog().message(message).firstButton("باشه") {
                                 GetAppInfo().callAppInfoAPI()
-                            }.show()
+                            }.cancelable(false).show()
                             MyApplication.prefManager.idToken = dataObj.getString("idToken")
                             MyApplication.prefManager.authorization =
                                 dataObj.getString("accessToken")
@@ -176,9 +176,7 @@ class SignUpFragment : Fragment() {
                         val splashJson = JSONObject(args[0].toString())
                         val success = splashJson.getBoolean("success")
                         val message = splashJson.getString("message")
-                        if (success) {
-                            MyApplication.Toast(message, Toast.LENGTH_LONG)
-                        }
+                        MyApplication.Toast(message, Toast.LENGTH_LONG)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfSendCode.displayedChild = 0

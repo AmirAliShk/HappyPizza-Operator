@@ -81,6 +81,7 @@
     <string name="bakeTime">زمان شروع پخت : </string>
     <string name="finishTime">زمان پایان : </string>
     <string name="sendTime">زمان ارسال : </string>
+    <string name="support">پشتیبانی</string>
 
 
 </resources>

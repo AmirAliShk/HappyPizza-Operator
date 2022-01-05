@@ -97,7 +97,8 @@ class GetAppInfo {
                                 MyApplication.prefManager.sipNumber = sipNumber
                                 MyApplication.prefManager.sipPassword = sipPassword
                                 MyApplication.prefManager.sipServer = sipServer
-                                MyApplication.prefManager.queueStatus = data.getInt("activeInQueue") == 1
+                                MyApplication.prefManager.queueStatus =
+                                    data.getInt("activeInQueue") == 1
 
                                 if (updateAvailable) {
                                     update(forceUpdate, updateUrl)
@@ -124,11 +125,13 @@ class GetAppInfo {
                                         MyApplication.prefManager.cleanPrefManger()
                                         MyApplication.currentActivity.finish()
                                     }
+                                    .cancelable(false)
                                     .show()
                             } else {
                                 GeneralDialog()
                                     .message(statusMessage)
                                     .secondButton("بستن") { MyApplication.currentActivity.finish() }
+                                    .cancelable(false)
                                     .show()
                             }
 

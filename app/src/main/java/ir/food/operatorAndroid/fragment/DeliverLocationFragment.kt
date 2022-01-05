@@ -102,7 +102,8 @@ class DeliverLocationFragment(id: String, location: LatLng, lastTime: String) : 
                                 ))
                             }
                         } else {
-                            GeneralDialog().message(message).secondButton("باشه") {}.show()
+                            GeneralDialog().message(message).secondButton("باشه") {}
+                                .cancelable(false).show()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

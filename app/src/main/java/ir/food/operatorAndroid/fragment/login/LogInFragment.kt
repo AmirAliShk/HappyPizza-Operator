@@ -157,10 +157,9 @@ class LogInFragment : Fragment() {
                         val splashJson = JSONObject(args[0].toString())
                         val success = splashJson.getBoolean("success")
                         val message = splashJson.getString("message")
-                        if (success) {
-                            MyApplication.Toast(message, Toast.LENGTH_LONG)
-                            KeyBoardHelper.hideKeyboard()
-                        }
+
+                        MyApplication.Toast(message, Toast.LENGTH_LONG)
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfSendCode.displayedChild = 0

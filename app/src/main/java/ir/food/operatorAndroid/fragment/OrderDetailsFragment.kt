@@ -345,10 +345,12 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         if (status) {
                             val dataObj = jsonObject.getJSONObject("data")
                             if (dataObj.getBoolean("status")) {
-                                GeneralDialog().message(message).firstButton("باشه") {}.show()
+                                GeneralDialog().message(message).firstButton("باشه") {}
+                                    .cancelable(false).show()
                             }
                         } else {
-                            GeneralDialog().message(message).secondButton("باشه") {}.show()
+                            GeneralDialog().message(message).secondButton("باشه") {}
+                                .cancelable(false).show()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
