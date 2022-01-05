@@ -369,6 +369,30 @@
                         android:textSize="@dimen/_10sdp"
                         android:visibility="gone" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:src="@drawable/ic_waiting" />
+
+                        <TextView
+                            android:id="@+id/pendingNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:text="3"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <EditText
@@ -624,7 +648,7 @@
                     android:listSelector="#00ffffff"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_cart" />
+                    tools:listitem="@layout/item_order" />
 
                 <View
                     android:layout_width="match_parent"

@@ -48,8 +48,18 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
         holder.binding.txtMobile.text = StringHelper.toPersianDigits(model.mobile)
         holder.binding.txtAddress.text = StringHelper.toPersianDigits(model.address)
 
-        var icon = R.drawable.ic_payment
-        var color = R.color.payment_color
+        var icon = R.drawable.ic_led_inprogress
+        var color = R.color.darkGray
+        holder.binding.txtStatus.setTextColor(
+            MyApplication.currentActivity.resources.getColor(
+                R.color.white
+            )
+        )
+        holder.binding.txtTime.setTextColor(
+            MyApplication.currentActivity.resources.getColor(
+                R.color.white
+            )
+        )
 //        if (!model.paid) {
 //            icon = R.drawable.ic_payment
 //            color = R.color.payment_color
@@ -133,6 +143,34 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
             4 -> {
                 icon = R.drawable.ic_round_done_24
                 color = R.color.finished
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            7 -> {
+                icon = R.drawable.ic_payment
+                color = R.color.settlement
+                holder.binding.txtStatus.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+            }
+            6 -> {
+                icon = R.drawable.ic_refresh_white
+                color = R.color.payment_color
                 holder.binding.txtStatus.setTextColor(
                     MyApplication.currentActivity.resources.getColor(
                         R.color.white

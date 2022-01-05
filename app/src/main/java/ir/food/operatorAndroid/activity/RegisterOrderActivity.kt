@@ -221,7 +221,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                         pendingCartModels.add(pendingCart)
                     } else {
                         for (j in 0 until pendingCartModels.size) {
-                            if (productsModels[i].supply == pendingCartModels[j].quantity) {
+                            if (productsModels[i].supply == pendingCartModels[j].quantity && pendingCartModels[j].id == productsModels[i].id) {
                                 MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
                                 return@setOnClickListener
                             }
@@ -963,7 +963,6 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("address", binding.edtAddress.text.trim().toString())
             .addParam("addressId", customerAddressId)
             .addParam("station", binding.edtStationCode.text.trim().toString())
-//            .addParam("station", 31)
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
             .listener(submitOrderCallBack)

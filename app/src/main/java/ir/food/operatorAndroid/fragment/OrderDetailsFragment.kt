@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
@@ -16,6 +17,7 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
 import ir.food.operatorAndroid.dialog.EditAddressDialog
+import ir.food.operatorAndroid.dialog.EditOrderDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.dialog.RegisterComplaintDialog
 import ir.food.operatorAndroid.helper.DateHelper
@@ -78,6 +80,12 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         binding.txtAddress.text = address
                     }
                 })
+        }
+
+        binding.btnEditOrder.setOnClickListener {
+            EditOrderDialog().show(
+                JSONObject(orderDetails).getJSONObject("order").getJSONArray("products")
+            )
         }
 
         return binding.root
@@ -195,12 +203,24 @@ class OrderDetailsFragment(details: String) : Fragment() {
             } else {
                 binding.txtDescription.text = orderObj.getString("description")
             }
-
+            if (orderObj.has("operator")) {
+                binding.txtOperator.text = orderObj.getString("operator")
+            }
             val cartAdapter = CartAdapter(supportCartModels)
             binding.orderList.adapter = cartAdapter
 
-            var icon = R.drawable.ic_payment
-            var color = R.color.payment_color
+            var icon = R.drawable.ic_led_inprogress
+            var color = R.color.darkGray
+            binding.txtStatus.setTextColor(
+                MyApplication.currentActivity.resources.getColor(
+                    R.color.white
+                )
+            )
+            binding.txtTime.setTextColor(
+                MyApplication.currentActivity.resources.getColor(
+                    R.color.white
+                )
+            )
 //            if (!orderObj.getBoolean("paid")) {
 //                binding.btnDeliverLocation.isEnabled = false
 //                binding.btnSetComplaint.isEnabled = false
@@ -222,6 +242,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         )
                     )
                     binding.btnDeliverLocation.visibility = GONE
+                    binding.llEditOrder.visibility = VISIBLE
                 }
                 5 -> {
                     icon = R.drawable.ic_chef
@@ -285,6 +306,34 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 4 -> {
                     icon = R.drawable.ic_round_done_24
                     color = R.color.finished
+                    binding.txtStatus.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.white
+                        )
+                    )
+                    binding.txtTime.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.white
+                        )
+                    )
+                }
+                7 -> {
+                    icon = R.drawable.ic_payment
+                    color = R.color.settlement
+                    binding.txtStatus.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.white
+                        )
+                    )
+                    binding.txtTime.setTextColor(
+                        MyApplication.currentActivity.resources.getColor(
+                            R.color.white
+                        )
+                    )
+                }
+                6 -> {
+                    icon = R.drawable.ic_refresh_white
+                    color = R.color.payment_color
                     binding.txtStatus.setTextColor(
                         MyApplication.currentActivity.resources.getColor(
                             R.color.white

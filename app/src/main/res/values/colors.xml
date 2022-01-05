@@ -28,6 +28,7 @@
     <color name="delivery">#1e88e5</color>
     <color name="finished">#43a047</color>
     <color name="canceled">#e53935</color>
+    <color name="settlement">#9575cd</color>
 
 
 </resources>
