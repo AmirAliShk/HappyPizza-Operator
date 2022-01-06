@@ -14,7 +14,6 @@ import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrdersListBinding
 import ir.food.operatorAndroid.dialog.CallDialog
-import ir.food.operatorAndroid.dialog.SearchDialog
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.OrderModel
@@ -29,7 +28,6 @@ import org.linphone.core.CoreListenerStub
 class OrdersListFragment(mobile: String) : Fragment() {
 
     lateinit var binding: FragmentOrdersListBinding
-    var value = "mobile"
     lateinit var core: Core
     var tellNumber: String = mobile
 
@@ -46,9 +44,7 @@ class OrdersListFragment(mobile: String) : Fragment() {
         binding.edtSearchBar.requestFocus()
         if (tellNumber != "") {
             binding.edtSearchBar.setText(tellNumber)
-            binding.imgSearchType.setImageResource(R.drawable.ic_phone)
             binding.edtSearchBar.inputType = InputType.TYPE_CLASS_NUMBER
-            value = "mobile"
             getOrders(binding.edtSearchBar.text.toString())
         }
 
@@ -69,31 +65,6 @@ class OrdersListFragment(mobile: String) : Fragment() {
             }
             KeyBoardHelper.hideKeyboard()
             getOrders(binding.edtSearchBar.text.toString())
-        }
-
-        binding.imgSearchType.setOnClickListener {
-            SearchDialog().show(object : SearchDialog.SearchListener {
-                override fun searchType(searchType: Int) {
-                    binding.edtSearchBar.setText("")
-                    when (searchType) {
-                        1 -> {
-                            binding.imgSearchType.setImageResource(R.drawable.ic_phone)
-                            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_NUMBER
-                            value = "mobile"
-                        }
-                        2 -> {
-                            binding.imgSearchType.setImageResource(R.drawable.ic_user)
-                            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_TEXT
-                            value = "family"
-                        }
-                        3 -> {
-                            binding.imgSearchType.setImageResource(R.drawable.ic_gps)
-                            binding.edtSearchBar.inputType = InputType.TYPE_CLASS_TEXT
-                            value = "address"
-                        }
-                    }
-                }
-            })
         }
 
         binding.imgBack.setOnClickListener { MyApplication.currentActivity.onBackPressed() }
@@ -143,16 +114,9 @@ class OrdersListFragment(mobile: String) : Fragment() {
 
     private fun getOrders(searchText: String) {
         binding.vfOrders.displayedChild = 1
-        var text = searchText
-        if (value == "mobile") {
-            if (!searchText.startsWith("0")) {
-                text = "0$searchText"
-            }
-        }
         RequestHelper.builder(EndPoints.GET_ORDERS_LIST)
             .listener(callBack)
-            .addPath(value)
-            .addPath(text)
+            .addPath(searchText)
             .get()
     }
 
