@@ -23,10 +23,8 @@ import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.*
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
-import ir.food.operatorAndroid.dialog.AddressDialog
-import ir.food.operatorAndroid.dialog.CallDialog
-import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.dialog.LoadingDialog
+import ir.food.operatorAndroid.dialog.*
+import ir.food.operatorAndroid.fragment.MenuFragment
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.*
 import ir.food.operatorAndroid.model.*
@@ -115,6 +113,12 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
+                .replace()
+        }
+
+        binding.llMenu.setOnClickListener {
+            KeyBoardHelper.hideKeyboard()
+            FragmentHelper.toFragment(MyApplication.currentActivity, MenuFragment())
                 .replace()
         }
 

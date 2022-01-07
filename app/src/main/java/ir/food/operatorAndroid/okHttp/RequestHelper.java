@@ -116,7 +116,7 @@ public class RequestHelper implements okhttp3.Callback {
     public RequestHelper addPath(String value) {
         if (paths == null)
             paths = new ArrayList<>();
-        paths.add(value);
+        paths.add(StringHelper.toEnglishDigits(value));
         return this;
     }
 

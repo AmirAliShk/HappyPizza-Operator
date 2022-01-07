@@ -9,5 +9,6 @@ data class ProductsModel(
     var name: String,
     var description: String,
     var type: JSONObject,
-    var supply: Int
+    var supply: Int,
+    var discount: String = "0"
 )

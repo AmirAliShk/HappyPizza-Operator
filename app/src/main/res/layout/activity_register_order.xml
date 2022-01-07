@@ -302,7 +302,7 @@
                         android:id="@+id/vfSendMenu"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:background="@drawable/bg_btn_gray_style">
 
                         <TextView
@@ -323,6 +323,27 @@
                             app:indicatorColor="@color/white" />
 
                     </ViewFlipper>
+
+                    <View
+                        android:layout_width="@dimen/_8sdp"
+                        android:layout_height="0dp" />
+
+                    <LinearLayout
+                        android:id="@+id/llMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:background="@drawable/edit_text_style"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_baseline_restaurant_menu_24" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

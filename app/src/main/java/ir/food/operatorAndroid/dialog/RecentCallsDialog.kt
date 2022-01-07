@@ -190,7 +190,7 @@ class RecentCallsDialog {
             }
         } catch (e: Exception) {
             Log.e("TAG", "dismiss: " + e.message)
-            AvaCrashReporter.send(e, "ReserveDialog class, dismiss method")
+            AvaCrashReporter.send(e, "RecentCallsDialog class, dismiss method")
         }
         PRDownloader.cancelAll()
         PRDownloader.shutDown()
