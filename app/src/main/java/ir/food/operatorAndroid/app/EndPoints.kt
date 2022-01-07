@@ -14,6 +14,7 @@ object EndPoints {
     private val ACTIVATE_PATH = "$IP:$APIPort/api/operator/v1/activate"
     private val CUSTOMER_PATH = "$IP:$APIPort/api/operator/v1/customer"
     private val ORDER_PATH = "$IP:$APIPort/api/operator/v1/order"
+    private val SUPPORT = "$IP:$APIPort/api/operator/v1/order/support"
 
     /******************************** Base Api  *********************************/
 
@@ -34,7 +35,7 @@ object EndPoints {
 
     /******************************** support order Api  *********************************/
 
-    val GET_ORDERS_LIST = ORDER_PATH
+    val GET_ORDERS_LIST = SUPPORT
     val GET_ORDER_DETAILS = ORDER_PATH
     val EDIT_ADDRESS = "$ORDER_PATH/editAddress"
     val ADD_COMPLAINT = COMPLAINT_PATH
