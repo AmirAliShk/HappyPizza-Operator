@@ -21,7 +21,8 @@ import org.json.JSONObject
 
 class MenuFragment : Fragment() {
     lateinit var binding: FragmentMenuBinding
-    lateinit var adapter : MenuViewPagerAdapter
+    lateinit var adapter: MenuViewPagerAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,10 +31,9 @@ class MenuFragment : Fragment() {
         binding = FragmentMenuBinding.inflate(layoutInflater)
         TypefaceUtil.overrideFonts(binding.root)
 
-        getProductsAndLists()
-
         adapter = MenuViewPagerAdapter(this)
-        binding.menuVPager.adapter = adapter
+
+        getProductsAndLists()
 
         binding.imgClose.setOnClickListener {
             MyApplication.currentActivity.onBackPressed()
@@ -43,6 +43,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun getProductsAndLists() {
+        binding.vfMenu.displayedChild = 0
         RequestHelper.builder(EndPoints.GET_PRODUCTS)
             .listener(productsCallBack)
             .get()
@@ -52,6 +53,7 @@ class MenuFragment : Fragment() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+                    binding.vfMenu.displayedChild = 1
 //{"success":true,"message":"محصولات سفارش با موفقیت ارسال شد","data":{"products":[{"_id":"61091b0ca9335b389819e894","size":[{"name":"medium","price":"75000","discount":"15000"}],"name":"رست بیف","description":"گوشت گوساله . پنیر . قارچ . فلفل دلمه ای . پیازجه","type":{"_id":"610916826f9446153c5e268d","name":"پیتزا"}}],"types":[{"_id":"610916826f9446153c5e268d","name":"پیتزا"}],"status":true}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
@@ -65,6 +67,8 @@ class MenuFragment : Fragment() {
                             MyApplication.prefManager.productsTypeList =
                                 data.getJSONArray("types").toString()
 
+                            binding.menuVPager.adapter = adapter
+
                             TabLayoutMediator(
                                 binding.tabLayout,
                                 binding.menuVPager
@@ -76,7 +80,15 @@ class MenuFragment : Fragment() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    binding.vfMenu.displayedChild = 2
                 }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+            MyApplication.handler.post {
+                binding.vfMenu.displayedChild = 2
             }
         }
     }

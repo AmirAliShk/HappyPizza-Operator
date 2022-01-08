@@ -8,26 +8,48 @@
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/bg_body"
-        android:layout_height="match_parent"
+    <ViewFlipper
+        android:id="@+id/vfMenu"
         android:layout_weight="1"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_25sdp"
-        android:orientation="vertical">
+        android:background="@drawable/bg_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabLayout
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            app:indicatorColor="@color/color_Red" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:id="@+id/tabLayout"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/menuVPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:id="@+id/tabLayout"/>
 
-    </LinearLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/menuVPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="هنگام دریافت لیست از سرور به خطا خوردیم \n لطفا مجدد امتحان کنید"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+    </ViewFlipper>
 
     <ImageView
         android:id="@+id/imgClose"
