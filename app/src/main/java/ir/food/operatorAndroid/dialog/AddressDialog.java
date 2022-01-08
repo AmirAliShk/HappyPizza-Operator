@@ -2,7 +2,6 @@ package ir.food.operatorAndroid.dialog;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class AddressDialog {
     DialogAddressListBinding binding;
     Listener listener;
 
-    public void show(ArrayList<AddressModel> addressModels, Listener listener) {
+    public void show(ArrayList<AddressModel> addressModels, String mobile, Listener listener) {
         if (MyApplication.currentActivity == null || MyApplication.currentActivity.isFinishing())
             return;
         dialog = new Dialog(MyApplication.currentActivity);
@@ -50,7 +49,7 @@ public class AddressDialog {
 
         binding.imgClose.setOnClickListener(view -> dismiss());
 
-        AddressAdapter addressAdapter = new AddressAdapter(addressModels, MyApplication.context);
+        AddressAdapter addressAdapter = new AddressAdapter(addressModels, MyApplication.context, mobile);
         binding.listAddress.setAdapter(addressAdapter);
 
         binding.listAddress.setOnItemClickListener((adapterView, view, i, l) -> {
@@ -72,6 +71,4 @@ public class AddressDialog {
         }
         dialog = null;
     }
-
-
 }

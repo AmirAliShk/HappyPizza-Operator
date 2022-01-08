@@ -31,12 +31,6 @@ class CartAdapter(list: ArrayList<SupportCartModel>) :
         holder.binding.txtCount.text = StringHelper.toPersianDigits(model.count.toString())
         holder.binding.txtName.text = model.name
         holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
-
-        if (model.discount) {
-            holder.binding.txtDiscount.visibility = View.VISIBLE
-        } else {
-            holder.binding.txtDiscount.visibility = View.INVISIBLE
-        }
     }
 
     override fun getItemCount(): Int {

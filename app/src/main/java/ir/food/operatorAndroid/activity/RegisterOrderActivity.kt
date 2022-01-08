@@ -459,6 +459,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 data.getJSONArray("types").toString()
                             initProductTypeSpinner()
                             initProductSpinner("")
+                            binding.pendingNum.text = data.getString("queueOrder")
                         }
                     }
                 } catch (e: Exception) {
@@ -1206,7 +1207,10 @@ class RegisterOrderActivity : AppCompatActivity() {
             MyApplication.Toast("ادرسی موجود نیست", Toast.LENGTH_SHORT)
         } else {
             AddressDialog().show(
-                addressModels
+                addressModels,
+                if (binding.edtMobile.text.toString()
+                        .startsWith("0")
+                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text.toString()}"
             ) { addressModel ->
                 addressChangeCounter = 0
                 addressLength = addressModel.address.length

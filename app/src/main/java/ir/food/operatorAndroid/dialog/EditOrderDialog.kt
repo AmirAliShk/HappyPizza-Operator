@@ -28,11 +28,13 @@ class EditOrderDialog {
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
     private var productsModels: ArrayList<ProductsModel> = ArrayList()
     private val supportCartModels: ArrayList<EditOrderModel> = ArrayList()
+    private val newSupportCartModels: ArrayList<EditOrderModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
     var isSame = false
+    private lateinit var productObj: JSONObject
     private val cartAdapter =
         EditOrderCartAdapter(supportCartModels, object : EditOrderCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
@@ -65,9 +67,9 @@ class EditOrderDialog {
 
         initProductTypeSpinner()
         initProductSpinner("")
-
+        cartJArray = JSONArray()
         for (i in 0 until productArr.length()) {
-            val productObj = productArr.getJSONObject(i)
+            productObj = productArr.getJSONObject(i)
             val cartModel = EditOrderModel(
                 productObj.getString("id"),
                 productObj.getString("name"),
@@ -75,7 +77,9 @@ class EditOrderDialog {
                 productObj.getString("size")
             )
             supportCartModels.add(cartModel)
+            newSupportCartModels.add(cartModel)
         }
+
         binding.orderList.adapter = cartAdapter
 
         binding.imgAddOrder.setOnClickListener {
@@ -222,7 +226,7 @@ class EditOrderDialog {
                             .getString("name"), 1
                     )
                     tempProductsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))//todo
+                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
         } catch (e: Exception) {
@@ -259,10 +263,10 @@ class EditOrderDialog {
 
     private fun editOrder() {
         LoadingDialog.makeCancelableLoader()
-        RequestHelper.builder(EndPoints.ADD_ORDER)
+        RequestHelper.builder(EndPoints.EDIT_ORDER)
             .addParam("products", cartJArray)
             .listener(editOrderCallBack)
-            .post()
+            .put()
     }
 
     private val editOrderCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {

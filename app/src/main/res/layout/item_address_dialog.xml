@@ -23,7 +23,8 @@
             android:layout_weight="0.35"
             android:gravity="center"
             android:paddingRight="5dp"
-            android:singleLine="true" android:textAppearance="?android:attr/textAppearanceMedium"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/darkGray" />
 
         <ImageView
@@ -46,18 +47,17 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_35sdp"
             android:elevation="@dimen/_8sdp"
-            android:visibility="gone"
             android:padding="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:src="@drawable/ic_recyclebin" />
 
     </LinearLayout>
 
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0.5dp"-->
-<!--        android:layout_marginLeft="25dp"-->
-<!--        android:layout_marginRight="25dp"-->
-<!--        android:background="#D6D4D4" />-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0.5dp"-->
+    <!--        android:layout_marginLeft="25dp"-->
+    <!--        android:layout_marginRight="25dp"-->
+    <!--        android:background="#D6D4D4" />-->
 
 </LinearLayout>

@@ -107,7 +107,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
                 val cartModel = SupportCartModel(
-                    productObj.getBoolean("discount"),
+                    productObj.getString("discount"),
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
                     productObj.getString("name")
@@ -140,6 +140,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtName.text = orderObj.getJSONObject("customer").getString("family")
             binding.txtMobile.text = orderObj.getJSONObject("customer").getString("mobile")
             binding.txtAddress.text = orderObj.getString("address")
+            binding.txtStationAddress.text = orderObj.getJSONObject("station").getString("code")
 
             binding.txtFinishTime.text = if (orderObj.has("finishDate")) {
                 (StringHelper.toPersianDigits(

@@ -31,14 +31,16 @@ object EndPoints {
     val GET_CUSTOMER = CUSTOMER_PATH
     val GET_PRODUCTS = "$ORDER_PATH/product"
     val ADD_ORDER = ORDER_PATH
+    val EDIT_ORDER = "$ORDER_PATH/editOrder"
     val SEND_MENU = "$ORDER_PATH/menu"
 
     /******************************** support order Api  *********************************/
 
     val GET_ORDERS_LIST = SUPPORT
-    val GET_ORDER_DETAILS = ORDER_PATH
+    val GET_ORDER_DETAILS = "$ORDER_PATH/v1/"
     val EDIT_ADDRESS = "$ORDER_PATH/editAddress"
     val ADD_COMPLAINT = COMPLAINT_PATH
     val CANCEL_ORDER = ORDER_PATH
     val GET_DELIVERY_LOCATION = "$ORDER_PATH/delivery/"
+    val ARCHIVE_ADDRESS = "$ORDER_PATH/cust/archive/address"
 }

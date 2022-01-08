@@ -394,8 +394,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
@@ -407,8 +406,7 @@
                             android:id="@+id/pendingNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:text="3"
+                            android:layout_marginLeft="@dimen/_10sdp"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 

@@ -8,23 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import ir.food.operatorAndroid.R;
+import ir.food.operatorAndroid.app.EndPoints;
+import ir.food.operatorAndroid.dialog.GeneralDialog;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
 import ir.food.operatorAndroid.model.AddressModel;
+import ir.food.operatorAndroid.okHttp.RequestHelper;
 import ir.food.operatorAndroid.push.AvaCrashReporter;
 
 public class AddressAdapter extends BaseAdapter {
 
     private ArrayList<AddressModel> addressModels;
     private LayoutInflater layoutInflater;
+    String mobile;
 
-    public AddressAdapter(ArrayList<AddressModel> addressModels, Context context) {
+    public AddressAdapter(ArrayList<AddressModel> addressModels, Context context, String mobile) {
         this.addressModels = addressModels;
         this.layoutInflater = LayoutInflater.from(context);
+        this.mobile = mobile;
     }
 
     @Override
@@ -59,10 +62,40 @@ public class AddressAdapter extends BaseAdapter {
             txtAddress.setText(addressModel.getAddress());
             txtStation.setText(addressModel.getStationId());
 
+            imgArchive.setOnClickListener(view -> {
+                new GeneralDialog()
+                        .title("هشدار")
+                        .message("ایا از انجام عملیات فوق اطمینان دارید؟")
+                        .firstButton("بله", () -> {
+                            archiveAddress(addressModel.getAddressId());
+                            addressModels.remove(position);
+                            notifyDataSetChanged();
+                        })
+                        .secondButton("خیر", null)
+                        .cancelable(false)
+                        .show();
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
             AvaCrashReporter.send(e, "LastAddressAdapter class, getView method");
         }
         return myView;
     }
+
+    void archiveAddress(String id) {
+        RequestHelper.builder(EndPoints.INSTANCE.getARCHIVE_ADDRESS())
+                .addParam("mobile", mobile)
+                .addParam("addressId", id)
+                .listener(archiveCallBack)
+                .put();
+    }
+
+    RequestHelper.Callback archiveCallBack = new RequestHelper.Callback() {
+        @Override
+        public void onResponse(Runnable reCall, Object... args) {
+//            {"success":true,"message":"آدرس مشتری با موفقیت آرشیو شد"}
+
+        }
+    };
 }

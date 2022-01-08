@@ -39,17 +39,6 @@
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtDiscount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_4sdp"
-                android:layout_weight="0.30"
-                android:text="باتخفیف"
-                android:textColor="@color/color_Red"
-                android:textSize="@dimen/_10ssp"
-                android:textStyle="bold" />
-
         </LinearLayout>
 
         <TextView
