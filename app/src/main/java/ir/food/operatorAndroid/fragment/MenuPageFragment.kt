@@ -48,7 +48,9 @@ class MenuPageFragment(position: Int) : Fragment() {
                         productsArr.getJSONObject(i).getString("name"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
-                        productsArr.getJSONObject(i).getInt("supply")
+                        productsArr.getJSONObject(i).getInt("supply"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price")
                     )
                     productsModels.add(products)
                     val adapter = MenuListAdapter(productsModels)

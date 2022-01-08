@@ -10,5 +10,6 @@ data class ProductsModel(
     var description: String,
     var type: JSONObject,
     var supply: Int,
-    var discount: String = "0"
+    var discount: String = "0",
+    var price: String = "0",
 )

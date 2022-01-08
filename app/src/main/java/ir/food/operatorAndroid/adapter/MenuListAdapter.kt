@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemMenuBinding
+import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.ProductsModel
 
@@ -21,6 +22,7 @@ class MenuListAdapter(list: ArrayList<ProductsModel>) :
         )
         TypefaceUtil.overrideFonts(binding.root)
         TypefaceUtil.overrideFonts(binding.txtPName, MyApplication.IraSanSMedume)
+        TypefaceUtil.overrideFonts(binding.txtPrice, MyApplication.IraSanSMedume)
         return ViewHolder(binding)
     }
 
@@ -29,6 +31,7 @@ class MenuListAdapter(list: ArrayList<ProductsModel>) :
 
         holder.binding.txtPName.text = model.name
         holder.binding.txtIngredients.text = model.description
+        holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
 
     }
 
