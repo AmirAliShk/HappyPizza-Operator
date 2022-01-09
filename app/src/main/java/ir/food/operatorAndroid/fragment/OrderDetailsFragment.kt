@@ -85,7 +85,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         binding.btnEditOrder.setOnClickListener {
             EditOrderDialog().show(
                 JSONObject(orderDetails).getJSONObject("order").getJSONArray("products")
-            )
+            , orderId)
         }
 
         return binding.root
@@ -243,7 +243,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                         )
                     )
                     binding.btnDeliverLocation.visibility = GONE
-                    binding.llEditOrder.visibility = VISIBLE
+//                    binding.llEditOrder.visibility = VISIBLE
                 }
                 5 -> {
                     icon = R.drawable.ic_chef

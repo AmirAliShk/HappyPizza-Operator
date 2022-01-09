@@ -44,7 +44,6 @@ class EditOrderCartAdapter(list: ArrayList<EditOrderModel>, var totalPrice: Tota
 //        }
 
         holder.binding.imgReduce.setOnClickListener {
-
             if (model.quantity == 1) models.removeAt(position)
             else model.quantity--
             totalPrice.collectTotalPrice(models.size)

@@ -3,6 +3,7 @@ package ir.food.operatorAndroid.dialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.Toast
@@ -28,8 +29,7 @@ class EditOrderDialog {
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
     private var productsModels: ArrayList<ProductsModel> = ArrayList()
     private val supportCartModels: ArrayList<EditOrderModel> = ArrayList()
-    private val newSupportCartModels: ArrayList<EditOrderModel> = ArrayList()
-    private lateinit var cartJArray: JSONArray
+    private val oldSupportCartModels: ArrayList<EditOrderModel> = ArrayList()
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
@@ -51,7 +51,7 @@ class EditOrderDialog {
             }
         })
 
-    fun show(productArr: JSONArray) {
+    fun show(productArr: JSONArray, orderId: String) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         binding = DialogEditOrderBinding.inflate(LayoutInflater.from(MyApplication.context))
@@ -67,7 +67,8 @@ class EditOrderDialog {
 
         initProductTypeSpinner()
         initProductSpinner("")
-        cartJArray = JSONArray()
+
+        val oldCartJArray = JSONArray()
         for (i in 0 until productArr.length()) {
             productObj = productArr.getJSONObject(i)
             val cartModel = EditOrderModel(
@@ -77,7 +78,14 @@ class EditOrderDialog {
                 productObj.getString("size")
             )
             supportCartModels.add(cartModel)
-            newSupportCartModels.add(cartModel)
+
+            val cartJObj = JSONObject()
+            cartJObj.put("_id", productObj.getString("id"))
+            cartJObj.put("name", productObj.getString("name"))
+            cartJObj.put("quantity", productObj.getInt("quantity"))
+            cartJObj.put("size", productObj.getString("size"))
+
+            oldCartJArray.put(cartJObj)
         }
 
         binding.orderList.adapter = cartAdapter
@@ -135,16 +143,53 @@ class EditOrderDialog {
         }
 
         binding.btnEditOrder.setOnClickListener {
-            cartJArray = JSONArray()
+            Log.i("TAG", "show: $supportCartModels")
+            Log.i("TAG", "show: $oldSupportCartModels")
+            for (k in 0 until oldCartJArray.length()) {
+                val cartObj = oldCartJArray.getJSONObject(k)
+                val cartModel = EditOrderModel(
+                    cartObj.getString("_id"),
+                    cartObj.getString("name"),
+                    cartObj.getInt("quantity"),
+                    cartObj.getString("size")
+                )
+                oldSupportCartModels.add(cartModel)
+            }
+            Log.i("TAG", "show: $oldSupportCartModels")
+
             for (i in 0 until supportCartModels.size) {
+                for (j in 0 until oldSupportCartModels.size) {
+                    Log.i(
+                        "TAG",
+                        "newSupportCartModels: ${oldSupportCartModels[j].name}"
+                    )
+                    Log.i(
+                        "TAG",
+                        "supportCartModels: ${supportCartModels[i].name}"
+                    )
+                    if (oldSupportCartModels[j].id == supportCartModels[i].id) {
+                        oldSupportCartModels[j].quantity = supportCartModels[i].quantity - oldSupportCartModels[j].quantity
+
+                    } else if (!oldSupportCartModels.contains(supportCartModels[i])) {
+                        oldSupportCartModels.add(supportCartModels[i])
+
+                    } else if (!supportCartModels.contains(oldSupportCartModels[j])) {
+                        oldSupportCartModels[j].quantity = 0
+
+                    }
+                }
+            }
+            val cartJArray = JSONArray()
+            for (m in 0 until oldSupportCartModels.size) {
                 val cartJObj = JSONObject()
-                cartJObj.put("_id", supportCartModels[i].id)
-                cartJObj.put("quantity", supportCartModels[i].quantity)
-                cartJObj.put("size", supportCartModels[i].size)
+                cartJObj.put("_id", oldSupportCartModels[m].id)
+                cartJObj.put("quantity", oldSupportCartModels[m].quantity)
+                cartJObj.put("size", oldSupportCartModels[m].size)
 
                 cartJArray.put(cartJObj)
             }
-            editOrder()
+            Log.e("TAG", "show: $cartJArray")
+//            editOrder(cartJArray, orderId)
         }
 
         binding.imgClose.setOnClickListener { dialog.dismiss() }
@@ -261,9 +306,10 @@ class EditOrderDialog {
         }
     }
 
-    private fun editOrder() {
+    private fun editOrder(cartJArray: JSONArray, orderId: String) {
         LoadingDialog.makeCancelableLoader()
         RequestHelper.builder(EndPoints.EDIT_ORDER)
+            .addParam("orderId", orderId)
             .addParam("products", cartJArray)
             .listener(editOrderCallBack)
             .put()
