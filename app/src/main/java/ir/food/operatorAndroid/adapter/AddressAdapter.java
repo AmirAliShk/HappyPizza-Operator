@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -58,23 +59,27 @@ public class AddressAdapter extends BaseAdapter {
             TextView txtAddress = myView.findViewById(R.id.txtAddress);
             TextView txtStation = myView.findViewById(R.id.txtStation);
             ImageView imgArchive = myView.findViewById(R.id.imgArchive);
+            LinearLayout llStation = myView.findViewById(R.id.llStation);
 
+            if (addressModel.isArchive() == 1) {
+                llStation.setVisibility(View.GONE);
+            } else {
+                llStation.setVisibility(View.VISIBLE);
+            }
             txtAddress.setText(addressModel.getAddress());
             txtStation.setText(addressModel.getStationId());
 
-            imgArchive.setOnClickListener(view -> {
-                new GeneralDialog()
-                        .title("هشدار")
-                        .message("ایا از انجام عملیات فوق اطمینان دارید؟")
-                        .firstButton("بله", () -> {
-                            archiveAddress(addressModel.getAddressId());
-                            addressModels.remove(position);
-                            notifyDataSetChanged();
-                        })
-                        .secondButton("خیر", null)
-                        .cancelable(false)
-                        .show();
-            });
+            imgArchive.setOnClickListener(view -> new GeneralDialog()
+                    .title("هشدار")
+                    .message("ایا از انجام عملیات فوق اطمینان دارید؟")
+                    .firstButton("بله", () -> {
+                        archiveAddress(addressModel.getAddressId());
+                        addressModels.remove(position);
+                        notifyDataSetChanged();
+                    })
+                    .secondButton("خیر", null)
+                    .cancelable(false)
+                    .show());
 
         } catch (Exception e) {
             e.printStackTrace();

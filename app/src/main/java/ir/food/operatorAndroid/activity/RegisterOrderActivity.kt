@@ -544,7 +544,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("name"), 1
                     )
                     tempProductsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))//todo
+                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
         } catch (e: Exception) {
@@ -746,7 +746,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                                     {
 
                                     }
-                                    1 -> {//customer is lock
+                                    1 -> //customer is lock
+                                    {
                                         binding.txtLockCustomer.visibility = View.VISIBLE
                                     }
                                     2 ->//recently add order
@@ -1172,17 +1173,24 @@ class RegisterOrderActivity : AppCompatActivity() {
     private fun showLastAddress() {
         val addressArr = JSONArray(customerAddresses)
         if (addressArr.length() != 0) {
-            val addressObj = addressArr.getJSONObject(addressArr.length() - 1)
-            val address = addressObj.getString("address")
-            originAddress = address
-            binding.edtAddress.setText(address)
-            binding.edtStationCode.setText(
-                if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
-                    .toString() else ""
-            )
-            addressLength = address.length
-            customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
-            tempAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+            for (i in 0 until addressArr.length()) {
+                val addressObj = addressArr.getJSONObject(i)
+
+                if (addressObj.getInt("archive") == 1)
+                    continue
+                val address = addressObj.getString("address")
+                originAddress = address
+                binding.edtAddress.setText(address)
+                binding.edtStationCode.setText(
+                    if (addressObj.has("station")) addressObj.getJSONObject("station")
+                        .getInt("code")
+                        .toString() else ""
+                )
+                addressLength = address.length
+                customerAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+                tempAddressId = if (addressObj.has("_id")) addressObj.getString("_id") else "0"
+                break
+            }
         }
     }
 
@@ -1199,7 +1207,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressObj.getString("address"),
                 if (addressObj.has("_id")) addressObj.getString("_id") else "0",
                 if (addressObj.has("station")) addressObj.getJSONObject("station").getInt("code")
-                    .toString() else "0"
+                    .toString() else "0",
+                addressObj.getInt("archive")
             )
             addressModels.add(addressModel)
         }
