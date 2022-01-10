@@ -198,11 +198,13 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 1 -> binding.txtOrderType.text = "آنلاین"
             }
 
-            if (orderObj.getString("description").isEmpty()) {
-                binding.llDesc.visibility = GONE
-            } else {
-                binding.txtDescription.text = orderObj.getString("description")+ "\n" + orderObj.getString("systemDescription")
-            }
+            if (orderObj.getString("description").isNotEmpty() && orderObj.getString("systemDescription").isNotEmpty())
+                binding.txtDescription.text = orderObj.getString("description") + "\n" + orderObj.getString("systemDescription")
+            else if (orderObj.getString("description").isNotEmpty() && orderObj.getString("systemDescription").isEmpty())
+                binding.txtDescription.text = orderObj.getString("description")
+            else if (orderObj.getString("description").isEmpty() && orderObj.getString("systemDescription").isNotEmpty())
+                binding.txtDescription.text = orderObj.getString("systemDescription")
+
             if (orderObj.has("operator")) {
                 binding.txtOperator.text = orderObj.getString("operator")
             }
