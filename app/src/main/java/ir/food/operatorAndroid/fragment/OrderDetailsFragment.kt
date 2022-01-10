@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
@@ -84,8 +83,8 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
         binding.btnEditOrder.setOnClickListener {
             EditOrderDialog().show(
-                JSONObject(orderDetails).getJSONObject("order").getJSONArray("products")
-            , orderId)
+                JSONObject(orderDetails).getJSONObject("order").getJSONArray("products"), orderId
+            )
         }
 
         return binding.root
@@ -200,9 +199,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
             }
 
             if (orderObj.getString("description").isEmpty()) {
-                binding.llDesc.visibility = View.GONE
+                binding.llDesc.visibility = GONE
             } else {
-                binding.txtDescription.text = orderObj.getString("description")
+                binding.txtDescription.text = orderObj.getString("description")+ "\n" + orderObj.getString("systemDescription")
             }
             if (orderObj.has("operator")) {
                 binding.txtOperator.text = orderObj.getString("operator")
