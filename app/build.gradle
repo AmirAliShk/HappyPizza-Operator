@@ -11,8 +11,8 @@ android {
         applicationId "ir.food.operatorAndroid"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.3.1"
+        versionCode 4
+        versionName "1.4.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
