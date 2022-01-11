@@ -45,23 +45,29 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegisterOrderBinding
     val TAG = RegisterOrderActivity.javaClass.simpleName
+
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-    var productsModels: ArrayList<ProductsModel> = ArrayList()
+
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
-    var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
+    var productsModels: ArrayList<PendingCartModel> = ArrayList()
     var addressModels: ArrayList<AddressModel> = ArrayList()
+
     private lateinit var cartJArray: JSONArray
+
     var customerAddresses = ""
     var phoneNumber = "0"
     var phoneNumberNew = "0"
     var isFull = false // this variable will check the fields in page is full or not
     var customerAddressId = "0"
     var productTypes: String = ""
+
+    lateinit var product: PendingCartModel
     var productId: String = ""
+
     var tempAddressId = "0" // it is a temp variable for save addressId for first time.
     var originAddress =
         "" // it is a temp variable for save address for first time. if you change the editText content it never will change
@@ -204,54 +210,29 @@ class RegisterOrderActivity : AppCompatActivity() {
             if (productId.isEmpty()) {
                 return@setOnClickListener
             }
-            for (i in 0 until JSONArray(MyApplication.prefManager.productsList).length()) {
-                if (productsModels[i].id == productId) {
-                    val pendingCart = PendingCartModel(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("_id"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("name"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("nameWithSupply"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("price"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("name"),
-                        1
-                    )
-                    if (pendingCartModels.size == 0) {
-                        pendingCartModels.add(pendingCart)
-                    } else {
-                        for (j in 0 until pendingCartModels.size) {
-                            if (productsModels[i].supply == pendingCartModels[j].quantity && pendingCartModels[j].id == productsModels[i].id) {
-                                MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
-                                return@setOnClickListener
-                            }
-                            if (pendingCartModels[j].id == productId) {
-                                pendingCartModels[j].quantity++
-                                isSame = true
-                                break
-                            }
+
+            if (pendingCartModels.size == 0) {
+                pendingCartModels.add(product)
+            } else {
+                if (pendingCartModels.contains(product)) {
+                    for (j in 0 until pendingCartModels.size) {
+                        if (product.supply == pendingCartModels[j].quantity) {
+                            MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
+                            return@setOnClickListener
                         }
-                        if (!isSame) {
-                            pendingCartModels.add(pendingCart)
-                        } else {
-                            isSame = false
+                        if (pendingCartModels[j].id == productId) {
+                            pendingCartModels[j].quantity++
+                            break
                         }
                     }
-
-                    sum += Integer.valueOf(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("price")
-                    )
-                    binding.txtSumPrice.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
-                    break
+                } else {
+                    pendingCartModels.add(product)
                 }
             }
+
+            sum += product.price.toInt()
+            binding.txtSumPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
 
             pendingCartAdapter.notifyDataSetChanged()
         }
@@ -505,7 +486,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 //                            productTypes = ""
 //                            return
 //                        }
-                        tempProductsModels.clear()
+                        productsModels.clear()
                         productTypes = typesModels[position].id
                         initProductSpinner(productTypes)
                     }
@@ -524,16 +505,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         try {
             productsList.add(0, "محصولات")
             for (i in 0 until productsArr.length()) {
-                val products = ProductsModel(
-                    productsArr.getJSONObject(i).getString("_id"),
-                    productsArr.getJSONObject(i).getJSONArray("size"),
-                    productsArr.getJSONObject(i).getString("name"),
-                    productsArr.getJSONObject(i).getString("description"),
-                    productsArr.getJSONObject(i).getJSONObject("type"),
-                    productsArr.getJSONObject(i).getInt("supply")
-                )
-                productsModels.add(products)
-                if (productsModels[i].type.getString("_id").equals(type)) {
+                if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
+                        .equals(type)
+                ) {
                     val pendingCart = PendingCartModel(
                         productsArr.getJSONObject(i).getString("_id"),
                         productsArr.getJSONObject(i).getString("name"),
@@ -541,9 +515,10 @@ class RegisterOrderActivity : AppCompatActivity() {
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("price"),
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("name"), 1
+                            .getString("name"), 1,
+                        productsArr.getJSONObject(i).getInt("supply")
                     )
-                    tempProductsModels.add(pendingCart)
+                    productsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
@@ -569,7 +544,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                             productId = ""
                             return
                         }
-                        productId = tempProductsModels[position - 1].id
+                        productId = productsModels[position - 1].id
+                        product = productsModels[position - 1]
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}

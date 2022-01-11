@@ -8,7 +8,7 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.Toast
 import ir.food.operatorAndroid.R
-import ir.food.operatorAndroid.adapter.EditOrderCartAdapter
+import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
@@ -26,17 +26,18 @@ class EditOrderDialog {
     lateinit var binding: DialogEditOrderBinding
 
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
-    private var productsModels: ArrayList<ProductsModel> = ArrayList()
-    private val supportCartModels: ArrayList<EditOrderModel> = ArrayList()
-    private val oldSupportCartModels: ArrayList<EditOrderModel> = ArrayList()
+    private var productsModels: ArrayList<PendingCartModel> = ArrayList()
+    private val pendingSupportCartModels: ArrayList<PendingCartModel> = ArrayList()
+
     var productTypes: String = ""
+
     var productId: String = ""
+    lateinit var product: PendingCartModel
+
     var sum = 0
-    var isSame = false
     private lateinit var productObj: JSONObject
     private val cartAdapter =
-        EditOrderCartAdapter(supportCartModels, object : EditOrderCartAdapter.TotalPrice {
+        PendingCartAdapter(pendingSupportCartModels, object : PendingCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
                 sum = 0
                 if (s == 0) {
@@ -68,24 +69,19 @@ class EditOrderDialog {
         initProductTypeSpinner()
         initProductSpinner("")
 
-        val oldCartJArray = JSONArray()
         for (i in 0 until productArr.length()) {
             productObj = productArr.getJSONObject(i)
-            val cartModel = EditOrderModel(
+            val cartModel = PendingCartModel(
                 productObj.getString("id"),
                 productObj.getString("name"),
+                "",
+                productObj.getString("price"),
+                productObj.getString("size"),
                 productObj.getInt("quantity"),
-                productObj.getString("size")
+                0,
+                productObj.getString("discount")
             )
-            supportCartModels.add(cartModel)
-
-            val cartJObj = JSONObject()
-            cartJObj.put("_id", productObj.getString("id"))
-            cartJObj.put("name", productObj.getString("name"))
-            cartJObj.put("quantity", productObj.getInt("quantity"))
-            cartJObj.put("size", productObj.getString("size"))
-
-            oldCartJArray.put(cartJObj)
+            pendingSupportCartModels.add(cartModel)
         }
 
         binding.orderList.adapter = cartAdapter
@@ -95,100 +91,36 @@ class EditOrderDialog {
             if (productId.isEmpty()) {
                 return@setOnClickListener
             }
-            for (i in 0 until JSONArray(MyApplication.prefManager.productsList).length()) {
-                if (productsModels[i].id == productId) {
-                    val pendingCart = EditOrderModel(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("_id"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("name"),
-                        1,
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("name")
-                    )
-                    if (supportCartModels.size == 0) {
-                        supportCartModels.add(pendingCart)
-                    } else {
-                        for (j in 0 until supportCartModels.size) {
-                            if (productsModels[i].supply == supportCartModels[j].quantity && supportCartModels[j].id == productsModels[i].id) {
-                                MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
-                                return@setOnClickListener
-                            }
-                            if (supportCartModels[j].id == productId) {
-                                supportCartModels[j].quantity++
-                                isSame = true
-                                break
-                            }
+
+            if (pendingSupportCartModels.size == 0) {
+                pendingSupportCartModels.add(product)
+            } else {
+                if (pendingSupportCartModels.contains(product)) {
+                    for (j in 0 until pendingSupportCartModels.size) {
+                        if (product.supply == pendingSupportCartModels[j].quantity) {
+                            MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
+                            return@setOnClickListener
                         }
-                        if (!isSame) {
-                            supportCartModels.add(pendingCart)
-                        } else {
-                            isSame = false
+                        if (pendingSupportCartModels[j].id == productId) {
+                            pendingSupportCartModels[j].quantity++
+                            break
                         }
                     }
-
-                    sum += Integer.valueOf(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("price")
-                    )
-//                    binding.txtSumPrice.text =
-//                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
-                    break
+                } else {
+                    pendingSupportCartModels.add(product)
                 }
             }
+
+            sum += product.price.toInt()
+//                    binding.txtSumPrice.text =
+//                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
 
             cartAdapter.notifyDataSetChanged()
         }
 
         binding.btnEditOrder.setOnClickListener {
-            Log.i("TAG", "show: $supportCartModels")
-            Log.i("TAG", "show: $oldSupportCartModels")
-            for (k in 0 until oldCartJArray.length()) {
-                val cartObj = oldCartJArray.getJSONObject(k)
-                val cartModel = EditOrderModel(
-                    cartObj.getString("_id"),
-                    cartObj.getString("name"),
-                    cartObj.getInt("quantity"),
-                    cartObj.getString("size")
-                )
-                oldSupportCartModels.add(cartModel)
-            }
-            Log.i("TAG", "show: $oldSupportCartModels")
 
-            for (i in 0 until supportCartModels.size) {
-                for (j in 0 until oldSupportCartModels.size) {
-                    Log.i(
-                        "TAG",
-                        "newSupportCartModels: ${oldSupportCartModels[j].name}"
-                    )
-                    Log.i(
-                        "TAG",
-                        "supportCartModels: ${supportCartModels[i].name}"
-                    )
-                    if (oldSupportCartModels[j].id == supportCartModels[i].id) {
-                        oldSupportCartModels[j].quantity = supportCartModels[i].quantity - oldSupportCartModels[j].quantity
-
-                    } else if (!oldSupportCartModels.contains(supportCartModels[i])) {
-                        oldSupportCartModels.add(supportCartModels[i])
-
-                    } else if (!supportCartModels.contains(oldSupportCartModels[j])) {
-                        oldSupportCartModels[j].quantity = 0
-
-                    }
-                }
-            }
-            val cartJArray = JSONArray()
-            for (m in 0 until oldSupportCartModels.size) {
-                val cartJObj = JSONObject()
-                cartJObj.put("_id", oldSupportCartModels[m].id)
-                cartJObj.put("quantity", oldSupportCartModels[m].quantity)
-                cartJObj.put("size", oldSupportCartModels[m].size)
-
-                cartJArray.put(cartJObj)
-            }
-            Log.e("TAG", "show: $cartJArray")
+            Log.e("TAG", "sending array object: ")
 //            editOrder(cartJArray, orderId)
         }
 
@@ -232,7 +164,7 @@ class EditOrderDialog {
 //                            productTypes = ""
 //                            return
 //                        }
-                        tempProductsModels.clear()
+                        productsModels.clear()
                         productTypes = typesModels[position].id
                         initProductSpinner(productTypes)
                     }
@@ -251,16 +183,9 @@ class EditOrderDialog {
         try {
             productsList.add(0, "محصولات")
             for (i in 0 until productsArr.length()) {
-                val products = ProductsModel(
-                    productsArr.getJSONObject(i).getString("_id"),
-                    productsArr.getJSONObject(i).getJSONArray("size"),
-                    productsArr.getJSONObject(i).getString("name"),
-                    productsArr.getJSONObject(i).getString("description"),
-                    productsArr.getJSONObject(i).getJSONObject("type"),
-                    productsArr.getJSONObject(i).getInt("supply")
-                )
-                productsModels.add(products)
-                if (productsModels[i].type.getString("_id").equals(type)) {
+                if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
+                        .equals(type)
+                ) {
                     val pendingCart = PendingCartModel(
                         productsArr.getJSONObject(i).getString("_id"),
                         productsArr.getJSONObject(i).getString("name"),
@@ -268,9 +193,10 @@ class EditOrderDialog {
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("price"),
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("name"), 1
+                            .getString("name"), 1,
+                        productsArr.getJSONObject(i).getInt("supply")
                     )
-                    tempProductsModels.add(pendingCart)
+                    productsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
@@ -296,7 +222,8 @@ class EditOrderDialog {
                             productId = ""
                             return
                         }
-                        productId = tempProductsModels[position - 1].id
+                        productId = productsModels[position - 1].id
+                        product = productsModels[position - 1]
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}

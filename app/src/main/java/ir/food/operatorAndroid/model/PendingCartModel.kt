@@ -6,5 +6,7 @@ data class PendingCartModel(
     val nameWithSupply: String,
     var price: String,
     val size: String,
-    var quantity: Int
+    var quantity: Int,
+    var supply: Int,
+    var discount: String
 )
