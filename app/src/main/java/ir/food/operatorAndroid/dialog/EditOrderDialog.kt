@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.Toast
+import com.downloader.PRDownloader
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.EditOrderCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
@@ -15,6 +16,7 @@ import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
 import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.helper.VoiceDownloader
 import ir.food.operatorAndroid.model.*
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
@@ -28,15 +30,15 @@ class EditOrderDialog {
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
     private var productsModels: ArrayList<ProductsModel> = ArrayList()
-    private val supportCartModels: ArrayList<EditOrderModel> = ArrayList()
-    private val oldSupportCartModels: ArrayList<EditOrderModel> = ArrayList()
+    lateinit var supportCartModels: ArrayList<EditOrderModel>
+    lateinit var oldSupportCartModels: ArrayList<EditOrderModel>
     var productTypes: String = ""
     var productId: String = ""
     var sum = 0
     var isSame = false
     private lateinit var productObj: JSONObject
     private val cartAdapter =
-        EditOrderCartAdapter(supportCartModels, object : EditOrderCartAdapter.TotalPrice {
+        EditOrderCartAdapter(productsModels, object : EditOrderCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
                 sum = 0
                 if (s == 0) {
@@ -68,7 +70,9 @@ class EditOrderDialog {
         initProductTypeSpinner()
         initProductSpinner("")
 
-        val oldCartJArray = JSONArray()
+        supportCartModels = ArrayList()
+        oldSupportCartModels = ArrayList()
+
         for (i in 0 until productArr.length()) {
             productObj = productArr.getJSONObject(i)
             val cartModel = EditOrderModel(
@@ -77,15 +81,8 @@ class EditOrderDialog {
                 productObj.getInt("quantity"),
                 productObj.getString("size")
             )
+            oldSupportCartModels.add(cartModel)
             supportCartModels.add(cartModel)
-
-            val cartJObj = JSONObject()
-            cartJObj.put("_id", productObj.getString("id"))
-            cartJObj.put("name", productObj.getString("name"))
-            cartJObj.put("quantity", productObj.getInt("quantity"))
-            cartJObj.put("size", productObj.getString("size"))
-
-            oldCartJArray.put(cartJObj)
         }
 
         binding.orderList.adapter = cartAdapter
@@ -142,59 +139,66 @@ class EditOrderDialog {
             cartAdapter.notifyDataSetChanged()
         }
 
-        binding.btnEditOrder.setOnClickListener {
-            Log.i("TAG", "show: $supportCartModels")
-            Log.i("TAG", "show: $oldSupportCartModels")
-            for (k in 0 until oldCartJArray.length()) {
-                val cartObj = oldCartJArray.getJSONObject(k)
-                val cartModel = EditOrderModel(
-                    cartObj.getString("_id"),
-                    cartObj.getString("name"),
-                    cartObj.getInt("quantity"),
-                    cartObj.getString("size")
-                )
-                oldSupportCartModels.add(cartModel)
-            }
-            Log.i("TAG", "show: $oldSupportCartModels")
-
-            for (i in 0 until supportCartModels.size) {
-                for (j in 0 until oldSupportCartModels.size) {
-                    Log.i(
-                        "TAG",
-                        "newSupportCartModels: ${oldSupportCartModels[j].name}"
-                    )
-                    Log.i(
-                        "TAG",
-                        "supportCartModels: ${supportCartModels[i].name}"
-                    )
-                    if (oldSupportCartModels[j].id == supportCartModels[i].id) {
-                        oldSupportCartModels[j].quantity = supportCartModels[i].quantity - oldSupportCartModels[j].quantity
-
-                    } else if (!oldSupportCartModels.contains(supportCartModels[i])) {
-                        oldSupportCartModels.add(supportCartModels[i])
-
-                    } else if (!supportCartModels.contains(oldSupportCartModels[j])) {
-                        oldSupportCartModels[j].quantity = 0
-
-                    }
-                }
-            }
-            val cartJArray = JSONArray()
-            for (m in 0 until oldSupportCartModels.size) {
-                val cartJObj = JSONObject()
-                cartJObj.put("_id", oldSupportCartModels[m].id)
-                cartJObj.put("quantity", oldSupportCartModels[m].quantity)
-                cartJObj.put("size", oldSupportCartModels[m].size)
-
-                cartJArray.put(cartJObj)
-            }
-            Log.e("TAG", "show: $cartJArray")
-//            editOrder(cartJArray, orderId)
+        binding.btnSubmit.setOnClickListener {
+            compare(oldSupportCartModels, supportCartModels, orderId)
         }
 
         binding.imgClose.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
+    }
+
+    private fun compare(
+        oldList: ArrayList<EditOrderModel>,
+        currentOrders: ArrayList<EditOrderModel>,
+        orderId: String
+    ) {
+        Log.i("TAG", "compare: oldList $oldList")
+        Log.i("TAG", "compare: currentOrders $currentOrders")
+
+        var orderArray = JSONArray()
+        var orderObject = JSONObject()
+        for (i in 0 until oldList.size) {
+            for (j in 0 until currentOrders.size) {
+                if (oldList[i].id == currentOrders[j].id) { // it means there is an order that the quantity was changed
+                    if (oldList[i].quantity != currentOrders[j].quantity) {
+                        orderObject = JSONObject()
+                        orderObject.put("id", currentOrders[j].id)
+                        orderObject.put("quantity", oldList[i].quantity - currentOrders[j].quantity)
+                        orderObject.put("size", currentOrders[j].size)
+                    }
+                }
+                if (!currentOrders[j].id.contains(oldList[i].id)) { // it means a new order was added
+                    orderObject = JSONObject()
+                    orderObject.put("id", currentOrders[j].id)
+                    orderObject.put("quantity", currentOrders[j].quantity)
+                    orderObject.put("size", currentOrders[j].size)
+                }
+                if (!oldList[i].id.contains(currentOrders[j].id)) { // it means an order was deleted
+                    orderObject = JSONObject()
+                    orderObject.put("id", currentOrders[j].id)
+                    orderObject.put("quantity", currentOrders[j].quantity)
+                    orderObject.put("size", currentOrders[j].size)
+                }
+                orderArray.put(orderObject)
+            }
+        }
+
+        Log.i("TAG", "compare:finalList $orderArray")
+
+//        editOrder(orderArray, orderId)
+
+    }
+
+    private fun dismiss() {
+        try {
+            if (dialog != null) {
+                dialog.dismiss()
+            }
+        } catch (e: java.lang.Exception) {
+            Log.e("TAG", "dismiss: " + e.message)
+            AvaCrashReporter.send(e, "EditOrderDialog class, dismiss method")
+        }
     }
 
     private fun initProductTypeSpinner() {

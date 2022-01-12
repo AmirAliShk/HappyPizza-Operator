@@ -15,10 +15,7 @@ import ir.food.operatorAndroid.adapter.CartAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
-import ir.food.operatorAndroid.dialog.EditAddressDialog
-import ir.food.operatorAndroid.dialog.EditOrderDialog
-import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.dialog.RegisterComplaintDialog
+import ir.food.operatorAndroid.dialog.*
 import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
@@ -82,7 +79,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnEditOrder.setOnClickListener {
-            EditOrderDialog().show(
+            EditOrderDialogTest().show(
                 JSONObject(orderDetails).getJSONObject("order").getJSONArray("products"), orderId
             )
         }

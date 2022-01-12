@@ -666,8 +666,7 @@
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_4sdp"
-                android:visibility="gone">
+                android:paddingVertical="@dimen/_4sdp">
 
                 <Button
                     android:id="@+id/btnEditOrder"

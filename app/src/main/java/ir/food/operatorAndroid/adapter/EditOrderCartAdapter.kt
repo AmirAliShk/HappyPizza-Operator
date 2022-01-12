@@ -8,8 +8,9 @@ import ir.food.operatorAndroid.databinding.ItemOrderBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.EditOrderModel
+import ir.food.operatorAndroid.model.ProductsModel
 
-class EditOrderCartAdapter(list: ArrayList<EditOrderModel>, var totalPrice: TotalPrice) :
+class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: TotalPrice) :
     RecyclerView.Adapter<EditOrderCartAdapter.ViewHolder>() {
     private val models = list
 

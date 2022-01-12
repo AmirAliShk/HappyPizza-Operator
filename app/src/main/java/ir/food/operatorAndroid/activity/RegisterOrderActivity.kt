@@ -48,7 +48,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
-    lateinit var core: Core
+    var core: Core? = null
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
@@ -138,7 +138,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.imgCallOption.setOnClickListener {
             CallDialog().show(object : CallDialog.CallDialogInterface {
                 override fun onDismiss() {
-                    core.addListener(mCoreListener)
+                    core?.addListener(mCoreListener)
                 }
 
                 override fun onCallReceived() {
@@ -155,13 +155,15 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.rlAccept.setOnClickListener {
-            call = core.currentCall
-            val calls = core.calls
-            val i = calls.size
-            if (call != null) {
-                call.accept()
-            } else if (calls.isNotEmpty()) {
-                calls[0].accept()
+            if (core != null) {
+                call = core!!.currentCall
+                val calls = core!!.calls
+                val i = calls.size
+                if (call != null) {
+                    call.accept()
+                } else if (calls.isNotEmpty()) {
+                    calls[0].accept()
+                }
             }
         }
 
@@ -1117,9 +1119,9 @@ class RegisterOrderActivity : AppCompatActivity() {
             state: RegistrationState,
             message: String
         ) {
-            if (core.defaultProxyConfig != null && core.defaultProxyConfig == proxy) {
+            if (core?.defaultProxyConfig != null && core?.defaultProxyConfig == proxy) {
                 binding.imgSipStatus.setImageResource(getStatusIconResource(state))
-            } else if (core.defaultProxyConfig == null) {
+            } else if (core?.defaultProxyConfig == null) {
                 binding.imgSipStatus.setImageResource(getStatusIconResource(state))
             }
             try {
@@ -1155,12 +1157,14 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun showCallIncoming() {
-        binding.mRipplePulseLayout.startRippleAnimation()
-        call = core.currentCall
-        val address: Address = call.remoteAddress
-        binding.txtCallerNum.text = address.username
-        binding.rlNewInComingCall.visibility = View.VISIBLE
-        binding.rlActionBar.visibility = View.GONE
+        if (core != null) {
+            binding.mRipplePulseLayout.startRippleAnimation()
+            call = core!!.currentCall
+            val address: Address = call.remoteAddress
+            binding.txtCallerNum.text = address.username
+            binding.rlNewInComingCall.visibility = View.VISIBLE
+            binding.rlActionBar.visibility = View.GONE
+        }
     }
 
     private fun showTitleBar() {
@@ -1237,21 +1241,23 @@ class RegisterOrderActivity : AppCompatActivity() {
         MyApplication.currentActivity = this
         showTitleBar()
         MyApplication.prefManager.isAppRun = true
-        core.addListener(mListener)
-        val lpc = core.defaultProxyConfig
+        core?.addListener(mListener)
+        val lpc = core?.defaultProxyConfig
         if (lpc != null) {
-            mListener.onRegistrationStateChanged(core, lpc, lpc.state, "")
+            core?.let { mListener.onRegistrationStateChanged(it, lpc, lpc.state, "") }
         }
         if (MyApplication.prefManager.connectedCall) {
             startCallQuality()
             binding.imgCallOption.setImageResource(R.drawable.ic_call_dialog_enable)
-            val calls = core.calls
-            for (call in calls) {
-                if (call != null && call.state == Call.State.StreamsRunning) {
-                    if (phoneNumber == "0") {
-                        val address = call.remoteAddress
-                        binding.edtMobile.setText(NumberValidation.removePrefix(address.username))
-                        MyApplication.handler.postDelayed({ getCustomer(address.username) }, 600)
+            val calls = core?.calls
+            if (calls != null) {
+                for (call in calls) {
+                    if (call != null && call.state == Call.State.StreamsRunning) {
+                        if (phoneNumber == "0") {
+                            val address = call.remoteAddress
+                            binding.edtMobile.setText(NumberValidation.removePrefix(address.username))
+                            MyApplication.handler.postDelayed({ getCustomer(address.username) }, 600)
+                        }
                     }
                 }
             }
@@ -1267,7 +1273,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         MyApplication.currentActivity = this
         isRunning = true
         core = LinphoneService.getCore()
-        core.addListener(mCoreListener)
+        core?.addListener(mCoreListener)
     }
 
     override fun onPause() {
@@ -1276,13 +1282,13 @@ class RegisterOrderActivity : AppCompatActivity() {
         MyApplication.prefManager.isAppRun = false
         KeyBoardHelper.hideKeyboard()
         if (core != null) {
-            core.removeListener(mListener)
+            core?.removeListener(mListener)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        core.removeListener(mCoreListener)
+        core?.removeListener(mCoreListener)
     }
 
     override fun onBackPressed() {
