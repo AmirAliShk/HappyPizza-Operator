@@ -21,11 +21,9 @@ import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
-import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
@@ -83,7 +81,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnEditOrder.setOnClickListener {
-            EditOrderDialogTest().show(
+            EditOrderDialog().show(
                 JSONObject(orderDetails).getJSONObject("order").getJSONArray("products"), orderId
             )
         }

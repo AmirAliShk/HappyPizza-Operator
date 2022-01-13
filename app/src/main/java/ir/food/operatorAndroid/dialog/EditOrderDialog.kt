@@ -7,49 +7,50 @@ import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.Toast
-import com.downloader.PRDownloader
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.EditOrderCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
+import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
-import ir.food.operatorAndroid.helper.KeyBoardHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.helper.VoiceDownloader
-import ir.food.operatorAndroid.model.*
+import ir.food.operatorAndroid.model.EditOrderModel
+import ir.food.operatorAndroid.model.ProductsModel
+import ir.food.operatorAndroid.model.ProductsTypeModel
+import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.HashMap
 
 class EditOrderDialog {
     lateinit var dialog: Dialog
     lateinit var binding: DialogEditOrderBinding
 
-    var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    var tempProductsModels: ArrayList<PendingCartModel> = ArrayList()
-    private var productsModels: ArrayList<ProductsModel> = ArrayList()
-    lateinit var supportCartModels: ArrayList<EditOrderModel>
-    lateinit var oldSupportCartModels: ArrayList<EditOrderModel>
-    var productTypes: String = ""
-    var productId: String = ""
-    var sum = 0
     var isSame = false
-    private lateinit var productObj: JSONObject
+    lateinit var productsModels: ArrayList<ProductsModel> // this list store all type of product, like : peperoni, french, chicken
+    var typesModels: ArrayList<ProductsTypeModel> =
+        ArrayList() // this list store all type of products type, like : pizza, sandwich, drink ect
+    private var cartModels: ArrayList<ProductsModel> =
+        ArrayList() // this is contain what you select for buy
+    var productModel: ProductsModel? =
+        null // this model save the last selected product in the spinner
+    val cart: HashMap<String, ProductsModel> = HashMap()
+    var orderArray = JSONArray()
+    private lateinit var orderObject: JSONObject
     private val cartAdapter =
-        EditOrderCartAdapter(productsModels, object : EditOrderCartAdapter.TotalPrice {
-            override fun collectTotalPrice(s: Int) {
-                sum = 0
-                if (s == 0) {
-//                    binding.txtSumPrice.text = "۰ تومان"
-                    return
+        EditOrderCartAdapter(cartModels, object : EditOrderCartAdapter.TotalPrice {
+            override fun collectTotalPrice(model: ProductsModel) {
+                if (model.quantity == 0) {
+                    orderObject = JSONObject()
+                    orderObject.put("_id", model.id)
+                    orderObject.put("quantity", 0)
+                    orderObject.put("size", model.size)
+                    orderArray.put(orderObject)
                 }
-                for (i in 0 until s) {
-//                    sum += Integer.valueOf(supportCartModels[i].price.toInt() * supportCartModels[i].quantity)
-//                    binding.txtSumPrice.text =
-//                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
-                }
+//                sum = 0
             }
         })
 
@@ -70,69 +71,49 @@ class EditOrderDialog {
         initProductTypeSpinner()
         initProductSpinner("")
 
-        supportCartModels = ArrayList()
-        oldSupportCartModels = ArrayList()
-
         for (i in 0 until productArr.length()) {
-            productObj = productArr.getJSONObject(i)
-            val cartModel = EditOrderModel(
+            val productObj = productArr.getJSONObject(i)
+            val cartModel = ProductsModel(
                 productObj.getString("id"),
+                JSONArray(),
                 productObj.getString("name"),
-                productObj.getInt("quantity"),
-                productObj.getString("size")
+                "",
+                JSONObject(),
+                1,
+                productObj.getInt("quantity")
             )
-            oldSupportCartModels.add(cartModel)
-            supportCartModels.add(cartModel)
+            cartModels.add(cartModel)
+            cart[productObj.getString("id")] = cartModel
         }
-
         binding.orderList.adapter = cartAdapter
 
         binding.imgAddOrder.setOnClickListener {
-            KeyBoardHelper.hideKeyboard()
-            if (productId.isEmpty()) {
+            if (productModel == null) {
+                binding.spProduct.performClick()
                 return@setOnClickListener
             }
-            for (i in 0 until JSONArray(MyApplication.prefManager.productsList).length()) {
-                if (productsModels[i].id == productId) {
-                    val pendingCart = EditOrderModel(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("_id"),
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getString("name"),
-                        1,
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("name")
-                    )
-                    if (supportCartModels.size == 0) {
-                        supportCartModels.add(pendingCart)
-                    } else {
-                        for (j in 0 until supportCartModels.size) {
-                            if (productsModels[i].supply == supportCartModels[j].quantity && supportCartModels[j].id == productsModels[i].id) {
-                                MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
-                                return@setOnClickListener
-                            }
-                            if (supportCartModels[j].id == productId) {
-                                supportCartModels[j].quantity++
-                                isSame = true
-                                break
-                            }
-                        }
-                        if (!isSame) {
-                            supportCartModels.add(pendingCart)
+
+            if (cartModels.size == 0) {
+                cartModels.add(productModel!!)
+                cart[productModel!!.id] = productModel!!
+            } else {
+                for (i in 0 until cartModels.size) {
+                    if (productModel!!.id == cartModels[i].id) {
+                        if (cartModels[i].quantity == productModel!!.supply) {
+                            MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
+                            return@setOnClickListener
                         } else {
-                            isSame = false
+                            cartModels[i].quantity++
+                            isSame = true
+                            break
                         }
                     }
-
-                    sum += Integer.valueOf(
-                        JSONArray(MyApplication.prefManager.productsList).getJSONObject(i)
-                            .getJSONArray("size").getJSONObject(0)
-                            .getString("price")
-                    )
-//                    binding.txtSumPrice.text =
-//                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
-                    break
+                }
+                if (!isSame) {
+                    cartModels.add(productModel!!)
+                    cart[productModel!!.id] = productModel!!
+                } else {
+                    isSame = false
                 }
             }
 
@@ -140,7 +121,15 @@ class EditOrderDialog {
         }
 
         binding.btnSubmit.setOnClickListener {
-            compare(oldSupportCartModels, supportCartModels, orderId)
+
+            GeneralDialog()
+                .message("آیا از ویرایش سفارش اطمینان دارید؟")
+                .firstButton("بله") {
+                    newOrder(cartModels, orderId)
+                }
+                .secondButton("خیر") {}
+                .show()
+
         }
 
         binding.imgClose.setOnClickListener { dialog.dismiss() }
@@ -148,166 +137,42 @@ class EditOrderDialog {
         dialog.show()
     }
 
-    private fun compare(
-        oldList: ArrayList<EditOrderModel>,
-        currentOrders: ArrayList<EditOrderModel>,
+    private fun newOrder(
+        currentOrders: ArrayList<ProductsModel>,
         orderId: String
     ) {
-        Log.i("TAG", "compare: oldList $oldList")
-        Log.i("TAG", "compare: currentOrders $currentOrders")
+        val cartMap: HashMap<String, SupportCartModel> = DataHolder.getInstance().customerCart
 
-        var orderArray = JSONArray()
-        var orderObject = JSONObject()
-        for (i in 0 until oldList.size) {
-            for (j in 0 until currentOrders.size) {
-                if (oldList[i].id == currentOrders[j].id) { // it means there is an order that the quantity was changed
-                    if (oldList[i].quantity != currentOrders[j].quantity) {
-                        orderObject = JSONObject()
-                        orderObject.put("id", currentOrders[j].id)
-                        orderObject.put("quantity", oldList[i].quantity - currentOrders[j].quantity)
-                        orderObject.put("size", currentOrders[j].size)
-                    }
-                }
-                if (!currentOrders[j].id.contains(oldList[i].id)) { // it means a new order was added
+        for (j in 0 until currentOrders.size) {
+            if (cartMap.containsKey(currentOrders[j].id)) {
+                if (cartMap.getValue(currentOrders[j].id).count != currentOrders[j].quantity) { // it means there is an order that the quantity was changed
                     orderObject = JSONObject()
-                    orderObject.put("id", currentOrders[j].id)
-                    orderObject.put("quantity", currentOrders[j].quantity)
+                    orderObject.put("_id", currentOrders[j].id)
+                    orderObject.put(
+                        "quantity",
+                        currentOrders[j].quantity - cartMap.getValue(currentOrders[j].id).count
+                    )
                     orderObject.put("size", currentOrders[j].size)
+                    orderArray.put(orderObject)
                 }
-                if (!oldList[i].id.contains(currentOrders[j].id)) { // it means an order was deleted
-                    orderObject = JSONObject()
-                    orderObject.put("id", currentOrders[j].id)
-                    orderObject.put("quantity", currentOrders[j].quantity)
-                    orderObject.put("size", currentOrders[j].size)
-                }
+            }
+        }
+
+        for (i in 0 until currentOrders.size) {
+            if (!cartMap.containsKey(currentOrders[i].id)) { // it means a new order was added
+                orderObject = JSONObject()
+                orderObject.put("_id", currentOrders[i].id)
+                orderObject.put("quantity", currentOrders[i].quantity)
+                orderObject.put("size", currentOrders[i].size)
                 orderArray.put(orderObject)
             }
         }
 
-        Log.i("TAG", "compare:finalList $orderArray")
+        Log.i("TAG", "compare:       oldList $cartMap")
+        Log.i("TAG", "compare: currentOrders $currentOrders")
+        Log.i("TAG", "compare:     finalList $orderArray")
 
-//        editOrder(orderArray, orderId)
-
-    }
-
-    private fun dismiss() {
-        try {
-            if (dialog != null) {
-                dialog.dismiss()
-            }
-        } catch (e: java.lang.Exception) {
-            Log.e("TAG", "dismiss: " + e.message)
-            AvaCrashReporter.send(e, "EditOrderDialog class, dismiss method")
-        }
-    }
-
-    private fun initProductTypeSpinner() {
-        val typesList = ArrayList<String>()
-        try {
-//            typesList.add(0, "نوع محصول")
-            val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
-            for (i in 0 until typesArr.length()) {
-                val types = ProductsTypeModel(
-                    typesArr.getJSONObject(i).getString("_id"),
-                    typesArr.getJSONObject(i).getString("name")
-                )
-                typesModels.add(types)
-
-                typesList.add(i, typesArr.getJSONObject(i).getString("name"))
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "EditOrderDialog class, initProductTypeSpinner method")
-        }
-        if (binding.spProductType == null) return
-
-        try {
-            binding.spProductType.adapter =
-                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, typesList)
-            binding.spProductType.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-//                        if (position == 0) {
-//                            productTypes = ""
-//                            return
-//                        }
-                        tempProductsModels.clear()
-                        productTypes = typesModels[position].id
-                        initProductSpinner(productTypes)
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "EditOrderDialog class, initProductTypeSpinner method2")
-        }
-    }
-
-    private fun initProductSpinner(type: String) {
-        val productsList = ArrayList<String>()
-        val productsArr = JSONArray(MyApplication.prefManager.productsList)
-        try {
-            productsList.add(0, "محصولات")
-            for (i in 0 until productsArr.length()) {
-                val products = ProductsModel(
-                    productsArr.getJSONObject(i).getString("_id"),
-                    productsArr.getJSONObject(i).getJSONArray("size"),
-                    productsArr.getJSONObject(i).getString("name"),
-                    productsArr.getJSONObject(i).getString("description"),
-                    productsArr.getJSONObject(i).getJSONObject("type"),
-                    productsArr.getJSONObject(i).getInt("supply")
-                )
-                productsModels.add(products)
-                if (productsModels[i].type.getString("_id").equals(type)) {
-                    val pendingCart = PendingCartModel(
-                        productsArr.getJSONObject(i).getString("_id"),
-                        productsArr.getJSONObject(i).getString("name"),
-                        productsArr.getJSONObject(i).getString("nameWithSupply"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("price"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("name"), 1
-                    )
-                    tempProductsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
-        }
-        if (binding.spProduct == null) return
-
-        try {
-            binding.spProduct.adapter =
-                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, productsList)
-            binding.spProduct.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-                        if (position == 0) {
-                            productId = ""
-                            return
-                        }
-                        productId = tempProductsModels[position - 1].id
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
+        editOrder(orderArray, orderId)
     }
 
     private fun editOrder(cartJArray: JSONArray, orderId: String) {
@@ -377,4 +242,102 @@ class EditOrderDialog {
             LoadingDialog.dismissCancelableDialog()
         }
     }
+
+    private fun initProductTypeSpinner() {
+        val typesList = ArrayList<String>()
+        try {
+            val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
+            for (i in 0 until typesArr.length()) {
+                val types = ProductsTypeModel(
+                    typesArr.getJSONObject(i).getString("_id"),
+                    typesArr.getJSONObject(i).getString("name")
+                )
+                typesModels.add(types)
+
+                typesList.add(i, typesArr.getJSONObject(i).getString("name"))
+            }
+
+            binding.spProductType.adapter =
+                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, typesList)
+            binding.spProductType.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        productModel = null
+                        initProductSpinner(typesModels[position].id)
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "EditOrderDialog class, initProductTypeSpinner method")
+        }
+        if (binding.spProductType == null) return
+    }
+
+    private fun initProductSpinner(type: String) {
+        val productsList = ArrayList<String>()
+        productsModels = ArrayList()
+        val productsArr = JSONArray(MyApplication.prefManager.productsList)
+        try {
+            productsList.add(0, "محصولات")
+            for (i in 0 until productsArr.length()) {
+                if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
+                        .equals(type)
+                ) {
+                    val products = ProductsModel(
+                        productsArr.getJSONObject(i).getString("_id"),
+                        productsArr.getJSONObject(i).getJSONArray("size"),
+                        productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getString("description"),
+                        productsArr.getJSONObject(i).getJSONObject("type"),
+                        productsArr.getJSONObject(i).getInt("supply")
+                    )
+                    productsModels.add(products)
+                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
+                }
+            }
+
+            binding.spProduct.adapter =
+                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, productsList)
+
+            binding.spProduct.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (position == 0) {
+                        return
+                    }
+                    productModel = productsModels[position - 1]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
+        }
+    }
+
+    private fun dismiss() {
+        try {
+            if (dialog != null) {
+                dialog.dismiss()
+            }
+        } catch (e: java.lang.Exception) {
+            Log.e("TAG", "dismiss: " + e.message)
+            AvaCrashReporter.send(e, "EditOrderDialog class, dismiss method")
+        }
+    }
+
 }
