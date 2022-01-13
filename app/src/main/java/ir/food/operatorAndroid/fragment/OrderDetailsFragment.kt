@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.CartAdapter
+import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
@@ -20,10 +21,13 @@ import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
+import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
+import org.json.JSONArray
 import org.json.JSONObject
+import java.util.HashMap
 
 class OrderDetailsFragment(details: String) : Fragment() {
 
@@ -98,18 +102,22 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 dataObj.getJSONObject("deliveryLocation").getDouble("lng")
             )
 
+            val cartMap : HashMap<String,SupportCartModel> = HashMap()
             val productsArr = orderObj.getJSONArray("products")
             val supportCartModels: ArrayList<SupportCartModel> = ArrayList()
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
                 val cartModel = SupportCartModel(
+                    productObj.getString("id"),
                     productObj.getString("discount"),
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
                     productObj.getString("name")
                 )
                 supportCartModels.add(cartModel)
+                cartMap[productObj.getString("id")] = cartModel
             }
+            DataHolder.getInstance().customerCart = cartMap
 
             orderId = orderObj.getString("id")
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")

@@ -15,7 +15,7 @@ class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: Total
     private val models = list
 
     interface TotalPrice {
-        fun collectTotalPrice(s: Int)
+        fun collectTotalPrice(model: ProductsModel)
     }
 
     class ViewHolder(val binding: ItemOrderBinding) :
@@ -35,7 +35,9 @@ class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: Total
 //        if (model.contains(model)) {
 //            quantity++
 //        }
-        holder.binding.txtQuantity.text = StringHelper.toPersianDigits(model.quantity.toString())
+        if (model.quantity == 0) model.quantity = 1
+        holder.binding.txtQuantity.text =
+            StringHelper.toPersianDigits(model.quantity.toString())
         holder.binding.txtName.text = model.name
 
 //        if (model.size[0].) {
@@ -45,10 +47,12 @@ class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: Total
 //        }
 
         holder.binding.imgReduce.setOnClickListener {
-            if (model.quantity == 1) models.removeAt(position)
-            else model.quantity--
-            totalPrice.collectTotalPrice(models.size)
+            if (model.quantity == 1) {
+                model.quantity = 0
+                models.removeAt(position)
+            } else model.quantity--
             notifyDataSetChanged()
+            totalPrice.collectTotalPrice(model)
         }
     }
 

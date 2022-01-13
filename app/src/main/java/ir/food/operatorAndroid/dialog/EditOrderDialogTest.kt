@@ -10,15 +10,20 @@ import android.widget.Toast
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.EditOrderCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
+import ir.food.operatorAndroid.app.DataHolder
+import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.EditOrderModel
 import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.ProductsTypeModel
+import ir.food.operatorAndroid.model.SupportCartModel
+import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.HashMap
 
 class EditOrderDialogTest {
     lateinit var dialog: Dialog
@@ -30,10 +35,21 @@ class EditOrderDialogTest {
         ArrayList() // this list store all type of products type, like : pizza, sandwich, drink ect
     private var cartModels: ArrayList<ProductsModel> =
         ArrayList() // this is contain what you select for buy
-    var productModel: ProductsModel? = null
+    var productModel: ProductsModel? =
+        null // this model save the last selected product in the spinner
+    val cart: HashMap<String, ProductsModel> = HashMap()
+    var orderArray = JSONArray()
+    private lateinit var orderObject: JSONObject
     private val cartAdapter =
         EditOrderCartAdapter(cartModels, object : EditOrderCartAdapter.TotalPrice {
-            override fun collectTotalPrice(s: Int) {
+            override fun collectTotalPrice(model: ProductsModel) {
+                if (model.quantity == 0) {
+                    orderObject = JSONObject()
+                    orderObject.put("_id", model.id)
+                    orderObject.put("quantity", 0)
+                    orderObject.put("size", model.size)
+                    orderArray.put(orderObject)
+                }
 //                sum = 0
             }
         })
@@ -67,8 +83,8 @@ class EditOrderDialogTest {
                 productObj.getInt("quantity")
             )
             cartModels.add(cartModel)
+            cart[productObj.getString("id")] = cartModel
         }
-
         binding.orderList.adapter = cartAdapter
 
         binding.imgAddOrder.setOnClickListener {
@@ -79,10 +95,11 @@ class EditOrderDialogTest {
 
             if (cartModels.size == 0) {
                 cartModels.add(productModel!!)
+                cart[productModel!!.id] = productModel!!
             } else {
                 for (i in 0 until cartModels.size) {
                     if (productModel!!.id == cartModels[i].id) {
-                        if (cartModels[i].supply == productModel!!.quantity) {
+                        if (cartModels[i].quantity == productModel!!.supply) {
                             MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
                             return@setOnClickListener
                         } else {
@@ -94,6 +111,7 @@ class EditOrderDialogTest {
                 }
                 if (!isSame) {
                     cartModels.add(productModel!!)
+                    cart[productModel!!.id] = productModel!!
                 } else {
                     isSame = false
                 }
@@ -104,11 +122,125 @@ class EditOrderDialogTest {
 
         binding.btnSubmit.setOnClickListener {
 
+            GeneralDialog()
+                .message("آیا از ویرایش سفارش اطمینان دارید؟")
+                .firstButton("بله") {
+                    newOrder(cartModels, orderId)
+                }
+                .secondButton("خیر") {}
+                .show()
+
         }
 
         binding.imgClose.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
+    }
+
+    private fun newOrder(
+        currentOrders: ArrayList<ProductsModel>,
+        orderId: String
+    ) {
+        val cartMap: HashMap<String, SupportCartModel> = DataHolder.getInstance().customerCart
+
+        for (j in 0 until currentOrders.size) {
+            if (cartMap.containsKey(currentOrders[j].id)) {
+                if (cartMap.getValue(currentOrders[j].id).count != currentOrders[j].quantity) { // it means there is an order that the quantity was changed
+                    orderObject = JSONObject()
+                    orderObject.put("_id", currentOrders[j].id)
+                    orderObject.put(
+                        "quantity",
+                        currentOrders[j].quantity - cartMap.getValue(currentOrders[j].id).count
+                    )
+                    orderObject.put("size", currentOrders[j].size)
+                    orderArray.put(orderObject)
+                }
+            }
+        }
+
+        for (i in 0 until currentOrders.size) {
+            if (!cartMap.containsKey(currentOrders[i].id)) { // it means a new order was added
+                orderObject = JSONObject()
+                orderObject.put("_id", currentOrders[i].id)
+                orderObject.put("quantity", currentOrders[i].quantity)
+                orderObject.put("size", currentOrders[i].size)
+                orderArray.put(orderObject)
+            }
+        }
+
+        Log.i("TAG", "compare:       oldList $cartMap")
+        Log.i("TAG", "compare: currentOrders $currentOrders")
+        Log.i("TAG", "compare:     finalList $orderArray")
+
+        editOrder(orderArray, orderId)
+    }
+
+    private fun editOrder(cartJArray: JSONArray, orderId: String) {
+        LoadingDialog.makeCancelableLoader()
+        RequestHelper.builder(EndPoints.EDIT_ORDER)
+            .addParam("orderId", orderId)
+            .addParam("products", cartJArray)
+            .listener(editOrderCallBack)
+            .put()
+    }
+
+    private val editOrderCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+                    LoadingDialog.dismissCancelableDialog()
+//                    {"success":true,"message":"ایستگاه موجود نمی باشد","data":{"status":false}}
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    var message = jsonObject.getString("message")
+                    if (success) {
+                        val data = jsonObject.getJSONObject("data")
+                        val status = data.getBoolean("status")
+                        if (status) {
+                            GeneralDialog()
+                                .message(message)
+                                .firstButton("باشه") { dialog.dismiss() }
+                                .cancelable(false)
+                                .show()
+                        } else {
+                            if (data.has("products") && data.getJSONArray("products").length() != 0
+                            ) {
+                                var productsName = ""
+                                val productsArr = data.getJSONArray("products")
+                                for (i in 0 until productsArr.length()) {
+                                    productsName = if (i == 0) {
+                                        "${productsArr[i]}"
+                                    } else {
+                                        "$productsName و ${productsArr[i]}"
+                                    }
+                                }
+                                message = " موجودی محصول $productsName کافی نمیباشد "
+                            }
+                            GeneralDialog()
+                                .message(message)
+                                .secondButton("باشه") {}
+                                .cancelable(false)
+                                .show()
+                        }
+                    } else {
+                        GeneralDialog()
+                            .message(message)
+                            .secondButton("باشه") {}
+                            .cancelable(false)
+                            .show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    LoadingDialog.dismissCancelableDialog()
+                    AvaCrashReporter.send(e, "EditOrderDialog class, submitOrderCallBack method")
+                }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+            LoadingDialog.dismissCancelableDialog()
+        }
     }
 
     private fun initProductTypeSpinner() {
@@ -135,8 +267,7 @@ class EditOrderDialogTest {
                         position: Int,
                         id: Long
                     ) {
-                        Log.i("TAG", "onItemSelected: $position")
-                        Log.i("TAG", "onItemSelected: ${typesModels[position].id}")
+                        productModel = null
                         initProductSpinner(typesModels[position].id)
                     }
 
@@ -157,7 +288,9 @@ class EditOrderDialogTest {
         try {
             productsList.add(0, "محصولات")
             for (i in 0 until productsArr.length()) {
-                if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id").equals(type)) {
+                if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
+                        .equals(type)
+                ) {
                     val products = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
                         productsArr.getJSONObject(i).getJSONArray("size"),
