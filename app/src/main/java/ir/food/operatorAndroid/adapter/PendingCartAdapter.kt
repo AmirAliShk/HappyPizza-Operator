@@ -7,9 +7,9 @@ import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ItemOrderBinding
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.PendingCartModel
+import ir.food.operatorAndroid.model.ProductsModel
 
-class PendingCartAdapter(list: ArrayList<PendingCartModel>, var totalPrice: TotalPrice) :
+class PendingCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: TotalPrice) :
     RecyclerView.Adapter<PendingCartAdapter.ViewHolder>() {
     private val models = list
 

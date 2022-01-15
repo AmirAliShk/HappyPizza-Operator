@@ -31,7 +31,7 @@ class MenuListAdapter(list: ArrayList<ProductsModel>) :
 
         holder.binding.txtPName.text = model.name
         holder.binding.txtIngredients.text = model.description
-        holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.size.getJSONObject(0).getString("price")))
+        holder.binding.txtPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(model.price))
 
     }
 

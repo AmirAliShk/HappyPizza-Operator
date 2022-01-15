@@ -45,14 +45,14 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegisterOrderBinding
     val TAG = RegisterOrderActivity.javaClass.simpleName
-    var productModel: PendingCartModel? = null // this model save the last selected product in the spinner
+    var productModel: ProductsModel? = null // this model save the last selected product in the spinner
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
-    var productsModels: ArrayList<PendingCartModel> = ArrayList()
+    var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
+    var productsModels: ArrayList<ProductsModel> = ArrayList()
     var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
 
@@ -61,18 +61,12 @@ class RegisterOrderActivity : AppCompatActivity() {
     var phoneNumberNew = "0"
     var isFull = false // this variable will check the fields in page is full or not
     var customerAddressId = "0"
-    var productTypes: String = ""
-
-    lateinit var product: PendingCartModel
     var productId: String = ""
-
     var tempAddressId = "0" // it is a temp variable for save addressId for first time.
-    var originAddress =
-        "" // it is a temp variable for save address for first time. if you change the editText content it never will change
+    var originAddress = "" // it is a temp variable for save address for first time. if you change the editText content it never will change
     var sum = 0
     var isSame = false
-    var addressChangeCounter =
-        0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
+    var addressChangeCounter = 0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
     var addressLength = 0
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
@@ -496,14 +490,17 @@ class RegisterOrderActivity : AppCompatActivity() {
                 if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
                         .equals(type)
                 ) {
-                    val pendingCart = PendingCartModel(
+                    val pendingCart = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
                         productsArr.getJSONObject(i).getString("nameWithSupply"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
+                        productsArr.getJSONObject(i).getString("description"),
+                        productsArr.getJSONObject(i).getJSONObject("type"),
+                        productsArr.getJSONObject(i).getInt("supply"),
                         1,
-                        productsArr.getJSONObject(i).getInt("supply")
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
                     )
                     productsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))

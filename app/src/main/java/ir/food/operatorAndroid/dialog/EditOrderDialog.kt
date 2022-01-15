@@ -73,12 +73,15 @@ class EditOrderDialog {
             val productObj = productArr.getJSONObject(i)
             val cartModel = ProductsModel(
                 productObj.getString("id"),
-                JSONArray(),
+                productObj.getString("size"),
                 productObj.getString("name"),
                 "",
+                "",
                 JSONObject(),
-                1,
-                productObj.getInt("quantity")
+                0,
+                productObj.getInt("quantity"),
+                productObj.getString("price"),
+                productObj.getString("discount")
             )
             cartModels.add(cartModel)
             cart[productObj.getString("id")] = cartModel
@@ -291,11 +294,15 @@ class EditOrderDialog {
                 ) {
                     val products = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
-                        productsArr.getJSONObject(i).getJSONArray("size"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
-                        productsArr.getJSONObject(i).getInt("supply")
+                        productsArr.getJSONObject(i).getInt("supply"),
+                        1,
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
                     )
                     productsModels.add(products)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))

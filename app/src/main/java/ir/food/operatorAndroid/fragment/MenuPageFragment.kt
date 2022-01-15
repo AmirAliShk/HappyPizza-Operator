@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.MenuAdapter
 import androidx.fragment.app.Fragment
 import ir.food.operatorAndroid.adapter.MenuListAdapter
 import ir.food.operatorAndroid.app.MyApplication
-import ir.food.operatorAndroid.databinding.FragmentMenuBinding
 import ir.food.operatorAndroid.databinding.FragmentMenuPageBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.PendingCartModel
 import ir.food.operatorAndroid.model.ProductsModel
 import org.json.JSONArray
-import java.text.FieldPosition
 
 class MenuPageFragment(position: Int) : Fragment() {
     lateinit var binding: FragmentMenuPageBinding
@@ -44,11 +40,15 @@ class MenuPageFragment(position: Int) : Fragment() {
                 ) {
                     val products = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
-                        productsArr.getJSONObject(i).getJSONArray("size"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
+                        productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
-                        productsArr.getJSONObject(i).getInt("supply")
+                        productsArr.getJSONObject(i).getInt("supply"),
+                        1,
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
                     )
                     productsModels.add(products)
                     val adapter = MenuListAdapter(productsModels)
