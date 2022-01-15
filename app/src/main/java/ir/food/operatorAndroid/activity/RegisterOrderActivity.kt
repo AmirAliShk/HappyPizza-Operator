@@ -45,7 +45,8 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegisterOrderBinding
     val TAG = RegisterOrderActivity.javaClass.simpleName
-    var productModel: ProductsModel? = null // this model save the last selected product in the spinner
+    var productModel: ProductsModel? =
+        null // this model save the last selected product in the spinner
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
@@ -55,7 +56,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     var productsModels: ArrayList<ProductsModel> = ArrayList()
     var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
-
     var customerAddresses = ""
     var phoneNumber = "0"
     var phoneNumberNew = "0"
@@ -63,23 +63,31 @@ class RegisterOrderActivity : AppCompatActivity() {
     var customerAddressId = "0"
     var productId: String = ""
     var tempAddressId = "0" // it is a temp variable for save addressId for first time.
-    var originAddress = "" // it is a temp variable for save address for first time. if you change the editText content it never will change
-    var sum = 0
+    var originAddress =
+        "" // it is a temp variable for save address for first time. if you change the editText content it never will change
+    var totalPrice = 0
+    var totalDiscount = 0
     var isSame = false
-    var addressChangeCounter = 0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
+    var addressChangeCounter =
+        0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
     var addressLength = 0
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
-                sum = 0
+                totalPrice = 0
+                totalDiscount = 0
                 if (s == 0) {
                     binding.txtSumPrice.text = "۰ تومان"
                     return
                 }
                 for (i in 0 until s) {
-                    sum += Integer.valueOf(pendingCartModels[i].price.toInt() * pendingCartModels[i].quantity)
+                    totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt() - pendingCartModels[i].discount.toInt()) * pendingCartModels[i].quantity)
                     binding.txtSumPrice.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
+                        StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
+                    totalDiscount += Integer.valueOf(pendingCartModels[i].discount.toInt() * pendingCartModels[i].quantity)
+                    binding.txtDiscount.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
                 }
             }
         })
@@ -225,6 +233,14 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
             }
 
+            totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
+            binding.txtSumPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
+            totalDiscount += Integer.valueOf(productModel!!.discount)
+            binding.txtDiscount.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+
             pendingCartAdapter.notifyDataSetChanged()
         }
 
@@ -316,8 +332,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         setCursorEnd(window.decorView.rootView)
 
         binding.edtAddress.addTextChangedListener(addressTW)
-
         binding.edtMobile.addTextChangedListener(tellTW)
+        binding.edtStationCode.addTextChangedListener(stationTW)
     }
 
     private val tellTW = object : TextWatcher {
@@ -338,7 +354,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                 pendingCartAdapter.notifyDataSetChanged()
                 initProductSpinner("")
                 initProductTypeSpinner()
-                sum = 0
+                totalPrice = 0
+                totalDiscount = 0
                 binding.txtSumPrice.text = "۰ تومان"
                 binding.edtCustomerName.setText("")
                 binding.edtDescription.setText("")
@@ -378,6 +395,37 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressLength = 0
                 binding.edtStationCode.setText("")
             }
+        }
+    }
+
+    private var stationTW: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(
+            charSequence: CharSequence,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            if (charSequence.isEmpty()) {
+                binding.txtDeliPrice.text = "۰ تومان"
+            }
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            MyApplication.handler.postDelayed({
+                if (editable.isEmpty()) {
+                    binding.txtDeliPrice.text = "۰ تومان"
+                    return@postDelayed
+                }
+                getPrice()
+            }, 100)
         }
     }
 
@@ -442,6 +490,35 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPrice() {
+        RequestHelper.builder(EndPoints.GET_PRICE)
+            .listener(getPriceCallBack)
+            .addPath(binding.edtStationCode.text.toString())
+            .get()
+    }
+
+    private val getPriceCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        override fun onResponse(reCall: Runnable?, vararg args: Any?) {
+            MyApplication.handler.post {
+                try {
+                    val jsonObject = JSONObject(args[0].toString())
+                    val success = jsonObject.getBoolean("success")
+                    val message = jsonObject.getString("message")
+                    if (success) {
+                        val data = jsonObject.getString("data")
+                        binding.txtDeliPrice.text =
+                            StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                    } else {
+                        GeneralDialog().message(message).secondButton("باشه") {}
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    AvaCrashReporter.send(e, "$TAG class, getPriceCallBack method")
+                }
+            }
+        }
+    }
+
     private fun initProductTypeSpinner() {
         val typesList = ArrayList<String>()
         try {
@@ -492,15 +569,18 @@ class RegisterOrderActivity : AppCompatActivity() {
                 ) {
                     val pendingCart = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
                         productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
                         productsArr.getJSONObject(i).getInt("supply"),
                         1,
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("discount"),
                     )
                     productsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
@@ -816,7 +896,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         initProductTypeSpinner()
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
-        sum = 0
+        totalPrice = 0
+        totalDiscount = 0
         disableViews()
     }
 
