@@ -12,13 +12,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.CartAdapter
+import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentOrderDetailBinding
-import ir.food.operatorAndroid.dialog.EditAddressDialog
-import ir.food.operatorAndroid.dialog.EditOrderDialog
-import ir.food.operatorAndroid.dialog.GeneralDialog
-import ir.food.operatorAndroid.dialog.RegisterComplaintDialog
+import ir.food.operatorAndroid.dialog.*
 import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
@@ -27,6 +25,7 @@ import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
+import java.util.HashMap
 
 class OrderDetailsFragment(details: String) : Fragment() {
 
@@ -101,18 +100,22 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 dataObj.getJSONObject("deliveryLocation").getDouble("lng")
             )
 
+            val cartMap: HashMap<String, SupportCartModel> = HashMap()
             val productsArr = orderObj.getJSONArray("products")
             val supportCartModels: ArrayList<SupportCartModel> = ArrayList()
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
                 val cartModel = SupportCartModel(
+                    productObj.getString("id"),
                     productObj.getString("discount"),
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
                     productObj.getString("name")
                 )
                 supportCartModels.add(cartModel)
+                cartMap[productObj.getString("id")] = cartModel
             }
+            DataHolder.getInstance().customerCart = cartMap
 
             orderId = orderObj.getString("id")
             binding.txtStatus.text = orderObj.getJSONObject("status").getString("name")
@@ -198,11 +201,18 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 1 -> binding.txtOrderType.text = "آنلاین"
             }
 
-            if (orderObj.getString("description").isNotEmpty() && orderObj.getString("systemDescription").isNotEmpty())
-                binding.txtDescription.text = orderObj.getString("description") + "\n" + orderObj.getString("systemDescription")
-            else if (orderObj.getString("description").isNotEmpty() && orderObj.getString("systemDescription").isEmpty())
+            if (orderObj.getString("description")
+                    .isNotEmpty() && orderObj.getString("systemDescription").isNotEmpty()
+            )
+                binding.txtDescription.text =
+                    orderObj.getString("description") + "\n" + orderObj.getString("systemDescription")
+            else if (orderObj.getString("description")
+                    .isNotEmpty() && orderObj.getString("systemDescription").isEmpty()
+            )
                 binding.txtDescription.text = orderObj.getString("description")
-            else if (orderObj.getString("description").isEmpty() && orderObj.getString("systemDescription").isNotEmpty())
+            else if (orderObj.getString("description")
+                    .isEmpty() && orderObj.getString("systemDescription").isNotEmpty()
+            )
                 binding.txtDescription.text = orderObj.getString("systemDescription")
 
             if (orderObj.has("operator")) {
@@ -231,6 +241,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 //            } else {
             when (orderObj.getJSONObject("status").getInt("status")) {
                 0 -> {
+                    binding.llEditOrder.visibility = View.VISIBLE
                     icon = R.drawable.ic_waiting
                     color = R.color.waiting
                     binding.txtStatus.setTextColor(
@@ -247,6 +258,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 //                    binding.llEditOrder.visibility = VISIBLE
                 }
                 5 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_chef
                     color = R.color.preparing
                     binding.txtStatus.setTextColor(
@@ -262,6 +274,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 2 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_coooking
                     color = R.color.cooking
                     binding.txtStatus.setTextColor(
@@ -277,6 +290,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 3 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_delivery
                     color = R.color.delivery
                     binding.txtStatus.setTextColor(
@@ -291,6 +305,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 1 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_close
                     color = R.color.canceled
                     binding.txtStatus.setTextColor(
@@ -306,6 +321,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 4 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_round_done_24
                     color = R.color.finished
                     binding.txtStatus.setTextColor(
@@ -320,6 +336,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 7 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_payment
                     color = R.color.settlement
                     binding.txtStatus.setTextColor(
@@ -334,6 +351,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 6 -> {
+                    binding.llEditOrder.visibility = View.GONE
                     icon = R.drawable.ic_refresh_white
                     color = R.color.payment_color
                     binding.txtStatus.setTextColor(

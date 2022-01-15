@@ -45,17 +45,15 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegisterOrderBinding
     val TAG = RegisterOrderActivity.javaClass.simpleName
-
+    var productModel: PendingCartModel? = null // this model save the last selected product in the spinner
     var mCallQualityUpdater: Runnable? = null
     var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-
     var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     var pendingCartModels: ArrayList<PendingCartModel> = ArrayList()
     var productsModels: ArrayList<PendingCartModel> = ArrayList()
     var addressModels: ArrayList<AddressModel> = ArrayList()
-
     private lateinit var cartJArray: JSONArray
 
     var customerAddresses = ""
@@ -206,33 +204,32 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.imgAddOrder.setOnClickListener {
-            KeyBoardHelper.hideKeyboard()
-            if (productId.isEmpty()) {
+            if (productModel == null) {
+                binding.spProduct.performClick()
                 return@setOnClickListener
             }
 
             if (pendingCartModels.size == 0) {
-                pendingCartModels.add(product)
+                pendingCartModels.add(productModel!!)
             } else {
-                if (pendingCartModels.contains(product)) {
-                    for (j in 0 until pendingCartModels.size) {
-                        if (product.supply == pendingCartModels[j].quantity) {
+                for (i in 0 until pendingCartModels.size) {
+                    if (productModel!!.id == pendingCartModels[i].id) {
+                        if (pendingCartModels[i].quantity == productModel!!.supply) {
                             MyApplication.Toast("تعداد از این بیشتر نمیشه", Toast.LENGTH_SHORT)
                             return@setOnClickListener
-                        }
-                        if (pendingCartModels[j].id == productId) {
-                            pendingCartModels[j].quantity++
+                        } else {
+                            pendingCartModels[i].quantity++
+                            isSame = true
                             break
                         }
                     }
+                }
+                if (!isSame) {
+                    pendingCartModels.add(productModel!!)
                 } else {
-                    pendingCartModels.add(product)
+                    isSame = false
                 }
             }
-
-            sum += product.price.toInt()
-            binding.txtSumPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(sum.toString())) + " تومان"
 
             pendingCartAdapter.notifyDataSetChanged()
         }
@@ -454,7 +451,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     private fun initProductTypeSpinner() {
         val typesList = ArrayList<String>()
         try {
-//            typesList.add(0, "نوع محصول")
             val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
             for (i in 0 until typesArr.length()) {
                 val types = ProductsTypeModel(
@@ -465,13 +461,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                 typesList.add(i, typesArr.getJSONObject(i).getString("name"))
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "$TAG class, initProductTypeSpinner method")
-        }
-        if (binding.spProductType == null) return
 
-        try {
             binding.spProductType.adapter =
                 SpinnerAdapter(MyApplication.context, R.layout.item_spinner, typesList)
             binding.spProductType.onItemSelectedListener =
@@ -482,25 +472,23 @@ class RegisterOrderActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
-//                        if (position == 0) {
-//                            productTypes = ""
-//                            return
-//                        }
-                        productsModels.clear()
-                        productTypes = typesModels[position].id
-                        initProductSpinner(productTypes)
+                        productModel = null
+                        initProductSpinner(typesModels[position].id)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
-        } catch (e: java.lang.Exception) {
+
+        } catch (e: Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "$TAG class, initProductTypeSpinner method2")
+            AvaCrashReporter.send(e, "EditOrderDialog class, initProductTypeSpinner method")
         }
+        if (binding.spProductType == null) return
     }
 
     private fun initProductSpinner(type: String) {
         val productsList = ArrayList<String>()
+        productsModels = ArrayList()
         val productsArr = JSONArray(MyApplication.prefManager.productsList)
         try {
             productsList.add(0, "محصولات")
@@ -512,46 +500,38 @@ class RegisterOrderActivity : AppCompatActivity() {
                         productsArr.getJSONObject(i).getString("_id"),
                         productsArr.getJSONObject(i).getString("name"),
                         productsArr.getJSONObject(i).getString("nameWithSupply"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("price"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
-                            .getString("name"), 1,
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
+                        1,
                         productsArr.getJSONObject(i).getInt("supply")
                     )
                     productsModels.add(pendingCart)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            AvaCrashReporter.send(e, "$TAG class, initProductSpinner method")
-        }
-        if (binding.spProduct == null) return
 
-        try {
             binding.spProduct.adapter =
                 SpinnerAdapter(MyApplication.context, R.layout.item_spinner, productsList)
-            binding.spProduct.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
 
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-                        if (position == 0) {
-                            productId = ""
-                            return
-                        }
-                        productId = productsModels[position - 1].id
-                        product = productsModels[position - 1]
+            binding.spProduct.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (position == 0) {
+                        return
                     }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    productModel = productsModels[position - 1]
                 }
-        } catch (e: java.lang.Exception) {
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        } catch (e: Exception) {
             e.printStackTrace()
+            AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
         }
     }
 
@@ -1276,4 +1256,5 @@ class RegisterOrderActivity : AppCompatActivity() {
                 .show()
         }
     }
+
 }

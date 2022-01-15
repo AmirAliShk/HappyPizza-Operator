@@ -8,5 +8,5 @@ data class PendingCartModel(
     val size: String,
     var quantity: Int,
     var supply: Int,
-    var discount: String
+    var discount: String = "0"
 )
