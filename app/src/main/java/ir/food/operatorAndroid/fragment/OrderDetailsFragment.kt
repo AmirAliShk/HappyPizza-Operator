@@ -21,7 +21,7 @@ import ir.food.operatorAndroid.helper.DateHelper
 import ir.food.operatorAndroid.helper.FragmentHelper
 import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
-import ir.food.operatorAndroid.model.SupportCartModel
+import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONObject
@@ -100,17 +100,22 @@ class OrderDetailsFragment(details: String) : Fragment() {
                 dataObj.getJSONObject("deliveryLocation").getDouble("lng")
             )
 
-            val cartMap: HashMap<String, SupportCartModel> = HashMap()
+            val cartMap: HashMap<String, ProductsModel> = HashMap()
             val productsArr = orderObj.getJSONArray("products")
-            val supportCartModels: ArrayList<SupportCartModel> = ArrayList()
+            val supportCartModels: ArrayList<ProductsModel> = ArrayList()
             for (i in 0 until productsArr.length()) {
                 val productObj = productsArr.getJSONObject(i)
-                val cartModel = SupportCartModel(
+                val cartModel = ProductsModel(
                     productObj.getString("id"),
-                    productObj.getString("discount"),
+                    productObj.getString("size"),
+                    productObj.getString("name"),
+                    "",
+                    "",
+                    JSONObject(),
+                    0,
                     productObj.getInt("quantity"),
                     productObj.getString("price"),
-                    productObj.getString("name")
+                    productObj.getString("discount")
                 )
                 supportCartModels.add(cartModel)
                 cartMap[productObj.getString("id")] = cartModel

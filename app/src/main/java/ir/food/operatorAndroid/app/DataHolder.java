@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ir.food.operatorAndroid.model.ProductsModel;
-import ir.food.operatorAndroid.model.SupportCartModel;
 
 public class DataHolder {
     private static DataHolder ourInstance;
@@ -12,13 +11,13 @@ public class DataHolder {
     public String voipId = "0";
     public String pushType = null;
 
-    private HashMap<String,SupportCartModel> customerCart = null;
+    private HashMap<String,ProductsModel> customerCart = null;
 
-    public HashMap<String,SupportCartModel> getCustomerCart() {
+    public HashMap<String,ProductsModel> getCustomerCart() {
         return ourInstance.customerCart;
     }
 
-    public void setCustomerCart(HashMap<String,SupportCartModel> cart) {
+    public void setCustomerCart(HashMap<String,ProductsModel> cart) {
         ourInstance.customerCart = cart;
     }
 

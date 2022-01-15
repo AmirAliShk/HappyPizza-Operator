@@ -17,7 +17,6 @@ import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.ProductsTypeModel
-import ir.food.operatorAndroid.model.SupportCartModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import org.json.JSONArray
@@ -142,16 +141,16 @@ class EditOrderDialog {
         currentOrders: ArrayList<ProductsModel>,
         orderId: String
     ) {
-        val cartMap: HashMap<String, SupportCartModel> = DataHolder.getInstance().customerCart
+        val cartMap: HashMap<String, ProductsModel> = DataHolder.getInstance().customerCart
 
         for (j in 0 until currentOrders.size) {
             if (cartMap.containsKey(currentOrders[j].id)) {
-                if (cartMap.getValue(currentOrders[j].id).count != currentOrders[j].quantity) { // it means there is an order that the quantity was changed
+                if (cartMap.getValue(currentOrders[j].id).quantity != currentOrders[j].quantity) { // it means there is an order that the quantity was changed
                     orderObject = JSONObject()
                     orderObject.put("_id", currentOrders[j].id)
                     orderObject.put(
                         "quantity",
-                        currentOrders[j].quantity - cartMap.getValue(currentOrders[j].id).count
+                        currentOrders[j].quantity - cartMap.getValue(currentOrders[j].id).quantity
                     )
                     orderObject.put("size", currentOrders[j].size)
                     orderArray.put(orderObject)
