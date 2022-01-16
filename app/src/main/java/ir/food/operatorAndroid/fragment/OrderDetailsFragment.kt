@@ -51,10 +51,39 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
 
         binding.btnCancelOrder.setOnClickListener {
-            GeneralDialog().message("ایا از کنسل کردن سرویس اطمینان دارید؟").firstButton("بله") {
-                cancelService(orderId)
-            }
-                .secondButton("خیر") {}.show()
+            CancelDialogOrder().show(orderId, object : CancelDialogOrder.CancelOrderDialog {
+                override fun onSuccess(b: Boolean) {
+                    if (b) {
+                        GeneralDialog()
+                            .message("سفارش با موفقیت لغو شد")
+                            .firstButton("باشه") {
+                                binding.scrol.scrollTo(0,0)
+                                binding.txtStatus.text = "لغو شده"
+                                binding.llEditOrder.visibility = View.GONE
+                                binding.imgStatus.setImageResource(R.drawable.ic_close)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    val header =
+                                        AppCompatResources.getDrawable(
+                                            MyApplication.context,
+                                            R.drawable.bg_orders_header
+                                        )
+                                    binding.llHeaderStatus.background = header
+                                    DrawableCompat.setTint(header!!, MyApplication.currentActivity.resources.getColor(R.color.canceled))
+                                } else {
+                                    binding.llHeaderStatus.setBackgroundColor(MyApplication.currentActivity.resources.getColor(R.color.canceled))
+                                }
+                            }
+                            .cancelable(false)
+                            .show()
+                    } else {
+                        GeneralDialog()
+                            .message("مشکلی پیش آمده، لطفا مجدد امتحان کنید")
+                            .secondButton("بستن") { GeneralDialog().dismiss() }
+                            .cancelable(false)
+                            .show()
+                    }
+                }
+            })
         }
 
         binding.btnSetComplaint.setOnClickListener {
@@ -401,48 +430,4 @@ class OrderDetailsFragment(details: String) : Fragment() {
         }
     }
 
-    private fun cancelService(id: String) {
-        binding.vfCancel.displayedChild = 1
-        RequestHelper.builder(EndPoints.CANCEL_ORDER)
-            .listener(cancelServiceCallBack)
-            .addParam("orderId", id)
-            .delete()
-    }
-
-    private val cancelServiceCallBack: RequestHelper.Callback =
-        object : RequestHelper.Callback() {
-            override fun onResponse(reCall: Runnable?, vararg args: Any?) {
-                MyApplication.handler.post {
-                    try {
-                        binding.vfCancel.displayedChild = 0
-                        val jsonObject = JSONObject(args[0].toString())
-                        val status = jsonObject.getBoolean("success")
-                        val message = jsonObject.getString("message")
-                        if (status) {
-                            val dataObj = jsonObject.getJSONObject("data")
-                            if (dataObj.getBoolean("status")) {
-                                GeneralDialog().message(message).firstButton("باشه") {}
-                                    .cancelable(false).show()
-                            }
-                        } else {
-                            GeneralDialog().message(message).secondButton("باشه") {}
-                                .cancelable(false).show()
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        binding.vfCancel.displayedChild = 0
-                        AvaCrashReporter.send(
-                            e,
-                            "OrderDetailsFragment class, cancelServiceCallBack method"
-                        )
-                    }
-                }
-            }
-
-            override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
-                MyApplication.handler.post {
-                    binding.vfCancel.displayedChild = 0
-                }
-            }
-        }
 }
