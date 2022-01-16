@@ -68,7 +68,8 @@ class RegisterOrderActivity : AppCompatActivity() {
     var totalPrice = 0
     var totalDiscount = 0
     var courierFee = 0
-    var isSame = false
+    private var isSame = false
+    private var hasDiscount = false
     var addressChangeCounter =
         0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
     var addressLength = 0
@@ -87,9 +88,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                     binding.txtSumPrice.text =
                         StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
 
-                    totalDiscount += Integer.valueOf(pendingCartModels[i].discount.toInt() * pendingCartModels[i].quantity)
-                    binding.txtDiscount.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                    if (!hasDiscount) {
+                        totalDiscount += Integer.valueOf(pendingCartModels[i].discount.toInt() * pendingCartModels[i].quantity)
+                        binding.txtDiscount.text =
+                            StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                    }
                 }
             }
         })
@@ -122,6 +125,21 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
                 .replace()
+        }
+
+        binding.btnPriceCount.setOnClickListener {
+            if (binding.edtMobile.text.trim().isEmpty()) {
+                MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_SHORT)
+                binding.edtMobile.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (binding.edtStationCode.text.trim().isEmpty()) {
+                MyApplication.Toast("کد ایستگاه را وارد کنید", Toast.LENGTH_SHORT)
+                binding.edtStationCode.requestFocus()
+                return@setOnClickListener
+            }
+            getPrice()
         }
 
         binding.llMenu.setOnClickListener {
@@ -235,13 +253,15 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
             }
 
-            totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
-            binding.txtSumPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+            if (!hasDiscount) {
+                totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
+                binding.txtSumPrice.text =
+                    StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
 
-            totalDiscount += Integer.valueOf(productModel!!.discount)
-            binding.txtDiscount.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                totalDiscount += Integer.valueOf(productModel!!.discount)
+                binding.txtDiscount.text =
+                    StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+            }
 
             pendingCartAdapter.notifyDataSetChanged()
         }
@@ -335,7 +355,6 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.edtAddress.addTextChangedListener(addressTW)
         binding.edtMobile.addTextChangedListener(tellTW)
-        binding.edtStationCode.addTextChangedListener(stationTW)
     }
 
     private val tellTW = object : TextWatcher {
@@ -358,9 +377,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                 initProductTypeSpinner()
                 totalPrice = 0
                 totalDiscount = 0
+                hasDiscount = false
                 binding.txtSumPrice.text = "۰ تومان"
                 binding.edtCustomerName.setText("")
                 binding.edtDescription.setText("")
+                binding.txtDiscount.text = "۰ تومان"
+                binding.edtIntroducer.setText("")
                 addressChangeCounter = 0
                 binding.edtStationCode.setText("")
             }
@@ -396,36 +418,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 customerAddressId = "0"
                 addressLength = 0
                 binding.edtStationCode.setText("")
-            }
-        }
-    }
-
-    private var stationTW: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(
-            charSequence: CharSequence,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
-
-        override fun onTextChanged(
-            charSequence: CharSequence,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-            if (charSequence.isEmpty()) {
-                binding.txtDeliPrice.text = "۰ تومان"
-            }
-        }
-
-        override fun afterTextChanged(editable: Editable) {
-            Log.i(TAG, "afterTextChanged: $editable")
-            if (editable.isNotEmpty()) {
-                getPrice()
-            } else {
-                binding.txtDeliPrice.text = "۰ تومان"
             }
         }
     }
@@ -492,9 +484,20 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun getPrice() {
+        val introducer =
+            if (NumberValidation.isValid(binding.edtIntroducer.text.trim().toString())) {
+                NumberValidation.addZeroFirst(binding.edtIntroducer.text.trim().toString())
+            } else {
+                if (binding.edtIntroducer.text.trim().isEmpty())
+                    "0"
+                else
+                    binding.edtIntroducer.text.trim().toString()
+            }
         RequestHelper.builder(EndPoints.GET_PRICE)
+            .addPath(binding.edtStationCode.text.trim().toString())
+            .addPath(NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString()))
+            .addPath(introducer)
             .listener(getPriceCallBack)
-            .addPath(binding.edtStationCode.text.toString())
             .get()
     }
 
@@ -506,14 +509,22 @@ class RegisterOrderActivity : AppCompatActivity() {
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
                     if (success) {
-                        val data = jsonObject.getString("data")
+                        val dataObj = jsonObject.getJSONObject("data")
+                        val deliveryCost = dataObj.getString("deliveryCost")
+                        val discount = dataObj.getString("discount")
+                        if (discount == "0") {
+                            hasDiscount = false
+                        } else {
+                            hasDiscount = true
+                            binding.txtDiscount.text =   StringHelper.toPersianDigits(StringHelper.setComma(discount)) + " تومان"
+                        }
                         if (binding.edtStationCode.text.trim().isEmpty()) {
                             binding.txtDeliPrice.text = "۰ تومان"
                         } else {
-                            courierFee = (Integer.valueOf(data))
-                            totalPrice += (Integer.valueOf(data))
+                            courierFee = (Integer.valueOf(deliveryCost))
+                            totalPrice += (Integer.valueOf(deliveryCost))
                             binding.txtDeliPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                                StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost)) + " تومان"
                         }
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {
@@ -911,6 +922,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.txtDeliPrice.text = "۰ تومان"
         totalPrice = 0
         totalDiscount = 0
+        hasDiscount = false
         disableViews()
     }
 
@@ -1118,17 +1130,17 @@ class RegisterOrderActivity : AppCompatActivity() {
         if (mCallQualityUpdater == null)
             LinphoneService.dispatchOnUIThreadAfter(
                 object : Runnable {
-                    val mCurrentCall = LinphoneService.getCore().currentCall;
+                    val mCurrentCall = LinphoneService.getCore().currentCall
                     override fun run() {
                         if (mCurrentCall == null) {
-                            mCallQualityUpdater = null;
+                            mCallQualityUpdater = null
                             return
                         }
                         val newQuality = mCurrentCall.currentQuality
-                        updateQualityOfSignalIcon(newQuality);
+                        updateQualityOfSignalIcon(newQuality)
 
                         if (MyApplication.prefManager.connectedCall)
-                            LinphoneService.dispatchOnUIThreadAfter(this, 1000);
+                            LinphoneService.dispatchOnUIThreadAfter(this, 1000)
                     }
                 }, 1000
             )
@@ -1266,7 +1278,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressModels,
                 if (binding.edtMobile.text.toString()
                         .startsWith("0")
-                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text.toString()}"
+                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text}"
             ) { addressModel ->
                 addressChangeCounter = 0
                 addressLength = addressModel.address.length

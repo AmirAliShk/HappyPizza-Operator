@@ -44,5 +44,5 @@ object EndPoints {
     val GET_DELIVERY_LOCATION = "$ORDER_PATH/delivery/"
     val ARCHIVE_ADDRESS = "$ORDER_PATH/cust/archive/address"
 
-    val GET_PRICE = "${WEBSERVICE_PATH}price"
+    val GET_PRICE = "${WEBSERVICE_PATH}price/v1"
 }
