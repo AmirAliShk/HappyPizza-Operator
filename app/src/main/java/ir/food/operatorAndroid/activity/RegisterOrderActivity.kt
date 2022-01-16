@@ -897,6 +897,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
         addressModels.clear()
+        addressModels.clear()
         customerAddresses = ""
         customerAddressId = "0"
         addressChangeCounter = 0
@@ -906,6 +907,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         initProductTypeSpinner()
         initProductSpinner("")
         binding.txtSumPrice.text = "۰ تومان"
+        binding.txtDiscount.text = "۰ تومان"
+        binding.txtDeliPrice.text = "۰ تومان"
         totalPrice = 0
         totalDiscount = 0
         disableViews()
