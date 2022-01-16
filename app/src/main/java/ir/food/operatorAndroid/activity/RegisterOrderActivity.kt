@@ -78,6 +78,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 totalDiscount = 0
                 if (s == 0) {
                     binding.txtSumPrice.text = "۰ تومان"
+                    binding.txtDiscount.text = "۰ تومان"
                     return
                 }
                 for (i in 0 until s) {
@@ -510,9 +511,16 @@ class RegisterOrderActivity : AppCompatActivity() {
                         } else {
                             binding.txtDeliPrice.text =
                                 StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                            totalPrice += (Integer.valueOf(data))
+                            binding.txtSumPrice.text =
+                                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
                         }
                     } else {
-                        GeneralDialog().message(message).secondButton("باشه") {}
+                        GeneralDialog().message(message).secondButton("باشه") {
+                            binding.txtDeliPrice.text = "۰ تومان"
+                            binding.edtStationCode.setText("")
+                        }.show()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
