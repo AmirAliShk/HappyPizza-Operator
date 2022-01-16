@@ -14,7 +14,7 @@ class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: Total
     private val models = list
 
     interface TotalPrice {
-        fun collectTotalPrice(model: ProductsModel)
+        fun collectTotalPrice(model: ProductsModel, length:Int)
     }
 
     class ViewHolder(val binding: ItemOrderBinding) :
@@ -42,7 +42,7 @@ class EditOrderCartAdapter(list: ArrayList<ProductsModel>, var totalPrice: Total
                 models.removeAt(position)
             } else model.quantity--
             notifyDataSetChanged()
-            totalPrice.collectTotalPrice(model)
+            totalPrice.collectTotalPrice(model, models.size)
         }
     }
 

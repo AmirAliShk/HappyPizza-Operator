@@ -14,6 +14,7 @@ import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
+import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.ProductsTypeModel
@@ -37,9 +38,12 @@ class EditOrderDialog {
     val cart: HashMap<String, ProductsModel> = HashMap()
     var orderArray = JSONArray()
     private lateinit var orderObject: JSONObject
+    var totalPrice = 0
+    var totalDiscount = 0
+    var courierFee = 0
     private val cartAdapter =
         EditOrderCartAdapter(cartModels, object : EditOrderCartAdapter.TotalPrice {
-            override fun collectTotalPrice(model: ProductsModel) {
+            override fun collectTotalPrice(model: ProductsModel, length: Int) {
                 if (model.quantity == 0) {
                     orderObject = JSONObject()
                     orderObject.put("_id", model.id)
@@ -47,11 +51,28 @@ class EditOrderDialog {
                     orderObject.put("size", model.size)
                     orderArray.put(orderObject)
                 }
-//                sum = 0
+
+                totalPrice = courierFee
+                totalDiscount = 0
+                if (length == 0) {
+                    binding.txtSumPrice.text = "۰ تومان"
+                    binding.txtDiscount.text = "۰ تومان"
+                    return
+                }
+                for (i in 0 until length) {
+                    totalPrice += Integer.valueOf((cartModels[i].price.toInt() - cartModels[i].discount.toInt()) * cartModels[i].quantity)
+                    binding.txtSumPrice.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
+                    totalDiscount += Integer.valueOf(cartModels[i].discount.toInt() * cartModels[i].quantity)
+                    binding.txtDiscount.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                }
+
             }
         })
 
-    fun show(productArr: JSONArray, orderId: String) {
+    fun show(productArr: JSONArray, orderId: String, courierFee: String) {
         dialog = Dialog(MyApplication.currentActivity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         binding = DialogEditOrderBinding.inflate(LayoutInflater.from(MyApplication.context))
@@ -68,6 +89,8 @@ class EditOrderDialog {
         initProductTypeSpinner()
         initProductSpinner("")
 
+        totalPrice = (Integer.valueOf(courierFee))
+        this.courierFee = (Integer.valueOf(courierFee))
         for (i in 0 until productArr.length()) {
             val productObj = productArr.getJSONObject(i)
             val cartModel = ProductsModel(
@@ -84,8 +107,19 @@ class EditOrderDialog {
             )
             cartModels.add(cartModel)
             cart[productObj.getString("id")] = cartModel
+
+            totalPrice += Integer.valueOf((cartModels[i].price.toInt() - cartModels[i].discount.toInt()) * cartModels[i].quantity)
+            binding.txtSumPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
+            totalDiscount += Integer.valueOf(cartModels[i].discount.toInt() * cartModels[i].quantity)
+            binding.txtDiscount.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+
         }
         binding.orderList.adapter = cartAdapter
+
+        binding.txtDeliPrice.text = StringHelper.setComma(courierFee)
 
         binding.imgAddOrder.setOnClickListener {
             if (productModel == null) {
@@ -116,6 +150,14 @@ class EditOrderDialog {
                     isSame = false
                 }
             }
+
+            totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
+            binding.txtSumPrice.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+
+            totalDiscount += Integer.valueOf(productModel!!.discount)
+            binding.txtDiscount.text =
+                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
 
             cartAdapter.notifyDataSetChanged()
         }
@@ -293,15 +335,18 @@ class EditOrderDialog {
                 ) {
                     val products = ProductsModel(
                         productsArr.getJSONObject(i).getString("_id"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("name"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
                         productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
                         productsArr.getJSONObject(i).getInt("supply"),
                         1,
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("price"),
-                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0).getString("discount"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("price"),
+                        productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
+                            .getString("discount"),
                     )
                     productsModels.add(products)
                     productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))

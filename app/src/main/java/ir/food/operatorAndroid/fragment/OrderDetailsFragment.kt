@@ -82,7 +82,9 @@ class OrderDetailsFragment(details: String) : Fragment() {
 
         binding.btnEditOrder.setOnClickListener {
             EditOrderDialog().show(
-                JSONObject(orderDetails).getJSONObject("order").getJSONArray("products"), orderId
+                JSONObject(orderDetails).getJSONObject("order").getJSONArray("products"),
+                orderId,
+                StringHelper.extractTheNumber(binding.txtSendPrice.text.toString())
             )
         }
 
