@@ -419,13 +419,12 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(editable: Editable) {
-            MyApplication.handler.postDelayed({
-                if (editable.isEmpty()) {
-                    binding.txtDeliPrice.text = "۰ تومان"
-                    return@postDelayed
-                }
+            Log.i(TAG, "afterTextChanged: $editable")
+            if (editable.isNotEmpty()) {
                 getPrice()
-            }, 100)
+            } else {
+                binding.txtDeliPrice.text = "۰ تومان"
+            }
         }
     }
 
@@ -506,8 +505,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                     val message = jsonObject.getString("message")
                     if (success) {
                         val data = jsonObject.getString("data")
-                        binding.txtDeliPrice.text =
-                            StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                        if (binding.edtStationCode.text.trim().isEmpty()) {
+                            binding.txtDeliPrice.text = "۰ تومان"
+                        } else {
+                            binding.txtDeliPrice.text =
+                                StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                        }
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {}
                     }
