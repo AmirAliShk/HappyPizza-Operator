@@ -67,6 +67,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         "" // it is a temp variable for save address for first time. if you change the editText content it never will change
     var totalPrice = 0
     var totalDiscount = 0
+    var courierFee = 0
     var isSame = false
     var addressChangeCounter =
         0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
@@ -74,7 +75,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             override fun collectTotalPrice(s: Int) {
-                totalPrice = 0
+                totalPrice = courierFee
                 totalDiscount = 0
                 if (s == 0) {
                     binding.txtSumPrice.text = "۰ تومان"
@@ -509,12 +510,10 @@ class RegisterOrderActivity : AppCompatActivity() {
                         if (binding.edtStationCode.text.trim().isEmpty()) {
                             binding.txtDeliPrice.text = "۰ تومان"
                         } else {
+                            courierFee = (Integer.valueOf(data))
+                            totalPrice += (Integer.valueOf(data))
                             binding.txtDeliPrice.text =
                                 StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
-                            totalPrice += (Integer.valueOf(data))
-                            binding.txtSumPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
                         }
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {
