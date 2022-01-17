@@ -44,37 +44,41 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     lateinit var binding: ActivityRegisterOrderBinding
-    val TAG = RegisterOrderActivity.javaClass.simpleName
-    var productModel: ProductsModel? =
+    private val TAG = RegisterOrderActivity.javaClass.simpleName
+    private var productModel: ProductsModel? =
         null // this model save the last selected product in the spinner
-    var mCallQualityUpdater: Runnable? = null
-    var mDisplayedQuality = -1
+    private var mCallQualityUpdater: Runnable? = null
+    private var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-    var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
-    var productsModels: ArrayList<ProductsModel> = ArrayList()
-    var addressModels: ArrayList<AddressModel> = ArrayList()
+    private var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
+    private var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
+    private var productsModels: ArrayList<ProductsModel> = ArrayList()
+    private var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
-    var customerAddresses = ""
-    var phoneNumber = "0"
-    var phoneNumberNew = "0"
-    var isFull = false // this variable will check the fields in page is full or not
-    var customerAddressId = "0"
-    var productId: String = ""
-    var tempAddressId = "0" // it is a temp variable for save addressId for first time.
-    var originAddress =
+    private var customerAddresses = ""
+    private var phoneNumber = "0"
+    private var phoneNumberNew = "0"
+    private var isFull = false // this variable will check the fields in page is full or not
+    private var customerAddressId = "0"
+    private var productId: String = ""
+    private var tempAddressId = "0" // it is a temp variable for save addressId for first time.
+    private var originAddress =
         "" // it is a temp variable for save address for first time. if you change the editText content it never will change
-    var totalPrice = 0
-    var totalDiscount = 0
-    var courierFee = 0
+    private var totalPrice = 0
+    private var totalDiscount = 0
+    private var courierFee =
+        0 // The cost of transportation by motor courier that comes from server by call getPrice()
+    private var serverDiscount =
+        0 // if it's 0 we use from discount of each product, else we use from serverDiscount value instead of discount of each product it comes from getPrice()
     private var isSame = false
     private var hasDiscount = false
-    var addressChangeCounter =
+    private var addressChangeCounter =
         0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
-    var addressLength = 0
+    private var addressLength = 0
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
+            @SuppressLint("SetTextI18n")
             override fun collectTotalPrice(s: Int) {
                 totalPrice = courierFee
                 totalDiscount = 0
@@ -84,19 +88,24 @@ class RegisterOrderActivity : AppCompatActivity() {
                     return
                 }
                 for (i in 0 until s) {
-                    totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt() - pendingCartModels[i].discount.toInt()) * pendingCartModels[i].quantity)
-                    binding.txtSumPrice.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
                     if (!hasDiscount) {
+                        totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt() - pendingCartModels[i].discount.toInt()) * pendingCartModels[i].quantity)
                         totalDiscount += Integer.valueOf(pendingCartModels[i].discount.toInt() * pendingCartModels[i].quantity)
-                        binding.txtDiscount.text =
-                            StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                    } else {
+                        totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt()) * pendingCartModels[i].quantity)
+                        totalDiscount = serverDiscount
                     }
+                    binding.txtDiscount.text =
+                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+                    binding.txtSumPrice.text = if (!hasDiscount) StringHelper.toPersianDigits(
+                        StringHelper.setComma(totalPrice.toString())
+                    ) + " تومان"
+                    else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount}")) + " تومان"
                 }
             }
         })
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterOrderBinding.inflate(layoutInflater)
@@ -131,12 +140,26 @@ class RegisterOrderActivity : AppCompatActivity() {
             if (binding.edtMobile.text.trim().isEmpty()) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_SHORT)
                 binding.edtMobile.requestFocus()
+                binding.scroll.scrollTo(0,0)
+                return@setOnClickListener
+            }
+            if (binding.edtIntroducer.text.trim().isEmpty()) {
+                MyApplication.Toast("شماره معرف یا کدتخفیف را وارد کنید", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0,0)
+                return@setOnClickListener
+            }
+
+            if(productModel==null){
+                MyApplication.Toast("حداقل یک سفارش انتخاب کنید", Toast.LENGTH_SHORT)
+                binding.spProduct.performClick()
                 return@setOnClickListener
             }
 
             if (binding.edtStationCode.text.trim().isEmpty()) {
                 MyApplication.Toast("کد ایستگاه را وارد کنید", Toast.LENGTH_SHORT)
                 binding.edtStationCode.requestFocus()
+                binding.scroll.scrollTo(0,0)
                 return@setOnClickListener
             }
             getPrice()
@@ -230,7 +253,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProduct.performClick()
                 return@setOnClickListener
             }
-
             if (pendingCartModels.size == 0) {
                 pendingCartModels.add(productModel!!)
             } else {
@@ -253,15 +275,34 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
             }
 
-            if (!hasDiscount) {
-                totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
-                binding.txtSumPrice.text =
-                    StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+            totalPrice = courierFee
+            totalDiscount = 0
 
-                totalDiscount += Integer.valueOf(productModel!!.discount)
-                binding.txtDiscount.text =
-                    StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+            for (m in 0 until pendingCartModels.size) {
+                if (!hasDiscount) {
+                    totalPrice += Integer.valueOf((pendingCartModels[m].price.toInt() - pendingCartModels[m].discount.toInt()) * pendingCartModels[m].quantity)
+                    totalDiscount += Integer.valueOf(pendingCartModels[m].discount.toInt() * pendingCartModels[m].quantity)
+                } else {
+                    totalPrice += Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
+                    totalDiscount = serverDiscount
+                }
             }
+            binding.txtDiscount.text = StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+            binding.txtSumPrice.text = if (!hasDiscount) StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+            else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount}")) + " تومان"
+
+//            if (!hasDiscount) {
+//                totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
+//                totalDiscount += Integer.valueOf(productModel!!.discount)
+//            } else {
+//                totalPrice += (Integer.valueOf(productModel!!.price))
+//                totalDiscount = serverDiscount
+//            }
+//            binding.txtDiscount.text =
+//                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+//            binding.txtSumPrice.text =
+//                if (!hasDiscount) StringHelper.toPersianDigits(StringHelper.setComma((totalPrice+courierFee).toString())) + " تومان"
+//                else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount + courierFee}")) + " تومان"
 
             pendingCartAdapter.notifyDataSetChanged()
         }
@@ -376,7 +417,9 @@ class RegisterOrderActivity : AppCompatActivity() {
                 initProductSpinner("")
                 initProductTypeSpinner()
                 totalPrice = 0
+                courierFee = 0
                 totalDiscount = 0
+                serverDiscount = 0
                 hasDiscount = false
                 binding.txtSumPrice.text = "۰ تومان"
                 binding.edtCustomerName.setText("")
@@ -502,6 +545,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private val getPriceCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        @SuppressLint("SetTextI18n")
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
@@ -511,21 +555,28 @@ class RegisterOrderActivity : AppCompatActivity() {
                     if (success) {
                         val dataObj = jsonObject.getJSONObject("data")
                         val deliveryCost = dataObj.getString("deliveryCost")
-                        val discount = dataObj.getString("discount")
-                        if (discount == "0") {
+                        serverDiscount = dataObj.getInt("discount")
+
+                        courierFee = (Integer.valueOf(deliveryCost))
+
+                        if (serverDiscount == 0) {
                             hasDiscount = false
                         } else {
                             hasDiscount = true
-                            binding.txtDiscount.text =   StringHelper.toPersianDigits(StringHelper.setComma(discount)) + " تومان"
+                            binding.txtDiscount.text = StringHelper.toPersianDigits(StringHelper.setComma(serverDiscount.toString())) + " تومان"
+                            totalPrice = 0
+                            for (i in 0 until pendingCartModels.size) {
+                                totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt()) * pendingCartModels[i].quantity)
+                            }
+                            binding.txtSumPrice.text = StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice + deliveryCost.toInt() - serverDiscount}")) + " تومان"
                         }
+
                         if (binding.edtStationCode.text.trim().isEmpty()) {
                             binding.txtDeliPrice.text = "۰ تومان"
-                        } else {
-                            courierFee = (Integer.valueOf(deliveryCost))
-                            totalPrice += (Integer.valueOf(deliveryCost))
-                            binding.txtDeliPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost)) + " تومان"
+                        }else{
+                            binding.txtDeliPrice.text = StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost)) + " تومان"
                         }
+
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {
                             binding.txtDeliPrice.text = "۰ تومان"
@@ -922,6 +973,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.txtDeliPrice.text = "۰ تومان"
         totalPrice = 0
         totalDiscount = 0
+        courierFee = 0
+        serverDiscount = 0
         hasDiscount = false
         disableViews()
     }
