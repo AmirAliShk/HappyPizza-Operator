@@ -143,12 +143,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.scroll.scrollTo(0,0)
                 return@setOnClickListener
             }
-            if (binding.edtIntroducer.text.trim().isEmpty()) {
-                MyApplication.Toast("شماره معرف یا کدتخفیف را وارد کنید", Toast.LENGTH_SHORT)
-                binding.edtIntroducer.requestFocus()
-                binding.scroll.scrollTo(0,0)
-                return@setOnClickListener
-            }
 
             if(productModel==null){
                 MyApplication.Toast("حداقل یک سفارش انتخاب کنید", Toast.LENGTH_SHORT)
@@ -555,7 +549,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     if (success) {
                         val dataObj = jsonObject.getJSONObject("data")
                         val deliveryCost = dataObj.getString("deliveryCost")
-                        serverDiscount = dataObj.getInt("discount")
+                        serverDiscount = 0
 
                         courierFee = (Integer.valueOf(deliveryCost))
 
