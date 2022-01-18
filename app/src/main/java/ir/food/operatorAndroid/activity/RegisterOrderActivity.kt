@@ -481,12 +481,8 @@ class RegisterOrderActivity : AppCompatActivity() {
     private fun getPrice() {
         RequestHelper.builder(EndPoints.GET_PRICE)
             .addPath(binding.edtStationCode.text.trim().toString())
+            .addPath(if (binding.edtIntroducer.text.trim().isEmpty()) "0" else binding.edtIntroducer.text.trim().toString())
             .addPath(NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString()))
-            .addPath(
-                if (binding.edtIntroducer.text.trim()
-                        .isEmpty()
-                ) "0" else binding.edtIntroducer.text.trim().toString()
-            )
             .listener(getPriceCallBack)
             .get()
     }
