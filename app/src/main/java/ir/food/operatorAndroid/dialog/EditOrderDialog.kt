@@ -51,15 +51,6 @@ class EditOrderDialog {
                     orderObject.put("size", model.size)
                     orderArray.put(orderObject)
                 }
-
-                if (length == 0) {
-                    binding.txtSumPrice.text = "۰ تومان"
-                    binding.txtDiscount.text = "۰ تومان"
-                    return
-                }
-
-                calculatePrice(true, 5000)
-
             }
         })
 
@@ -100,11 +91,7 @@ class EditOrderDialog {
             cart[productObj.getString("id")] = cartModel
         }
 
-        calculatePrice(true, 5000)
-
         binding.orderList.adapter = cartAdapter
-
-        binding.txtDeliPrice.text = StringHelper.setComma(courierFee)
 
         binding.imgAddOrder.setOnClickListener {
             if (productModel == null) {
@@ -136,8 +123,6 @@ class EditOrderDialog {
                 }
             }
 
-            calculatePrice(true, 5000)
-
             cartAdapter.notifyDataSetChanged()
         }
 
@@ -156,26 +141,6 @@ class EditOrderDialog {
         binding.imgClose.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
-    }
-
-    private fun calculatePrice(hasDiscount: Boolean, serverDiscount: Int) {
-        totalPrice = courierFee
-        totalDiscount = 0
-
-        for (m in 0 until cartModels.size) {
-            if (!hasDiscount) {
-                totalPrice += Integer.valueOf((cartModels[m].price.toInt() - cartModels[m].discount.toInt()) * cartModels[m].quantity)
-                totalDiscount += Integer.valueOf(cartModels[m].discount.toInt() * cartModels[m].quantity)
-            } else {
-                totalPrice += Integer.valueOf((cartModels[m].price.toInt()) * cartModels[m].quantity)
-                totalDiscount = serverDiscount
-            }
-        }
-        binding.txtDiscount.text =
-            StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-        binding.txtSumPrice.text =
-            if (!hasDiscount) StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-            else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount}")) + " تومان"
     }
 
     private fun newOrder(
