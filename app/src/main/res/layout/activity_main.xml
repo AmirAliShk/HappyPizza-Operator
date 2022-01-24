@@ -23,15 +23,43 @@
                 android:id="@+id/imgLogout"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/ic_log_out"
-                android:visibility="visible" />
+                android:src="@drawable/ic_log_out" />
 
-            <ImageView
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_30sdp"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_happy_pizza" />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_happy_pizza" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:src="@drawable/ic_user" />
+
+                    <TextView
+                        android:id="@+id/txtAccName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sdp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imgSipStatus"
@@ -106,8 +134,8 @@
                     <ImageView
                         android:layout_width="@dimen/_32sdp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_led_inprogress"
-                        android:layout_marginTop="3dp"/>
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/ic_led_inprogress" />
 
                     <TextView
                         android:layout_width="0dp"

@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
         MyApplication.configureAccount()
         core = LinphoneService.getCore()
+        binding.txtAccName.text = MyApplication.prefManager.userName
 
         binding.imgLogout.setOnClickListener {
             GeneralDialog().message("ایا از خروج از حساب کاربری خود اطمینان دارید؟")

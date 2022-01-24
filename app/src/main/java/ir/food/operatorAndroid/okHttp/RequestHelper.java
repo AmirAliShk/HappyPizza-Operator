@@ -20,7 +20,10 @@ import ir.food.operatorAndroid.app.MyApplication;
 import ir.food.operatorAndroid.dialog.ErrorDialog;
 import ir.food.operatorAndroid.dialog.GeneralDialog;
 import ir.food.operatorAndroid.helper.NetworkStatus;
+import ir.food.operatorAndroid.helper.ServiceHelper;
 import ir.food.operatorAndroid.helper.StringHelper;
+import ir.food.operatorAndroid.push.AvaService;
+import ir.food.operatorAndroid.sip.LinphoneService;
 import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -482,6 +485,8 @@ public class RequestHelper implements okhttp3.Callback {
         MyApplication.handler.post(() -> {
             MyApplication.currentActivity.finish();
             MyApplication.prefManager.cleanPrefManger();
+            ServiceHelper.stop(MyApplication.context, LinphoneService.class);
+            ServiceHelper.stop(MyApplication.context, AvaService.class);
             MyApplication.currentActivity.startActivity(new Intent(MyApplication.currentActivity, SplashActivity.class));
         });
     }

@@ -176,6 +176,11 @@ public class PrefManager {
         return pref.getString(KEY_USER_NAME, "0");
     }
 
+    public void setUserName(String v) {
+        editor.putString(KEY_USER_NAME, v);
+        editor.commit();
+    }
+
     public String getCity() {
         return pref.getString(CITY, "");
     }

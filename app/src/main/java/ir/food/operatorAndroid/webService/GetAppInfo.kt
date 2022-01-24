@@ -18,6 +18,7 @@ import ir.food.operatorAndroid.helper.ScreenHelper
 import ir.food.operatorAndroid.helper.ServiceHelper
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
+import ir.food.operatorAndroid.push.AvaService
 import ir.food.operatorAndroid.sip.LinphoneService
 import org.json.JSONException
 import org.json.JSONObject
@@ -91,6 +92,7 @@ class GetAppInfo {
                                 val sipPassword = data.getString("sipPassword")
                                 val sipServer = data.getString("sipServer")
 
+                                MyApplication.prefManager.userName = data.getString("family")
                                 MyApplication.prefManager.pushToken = data.getString("pushToken")
                                 MyApplication.prefManager.pushId = data.getInt("pushId")
                                 MyApplication.prefManager.userCode = data.getString("userId")
@@ -123,6 +125,8 @@ class GetAppInfo {
                                     .message(statusMessage)
                                     .secondButton("بستن") {
                                         MyApplication.prefManager.cleanPrefManger()
+                                        ServiceHelper.stop(context, LinphoneService::class.java)
+                                        ServiceHelper.stop(context, AvaService::class.java)
                                         MyApplication.currentActivity.finish()
                                     }
                                     .cancelable(false)
