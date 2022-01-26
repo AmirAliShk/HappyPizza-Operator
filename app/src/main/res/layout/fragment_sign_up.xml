@@ -332,6 +332,73 @@
 
                 </LinearLayout>
 
+                <ViewFlipper
+                    android:id="@+id/vfTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="تلاش مجدد پس از : "
+                            android:textColor="@color/darkGray"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:id="@+id/txtResendCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/color_Red"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" ثانیه"
+                            android:textColor="@color/darkGray"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llResendCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:shadowColor="@color/darkGray"
+                            android:shadowDy="2"
+                            android:shadowRadius="10"
+                            android:text="ارسال مجدد کد احراز هویت"
+                            android:textColor="@color/darkGray"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </LinearLayout>
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        app:indicatorColor="@color/darkGray" />
+
+                </ViewFlipper>
+
                 <TextView
                     android:id="@+id/txtLogin"
                     android:layout_width="match_parent"

@@ -1,7 +1,9 @@
 package ir.food.operatorAndroid.fragment.login
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,7 @@ import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.webService.GetAppInfo
 import org.json.JSONObject
+import java.util.*
 
 class LogInFragment : Fragment() {
 
@@ -31,6 +34,8 @@ class LogInFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
     lateinit var mobile: String
     lateinit var verificationCode: String
+
+    private lateinit var countDownTimer: CountDownTimer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -159,7 +164,12 @@ class LogInFragment : Fragment() {
                         val message = splashJson.getString("message")
 
                         MyApplication.Toast(message, Toast.LENGTH_LONG)
-
+                        if (success) {
+                            val repetitionTime: Int = splashJson.getInt("repetitionTime")
+                            MyApplication.prefManager.repetitionTime = repetitionTime
+                            startWaitingTime()
+                            binding.vfTime.visibility = View.VISIBLE
+                        }
                     } catch (e: Exception) {
                         e.printStackTrace()
                         binding.vfSendCode.displayedChild = 0
@@ -174,4 +184,31 @@ class LogInFragment : Fragment() {
                 }
             }
         }
+
+    private fun startWaitingTime() {
+        if (MyApplication.prefManager.activationRemainingTime < Calendar.getInstance().timeInMillis) MyApplication.prefManager.activationRemainingTime =
+            Calendar.getInstance().timeInMillis + MyApplication.prefManager.repetitionTime * 1000
+        countDownTimer()
+    }
+
+    private fun countDownTimer() {
+        val remainingTime: Long =
+            MyApplication.prefManager.activationRemainingTime - Calendar.getInstance().timeInMillis
+        countDownTimer =
+            object : CountDownTimer(remainingTime, 1000) {
+                @SuppressLint("SetTextI18n")
+                override fun onTick(millisUntilFinished: Long) {
+                    if (binding.txtResendCode != null) {
+                        if (binding.vfTime != null) binding.vfTime.displayedChild = 0
+                        binding.txtResendCode.text = ((millisUntilFinished / 1000).toString())
+                    }
+                }//todo set on click for send code again
+
+                override fun onFinish() {
+                    if (binding.txtResendCode != null) {
+                        if (binding.vfTime != null) binding.vfTime.displayedChild = 1
+                    }
+                }
+            }.start()
+    }
 }
