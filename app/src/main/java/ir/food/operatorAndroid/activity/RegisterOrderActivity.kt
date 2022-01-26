@@ -256,6 +256,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 MyApplication.Toast("لطفا شماره همراه را وارد نمایید.", Toast.LENGTH_SHORT)
                 return@setOnClickListener
             }
+            binding.vfSendMenu.displayedChild = 1
             sendMenu()
         }
 
@@ -949,7 +950,6 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun sendMenu() {
-        binding.vfSendMenu.displayedChild = 1
         RequestHelper.builder(EndPoints.SEND_MENU)
             .addParam(
                 "mobile",
@@ -970,7 +970,6 @@ class RegisterOrderActivity : AppCompatActivity() {
 //            {"success":true,"message":"اس ام اس منو با موفقیت برای مشتری ارسال شد","data":{"status":true}}
             MyApplication.handler.post {
                 try {
-                    binding.vfSendMenu.displayedChild = 0
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
@@ -980,14 +979,18 @@ class RegisterOrderActivity : AppCompatActivity() {
                         if (status) {
                             GeneralDialog()
                                 .message(message)
-                                .firstButton("باشه") {}
+                                .firstButton("باشه") {
+                                    binding.vfSendMenu.displayedChild = 0
+                                }
                                 .cancelable(false)
                                 .show()
                         }
                     } else {
                         GeneralDialog()
                             .message(message)
-                            .secondButton("باشه") {}
+                            .secondButton("باشه") {
+                                binding.vfSendMenu.displayedChild = 0
+                            }
                             .cancelable(false)
                             .show()
                     }
@@ -1000,6 +1003,9 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
             super.onFailure(reCall, e)
+            MyApplication.handler.post {
+                binding.vfSendMenu.displayedChild = 0
+            }
         }
     }
 
