@@ -35,7 +35,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.linphone.core.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RegisterOrderActivity : AppCompatActivity() {
 
@@ -73,9 +72,12 @@ class RegisterOrderActivity : AppCompatActivity() {
         0 // if it's 0 we use from discount of each product, else we use from serverDiscount value instead of discount of each product it comes from getPrice()
     private var isSame = false
     private var hasDiscount = false
+    var discountType = 0
     private var addressChangeCounter =
         0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
     private var addressLength = 0
+    var introducerId = "0"
+    var discountCode = "0"
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             @SuppressLint("SetTextI18n")
@@ -109,7 +111,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.orderList.adapter = pendingCartAdapter
         disableViews()
         getProductsAndLists()
-
+        initDiscountSpinner()
         MyApplication.handler.postDelayed({
             binding.edtMobile.requestFocus()
             KeyBoardHelper.showKeyboard(MyApplication.context)
@@ -141,7 +143,21 @@ class RegisterOrderActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            getPrice()
+            if (discountType != 0 && binding.edtIntroducer.text.toString().trim().isEmpty()) {
+                MyApplication.Toast("کد تخفیف یا معرف را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+            if (discountType == 0 && binding.edtIntroducer.text.toString().trim().isNotEmpty()) {
+                MyApplication.Toast("نوع کد تخفیف یا معرف را انتخاب کنید.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+
+            binding.vfPriceCalculate.displayedChild = 1
+            getBill()
         }
 
         binding.llMenu.setOnClickListener {
@@ -478,61 +494,109 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPrice() {
-        RequestHelper.builder(EndPoints.GET_PRICE)
-            .addPath(binding.edtStationCode.text.trim().toString())
-            .addPath(if (binding.edtIntroducer.text.trim().isEmpty()) "0" else binding.edtIntroducer.text.trim().toString())
-            .addPath(NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString()))
-            .listener(getPriceCallBack)
-            .get()
+    private fun getBill() {
+        when (discountType) {
+            1 -> introducerId = binding.edtIntroducer.text.trim().toString()
+            2 -> discountCode = binding.edtIntroducer.text.trim().toString()
+        }
+        var rawTotalPrice = 0
+        for (m in 0 until pendingCartModels.size) {
+            rawTotalPrice =
+                Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
+        }
+
+        RequestHelper.builder(EndPoints.CALCULATE_BILL)
+            .addParam("discountCode", discountCode)
+            .addParam("station", binding.edtStationCode.text.trim().toString())
+            .addParam(
+                "customerPhone",
+                NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString())
+            )
+            .addParam("introduceId", introducerId)
+            .addParam("total", rawTotalPrice)
+            .listener(getDiscountCallBack)
+            .post()
     }
 
-    private val getPriceCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+    private val getDiscountCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
         @SuppressLint("SetTextI18n")
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+//{"success":true,"message":"صورت حساب با موفقیت ایجاد شد","data":{"discount":{"success":false,"message":""},"introduce":{"success":false,"message":"این بخش فعال نمی باشد ","amount":0},"totalDiscount":0,"delivery":7000,"total":274000}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
                     if (success) {
                         val dataObj = jsonObject.getJSONObject("data")
-                        val deliveryCost = dataObj.getString("deliveryCost")
-                        serverDiscount = dataObj.getInt("discount")
-
+                        val discountObj = dataObj.getJSONObject("discount")
+                        val introduceObj = dataObj.getJSONObject("introduce")
+                        if (discountObj.getBoolean("success") && discountCode != "0") {
+                            binding.icDone.visibility = View.VISIBLE
+                        } else if (!discountObj.getBoolean("success") && discountCode != "0") {
+                            MyApplication.Toast(
+                                discountObj.getString("message"),
+                                Toast.LENGTH_SHORT
+                            )
+                        }
+                        if (introduceObj.getBoolean("success") && introducerId != "0") {
+                            binding.icDone.visibility = View.VISIBLE
+                        } else if (!introduceObj.getBoolean("success") && introducerId != "0") {
+                            MyApplication.Toast(
+                                introduceObj.getString("message"),
+                                Toast.LENGTH_SHORT
+                            )
+                        }
+                        val deliveryCost = dataObj.getInt("delivery")
+                        serverDiscount = dataObj.getInt("totalDiscount")
                         courierFee = (Integer.valueOf(deliveryCost))
+                        val total = dataObj.getInt("total")
 
                         if (serverDiscount == 0) {
                             hasDiscount = false
+                            calculatePrice()
                         } else {
                             hasDiscount = true
+
                             binding.txtDiscount.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(serverDiscount.toString())) + " تومان"
-                            totalPrice = 0
-                            for (i in 0 until pendingCartModels.size) {
-                                totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt()) * pendingCartModels[i].quantity)
-                            }
+                                StringHelper.toPersianDigits(
+                                    StringHelper.setComma(
+                                        serverDiscount.toString()
+                                    )
+                                ) + " تومان"
+                            totalPrice = total
                             binding.txtSumPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice + deliveryCost.toInt() - serverDiscount}")) + " تومان"
+                                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
                         }
 
                         if (binding.edtStationCode.text.trim().isEmpty()) {
                             binding.txtDeliPrice.text = "۰ تومان"
                         } else {
                             binding.txtDeliPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost)) + " تومان"
+                                StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost.toString())) + " تومان"
                         }
 
                     } else {
                         GeneralDialog().message(message).secondButton("باشه") {
-                            binding.txtDeliPrice.text = "۰ تومان"
-                            binding.edtStationCode.setText("")
+                            binding.txtDiscount.text = "۰ تومان"
                         }.show()
                     }
+                    binding.vfPriceCalculate.displayedChild = 0
+                    introducerId = "0"
+                    discountCode = "0"
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    AvaCrashReporter.send(e, "$TAG class, getPriceCallBack method")
+                    AvaCrashReporter.send(e, "$TAG class, getDiscountCallBack method")
                 }
+            }
+        }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+            MyApplication.handler.post {
+                binding.vfPriceCalculate.displayedChild = 0
+                introducerId = "0"
+                discountCode = "0"
             }
         }
     }
@@ -649,6 +713,35 @@ class RegisterOrderActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
+        }
+    }
+
+    private fun initDiscountSpinner() {
+        val discountTypeArr = ArrayList(listOf("نوع تخفیف", "کد معرف", "کد تخفیف"))
+        try {
+            binding.spDiscountType.adapter = SpinnerAdapter(
+                MyApplication.currentActivity,
+                R.layout.item_spinner,
+                discountTypeArr
+            )
+            binding.spDiscountType.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    binding.icDone.visibility = View.GONE
+                    binding.edtIntroducer.setText("")
+                    discountType = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initWaitingTimeSpinner method ")
         }
     }
 
@@ -924,6 +1017,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtAddress.setText("")
         binding.edtStationCode.setText("")
         binding.edtDescription.setText("")
+        binding.edtIntroducer.setText("")
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
         addressModels.clear()
@@ -936,6 +1030,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         isSame = false
         initProductTypeSpinner()
         initProductSpinner("")
+        initDiscountSpinner()
         binding.txtSumPrice.text = "۰ تومان"
         binding.txtDiscount.text = "۰ تومان"
         binding.txtDeliPrice.text = "۰ تومان"
@@ -944,6 +1039,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         courierFee = 0
         serverDiscount = 0
         hasDiscount = false
+        binding.icDone.visibility = View.GONE
         disableViews()
     }
 
@@ -962,6 +1058,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.spProduct.isEnabled = true
         binding.imgAddOrder.isEnabled = true
         binding.edtDescription.isEnabled = true
+        binding.rlDiscountType.isEnabled = true
+        binding.spDiscountType.isEnabled = true
+        binding.edtIntroducer.isEnabled = true
     }
 
     private fun disableViews() {
@@ -979,6 +1078,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.spProduct.isEnabled = false
         binding.imgAddOrder.isEnabled = false
         binding.edtDescription.isEnabled = false
+        binding.rlDiscountType.isEnabled = false
+        binding.spDiscountType.isEnabled = false
+        binding.edtIntroducer.isEnabled = false
     }
 
     private fun sendMenu() {
