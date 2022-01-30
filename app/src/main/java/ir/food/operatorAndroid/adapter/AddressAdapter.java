@@ -80,7 +80,6 @@ public class AddressAdapter extends BaseAdapter {
                     .secondButton("خیر", null)
                     .cancelable(false)
                     .show());
-
         } catch (Exception e) {
             e.printStackTrace();
             AvaCrashReporter.send(e, "LastAddressAdapter class, getView method");
@@ -89,7 +88,7 @@ public class AddressAdapter extends BaseAdapter {
     }
 
     void archiveAddress(String id) {
-        RequestHelper.builder(EndPoints.INSTANCE.getARCHIVE_ADDRESS())
+        RequestHelper.builder(EndPoints.ARCHIVE_ADDRESS)
                 .addParam("mobile", mobile)
                 .addParam("addressId", id)
                 .listener(archiveCallBack)
@@ -100,7 +99,6 @@ public class AddressAdapter extends BaseAdapter {
         @Override
         public void onResponse(Runnable reCall, Object... args) {
 //            {"success":true,"message":"آدرس مشتری با موفقیت آرشیو شد"}
-
         }
     };
 }

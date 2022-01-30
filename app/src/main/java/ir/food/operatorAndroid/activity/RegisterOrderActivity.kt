@@ -78,6 +78,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     private var addressLength = 0
     var introducerId = "0"
     var discountCode = "0"
+    var discountUsed = true
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             @SuppressLint("SetTextI18n")
@@ -122,7 +123,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 .replace()
         }
 
-        binding.btnPriceCount.setOnClickListener {
+        binding.btnPriceCalculate.setOnClickListener {
             if (binding.edtMobile.text.trim().isEmpty()) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_SHORT)
                 binding.edtMobile.requestFocus()
@@ -151,7 +152,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
             if (discountType == 0 && binding.edtIntroducer.text.toString().trim().isNotEmpty()) {
                 MyApplication.Toast("نوع کد تخفیف یا معرف را انتخاب کنید.", Toast.LENGTH_SHORT)
-                binding.edtIntroducer.requestFocus()
+                binding.spDiscountType.performClick()
                 binding.scroll.scrollTo(0, 0)
                 return@setOnClickListener
             }
@@ -325,6 +326,12 @@ class RegisterOrderActivity : AppCompatActivity() {
             if (pendingCartModels.size == 0) {
                 MyApplication.Toast("لطفا محصول را انتخاب کنید.", Toast.LENGTH_SHORT)
                 binding.spProductType.performClick()
+                return@setOnClickListener
+            }
+            if (!discountUsed) {
+                MyApplication.Toast("تخفیف وارد شده صحیح نمیباشد.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
                 return@setOnClickListener
             }
             customerAddressId =
@@ -531,6 +538,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                         val dataObj = jsonObject.getJSONObject("data")
                         val discountObj = dataObj.getJSONObject("discount")
                         val introduceObj = dataObj.getJSONObject("introduce")
+
                         if (discountObj.getBoolean("success") && discountCode != "0") {
                             binding.icDone.visibility = View.VISIBLE
                         } else if (!discountObj.getBoolean("success") && discountCode != "0") {
@@ -538,6 +546,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 discountObj.getString("message"),
                                 Toast.LENGTH_SHORT
                             )
+                            discountUsed = false
                         }
                         if (introduceObj.getBoolean("success") && introducerId != "0") {
                             binding.icDone.visibility = View.VISIBLE
@@ -546,7 +555,9 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 introduceObj.getString("message"),
                                 Toast.LENGTH_SHORT
                             )
+                            discountUsed = false
                         }
+
                         val deliveryCost = dataObj.getInt("delivery")
                         serverDiscount = dataObj.getInt("totalDiscount")
                         courierFee = (Integer.valueOf(deliveryCost))
@@ -1140,6 +1151,11 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun submitOrder() {
         LoadingDialog.makeCancelableLoader()
+        when (discountType) {
+            1 -> introducerId = binding.edtIntroducer.text.trim().toString()
+            2 -> discountCode = binding.edtIntroducer.text.trim().toString()
+        }
+
         RequestHelper.builder(EndPoints.ADD_ORDER)
             .addParam(
                 "mobile",
@@ -1153,6 +1169,11 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("station", binding.edtStationCode.text.trim().toString())
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
+            .addParam("introduceId", introducerId)
+            .addParam("discountCode", discountCode)
+            .addParam("deliveryPrice", courierFee)
+            .addParam("totalPrice", totalPrice)
+            .addParam("discountPrice", totalDiscount)
             .listener(submitOrderCallBack)
             .post()
     }

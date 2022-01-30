@@ -21,28 +21,28 @@ object EndPoints {
     const val APP_INFO = WEBSERVICE_PATH + "app/info"
     const val LOG_IN = WEBSERVICE_PATH + "login"
     const val SIGN_UP = WEBSERVICE_PATH + "register"
-    val LOGIN_VERIFICATION_CODE = WEBSERVICE_PATH + "login/verificationcode"
+    const val LOGIN_VERIFICATION_CODE = WEBSERVICE_PATH + "login/verificationcode"
     const val VERIFICATION_CODE = WEBSERVICE_PATH + "verificationcode"
 
     /******************************** register order Api  *********************************/
 
-    val ENTER_QUEUE = "${WEBSERVICE_PATH}queue/enter"
-    val EXIT_QUEUE = "${WEBSERVICE_PATH}queue/exit"
-    val GET_CUSTOMER = CUSTOMER_PATH
-    val GET_PRODUCTS = "$ORDER_PATH/product"
-    val ADD_ORDER = ORDER_PATH
-    val EDIT_ORDER = "$ORDER_PATH/editOrder"
-    val SEND_MENU = "$ORDER_PATH/menu"
-    val CALCULATE_BILL = "${ORDER_PATH}/bill"
+    const val ENTER_QUEUE = "${WEBSERVICE_PATH}queue/enter"
+    const val EXIT_QUEUE = "${WEBSERVICE_PATH}queue/exit"
+    const val GET_CUSTOMER = CUSTOMER_PATH
+    const val GET_PRODUCTS = "$ORDER_PATH/product"
+    const val ADD_ORDER = "${ORDER_PATH}/v1"
+    const val EDIT_ORDER = "$ORDER_PATH/editOrder"
+    const val SEND_MENU = "$ORDER_PATH/menu"
+    const val CALCULATE_BILL = "${ORDER_PATH}/bill"
 
     /******************************** support order Api  *********************************/
 
-    val GET_ORDERS_LIST = SUPPORT
-    val GET_ORDER_DETAILS = "$ORDER_PATH/v1/"
-    val EDIT_ADDRESS = "$ORDER_PATH/editAddress"
-    val ADD_COMPLAINT = COMPLAINT_PATH
-    val CANCEL_ORDER = ORDER_PATH
-    val GET_DELIVERY_LOCATION = "$ORDER_PATH/delivery/"
-    val ARCHIVE_ADDRESS = "$ORDER_PATH/cust/archive/address"
+    const val GET_ORDERS_LIST = SUPPORT
+    const val GET_ORDER_DETAILS = "$ORDER_PATH/v1/"
+    const val EDIT_ADDRESS = "$ORDER_PATH/editAddress"
+    const val ADD_COMPLAINT = COMPLAINT_PATH
+    const val CANCEL_ORDER = ORDER_PATH
+    const val GET_DELIVERY_LOCATION = "$ORDER_PATH/delivery/"
+    const val ARCHIVE_ADDRESS = "$ORDER_PATH/cust/archive/address"
 
 }
