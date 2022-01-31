@@ -138,7 +138,7 @@ class EditOrderDialog {
 
         }
 
-        binding.imgClose.setOnClickListener { dialog.dismiss() }
+        binding.imgClose.setOnClickListener { dismiss() }
 
         dialog.show()
     }

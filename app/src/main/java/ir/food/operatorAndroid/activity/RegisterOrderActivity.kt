@@ -334,6 +334,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.scroll.scrollTo(0, 0)
                 return@setOnClickListener
             }
+            if (courierFee == 0) {
+                MyApplication.Toast("هزینه پیک محاسبه نشده است.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
+
             customerAddressId =
                 if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
                     "0"
@@ -521,11 +526,11 @@ class RegisterOrderActivity : AppCompatActivity() {
             )
             .addParam("introduceId", introducerId)
             .addParam("total", rawTotalPrice)
-            .listener(getDiscountCallBack)
+            .listener(getBillCallBack)
             .post()
     }
 
-    private val getDiscountCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+    private val getBillCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
         @SuppressLint("SetTextI18n")
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
