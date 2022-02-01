@@ -59,7 +59,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                             .firstButton("باشه") {
                                 binding.scrol.scrollTo(0,0)
                                 binding.txtStatus.text = "لغو شده"
-                                binding.llEditOrder.visibility = View.GONE
+                                binding.llEditOrder.visibility = GONE
                                 binding.imgStatus.setImageResource(R.drawable.ic_close)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     val header =
@@ -294,7 +294,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
 //                    binding.llEditOrder.visibility = VISIBLE
                 }
                 5 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
                     icon = R.drawable.ic_chef
                     color = R.color.preparing
                     binding.txtStatus.setTextColor(
@@ -310,7 +310,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 2 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
                     icon = R.drawable.ic_coooking
                     color = R.color.cooking
                     binding.txtStatus.setTextColor(
@@ -326,7 +326,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 3 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
                     icon = R.drawable.ic_delivery
                     color = R.color.delivery
                     binding.txtStatus.setTextColor(
@@ -341,7 +341,8 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 1 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
+                    binding.vfCancel.visibility = GONE
                     icon = R.drawable.ic_close
                     color = R.color.canceled
                     binding.txtStatus.setTextColor(
@@ -357,7 +358,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     binding.btnDeliverLocation.visibility = GONE
                 }
                 4 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
                     icon = R.drawable.ic_round_done_24
                     color = R.color.finished
                     binding.txtStatus.setTextColor(
@@ -372,7 +373,8 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 7 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
+                    binding.vfCancel.visibility = GONE
                     icon = R.drawable.ic_payment
                     color = R.color.settlement
                     binding.txtStatus.setTextColor(
@@ -387,7 +389,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     )
                 }
                 6 -> {
-                    binding.llEditOrder.visibility = View.GONE
+                    binding.llEditOrder.visibility = GONE
                     icon = R.drawable.ic_refresh_white
                     color = R.color.payment_color
                     binding.txtStatus.setTextColor(

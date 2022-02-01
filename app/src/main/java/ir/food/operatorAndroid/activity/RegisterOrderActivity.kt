@@ -35,7 +35,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.linphone.core.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RegisterOrderActivity : AppCompatActivity() {
 
@@ -44,56 +43,58 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     lateinit var binding: ActivityRegisterOrderBinding
-    val TAG = RegisterOrderActivity.javaClass.simpleName
-    var productModel: ProductsModel? =
+    private val TAG = RegisterOrderActivity.javaClass.simpleName
+    private var productModel: ProductsModel? =
         null // this model save the last selected product in the spinner
-    var mCallQualityUpdater: Runnable? = null
-    var mDisplayedQuality = -1
+    private var mCallQualityUpdater: Runnable? = null
+    private var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
-    var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
-    var productsModels: ArrayList<ProductsModel> = ArrayList()
-    var addressModels: ArrayList<AddressModel> = ArrayList()
+    private var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
+    private var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
+    private var productsModels: ArrayList<ProductsModel> = ArrayList()
+    private var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
-    var customerAddresses = ""
-    var phoneNumber = "0"
-    var phoneNumberNew = "0"
-    var isFull = false // this variable will check the fields in page is full or not
-    var customerAddressId = "0"
-    var productId: String = ""
-    var tempAddressId = "0" // it is a temp variable for save addressId for first time.
-    var originAddress =
+    private var customerAddresses = ""
+    private var phoneNumber = "0"
+    private var phoneNumberNew = "0"
+    private var isFull = false // this variable will check the fields in page is full or not
+    private var customerAddressId = "0"
+    private var productId: String = ""
+    private var tempAddressId = "0" // it is a temp variable for save addressId for first time.
+    private var originAddress =
         "" // it is a temp variable for save address for first time. if you change the editText content it never will change
-    var totalPrice = 0
-    var totalDiscount = 0
-    var courierFee = 0
-    var isSame = false
-    var addressChangeCounter =
+    private var totalPrice = 0
+    private var totalDiscount = 0
+    private var courierFee =
+        0 // The cost of transportation by motor courier that comes from server by call getPrice()
+    private var serverDiscount =
+        0 // if it's 0 we use from discount of each product, else we use from serverDiscount value instead of discount of each product it comes from getPrice()
+    private var isSame = false
+    private var hasDiscount = false
+    var discountType = 0
+    private var addressChangeCounter =
         0 // this variable count the last edition of edtAddress. if more than 50% of address changed station set to 0
-    var addressLength = 0
+    private var addressLength = 0
+    var introducerId = "0"
+    var discountCode = "0"
+    var discountUsed = true
+    var canSubmitOrder = false
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
+            @SuppressLint("SetTextI18n")
             override fun collectTotalPrice(s: Int) {
-                totalPrice = courierFee
-                totalDiscount = 0
                 if (s == 0) {
                     binding.txtSumPrice.text = "۰ تومان"
                     binding.txtDiscount.text = "۰ تومان"
                     return
                 }
-                for (i in 0 until s) {
-                    totalPrice += Integer.valueOf((pendingCartModels[i].price.toInt() - pendingCartModels[i].discount.toInt()) * pendingCartModels[i].quantity)
-                    binding.txtSumPrice.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
-                    totalDiscount += Integer.valueOf(pendingCartModels[i].discount.toInt() * pendingCartModels[i].quantity)
-                    binding.txtDiscount.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-                }
+                calculatePrice()
+                canSubmitOrder = false
             }
         })
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterOrderBinding.inflate(layoutInflater)
@@ -113,7 +114,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.orderList.adapter = pendingCartAdapter
         disableViews()
         getProductsAndLists()
-
+        initDiscountSpinner()
         MyApplication.handler.postDelayed({
             binding.edtMobile.requestFocus()
             KeyBoardHelper.showKeyboard(MyApplication.context)
@@ -122,6 +123,44 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.btnSupport.setOnClickListener {
             FragmentHelper.toFragment(MyApplication.currentActivity, OrdersListFragment(""))
                 .replace()
+        }
+
+        binding.btnCalculatePrice.setOnClickListener {
+            if (binding.edtMobile.text.trim().isEmpty()) {
+                MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_SHORT)
+                binding.edtMobile.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+
+            if (productModel == null || pendingCartModels.size == 0) {
+                MyApplication.Toast("حداقل یک سفارش انتخاب کنید", Toast.LENGTH_SHORT)
+                binding.spProduct.performClick()
+                return@setOnClickListener
+            }
+
+            if (binding.edtStationCode.text.trim().isEmpty()) {
+                MyApplication.Toast("کد ایستگاه را وارد کنید", Toast.LENGTH_SHORT)
+                binding.edtStationCode.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+
+            if (discountType != 0 && binding.edtIntroducer.text.toString().trim().isEmpty()) {
+                MyApplication.Toast("کد تخفیف یا معرف را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+            if (discountType == 0 && binding.edtIntroducer.text.toString().trim().isNotEmpty()) {
+                MyApplication.Toast("نوع کد تخفیف یا معرف را انتخاب کنید.", Toast.LENGTH_SHORT)
+                binding.spDiscountType.performClick()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+
+            binding.vfPriceCalculate.displayedChild = 1
+            getBill()
         }
 
         binding.llMenu.setOnClickListener {
@@ -212,7 +251,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProduct.performClick()
                 return@setOnClickListener
             }
-
             if (pendingCartModels.size == 0) {
                 pendingCartModels.add(productModel!!)
             } else {
@@ -235,15 +273,9 @@ class RegisterOrderActivity : AppCompatActivity() {
                 }
             }
 
-            totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
-            binding.txtSumPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
-            totalDiscount += Integer.valueOf(productModel!!.discount)
-            binding.txtDiscount.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-
+            calculatePrice()
             pendingCartAdapter.notifyDataSetChanged()
+            canSubmitOrder = false
         }
 
         binding.txtSendMenu.setOnClickListener {
@@ -299,6 +331,21 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProductType.performClick()
                 return@setOnClickListener
             }
+            if (!discountUsed) {
+                MyApplication.Toast("تخفیف وارد شده صحیح نمیباشد.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
+            if (courierFee == 0) {
+                MyApplication.Toast("هزینه پیک محاسبه نشده است.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
+            if (!canSubmitOrder) {
+                MyApplication.Toast("هزینه سفارش محاسبه نشده است.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
+
             customerAddressId =
                 if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
                     "0"
@@ -336,6 +383,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.edtAddress.addTextChangedListener(addressTW)
         binding.edtMobile.addTextChangedListener(tellTW)
+        binding.edtIntroducer.addTextChangedListener(introducerTW)
         binding.edtStationCode.addTextChangedListener(stationTW)
     }
 
@@ -358,13 +406,41 @@ class RegisterOrderActivity : AppCompatActivity() {
                 initProductSpinner("")
                 initProductTypeSpinner()
                 totalPrice = 0
+                courierFee = 0
                 totalDiscount = 0
+                serverDiscount = 0
+                hasDiscount = false
                 binding.txtSumPrice.text = "۰ تومان"
                 binding.edtCustomerName.setText("")
                 binding.edtDescription.setText("")
+                binding.txtDiscount.text = "۰ تومان"
+                binding.edtIntroducer.setText("")
                 addressChangeCounter = 0
                 binding.edtStationCode.setText("")
+                canSubmitOrder = false
             }
+        }
+    }
+
+    private val introducerTW = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            canSubmitOrder = false
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+        }
+    }
+
+    private val stationTW = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            canSubmitOrder = false
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
         }
     }
 
@@ -389,6 +465,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             val addressPercent: Int = addressLength * 50 / 100
             if (addressChangeCounter >= addressPercent) {
                 binding.edtStationCode.setText("")
+                canSubmitOrder = false
             }
         }
 
@@ -397,36 +474,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 customerAddressId = "0"
                 addressLength = 0
                 binding.edtStationCode.setText("")
-            }
-        }
-    }
-
-    private var stationTW: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(
-            charSequence: CharSequence,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
-
-        override fun onTextChanged(
-            charSequence: CharSequence,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-            if (charSequence.isEmpty()) {
-                binding.txtDeliPrice.text = "۰ تومان"
-            }
-        }
-
-        override fun afterTextChanged(editable: Editable) {
-            Log.i(TAG, "afterTextChanged: $editable")
-            if (editable.isNotEmpty()) {
-                getPrice()
-            } else {
-                binding.txtDeliPrice.text = "۰ تومان"
+                canSubmitOrder = false
             }
         }
     }
@@ -492,42 +540,138 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPrice() {
-        RequestHelper.builder(EndPoints.GET_PRICE)
-            .listener(getPriceCallBack)
-            .addPath(binding.edtStationCode.text.toString())
-            .get()
+    private fun getBill() {
+        when (discountType) {
+            1 -> introducerId = binding.edtIntroducer.text.trim().toString()
+            2 -> discountCode = binding.edtIntroducer.text.trim().toString()
+        }
+        var rawTotalPrice = 0
+        for (m in 0 until pendingCartModels.size) {
+            rawTotalPrice =
+                Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
+        }
+
+        RequestHelper.builder(EndPoints.CALCULATE_BILL)
+            .addParam("discountCode", discountCode)
+            .addParam("station", binding.edtStationCode.text.trim().toString())
+            .addParam(
+                "customerPhone",
+                NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString())
+            )
+            .addParam("introduceId", introducerId)
+            .addParam("total", rawTotalPrice)
+            .listener(getBillCallBack)
+            .post()
     }
 
-    private val getPriceCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+    private val getBillCallBack: RequestHelper.Callback = object : RequestHelper.Callback() {
+        @SuppressLint("SetTextI18n")
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
+//{"success":true,"message":"صورت حساب با موفقیت ایجاد شد","data":{"discount":{"success":false,"message":""},"introduce":{"success":false,"message":"این بخش فعال نمی باشد ","amount":0},"totalDiscount":0,"delivery":7000,"total":274000}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
                     if (success) {
-                        val data = jsonObject.getString("data")
-                        if (binding.edtStationCode.text.trim().isEmpty()) {
-                            binding.txtDeliPrice.text = "۰ تومان"
-                        } else {
-                            courierFee = (Integer.valueOf(data))
-                            totalPrice += (Integer.valueOf(data))
-                            binding.txtDeliPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(data)) + " تومان"
+                        val dataObj = jsonObject.getJSONObject("data")
+                        val discountObj = dataObj.getJSONObject("discount")
+                        val introduceObj = dataObj.getJSONObject("introduce")
+
+                        if (discountObj.getBoolean("success") && discountCode != "0") {
+                            canSubmitOrder = true
+                            binding.icDone.visibility = View.VISIBLE
+                        } else if (!discountObj.getBoolean("success") && discountCode != "0") {
+                            MyApplication.Toast(
+                                discountObj.getString("message"),
+                                Toast.LENGTH_SHORT
+                            )
+                            canSubmitOrder = false
+                            discountUsed = false
                         }
+                        if (introduceObj.getBoolean("success") && introducerId != "0") {
+                            canSubmitOrder = true
+                            binding.icDone.visibility = View.VISIBLE
+                        } else if (!introduceObj.getBoolean("success") && introducerId != "0") {
+                            MyApplication.Toast(
+                                introduceObj.getString("message"),
+                                Toast.LENGTH_SHORT
+                            )
+                            canSubmitOrder = false
+                            discountUsed = false
+                        }
+
+                        val deliveryCost = dataObj.getInt("delivery")
+                        serverDiscount = dataObj.getInt("totalDiscount")
+                        courierFee = (Integer.valueOf(deliveryCost))
+                        val total = dataObj.getInt("total")
+
+                        if (serverDiscount == 0) {
+                            hasDiscount = false
+                            calculatePrice()
+                        } else {
+                            hasDiscount = true
+
+                            binding.txtDiscount.text =
+                                StringHelper.toPersianDigits(
+                                    StringHelper.setComma(
+                                        serverDiscount.toString()
+                                    )
+                                ) + " تومان"
+                            totalPrice = total
+                            binding.txtSumPrice.text =
+                                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+                        }
+
+                        binding.txtDeliPrice.text =
+                            StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost.toString())) + " تومان"
+
+                        canSubmitOrder = true
                     } else {
+                        canSubmitOrder = false
                         GeneralDialog().message(message).secondButton("باشه") {
-                            binding.txtDeliPrice.text = "۰ تومان"
-                            binding.edtStationCode.setText("")
+                            binding.txtDiscount.text = "۰ تومان"
                         }.show()
                     }
+                    binding.vfPriceCalculate.displayedChild = 0
+                    introducerId = "0"
+                    discountCode = "0"
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    AvaCrashReporter.send(e, "$TAG class, getPriceCallBack method")
+                    AvaCrashReporter.send(e, "$TAG class, getDiscountCallBack method")
                 }
             }
         }
+
+        override fun onFailure(reCall: Runnable?, e: java.lang.Exception?) {
+            super.onFailure(reCall, e)
+            MyApplication.handler.post {
+                binding.vfPriceCalculate.displayedChild = 0
+                introducerId = "0"
+                discountCode = "0"
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun calculatePrice() {
+        totalPrice = courierFee
+        totalDiscount = 0
+
+        for (m in 0 until pendingCartModels.size) {
+            if (!hasDiscount) {
+                totalPrice += Integer.valueOf((pendingCartModels[m].price.toInt() - pendingCartModels[m].discount.toInt()) * pendingCartModels[m].quantity)
+                totalDiscount += Integer.valueOf(pendingCartModels[m].discount.toInt() * pendingCartModels[m].quantity)
+            } else {
+                totalPrice += Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
+                totalDiscount = serverDiscount
+            }
+        }
+        binding.txtDiscount.text =
+            StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
+        binding.txtSumPrice.text =
+            if (!hasDiscount) StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
+            else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount}")) + " تومان"
     }
 
     private fun initProductTypeSpinner() {
@@ -609,6 +753,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     if (position == 0) {
+                        productModel = null
                         return
                     }
                     productModel = productsModels[position - 1]
@@ -620,6 +765,36 @@ class RegisterOrderActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
             AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
+        }
+    }
+
+    private fun initDiscountSpinner() {
+        val discountTypeArr = ArrayList(listOf("نوع تخفیف", "کد معرف", "کد تخفیف"))
+        try {
+            binding.spDiscountType.adapter = SpinnerAdapter(
+                MyApplication.currentActivity,
+                R.layout.item_spinner,
+                discountTypeArr
+            )
+            binding.spDiscountType.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    binding.icDone.visibility = View.GONE
+                    binding.edtIntroducer.setText("")
+                    canSubmitOrder = false
+                    discountType = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initWaitingTimeSpinner method ")
         }
     }
 
@@ -895,6 +1070,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtAddress.setText("")
         binding.edtStationCode.setText("")
         binding.edtDescription.setText("")
+        binding.edtIntroducer.setText("")
         pendingCartAdapter.notifyItemRangeRemoved(0, pendingCartModels.size)
         pendingCartModels.clear()
         addressModels.clear()
@@ -907,11 +1083,16 @@ class RegisterOrderActivity : AppCompatActivity() {
         isSame = false
         initProductTypeSpinner()
         initProductSpinner("")
+        initDiscountSpinner()
         binding.txtSumPrice.text = "۰ تومان"
         binding.txtDiscount.text = "۰ تومان"
         binding.txtDeliPrice.text = "۰ تومان"
         totalPrice = 0
         totalDiscount = 0
+        courierFee = 0
+        serverDiscount = 0
+        hasDiscount = false
+        binding.icDone.visibility = View.GONE
         disableViews()
     }
 
@@ -930,6 +1111,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.spProduct.isEnabled = true
         binding.imgAddOrder.isEnabled = true
         binding.edtDescription.isEnabled = true
+        binding.rlDiscountType.isEnabled = true
+        binding.spDiscountType.isEnabled = true
+        binding.edtIntroducer.isEnabled = true
     }
 
     private fun disableViews() {
@@ -947,6 +1131,10 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.spProduct.isEnabled = false
         binding.imgAddOrder.isEnabled = false
         binding.edtDescription.isEnabled = false
+        binding.rlDiscountType.isEnabled = false
+        binding.spDiscountType.isEnabled = false
+        binding.edtIntroducer.isEnabled = false
+        canSubmitOrder = false
     }
 
     private fun sendMenu() {
@@ -1011,6 +1199,11 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun submitOrder() {
         LoadingDialog.makeCancelableLoader()
+        when (discountType) {
+            1 -> introducerId = binding.edtIntroducer.text.trim().toString()
+            2 -> discountCode = binding.edtIntroducer.text.trim().toString()
+        }
+
         RequestHelper.builder(EndPoints.ADD_ORDER)
             .addParam(
                 "mobile",
@@ -1024,6 +1217,11 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("station", binding.edtStationCode.text.trim().toString())
             .addParam("products", cartJArray)
             .addParam("description", binding.edtDescription.text.trim().toString())
+            .addParam("introduceId", introducerId)
+            .addParam("discountCode", discountCode)
+            .addParam("deliveryPrice", courierFee)
+            .addParam("totalPrice", totalPrice)
+            .addParam("discountPrice", totalDiscount)
             .listener(submitOrderCallBack)
             .post()
     }
@@ -1124,17 +1322,17 @@ class RegisterOrderActivity : AppCompatActivity() {
         if (mCallQualityUpdater == null)
             LinphoneService.dispatchOnUIThreadAfter(
                 object : Runnable {
-                    val mCurrentCall = LinphoneService.getCore().currentCall;
+                    val mCurrentCall = LinphoneService.getCore().currentCall
                     override fun run() {
                         if (mCurrentCall == null) {
-                            mCallQualityUpdater = null;
+                            mCallQualityUpdater = null
                             return
                         }
                         val newQuality = mCurrentCall.currentQuality
-                        updateQualityOfSignalIcon(newQuality);
+                        updateQualityOfSignalIcon(newQuality)
 
                         if (MyApplication.prefManager.connectedCall)
-                            LinphoneService.dispatchOnUIThreadAfter(this, 1000);
+                            LinphoneService.dispatchOnUIThreadAfter(this, 1000)
                     }
                 }, 1000
             )
@@ -1272,7 +1470,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressModels,
                 if (binding.edtMobile.text.toString()
                         .startsWith("0")
-                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text.toString()}"
+                ) binding.edtMobile.text.toString() else "0${binding.edtMobile.text}"
             ) { addressModel ->
                 addressChangeCounter = 0
                 addressLength = addressModel.address.length

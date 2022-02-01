@@ -51,24 +51,6 @@ class EditOrderDialog {
                     orderObject.put("size", model.size)
                     orderArray.put(orderObject)
                 }
-
-                totalPrice = courierFee
-                totalDiscount = 0
-                if (length == 0) {
-                    binding.txtSumPrice.text = "۰ تومان"
-                    binding.txtDiscount.text = "۰ تومان"
-                    return
-                }
-                for (i in 0 until length) {
-                    totalPrice += Integer.valueOf((cartModels[i].price.toInt() - cartModels[i].discount.toInt()) * cartModels[i].quantity)
-                    binding.txtSumPrice.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
-                    totalDiscount += Integer.valueOf(cartModels[i].discount.toInt() * cartModels[i].quantity)
-                    binding.txtDiscount.text =
-                        StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-                }
-
             }
         })
 
@@ -107,19 +89,9 @@ class EditOrderDialog {
             )
             cartModels.add(cartModel)
             cart[productObj.getString("id")] = cartModel
-
-            totalPrice += Integer.valueOf((cartModels[i].price.toInt() - cartModels[i].discount.toInt()) * cartModels[i].quantity)
-            binding.txtSumPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
-            totalDiscount += Integer.valueOf(cartModels[i].discount.toInt() * cartModels[i].quantity)
-            binding.txtDiscount.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-
         }
-        binding.orderList.adapter = cartAdapter
 
-        binding.txtDeliPrice.text = StringHelper.setComma(courierFee)
+        binding.orderList.adapter = cartAdapter
 
         binding.imgAddOrder.setOnClickListener {
             if (productModel == null) {
@@ -151,14 +123,6 @@ class EditOrderDialog {
                 }
             }
 
-            totalPrice += (Integer.valueOf(productModel!!.price) - Integer.valueOf(productModel!!.discount))
-            binding.txtSumPrice.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
-
-            totalDiscount += Integer.valueOf(productModel!!.discount)
-            binding.txtDiscount.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(totalDiscount.toString())) + " تومان"
-
             cartAdapter.notifyDataSetChanged()
         }
 
@@ -174,7 +138,7 @@ class EditOrderDialog {
 
         }
 
-        binding.imgClose.setOnClickListener { dialog.dismiss() }
+        binding.imgClose.setOnClickListener { dismiss() }
 
         dialog.show()
     }
