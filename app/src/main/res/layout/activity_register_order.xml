@@ -490,7 +490,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/edit_text_style"
-                            android:gravity="center_vertical"
+                            android:gravity="center_vertical|right"
                             android:inputType="text"
                             android:nextFocusDown="@id/edtAddress"
                             android:paddingHorizontal="@dimen/_10sdp"

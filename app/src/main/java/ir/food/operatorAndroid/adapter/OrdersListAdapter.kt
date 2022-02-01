@@ -97,6 +97,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                         R.color.white
                     )
                 )
+                holder.binding.vfLoader.setIndicatorColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
             }
             2 -> {
                 icon = R.drawable.ic_coooking
@@ -107,6 +112,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                     )
                 )
                 holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.vfLoader.setIndicatorColor(
                     MyApplication.currentActivity.resources.getColor(
                         R.color.white
                     )
@@ -125,6 +135,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                         R.color.white
                     )
                 )
+                holder.binding.vfLoader.setIndicatorColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
             }
             1 -> {
                 icon = R.drawable.ic_close
@@ -135,6 +150,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                     )
                 )
                 holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.vfLoader.setIndicatorColor(
                     MyApplication.currentActivity.resources.getColor(
                         R.color.white
                     )
@@ -153,6 +173,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                         R.color.white
                     )
                 )
+                holder.binding.vfLoader.setIndicatorColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
             }
             7 -> {
                 icon = R.drawable.ic_payment
@@ -167,6 +192,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                         R.color.white
                     )
                 )
+                holder.binding.vfLoader.setIndicatorColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
             }
             6 -> {
                 icon = R.drawable.ic_refresh_white
@@ -177,6 +207,11 @@ class OrdersListAdapter(list: ArrayList<OrderModel>) :
                     )
                 )
                 holder.binding.txtTime.setTextColor(
+                    MyApplication.currentActivity.resources.getColor(
+                        R.color.white
+                    )
+                )
+                holder.binding.vfLoader.setIndicatorColor(
                     MyApplication.currentActivity.resources.getColor(
                         R.color.white
                     )
