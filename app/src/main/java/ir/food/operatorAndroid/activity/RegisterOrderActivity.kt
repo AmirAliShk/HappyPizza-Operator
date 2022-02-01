@@ -79,6 +79,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     var introducerId = "0"
     var discountCode = "0"
     var discountUsed = true
+    var canSubmitOrder = false
     private var pendingCartAdapter =
         PendingCartAdapter(pendingCartModels, object : PendingCartAdapter.TotalPrice {
             @SuppressLint("SetTextI18n")
@@ -89,6 +90,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     return
                 }
                 calculatePrice()
+                canSubmitOrder = false
             }
         })
 
@@ -123,7 +125,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 .replace()
         }
 
-        binding.btnPriceCalculate.setOnClickListener {
+        binding.btnCalculatePrice.setOnClickListener {
             if (binding.edtMobile.text.trim().isEmpty()) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_SHORT)
                 binding.edtMobile.requestFocus()
@@ -272,8 +274,8 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
 
             calculatePrice()
-
             pendingCartAdapter.notifyDataSetChanged()
+            canSubmitOrder = false
         }
 
         binding.txtSendMenu.setOnClickListener {
@@ -338,6 +340,10 @@ class RegisterOrderActivity : AppCompatActivity() {
                 MyApplication.Toast("هزینه پیک محاسبه نشده است.", Toast.LENGTH_SHORT)
                 return@setOnClickListener
             }
+            if (!canSubmitOrder) {
+                MyApplication.Toast("هزینه سفارش محاسبه نشده است.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
 
             customerAddressId =
                 if (originAddress.trim() != binding.edtAddress.text.toString().trim()) {
@@ -376,6 +382,8 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         binding.edtAddress.addTextChangedListener(addressTW)
         binding.edtMobile.addTextChangedListener(tellTW)
+        binding.edtIntroducer.addTextChangedListener(introducerTW)
+        binding.edtStationCode.addTextChangedListener(stationTW)
     }
 
     private val tellTW = object : TextWatcher {
@@ -408,7 +416,30 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.edtIntroducer.setText("")
                 addressChangeCounter = 0
                 binding.edtStationCode.setText("")
+                canSubmitOrder = false
             }
+        }
+    }
+
+    private val introducerTW = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            canSubmitOrder = false
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+        }
+    }
+
+    private val stationTW = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            canSubmitOrder = false
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
         }
     }
 
@@ -433,6 +464,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             val addressPercent: Int = addressLength * 50 / 100
             if (addressChangeCounter >= addressPercent) {
                 binding.edtStationCode.setText("")
+                canSubmitOrder = false
             }
         }
 
@@ -441,6 +473,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 customerAddressId = "0"
                 addressLength = 0
                 binding.edtStationCode.setText("")
+                canSubmitOrder = false
             }
         }
     }
@@ -545,21 +578,25 @@ class RegisterOrderActivity : AppCompatActivity() {
                         val introduceObj = dataObj.getJSONObject("introduce")
 
                         if (discountObj.getBoolean("success") && discountCode != "0") {
+                            canSubmitOrder = true
                             binding.icDone.visibility = View.VISIBLE
                         } else if (!discountObj.getBoolean("success") && discountCode != "0") {
                             MyApplication.Toast(
                                 discountObj.getString("message"),
                                 Toast.LENGTH_SHORT
                             )
+                            canSubmitOrder = false
                             discountUsed = false
                         }
                         if (introduceObj.getBoolean("success") && introducerId != "0") {
+                            canSubmitOrder = true
                             binding.icDone.visibility = View.VISIBLE
                         } else if (!introduceObj.getBoolean("success") && introducerId != "0") {
                             MyApplication.Toast(
                                 introduceObj.getString("message"),
                                 Toast.LENGTH_SHORT
                             )
+                            canSubmitOrder = false
                             discountUsed = false
                         }
 
@@ -585,14 +622,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                                 StringHelper.toPersianDigits(StringHelper.setComma(totalPrice.toString())) + " تومان"
                         }
 
-                        if (binding.edtStationCode.text.trim().isEmpty()) {
-                            binding.txtDeliPrice.text = "۰ تومان"
-                        } else {
-                            binding.txtDeliPrice.text =
-                                StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost.toString())) + " تومان"
-                        }
+                        binding.txtDeliPrice.text =
+                            StringHelper.toPersianDigits(StringHelper.setComma(deliveryCost.toString())) + " تومان"
 
+                        canSubmitOrder = true
                     } else {
+                        canSubmitOrder = false
                         GeneralDialog().message(message).secondButton("باشه") {
                             binding.txtDiscount.text = "۰ تومان"
                         }.show()
@@ -750,6 +785,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 ) {
                     binding.icDone.visibility = View.GONE
                     binding.edtIntroducer.setText("")
+                    canSubmitOrder = false
                     discountType = position
                 }
 
@@ -1097,6 +1133,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.rlDiscountType.isEnabled = false
         binding.spDiscountType.isEnabled = false
         binding.edtIntroducer.isEnabled = false
+        canSubmitOrder = false
     }
 
     private fun sendMenu() {

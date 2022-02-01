@@ -858,7 +858,7 @@
                         android:background="@drawable/bg_green">
 
                         <Button
-                            android:id="@+id/btnPriceCalculate"
+                            android:id="@+id/btn_calculate_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/transparent"
