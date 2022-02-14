@@ -163,7 +163,7 @@ class OrderDetailsFragment(details: String) : Fragment() {
             binding.txtTaxPrice.text =
                 StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("tax")))
             binding.txtDiscount.text =
-                StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("discount")))
+                StringHelper.toPersianDigits(StringHelper.setComma(orderObj.getString("discount")))
             binding.txtTotalPrice.text =
                 StringHelper.toPersianDigits(StringHelper.setComma(dataObj.getString("total")))
             binding.txtSendPrice.text =

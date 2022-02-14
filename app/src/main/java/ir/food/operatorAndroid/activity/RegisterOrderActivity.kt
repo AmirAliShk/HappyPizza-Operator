@@ -331,6 +331,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProductType.performClick()
                 return@setOnClickListener
             }
+            if (discountType != 0 && binding.edtIntroducer.text.isEmpty()) {
+                MyApplication.Toast("کد تخفیف را وارد کنید.", Toast.LENGTH_SHORT)
+                binding.edtIntroducer.requestFocus()
+                binding.scroll.scrollTo(0, 0)
+                return@setOnClickListener
+            }
             if (!discountUsed && discountType != 0) {
                 MyApplication.Toast("تخفیف وارد شده صحیح نمیباشد.", Toast.LENGTH_SHORT)
                 binding.edtIntroducer.requestFocus()
@@ -418,6 +424,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 addressChangeCounter = 0
                 binding.edtStationCode.setText("")
                 canSubmitOrder = false
+                binding.icDone.visibility = View.GONE
             }
         }
     }
@@ -580,6 +587,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                         if (discountObj.getBoolean("success") && discountCode != "0") {
                             canSubmitOrder = true
+                            discountUsed = true
                             binding.icDone.visibility = View.VISIBLE
                         } else if (!discountObj.getBoolean("success") && discountCode != "0") {
                             MyApplication.Toast(
@@ -591,6 +599,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                         }
                         if (introduceObj.getBoolean("success") && introducerId != "0") {
                             canSubmitOrder = true
+                            discountUsed = true
                             binding.icDone.visibility = View.VISIBLE
                         } else if (!introduceObj.getBoolean("success") && introducerId != "0") {
                             MyApplication.Toast(
@@ -608,7 +617,6 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                         if (serverDiscount == 0) {
                             hasDiscount = false
-                            calculatePrice()
                         } else {
                             hasDiscount = true
 
@@ -633,6 +641,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             binding.txtDiscount.text = "۰ تومان"
                         }.show()
                     }
+                    calculatePrice()
                     binding.vfPriceCalculate.displayedChild = 0
                     introducerId = "0"
                     discountCode = "0"
