@@ -331,7 +331,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.spProductType.performClick()
                 return@setOnClickListener
             }
-            if (!discountUsed) {
+            if (!discountUsed && discountType != 0) {
                 MyApplication.Toast("تخفیف وارد شده صحیح نمیباشد.", Toast.LENGTH_SHORT)
                 binding.edtIntroducer.requestFocus()
                 binding.scroll.scrollTo(0, 0)
@@ -1236,56 +1236,48 @@ class RegisterOrderActivity : AppCompatActivity() {
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
                     var message = jsonObject.getString("message")
+                    val data = jsonObject.getJSONObject("data")
                     if (success) {
-                        val data = jsonObject.getJSONObject("data")
-                        val status = data.getBoolean("status")
-                        if (status) {
-                            GeneralDialog()
-                                .message(message)
-                                .firstButton("باشه") {
-                                    getProductsAndLists()
-                                    clearData()
-                                    if (phoneNumberNew != "0") {
-                                        if (phoneNumberNew == phoneNumber) return@firstButton
-                                        binding.edtMobile.setText(
-                                            PhoneNumberValidation.removePrefix(
-                                                phoneNumberNew
-                                            )
+                        GeneralDialog()
+                            .message(message)
+                            .firstButton("باشه") {
+                                getProductsAndLists()
+                                clearData()
+                                if (phoneNumberNew != "0") {
+                                    if (phoneNumberNew == phoneNumber) return@firstButton
+                                    binding.edtMobile.setText(
+                                        PhoneNumberValidation.removePrefix(
+                                            phoneNumberNew
                                         )
-                                        getCustomer(
-                                            PhoneNumberValidation.removePrefix(
-                                                phoneNumberNew
-                                            )
+                                    )
+                                    getCustomer(
+                                        PhoneNumberValidation.removePrefix(
+                                            phoneNumberNew
                                         )
-                                        phoneNumber = phoneNumberNew
-                                        phoneNumberNew = "0"
-                                    }
+                                    )
+                                    phoneNumber = phoneNumberNew
+                                    phoneNumberNew = "0"
+                                }
 
-                                }
-                                .cancelable(false)
-                                .show()
-                        } else {
-                            if (data.has("products") && data.getJSONArray("products")
-                                    .length() != 0
-                            ) {
-                                var productsName = ""
-                                val productsArr = data.getJSONArray("products")
-                                for (i in 0 until productsArr.length()) {
-                                    if (i == 0) {
-                                        productsName = "${productsArr[i]}"
-                                    } else {
-                                        productsName = "$productsName و ${productsArr[i]}"
-                                    }
-                                }
-                                message = " موجودی محصول $productsName کافی نمیباشد "
                             }
-                            GeneralDialog()
-                                .message(message)
-                                .secondButton("باشه") {}
-                                .cancelable(false)
-                                .show()
-                        }
+                            .cancelable(false)
+                            .show()
+
                     } else {
+                        if (data.has("products") && data.getJSONArray("products")
+                                .length() != 0
+                        ) {
+                            var productsName = ""
+                            val productsArr = data.getJSONArray("products")
+                            for (i in 0 until productsArr.length()) {
+                                if (i == 0) {
+                                    productsName = "${productsArr[i]}"
+                                } else {
+                                    productsName = "$productsName و ${productsArr[i]}"
+                                }
+                            }
+                            message = " موجودی محصول $productsName کافی نمیباشد "
+                        }
                         GeneralDialog()
                             .message(message)
                             .secondButton("باشه") {}

@@ -10,11 +10,12 @@ object EndPoints {
     const val ACRA_PATH = "http://turbotaxi.ir:6061/api/v1/crashReport"
     const val PUSH = "http://turbotaxi.ir:6060"
     private const val WEBSERVICE_PATH = "$IP:$APIPort/api/operator/v1/"
-    private const val COMPLAINT_PATH = "$IP:$APIPort/api/operator/v1/complaint"
-    private val ACTIVATE_PATH = "$IP:$APIPort/api/operator/v1/activate"
-    private const val CUSTOMER_PATH = "$IP:$APIPort/api/operator/v1/customer"
-    private const val ORDER_PATH = "$IP:$APIPort/api/operator/v1/order"
-    private const val SUPPORT = "$IP:$APIPort/api/operator/v1/order/support"
+    private const val COMPLAINT_PATH = "${WEBSERVICE_PATH}complaint"
+    private val ACTIVATE_PATH = "${WEBSERVICE_PATH}activate"
+    private const val CUSTOMER_PATH = "${WEBSERVICE_PATH}customer"
+    private const val ORDER_PATH = "${WEBSERVICE_PATH}order"
+    private const val ORDER_PATH_V2 = "$IP:$APIPort/api/operator/v2/order"
+    private const val SUPPORT = "${ORDER_PATH}/support"
 
     /******************************** Base Api  *********************************/
 
@@ -30,7 +31,7 @@ object EndPoints {
     const val EXIT_QUEUE = "${WEBSERVICE_PATH}queue/exit"
     const val GET_CUSTOMER = CUSTOMER_PATH
     const val GET_PRODUCTS = "$ORDER_PATH/product"
-    const val ADD_ORDER = ORDER_PATH
+    const val ADD_ORDER = ORDER_PATH_V2
     const val EDIT_ORDER = "$ORDER_PATH/editOrder"
     const val SEND_MENU = "$ORDER_PATH/menu"
     const val CALCULATE_BILL = "${ORDER_PATH}/bill"

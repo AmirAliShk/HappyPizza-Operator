@@ -1,6 +1,5 @@
 package ir.food.operatorAndroid.model
 
-import org.json.JSONArray
 import org.json.JSONObject
 
 data class ProductsModel(
