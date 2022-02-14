@@ -47,9 +47,9 @@
         <entry key="app/src/main/res/drawable/selector_complaint_btn.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/spinner_style.xml" value="0.22039473684210525" />
         <entry key="app/src/main/res/layout/activity_call.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_order_register.xml" value="0.2861111111111111" />
-        <entry key="app/src/main/res/layout/activity_register_order.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/activity_register_order.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_register_order1.xml" value="0.22006578947368421" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="app/src/main/res/layout/dialog_address.xml" value="0.3770833333333333" />
@@ -58,7 +58,7 @@
         <entry key="app/src/main/res/layout/dialog_cancel_order.xml" value="0.25555555555555554" />
         <entry key="app/src/main/res/layout/dialog_cancelable_loder.xml" value="0.21445086705202313" />
         <entry key="app/src/main/res/layout/dialog_edit_address.xml" value="0.22006578947368421" />
-        <entry key="app/src/main/res/layout/dialog_edit_order.xml" value="0.2860196665241556" />
+        <entry key="app/src/main/res/layout/dialog_edit_order.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/dialog_error.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/dialog_extended_time.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_general.xml" value="0.19322916666666667" />
@@ -72,7 +72,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.21019736842105263" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/fragment_menu_page.xml" value="0.26944444444444443" />
-        <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.261328125" />
+        <entry key="app/src/main/res/layout/fragment_order_detail.xml" value="0.35185185185185186" />
         <entry key="app/src/main/res/layout/fragment_orders_list.xml" value="0.22006578947368421" />
         <entry key="app/src/main/res/layout/fragment_register_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.22006578947368421" />
@@ -97,7 +97,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

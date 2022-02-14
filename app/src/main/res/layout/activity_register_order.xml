@@ -470,7 +470,6 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:layout_alignLeft="@+id/spProductType"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:paddingLeft="@dimen/_7sdp"
@@ -502,7 +501,6 @@
                             android:id="@+id/icDone"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:layout_alignLeft="@+id/spProductType"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:paddingLeft="@dimen/_7sdp"
