@@ -647,6 +647,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     discountCode = "0"
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    binding.vfPriceCalculate.displayedChild = 0
                     AvaCrashReporter.send(e, "$TAG class, getDiscountCallBack method")
                 }
             }
