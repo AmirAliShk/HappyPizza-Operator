@@ -133,7 +133,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (productModel == null || pendingCartModels.size == 0) {
+            if (pendingCartModels.size == 0) {
                 MyApplication.Toast("حداقل یک سفارش انتخاب کنید", Toast.LENGTH_SHORT)
                 binding.spProduct.performClick()
                 return@setOnClickListener
@@ -152,6 +152,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 binding.scroll.scrollTo(0, 0)
                 return@setOnClickListener
             }
+
             if (discountType == 0 && binding.edtIntroducer.text.toString().trim().isNotEmpty()) {
                 MyApplication.Toast("نوع کد تخفیف یا معرف را انتخاب کنید.", Toast.LENGTH_SHORT)
                 binding.spDiscountType.performClick()
@@ -554,18 +555,17 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
         var rawTotalPrice = 0
         for (m in 0 until pendingCartModels.size) {
-            rawTotalPrice =
-                Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
+            rawTotalPrice += Integer.valueOf((pendingCartModels[m].price.toInt()) * pendingCartModels[m].quantity)
         }
 
         RequestHelper.builder(EndPoints.CALCULATE_BILL)
-            .addParam("discountCode", discountCode)
+            .addParam("discountCode", StringHelper.toEnglishDigits(discountCode))
             .addParam("station", binding.edtStationCode.text.trim().toString())
             .addParam(
                 "customerPhone",
                 NumberValidation.addZeroFirst(binding.edtMobile.text.trim().toString())
             )
-            .addParam("introduceId", introducerId)
+            .addParam("introduceId", StringHelper.toEnglishDigits(introducerId))
             .addParam("total", rawTotalPrice)
             .listener(getBillCallBack)
             .post()
