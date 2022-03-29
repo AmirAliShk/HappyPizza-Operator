@@ -22,10 +22,12 @@ import org.linphone.core.Core;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.TransportType;
 
+import java.io.File;
 import java.util.Locale;
 
 import ir.food.operatorAndroid.R;
 import ir.food.operatorAndroid.helper.TypefaceUtil;
+import ir.food.operatorAndroid.push.AvaCrashReporter;
 import ir.food.operatorAndroid.push.AvaFactory;
 import ir.food.operatorAndroid.sip.LinphoneService;
 
@@ -49,10 +51,9 @@ public class MyApplication extends Application {
     public static Typeface IraSanSBold;
     public static Typeface IraSanSLight;
     public static PrefManager prefManager;
-    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static String DIR_DOWNLOAD;
-    public static String DIR_ROOT;
-    public static final String VOICE_FOLDER_NAME = "voice";
+    public static final String DIR_MAIN_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath() + "/HappyPizzaOperator/";
+    public static final String UPDATE_FOLDER_NAME = "Update/";
+    public static final String VOICE_FOLDER_NAME = "voice/";
     public static final String SOUND = "android.resource://ir.food.operatorAndroid/";
 
     @Override
@@ -63,8 +64,20 @@ public class MyApplication extends Application {
         initTypeface();
 
         prefManager = new PrefManager(context);
-        DIR_ROOT = DIR_SDCARD + "/Android/data/" + context.getPackageName() + "/";
-        DIR_DOWNLOAD = DIR_SDCARD + "/Android/data/" + context.getPackageName() + "/files/";
+
+        new File(DIR_MAIN_FOLDER).mkdirs();
+        new File(DIR_MAIN_FOLDER + UPDATE_FOLDER_NAME).mkdirs();
+        File file = new File(DIR_MAIN_FOLDER + VOICE_FOLDER_NAME + ".nomedia");
+        try {
+            if (!file.getParentFile().exists())
+                file.getParentFile().mkdirs();
+            if (!file.exists())
+                file.createNewFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+            AvaCrashReporter.send(e, TAG + " class, onCreate method ");
+        }
+
         String languageToLoad = "fa_";
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
@@ -72,11 +85,16 @@ public class MyApplication extends Application {
         config.locale = locale;
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
 
-        if (prefManager.getUserCode() != "0") {
+        if (!prefManager.getUserCode().equals("0")) {
             avaStart();
         }
 
         initACRA();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 
     private void initACRA() {

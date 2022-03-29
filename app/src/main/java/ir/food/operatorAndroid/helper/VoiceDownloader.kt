@@ -13,6 +13,7 @@ import com.downloader.PRDownloader
 import com.downloader.Progress
 import com.warkiz.widget.IndicatorSeekBar
 import ir.food.operatorAndroid.app.MyApplication
+import ir.food.operatorAndroid.app.MyApplication.VOICE_FOLDER_NAME
 import ir.food.operatorAndroid.okHttp.AuthenticationInterceptor
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import java.io.File
@@ -38,7 +39,7 @@ class VoiceDownloader {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                     .toString() + File.separator + "operatorParsian/"
             } else {
-                MyApplication.DIR_ROOT.toString() + "voice/"
+                MyApplication.DIR_MAIN_FOLDER.toString() + VOICE_FOLDER_NAME
             }
             File(dirPath).mkdirs()
             val file = File(dirPath)

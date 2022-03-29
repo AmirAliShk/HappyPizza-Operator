@@ -10,6 +10,7 @@ import ir.food.operatorAndroid.app.ContinueProcessing
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.app.MyApplication.context
+import ir.food.operatorAndroid.dialog.DownloadUpdateDialog
 import ir.food.operatorAndroid.dialog.GeneralDialog
 import ir.food.operatorAndroid.fragment.login.LogInFragment
 import ir.food.operatorAndroid.helper.AppVersionHelper
@@ -160,10 +161,7 @@ class GetAppInfo {
             GeneralDialog()
                 .message("برای برنامه نسخه جدیدی موجود است لطفا برنامه را به روز رسانی کنید")
                 .firstButton("به روز رسانی") {
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    MyApplication.currentActivity.startActivity(i)
-                    MyApplication.currentActivity.finish()
+                    DownloadUpdateDialog().show(url)
                 }.secondButton("بستن") {
                     MyApplication.currentActivity.finish()
                 }.cancelable(false).show()
@@ -171,10 +169,7 @@ class GetAppInfo {
             GeneralDialog()
                 .message("برای برنامه نسخه جدیدی موجود است در صورت تمایل میتوانید برنامه را به روز رسانی کنید")
                 .firstButton("به روز رسانی") {
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    MyApplication.currentActivity.startActivity(i)
-                    MyApplication.currentActivity.finish()
+                    DownloadUpdateDialog().show(url)
                 }.secondButton("فعلا نه") {
                     startVoipService()
                 }.cancelable(false).show()

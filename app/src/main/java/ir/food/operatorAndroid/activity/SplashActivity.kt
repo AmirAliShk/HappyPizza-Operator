@@ -23,7 +23,10 @@ import org.acra.ACRA
 class SplashActivity : AppCompatActivity() {
     var TAG = SplashActivity::class.java
     private lateinit var binding: ActivitySplashBinding
-    private val permission = arrayOf(Manifest.permission.RECORD_AUDIO)
+    private val permission = arrayOf(
+        Manifest.permission.RECORD_AUDIO,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +61,11 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             val hasAudioPermission =
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            if (hasAudioPermission != PackageManager.PERMISSION_GRANTED) {
+            if ((hasAudioPermission != PackageManager.PERMISSION_GRANTED) || ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 ActivityCompat.requestPermissions(
                     this,
                     permission,

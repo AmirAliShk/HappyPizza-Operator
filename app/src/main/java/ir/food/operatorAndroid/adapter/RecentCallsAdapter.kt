@@ -69,7 +69,7 @@ class RecentCallsAdapter(private val recentCallsModels: ArrayList<RecentCallsMod
                         .toString() + File.separator + "operatorParsian/" + voiceName
                 )
             } else {
-                File(MyApplication.DIR_ROOT + MyApplication.VOICE_FOLDER_NAME + "/" + voiceName)
+                File(MyApplication.DIR_MAIN_FOLDER + MyApplication.VOICE_FOLDER_NAME + "/" + voiceName)
             }
             val voipId: String = model.voipId
             if (file.exists()) {
