@@ -34,7 +34,7 @@ object EndPoints {
     const val ADD_ORDER = ORDER_PATH_V2
     const val EDIT_ORDER = "$ORDER_PATH/editOrder"
     const val SEND_MENU = "$ORDER_PATH/menu"
-    const val CALCULATE_BILL = "${ORDER_PATH}/bill"
+    const val CALCULATE_BILL = "${ORDER_PATH_V2}/bill"
 
     /******************************** support order Api  *********************************/
 
