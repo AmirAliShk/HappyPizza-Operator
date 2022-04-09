@@ -1,7 +1,5 @@
 package ir.food.operatorAndroid.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +19,9 @@ import org.linphone.core.CoreListenerStub
 
 class CallActivity : AppCompatActivity() {
 
+    companion object;
+
+    private val TAG = CallActivity.javaClass.simpleName
     lateinit var binding: ActivityCallBinding
     lateinit var call: Call
 
@@ -63,7 +64,7 @@ class CallActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                AvaCrashReporter.send(e, "CallIncomingActivity class, onAcceptPress")
+                AvaCrashReporter.send(e, "$TAG class, onAcceptPress")
             }
         }
 
@@ -143,7 +144,7 @@ class CallActivity : AppCompatActivity() {
             }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "callActivity class, onResume method")
+            AvaCrashReporter.send(e, "$TAG class, onResume method")
         }
     }
 

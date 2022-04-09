@@ -361,7 +361,7 @@
                         android:paddingRight="@dimen/_50sdp"
                         android:text="@string/sign_up"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_20ssp"
+                        android:textSize="@dimen/_20sdp"
                         android:textStyle="bold" />
 
                     <com.wang.avi.AVLoadingIndicatorView

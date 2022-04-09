@@ -44,12 +44,8 @@ class SplashActivity : AppCompatActivity() {
                 ContextCompat.getColor(MyApplication.context, R.color.darkGray)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        ACRA.getErrorReporter().putCustomData(
-            "LineCode",
-            MyApplication.prefManager.userCode.toString()
-        )
-        ACRA.getErrorReporter()
-            .putCustomData("projectId", MyApplication.prefManager.pushId.toString())
+        ACRA.errorReporter.putCustomData("LineCode", MyApplication.prefManager.userCode.toString())
+        ACRA.errorReporter.putCustomData("projectId", MyApplication.prefManager.pushId.toString())
         MyApplication.handler.postDelayed(
             {
                 checkPermission()

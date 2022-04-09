@@ -196,7 +196,7 @@
                         android:paddingRight="@dimen/_50sdp"
                         android:text="@string/login"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp"
+                        android:textSize="@dimen/_18sdp"
                         android:textStyle="bold" />
 
                     <com.wang.avi.AVLoadingIndicatorView

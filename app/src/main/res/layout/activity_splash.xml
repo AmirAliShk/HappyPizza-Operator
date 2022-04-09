@@ -33,7 +33,7 @@
         android:gravity="center"
         android:text="@string/support_version"
         android:textColor="#f49089"
-        android:textSize="@dimen/_18ssp" />
+        android:textSize="@dimen/_18sdp" />
 
     <View
         android:layout_width="match_parent"

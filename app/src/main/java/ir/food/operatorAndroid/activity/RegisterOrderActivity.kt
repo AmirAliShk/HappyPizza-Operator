@@ -399,6 +399,8 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             disableViews()
+            binding.txtNewCustomer.visibility = View.GONE
+            binding.txtLockCustomer.visibility = View.GONE
         }
 
         override fun afterTextChanged(p0: Editable?) {
@@ -506,7 +508,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "RegisterOrderActivity class, setCursorEnd method")
+            AvaCrashReporter.send(e, "$TAG class, setCursorEnd method")
             // ignore
         }
     }
@@ -717,7 +719,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "EditOrderDialog class, initProductTypeSpinner method")
+            AvaCrashReporter.send(e, "$TAG class, initProductTypeSpinner method")
         }
         if (binding.spProductType == null) return
     }
@@ -774,7 +776,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "EditOrderDialog class, initProductSpinner method")
+            AvaCrashReporter.send(e, "$TAG class, initProductSpinner method")
         }
     }
 
@@ -802,9 +804,9 @@ class RegisterOrderActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
-            AvaCrashReporter.send(e, "$TAG class, initWaitingTimeSpinner method ")
+            AvaCrashReporter.send(e, "$TAG class, initDiscountSpinner method ")
         }
     }
 
