@@ -739,7 +739,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
-                        productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
                         productsArr.getJSONObject(i).getInt("supply"),
@@ -750,7 +749,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("discount"),
                     )
                     productsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("nameWithSupply"))
+                    productsList.add(productsArr.getJSONObject(i).getString("name") + " - " + productsArr.getJSONObject(i).getString("supply"))
                 }
             }
 

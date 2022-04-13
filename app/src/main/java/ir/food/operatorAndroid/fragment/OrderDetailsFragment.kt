@@ -146,7 +146,6 @@ class OrderDetailsFragment(details: String) : Fragment() {
                     productObj.getString("size"),
                     productObj.getString("name"),
                     "",
-                    "",
                     JSONObject(),
                     0,
                     productObj.getInt("quantity"),

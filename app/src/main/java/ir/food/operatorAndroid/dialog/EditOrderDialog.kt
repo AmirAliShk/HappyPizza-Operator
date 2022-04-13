@@ -14,7 +14,6 @@ import ir.food.operatorAndroid.app.DataHolder
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.DialogEditOrderBinding
-import ir.food.operatorAndroid.helper.StringHelper
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.model.ProductsModel
 import ir.food.operatorAndroid.model.ProductsTypeModel
@@ -79,7 +78,6 @@ class EditOrderDialog {
                 productObj.getString("id"),
                 productObj.getString("size"),
                 productObj.getString("name"),
-                "",
                 "",
                 JSONObject(),
                 0,
@@ -302,7 +300,6 @@ class EditOrderDialog {
                         productsArr.getJSONObject(i).getJSONArray("size").getJSONObject(0)
                             .getString("name"),
                         productsArr.getJSONObject(i).getString("name"),
-                        productsArr.getJSONObject(i).getString("nameWithSupply"),
                         productsArr.getJSONObject(i).getString("description"),
                         productsArr.getJSONObject(i).getJSONObject("type"),
                         productsArr.getJSONObject(i).getInt("supply"),
