@@ -5,24 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import ir.food.operatorAndroid.adapter.MenuViewPagerAdapter
 import ir.food.operatorAndroid.app.EndPoints
 import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.FragmentMenuBinding
 import ir.food.operatorAndroid.helper.TypefaceUtil
 import ir.food.operatorAndroid.okHttp.RequestHelper
-import ir.food.operatorAndroid.push.AvaCrashReporter
-import org.json.JSONArray
 import org.json.JSONObject
 
-class MenuFragment : Fragment() {
+class MenuFragment(station: String) : Fragment() {
     lateinit var binding: FragmentMenuBinding
     lateinit var adapter: MenuViewPagerAdapter
-
+    val station = station
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +41,7 @@ class MenuFragment : Fragment() {
     private fun getProductsAndLists() {
         binding.vfMenu.displayedChild = 0
         RequestHelper.builder(EndPoints.GET_PRODUCTS)
+            .addPath(station)
             .listener(productsCallBack)
             .get()
     }
@@ -62,10 +59,7 @@ class MenuFragment : Fragment() {
                         val data = jsonObject.getJSONObject("data")
                         val status = data.getBoolean("status")
                         if (status) {
-                            MyApplication.prefManager.productsList =
-                                data.getJSONArray("products").toString()
-                            MyApplication.prefManager.productsTypeList =
-                                data.getJSONArray("types").toString()
+                            MyApplication.prefManager.kitchenList = data.toString()
 
                             binding.menuVPager.adapter = adapter
 

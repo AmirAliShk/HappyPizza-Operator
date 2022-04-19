@@ -30,11 +30,11 @@ object EndPoints {
     const val ENTER_QUEUE = "${WEBSERVICE_PATH}queue/enter"
     const val EXIT_QUEUE = "${WEBSERVICE_PATH}queue/exit"
     const val GET_CUSTOMER = CUSTOMER_PATH
-    const val GET_PRODUCTS = "$ORDER_PATH/product"
-    const val ADD_ORDER = ORDER_PATH_V2
+    const val GET_PRODUCTS = "$ORDER_PATH/product/menu/"
+    const val ADD_ORDER = "$ORDER_PATH_V2/v1"
     const val EDIT_ORDER = "$ORDER_PATH/editOrder"
-    const val SEND_MENU = "$ORDER_PATH/menu"
-    const val CALCULATE_BILL = "${ORDER_PATH_V2}/bill"
+    const val SEND_MENU = "$ORDER_PATH/menu/v1"
+    const val CALCULATE_BILL = "${ORDER_PATH_V2}/bill/v1"
 
     /******************************** support order Api  *********************************/
 

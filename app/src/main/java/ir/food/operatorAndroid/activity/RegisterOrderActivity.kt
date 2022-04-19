@@ -1,7 +1,9 @@
 package ir.food.operatorAndroid.activity
 
 import android.annotation.SuppressLint
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -21,13 +23,20 @@ import androidx.core.content.ContextCompat
 import ir.food.operatorAndroid.R
 import ir.food.operatorAndroid.adapter.PendingCartAdapter
 import ir.food.operatorAndroid.adapter.SpinnerAdapter
-import ir.food.operatorAndroid.app.*
+import ir.food.operatorAndroid.app.EndPoints
+import ir.food.operatorAndroid.app.MyApplication
 import ir.food.operatorAndroid.databinding.ActivityRegisterOrderBinding
-import ir.food.operatorAndroid.dialog.*
+import ir.food.operatorAndroid.dialog.AddressDialog
+import ir.food.operatorAndroid.dialog.CallDialog
+import ir.food.operatorAndroid.dialog.GeneralDialog
+import ir.food.operatorAndroid.dialog.LoadingDialog
 import ir.food.operatorAndroid.fragment.MenuFragment
 import ir.food.operatorAndroid.fragment.OrdersListFragment
 import ir.food.operatorAndroid.helper.*
-import ir.food.operatorAndroid.model.*
+import ir.food.operatorAndroid.model.AddressModel
+import ir.food.operatorAndroid.model.KitchenListModel
+import ir.food.operatorAndroid.model.ProductsModel
+import ir.food.operatorAndroid.model.ProductsTypeModel
 import ir.food.operatorAndroid.okHttp.RequestHelper
 import ir.food.operatorAndroid.push.AvaCrashReporter
 import ir.food.operatorAndroid.sip.LinphoneService
@@ -50,6 +59,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     private var mDisplayedQuality = -1
     lateinit var call: Call
     lateinit var core: Core
+    private var kitchenModels: ArrayList<KitchenListModel> = ArrayList()
     private var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
     private var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
     private var productsModels: ArrayList<ProductsModel> = ArrayList()
@@ -61,6 +71,7 @@ class RegisterOrderActivity : AppCompatActivity() {
     private var isFull = false // this variable will check the fields in page is full or not
     private var customerAddressId = "0"
     private var productId: String = ""
+    var kitchenId = ""
     private var tempAddressId = "0" // it is a temp variable for save addressId for first time.
     private var originAddress =
         "" // it is a temp variable for save address for first time. if you change the editText content it never will change
@@ -113,7 +124,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         refreshQueueStatus()
         binding.orderList.adapter = pendingCartAdapter
         disableViews()
-        getProductsAndLists()
         initDiscountSpinner()
         MyApplication.handler.postDelayed({
             binding.edtMobile.requestFocus()
@@ -165,8 +175,14 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.llMenu.setOnClickListener {
+            if (binding.edtStationCode.text.isEmpty()) {
+                return@setOnClickListener
+            }
             KeyBoardHelper.hideKeyboard()
-            FragmentHelper.toFragment(MyApplication.currentActivity, MenuFragment())
+            FragmentHelper.toFragment(
+                MyApplication.currentActivity,
+                MenuFragment(binding.edtStationCode.text.toString())
+            )
                 .replace()
         }
 
@@ -230,7 +246,6 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         binding.imgDownload.setOnClickListener {
-            getProductsAndLists()
             if (binding.edtMobile.text.toString() == "" || binding.edtMobile.text.toString().length < 10) {
                 MyApplication.Toast("شماره موبایل را وارد کنید", Toast.LENGTH_LONG)
                 binding.edtMobile.requestFocus()
@@ -413,7 +428,8 @@ class RegisterOrderActivity : AppCompatActivity() {
                 pendingCartModels.clear()
                 pendingCartAdapter.notifyDataSetChanged()
                 initProductSpinner("")
-                initProductTypeSpinner()
+                initProductTypeSpinner("[]")
+                initKitchenListSpinner("[]")
                 totalPrice = 0
                 courierFee = 0
                 totalDiscount = 0
@@ -443,6 +459,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
     }
 
+    var timer = Timer()
     private val stationTW = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -451,6 +468,16 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(p0: Editable?) {
+            timer.cancel()
+            timer = Timer()
+            timer.schedule(
+                object : TimerTask() {
+                    override fun run() {
+                        getProductsAndLists()
+                    }
+                },
+                400
+            )
         }
     }
 
@@ -514,7 +541,11 @@ class RegisterOrderActivity : AppCompatActivity() {
     }
 
     private fun getProductsAndLists() {
+        if (binding.edtStationCode.text.isEmpty()) {
+            return
+        }
         RequestHelper.builder(EndPoints.GET_PRODUCTS)
+            .addPath(binding.edtStationCode.text.toString())
             .listener(productsCallBack)
             .get()
     }
@@ -530,17 +561,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
                     if (success) {
-                        val data = jsonObject.getJSONObject("data")
-                        val status = data.getBoolean("status")
-                        if (status) {
-                            MyApplication.prefManager.productsList =
-                                data.getJSONArray("products").toString()
-                            MyApplication.prefManager.productsTypeList =
-                                data.getJSONArray("types").toString()
-                            initProductTypeSpinner()
-                            initProductSpinner("")
-                            binding.pendingNum.text = data.getString("queueOrder")
-                        }
+                        val data = jsonObject.getJSONArray("data")
+                        MyApplication.prefManager.kitchenList = data.toString()
+                        initKitchenListSpinner(data.toString())
+                        initProductTypeSpinner("[]")
+                        initProductSpinner("")
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -569,6 +594,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             )
             .addParam("introduceId", StringHelper.toEnglishDigits(introducerId))
             .addParam("total", rawTotalPrice)
+            .addParam("kitchenId", kitchenId)
             .listener(getBillCallBack)
             .post()
     }
@@ -686,10 +712,61 @@ class RegisterOrderActivity : AppCompatActivity() {
             else StringHelper.toPersianDigits(StringHelper.setComma("${totalPrice - serverDiscount}")) + " تومان"
     }
 
-    private fun initProductTypeSpinner() {
+    private fun initKitchenListSpinner(kitchens: String) {
+        val kitchenList = ArrayList<String>()
+        try {
+            kitchenList.add(0, "رستوران")
+            val kitchenArr = JSONArray(kitchens)
+            for (i in 0 until kitchenArr.length()) {
+                val kitchenType = KitchenListModel(
+                    kitchenArr.getJSONObject(i).getString("_id"),
+                    kitchenArr.getJSONObject(i).getString("name"),
+                    kitchenArr.getJSONObject(i).getJSONArray("productTypes").toString(),
+                    kitchenArr.getJSONObject(i).getJSONArray("products").toString(),
+                    kitchenArr.getJSONObject(i).getJSONObject("waitingOrderInQueue").getInt("count")
+                        .toString()
+                )
+                kitchenModels.add(kitchenType)
+
+                kitchenList.add(i + 1, kitchenArr.getJSONObject(i).getString("name"))
+            }
+
+            binding.spKitchenType.adapter =
+                SpinnerAdapter(MyApplication.context, R.layout.item_spinner, kitchenList)
+            binding.spKitchenType.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        if (position == 0) {
+                            return
+                        }
+                        productModel = null
+                        binding.pendingNum.text = kitchenModels[position - 1].waitingOrderInQueue
+                        kitchenId = kitchenModels[position - 1].id
+                        MyApplication.prefManager.productsList = kitchenModels[position - 1].product
+                        initProductTypeSpinner(kitchenModels[position - 1].productType)
+                        initProductSpinner("")
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            AvaCrashReporter.send(e, "$TAG class, initKitchenTypeSpinner method")
+        }
+        if (binding.spKitchenType == null) return
+    }
+
+    private fun initProductTypeSpinner(type: String) {
         val typesList = ArrayList<String>()
         try {
-            val typesArr = JSONArray(MyApplication.prefManager.productsTypeList)
+            typesList.add(0, "نوع محصول")
+            val typesArr = JSONArray(type)
             for (i in 0 until typesArr.length()) {
                 val types = ProductsTypeModel(
                     typesArr.getJSONObject(i).getString("_id"),
@@ -697,7 +774,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                 )
                 typesModels.add(types)
 
-                typesList.add(i, typesArr.getJSONObject(i).getString("name"))
+                typesList.add(i + 1, typesArr.getJSONObject(i).getString("name"))
             }
 
             binding.spProductType.adapter =
@@ -710,8 +787,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                         position: Int,
                         id: Long
                     ) {
+                        if (position == 0) {
+                            return
+                        }
                         productModel = null
-                        initProductSpinner(typesModels[position].id)
+                        initProductSpinner(typesModels[position - 1].id)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -729,7 +809,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         productsModels = ArrayList()
         val productsArr = JSONArray(MyApplication.prefManager.productsList)
         try {
-            productsList.add(0, "محصولات")
+            productsList.add(0, "محصول")
             for (i in 0 until productsArr.length()) {
                 if (productsArr.getJSONObject(i).getJSONObject("type").getString("_id")
                         .equals(type)
@@ -749,7 +829,11 @@ class RegisterOrderActivity : AppCompatActivity() {
                             .getString("discount"),
                     )
                     productsModels.add(pendingCart)
-                    productsList.add(productsArr.getJSONObject(i).getString("name") + " - " + productsArr.getJSONObject(i).getString("supply"))
+                    productsList.add(
+                        productsArr.getJSONObject(i)
+                            .getString("name") + " - " + productsArr.getJSONObject(i)
+                            .getString("supply")
+                    )
                 }
             }
 
@@ -1092,7 +1176,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         addressLength = 0
         productId = ""
         isSame = false
-        initProductTypeSpinner()
+        initKitchenListSpinner("[]")
+        initProductTypeSpinner("[]")
         initProductSpinner("")
         initDiscountSpinner()
         binding.txtSumPrice.text = "۰ تومان"
@@ -1102,6 +1187,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         totalDiscount = 0
         courierFee = 0
         serverDiscount = 0
+        kitchenId = ""
         hasDiscount = false
         binding.icDone.visibility = View.GONE
         disableViews()
@@ -1116,6 +1202,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.imgAddressList.isEnabled = true
         binding.edtStationCode.isEnabled = true
         binding.llCart.isEnabled = true
+        binding.rlKitchenType.isEnabled = true
+        binding.spKitchenType.isEnabled = true
         binding.rlProductType.isEnabled = true
         binding.spProductType.isEnabled = true
         binding.llProduct.isEnabled = true
@@ -1136,6 +1224,8 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.imgAddressList.isEnabled = false
         binding.edtStationCode.isEnabled = false
         binding.llCart.isEnabled = false
+        binding.rlKitchenType.isEnabled = false
+        binding.spKitchenType.isEnabled = false
         binding.rlProductType.isEnabled = false
         binding.spProductType.isEnabled = false
         binding.llProduct.isEnabled = false
@@ -1160,6 +1250,7 @@ class RegisterOrderActivity : AppCompatActivity() {
                     )
                 }"
             )
+            .addParam("station", binding.edtStationCode.text.toString())
             .listener(sendMenuCallBack)
             .post()
     }
@@ -1233,6 +1324,7 @@ class RegisterOrderActivity : AppCompatActivity() {
             .addParam("deliveryPrice", courierFee)
             .addParam("totalPrice", totalPrice)
             .addParam("discountPrice", totalDiscount)
+            .addParam("kitchenId", kitchenId)
             .listener(submitOrderCallBack)
             .post()
     }
@@ -1269,7 +1361,6 @@ class RegisterOrderActivity : AppCompatActivity() {
                                     phoneNumber = phoneNumberNew
                                     phoneNumberNew = "0"
                                 }
-
                             }
                             .cancelable(false)
                             .show()

@@ -50,6 +50,7 @@ public class PrefManager {
     private static final String SIP_SERVER = "sipServer";
     private static final String VOIP_ID = "voipId";
     private static final String QUEUE = "queue";
+    private static final String KITCHEN_LIST = "kitchen_list";
     private static final String PRODUCTS_LIST = "product_list";
     private static final String PRODUCTS_TYPE_LIST = "product_type_list";
 
@@ -210,6 +211,15 @@ public class PrefManager {
 
     public void setQueue(String queue) {
         editor.putString(QUEUE, queue);
+        editor.commit();
+    }
+
+    public String getKitchenList() {
+        return pref.getString(KITCHEN_LIST, "");
+    }
+
+    public void setKitchenList(String kitchenList) {
+        editor.putString(KITCHEN_LIST, kitchenList);
         editor.commit();
     }
 
