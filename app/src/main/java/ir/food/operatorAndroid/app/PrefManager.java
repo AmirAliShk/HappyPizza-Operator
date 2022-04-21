@@ -224,7 +224,7 @@ public class PrefManager {
     }
 
     public String getProductsList() {
-        return pref.getString(PRODUCTS_LIST, "");
+        return pref.getString(PRODUCTS_LIST, "[]");
     }
 
     public void setProductsList(String productsList) {

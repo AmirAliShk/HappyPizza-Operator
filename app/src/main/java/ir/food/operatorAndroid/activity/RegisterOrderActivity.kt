@@ -409,6 +409,7 @@ class RegisterOrderActivity : AppCompatActivity() {
         binding.edtStationCode.addTextChangedListener(stationTW)
     }
 
+    var timer1 = Timer()
     private val tellTW = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -419,31 +420,44 @@ class RegisterOrderActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(p0: Editable?) {
-            if (NumberValidation.havePrefix(p0.toString())) {
-                NumberValidation.removePrefix(p0.toString())
-            }
+            timer1.cancel()
+            timer1 = Timer()
+            try {
+                timer1.schedule(object : TimerTask() {
+                    override fun run() {
+                        MyApplication.handler.post {
+                            if (NumberValidation.havePrefix(p0.toString())) {
+                                NumberValidation.removePrefix(p0.toString())
+                            }
 
-            if (!NumberValidation.isValid(p0.toString())) {
-                binding.edtAddress.setText("")
-                pendingCartModels.clear()
-                pendingCartAdapter.notifyDataSetChanged()
-                initProductSpinner("")
-                initProductTypeSpinner("[]")
-                initKitchenListSpinner("[]")
-                totalPrice = 0
-                courierFee = 0
-                totalDiscount = 0
-                serverDiscount = 0
-                hasDiscount = false
-                binding.txtSumPrice.text = "۰ تومان"
-                binding.edtCustomerName.setText("")
-                binding.edtDescription.setText("")
-                binding.txtDiscount.text = "۰ تومان"
-                binding.edtIntroducer.setText("")
-                addressChangeCounter = 0
-                binding.edtStationCode.setText("")
-                canSubmitOrder = false
-                binding.icDone.visibility = View.GONE
+                            if (!NumberValidation.isValid(p0.toString())) {
+                                binding.edtAddress.setText("")
+                                pendingCartModels.clear()
+                                pendingCartAdapter.notifyDataSetChanged()
+                                initProductSpinner("")
+                                initProductTypeSpinner("[]")
+                                initKitchenListSpinner("[]")
+                                totalPrice = 0
+                                courierFee = 0
+                                totalDiscount = 0
+                                serverDiscount = 0
+                                hasDiscount = false
+                                binding.txtSumPrice.text = "۰ تومان"
+                                binding.edtCustomerName.setText("")
+                                binding.edtDescription.setText("")
+                                binding.txtDiscount.text = "۰ تومان"
+                                binding.edtIntroducer.setText("")
+                                addressChangeCounter = 0
+                                binding.edtStationCode.setText("")
+                                canSubmitOrder = false
+                                binding.icDone.visibility = View.GONE
+                            }
+                        }
+                    }
+                }, 400)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                AvaCrashReporter.send(e, "$TAG class,  method")
             }
         }
     }
@@ -470,14 +484,18 @@ class RegisterOrderActivity : AppCompatActivity() {
         override fun afterTextChanged(p0: Editable?) {
             timer.cancel()
             timer = Timer()
-            timer.schedule(
-                object : TimerTask() {
+            try {
+                timer.schedule(object : TimerTask() {
                     override fun run() {
-                        getProductsAndLists()
+                        MyApplication.handler.post {
+                            getProductsAndLists()
+                        }
                     }
-                },
-                400
-            )
+                }, 400)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                AvaCrashReporter.send(e, "$TAG class,  method")
+            }
         }
     }
 
