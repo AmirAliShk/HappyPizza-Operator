@@ -61,8 +61,8 @@ class RegisterOrderActivity : AppCompatActivity() {
     lateinit var core: Core
     private var kitchenModels: ArrayList<KitchenListModel> = ArrayList()
     private var typesModels: ArrayList<ProductsTypeModel> = ArrayList()
-    private var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
     private var productsModels: ArrayList<ProductsModel> = ArrayList()
+    private var pendingCartModels: ArrayList<ProductsModel> = ArrayList()
     private var addressModels: ArrayList<AddressModel> = ArrayList()
     private lateinit var cartJArray: JSONArray
     private var customerAddresses = ""
@@ -304,6 +304,12 @@ class RegisterOrderActivity : AppCompatActivity() {
                 MyApplication.Toast("لطفا شماره همراه را وارد نمایید.", Toast.LENGTH_SHORT)
                 return@setOnClickListener
             }
+
+            if (binding.edtStationCode.text.isEmpty()) {
+                MyApplication.Toast("لطفا کد ایستگاه را وارد نمایید.", Toast.LENGTH_SHORT)
+                return@setOnClickListener
+            }
+
             binding.vfSendMenu.displayedChild = 1
             sendMenu()
         }
@@ -572,8 +578,9 @@ class RegisterOrderActivity : AppCompatActivity() {
         override fun onResponse(reCall: Runnable?, vararg args: Any?) {
             MyApplication.handler.post {
                 try {
-                    productsModels.clear()
+                    kitchenModels.clear()
                     typesModels.clear()
+                    productsModels.clear()
 //{"success":true,"message":"محصولات سفارش با موفقیت ارسال شد","data":{"products":[{"_id":"61091b0ca9335b389819e894","size":[{"name":"medium","price":"75000","discount":"15000"}],"name":"رست بیف","description":"گوشت گوساله . پنیر . قارچ . فلفل دلمه ای . پیازجه","type":{"_id":"610916826f9446153c5e268d","name":"پیتزا"}}],"types":[{"_id":"610916826f9446153c5e268d","name":"پیتزا"}],"status":true}}
                     val jsonObject = JSONObject(args[0].toString())
                     val success = jsonObject.getBoolean("success")
@@ -824,7 +831,7 @@ class RegisterOrderActivity : AppCompatActivity() {
 
     private fun initProductSpinner(type: String) {
         val productsList = ArrayList<String>()
-        productsModels = ArrayList()
+//        productsModels = ArrayList()
         val productsArr = JSONArray(MyApplication.prefManager.productsList)
         try {
             productsList.add(0, "محصول")
